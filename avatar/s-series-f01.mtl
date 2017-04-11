@@ -4,10 +4,10 @@
 newmtl None
 Ns 0
 Ka 0.000000 0.000000 0.000000
-Kd 0.8 0.8 0.8
-Ks 0.8 0.8 0.8
+Kd 1 1 1
+Ks 1 1 1
 d 1
-illum 2
+illum 0
 map_Kd s-series-f01_diff.png
 
 newmtl None_NONE
@@ -21,8 +21,8 @@ illum 2
 newmtl None_s-series-f01_glow.png
 Ns 0
 Ka 0.000000 0.000000 0.000000
-Kd 0.8 0.8 0.8
-Ks 0.8 0.8 0.8
+Kd 1 1 1
+Ks 1 1 1
 d 1
-illum 2
+illum 0
 map_Kd s-series-f01_glow.png
