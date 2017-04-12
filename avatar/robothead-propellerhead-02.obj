@@ -1,7 +1,7 @@
 # Blender v2.77 (sub 0) OBJ File: ''
 # www.blender.org
 mtllib robothead-propellerhead-02.mtl
-o Propeller_Head.001
+o Propeller
 v -0.008358 0.176866 -0.082752
 v -0.009756 0.330033 -0.080008
 v -0.008358 0.330033 -0.082752
