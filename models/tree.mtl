@@ -1,0 +1,167 @@
+# Blender MTL File: 'trees_0.blend'
+# Material Count: 14
+
+newmtl Material
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+Ke 0.240000 0.240000 0.240000
+Ni 1.000000
+d 0.000000
+illum 1
+map_Kd tree\trees_leaves_004_col.png
+map_d  tree\trees_leaves_004_col.png
+
+newmtl Material.TF.1026
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl browntreeleaves
+Ns 43.137255
+Ka 1.000000 1.000000 1.000000
+Kd 0.760000 0.760000 0.760000
+Ks 0.000000 0.000000 0.000000
+Ke 0.160000 0.160000 0.160000
+Ni 1.000000
+d 0.000000
+illum 1
+map_Kd tree\trees_leaves_003_col.png
+map_d  tree\trees_leaves_003_col.png
+
+newmtl log_001
+Ns 72.549020
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.100000 0.100000 0.100000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd tree\trees_log_001_col.png
+map_Bump  tree\trees_log_001_nor.jpg
+
+newmtl log_001_NONE
+Ns 72.549020
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.100000 0.100000 0.100000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Bump  tree\trees_log_001_nor.jpg
+map_Kd  tree\trees_log_001_col.png
+
+newmtl log_001_leaves
+Ns 72.549020
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.202672 0.202672 0.202672
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 0.000000
+illum 2
+map_Kd tree\trees_log_001_col.png
+map_Bump  tree\trees_log_001_nor.jpg
+map_d  tree\trees_log_001_col.png
+
+newmtl no_friction
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.403333 0.730972
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl sticks
+Ns 37.254902
+Ka 1.000000 1.000000 1.000000
+Kd 0.306000 0.246000 0.216000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd tree\trees_bark_001_col.jpg
+map_Bump -bm 0.700000 tree\trees_bark_001_nor.jpg
+
+newmtl tree_brown
+Ns 37.254902
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd tree\trees_bark_002_col.jpg
+map_Bump  tree\trees_bark_002_nor.jpg
+
+newmtl tree_stump
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 0.800000 0.800000
+Ks 0.100000 0.100000 0.100000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd tree\tree_stumps_col.jpg
+map_Bump  tree\tree_stumps_nor.jpg
+
+newmtl tree_stump_NONE
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 0.800000 0.800000
+Ks 0.100000 0.100000 0.100000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Bump  tree\tree_stumps_nor.jpg
+map_Kd  tree\tree_stumps_col.jpg
+
+newmtl tree_stump_trees_bark_001_col
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 0.800000 0.800000
+Ks 0.100000 0.100000 0.100000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd tree\trees_bark_001_col.jpg
+map_Bump  tree\tree_stumps_nor.jpg
+
+newmtl trees_bark_001
+Ns 76.470588
+Ka 1.000000 1.000000 1.000000
+Kd 0.604899 0.467153 0.214738
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd tree\trees_bark_001_col.jpg
+map_Bump  tree\trees_bark_001_nor.jpg
+
+newmtl vine_001
+Ns 56.862745
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.100000 0.100000 0.100000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 0.000000
+illum 2
+map_Kd tree\trees_vines_001_col.png
+map_d  tree\trees_vines_001_col.png
