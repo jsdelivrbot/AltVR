@@ -1,7 +1,18 @@
-# Blender MTL File: 'None'
-# Material Count: 8
+# Blender MTL File: 'house.blend'
+# Material Count: 13
 
 newmtl Material.002_WoodRoofTiles.jpg
+Ns 92.156863
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd WoodHousePillars.jpg
+
+newmtl Material.002_WoodRoofTiles.jpg_WoodRoofTiles.jpg
 Ns 92.156863
 Ka 1.000000 1.000000 1.000000
 Kd 0.640000 0.640000 0.640000
@@ -13,6 +24,17 @@ illum 2
 map_Kd WoodRoofTiles.jpg
 
 newmtl Material.003_WoodRoofTiles.jpg
+Ns 92.156863
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd WoodHousePillars.jpg
+
+newmtl Material.003_WoodRoofTiles.jpg_WoodRoofTiles.jpg
 Ns 92.156863
 Ka 1.000000 1.000000 1.000000
 Kd 0.640000 0.640000 0.640000
@@ -33,17 +55,6 @@ Ni 1.000000
 d 1.000000
 illum 2
 map_Kd WoodHousePillars.jpg
-
-newmtl Material.005
-Ns 92.156863
-Ka 1.000000 1.000000 1.000000
-Kd 0.640000 0.640000 0.640000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.000000
-d 1.000000
-illum 2
-map_Kd BrickHouseBase.jpg
 
 newmtl Material.008
 Ns 92.156863
@@ -67,20 +78,68 @@ d 1.000000
 illum 2
 map_Kd BrickOldRounded.jpg
 
-newmtl None
-Ns 0
-Ka 0.000000 0.000000 0.000000
-Kd 0.8 0.8 0.8
-Ks 0.8 0.8 0.8
-d 1
+newmtl Material_BrickOldRounded.jpg_Brickwallsinside.jpg
+Ns 92.156863
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
 illum 2
 map_Kd Brickwallsinside.jpg
 
-newmtl None_WoodHousePillars.jpg
-Ns 0
-Ka 0.000000 0.000000 0.000000
-Kd 0.8 0.8 0.8
-Ks 0.8 0.8 0.8
-d 1
+newmtl Material_BrickOldRounded.jpg_Brickwallsinside.jpg_BrickOldRounded.jpg
+Ns 92.156863
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
 illum 2
-map_Kd WoodHousePillars.jpg
+map_Kd BrickOldRounded.jpg
+
+newmtl Material_BrickOldRounded.jpg_Brickwallsinside.jpg_Brickwallsinside.jpg
+Ns 92.156863
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd Brickwallsinside.jpg
+
+newmtl Material_BrickOldRounded.jpg_NONE
+Ns 92.156863
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd  BrickOldRounded.jpg
+
+newmtl None_BrickHouseBase.jpg
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.800000 0.800000 0.800000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd BrickHouseBase.jpg
+
+newmtl None_BrickHouseBase.jpg_Brickwallsinside.jpg
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.800000 0.800000 0.800000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd Brickwallsinside.jpg
