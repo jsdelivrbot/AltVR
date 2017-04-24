@@ -10,7 +10,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd D:\AltVrFiles\textures\WoodRoofTiles.jpg
+map_Kd WoodRoofTiles.jpg
 
 newmtl Material.003
 Ns 92.156863
@@ -21,7 +21,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd D:\AltVrFiles\textures\WoodHousePillars.jpg
+map_Kd WoodHousePillars.jpg
 
 newmtl Material.003_WoodRoofTiles.jpg
 Ns 92.156863
@@ -32,7 +32,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd D:\AltVrFiles\textures\WoodRoofTiles.jpg
+map_Kd WoodRoofTiles.jpg
 
 newmtl Material.004
 Ns 92.156863
@@ -43,7 +43,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd D:\AltVrFiles\textures\WoodHousePillars.jpg
+map_Kd WoodHousePillars.jpg
 
 newmtl Material.004_FloorsRegular0128_2_S
 Ns 92.156863
@@ -54,7 +54,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd D:\AltVrFiles\textures\HouseInsideFloor.jpg
+map_Kd HouseInsideFloor.jpg
 
 newmtl Material.005
 Ns 92.156863
@@ -65,7 +65,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd D:\AltVrFiles\textures\BrickHouseBase.jpg
+map_Kd BrickHouseBase.jpg
 
 newmtl Material.008
 Ns 92.156863
@@ -76,7 +76,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd D:\AltVrFiles\textures\StuccoCeiling.jpg
+map_Kd StuccoCeiling.jpg
 
 newmtl Material_BrickOldRounded.jpg
 Ns 92.156863
@@ -87,7 +87,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd D:\AltVrFiles\textures\BrickOldRounded.jpg
+map_Kd BrickOldRounded.jpg
 
 newmtl Material_Brickwallsinside.jpg
 Ns 92.156863
@@ -98,7 +98,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd D:\AltVrFiles\textures\Brickwallsinside.jpg
+map_Kd Brickwallsinside.jpg
 
 newmtl Material_NONE
 Ns 92.156863
