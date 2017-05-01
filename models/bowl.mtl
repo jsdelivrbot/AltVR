@@ -1,0 +1,12 @@
+# Blender MTL File: 'dinnerware.blend'
+# Material Count: 1
+
+newmtl Wood
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.240987 0.174064 0.079663
+Ks 0.149799 0.149799 0.149799
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
