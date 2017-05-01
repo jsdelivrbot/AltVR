@@ -3,19 +3,21 @@
 	<title>Minimap</title>
   <script src="https://aframe.io/releases/0.3.0/aframe.js"></script>
   <script src="https://sdk.altvr.com/libs/altspace.js/2.4.0/altspace.min.js"></script>
-  <script src="https://cdn.rawgit.com/norybiak/UltimateLoader/v0.3.0/dist/UltimateLoader.min.js"></script>
+  <script src="https://cdn.rawgit.com/norybiak/UltimateLoader/v0.4.6/dist/UltimateLoader.min.js"></script>
   <script src="https://cdn.rawgit.com/Ooblik/AltVRNC/master/dist/AltVRNC.min.js"></script>
+  <script src="https://cdn.rawgit.com/NGenesis/altspacevr-behaviors/7cf658d3/js/NativeComponent.js"></script>
   <script src="https://tweenjs.github.io/tween.js/src/Tween.js"></script>
 </head>
 <body>
   <a-scene altspace='fullspace: true'>
-    <a-entity position='4 -90.7 -15.5' rotation='0 0 0' scale="4 4 4" n-layout-browser="url: http://hah.altvr.com/play; isEnclosure: true"></a-entity>
+    <!-- <a-entity position='4 -90.7 -15.5' rotation='0 0 0' scale="4 4 4" n-layout-browser="url: http://hah.altvr.com/play; isEnclosure: true"></a-entity>
     <a-entity position='4.5 1.4 -8' rotation='0 -90 0' scale=".2 .2 .2" n-layout-browser="url: https://video-jukebox.firebaseapp.com/?room=minimap"></a-entity>
-    <a-entity position='16.5 -90 -8' rotation='0 -90 0' scale="5 5 5" n-layout-browser="url: https://video-jukebox.firebaseapp.com/?room=minimap"></a-entity>
+    <a-entity position='16.5 -90 -8' rotation='0 -90 0' scale="5 5 5" n-layout-browser="url: https://video-jukebox.firebaseapp.com/?room=minimap"></a-entity> -->
+    <!-- <a-entity position='-115 -140 -60' rotation='0 0 0' n-portal='targetSpace: event-661755213408895236-306'></a-entity> -->
   </a-scene>
 <script>
   var scene = document.querySelector('a-scene').object3D;
-  var updateRate = 100;
+  var updateRate = 500;
   
   var modelPromise = new Promise(function (resolve, reject) {
     var url = 'https://bengarfield.github.io/AltVR-Tests/avatars/';
@@ -30,7 +32,7 @@
   });
   
   var config = {
-    baseRefUrl: "https://cubesync-f70b7.firebaseio.com",
+    baseRefUrl: "https://altvr-apps.firebaseio.com/",
     authorId: "BenG",
     appId: "Minimap"
   }
@@ -60,6 +62,39 @@
     }
     console.log(avatars);
     var models2 = results[4];
+    /*for (var i = 0; i < models2.length; i++) {
+      var url = 'https://bengarfield.github.io/AltVR/avatar/';
+      models2[i].position.set(.8 * i,1.2,-14);
+      scene.add(models2[i]);
+
+      if (i < 5) {
+        models2[i].getObjectByName("BodyGlow").material.color.set('rgb(255,230,65)');
+        //obj[i].getObjectByName("BodyGlow").material.map = '';
+
+        //obj[i].getObjectByName("Body").material.color.set('rgb(0,0,0)');
+      }
+      if (i == 6) {
+        //new TWEEN.Tween(models[6].getObjectByName('Propeller').rotation).to({y:Math.PI * 2}, 10000).start();
+      }
+      if (i == 7) {
+        console.log(models2[i]);
+        UltimateLoader.multiload([url + 'rubenoid-male-01_skin-01.png',url + 'rubenoid-male-01_hair-01.png',url + 'rubenoid-male-01_clothing-01.png'], function(tex){
+          models2[7].getObjectByName("Head").material.map = tex[0];
+          models2[7].getObjectByName("Hair").material.map = tex[1];
+          models2[7].getObjectByName("Body").material.map = tex[2];
+          //models2[7].remove(models2[7].getObjectByName("Arms"),models2[7].getObjectByName("ArmsSleeves"));
+          
+        });
+      }
+      if (i == 8) {
+        UltimateLoader.multiload([url + 'rubenoid-female-01_skin-01.png',url + 'rubenoid-female-01_hair-01.png',url + 'rubenoid-female-01_clothing-01.png'], function(tex){
+          models2[8].getObjectByName("Head").material.map = tex[0];
+          models2[8].getObjectByName("Hair").material.map = tex[1];
+          models2[8].getObjectByName("Body").material.map = tex[2];
+          //models2[8].remove(models2[8].getObjectByName("Arms"),models2[8].getObjectByName("ArmsSleeves"));
+        });
+      }
+    }*/
     
     var prop = new THREE.Group();
     prop.name = 'Prop';
@@ -73,14 +108,19 @@
     var grid = new THREE.TextureLoader().load('https://bengarfield.github.io/AltVR-Tests/grid.jpg');
     var loader = new altspace.utilities.shims.OBJMTLLoader();
     loader.load('https://bengarfield.github.io/AltVR/models/house.obj', 'https://bengarfield.github.io/AltVR/models/house.mtl', house);
+    loader.load('https://bengarfield.github.io/AltVR/models/house3.obj', 'https://bengarfield.github.io/AltVR/models/house3.mtl', house2);
     loader.load('https://bengarfield.github.io/AltVR/models/tree.obj', 'https://bengarfield.github.io/AltVR/models/tree.mtl', tree);
     //loader.load('https://bengarfield.github.io/AltVR/models/stones.obj', 'https://bengarfield.github.io/AltVR/models/stones.mtl', rocks);
+    loader.load('https://bengarfield.github.io/AltVR/models/chair.obj', 'https://bengarfield.github.io/AltVR/models/chair.mtl', chair);
+    loader.load('https://bengarfield.github.io/AltVR/models/table.obj', 'https://bengarfield.github.io/AltVR/models/table.mtl', table);
+    loader.load('https://bengarfield.github.io/AltVR/models/cutlery.obj', 'https://bengarfield.github.io/AltVR/models/cutlery.mtl', cutlery);
+    loader.load('https://bengarfield.github.io/AltVR/models/bowl.obj', 'https://bengarfield.github.io/AltVR/models/bowl.mtl', bowl);
     
     function house(obj) {
       console.log(obj);
       for (var i = 0; i < obj.children.length; i++) {
         if (obj.children[i].material.type == 'MultiMaterial') {
-          console.log('multi', obj.children[i].name, obj.children[i].material);
+          //console.log('multi', obj.children[i].name, obj.children[i].material);
           obj.children[i].material = obj.children[i].material.materials[0];
         }
       }
@@ -119,11 +159,11 @@
       new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse.getObjectByName('Wall7'));
       new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse.getObjectByName('Wall8'));
       new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse.getObjectByName('Wall9'));
-      new NativeComponent('n-mesh-collider', {type: 'hologram', convex: false}, bigHouse.getObjectByName('Roof1'));
-      new NativeComponent('n-mesh-collider', {type: 'hologram', convex: false}, bigHouse.getObjectByName('Roof2'));
+      new NativeComponent('n-mesh-collider', {type: 'object', convex: false}, bigHouse.getObjectByName('Roof1'));
+      new NativeComponent('n-mesh-collider', {type: 'object', convex: false}, bigHouse.getObjectByName('Roof2'));
       
       bigHouse.scale.multiplyScalar(25);
-      bigHouse.position.set(-.85,-.82,1);
+      bigHouse.position.set(-.85,-.84,1);
       bigHouse.rotation.y = 0;
       offset.add(bigHouse);
       var bigHouse2 = bigHouse.clone();
@@ -136,11 +176,64 @@
       new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse2.getObjectByName('Wall7'));
       new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse2.getObjectByName('Wall8'));
       new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse2.getObjectByName('Wall9'));
+      new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse2.getObjectByName('Cube.028'));
+      new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse2.getObjectByName('Cube.029'));
+      new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse2.getObjectByName('Cube.030'));
+      new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse2.getObjectByName('Cube.031'));
+      new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse2.getObjectByName('Plane'));
       big.add(bigHouse2);
       
       obj.getObjectByName('Roof1').addEventListener('cursordown', function(type) {shrink(type);});
       obj.getObjectByName('Roof2').addEventListener('cursordown', function(type) {shrink(type);});
     }
+    
+    function house2(obj) {
+      console.log(obj);
+      for (var i = 0; i < obj.children.length; i++) {
+        if (obj.children[i].material.type == 'MultiMaterial') {
+          //console.log('multi', obj.children[i].name, obj.children[i].material);
+          obj.children[i].material = obj.children[i].material.materials[0];
+        }
+      }
+      obj.children = [obj.getObjectByName('Cube.003'), obj.getObjectByName('Plane.001_Plane.003'), obj.getObjectByName('Plane.002_Plane.004'), obj.getObjectByName('Plane.003_Plane.005'), obj.getObjectByName('Plane.004_Plane.006'), obj.getObjectByName('Plane.005_Plane.007'), obj.getObjectByName('Plane.006_Plane.008')];
+      
+      var holeT = new THREE.TextureLoader().load('https://bengarfield.github.io/AltVR/models/hole.png');
+      var hole2T = new THREE.TextureLoader().load('https://bengarfield.github.io/AltVR/models/hole2.png');
+      obj.getObjectByName('Plane.002_Plane.004').material.map = holeT;
+      obj.getObjectByName('Plane.001_Plane.003').material.map = hole2T;
+      
+      obj.scale.set(1,1.4,1.5);
+      obj.scale.divideScalar(125);
+      obj.position.set(-.3,1.28,0);
+      //obj.rotation.y = Math.PI;
+      
+      var bigHouse = obj.clone();
+      new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse.getObjectByName('Cube.003'));
+      /*new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse.getObjectByName('Wall2'));
+      new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse.getObjectByName('Wall3'));
+      new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse.getObjectByName('Wall4'));
+      new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse.getObjectByName('Wall5'));
+      new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse.getObjectByName('Wall6'));
+      new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse.getObjectByName('Wall7'));
+      new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse.getObjectByName('Wall8'));
+      new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse.getObjectByName('Wall9'));
+      new NativeComponent('n-mesh-collider', {type: 'hologram', convex: false}, bigHouse.getObjectByName('Roof1'));
+      new NativeComponent('n-mesh-collider', {type: 'hologram', convex: false}, bigHouse.getObjectByName('Roof2'));*/
+      
+      bigHouse.scale.multiplyScalar(25);
+      bigHouse.position.set(-.5,-.84,1);
+      var bigHouse2 = bigHouse.clone();
+      //bigHouse2.scale.multiplyScalar(25);
+      //bigHouse2.position.set(-.7,-.84,1);
+      //bigHouse2.rotation.y = 0;
+      new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse2);
+      offset.add(bigHouse);
+      big.add(bigHouse2);
+    }
+    
+    /*var hole = new THREE.Mesh(new THREE.BoxGeometry(.1,.1,.1), new THREE.MeshBasicMaterial({color: 0x111111, side: THREE.BackSide}));
+    hole.position.set(0,0,0);
+    scene.add(hole);*/
     
     function tree(obj) {
       console.log('tree: ', obj);
@@ -174,22 +267,80 @@
       console.log('rocks: ', obj);
       obj.scale.divideScalar(100);
       obj.position.set(-.2,1.31,.4);
-      /*obj.rotation.y = THREE.Math.degToRad(65);
-      var tree2 = obj.clone();
-      tree2.position.set(-.3,1.31,-.45);
-      tree2.rotation.y = THREE.Math.degToRad(180);
-      var tree3 = obj.clone();
-      tree3.position.set(.32,1.31,.4);
-      tree3.rotation.y = THREE.Math.degToRad(270);*/
       new NativeComponent('n-mesh-collider', {type: 'hologram', convex: false}, obj).addTo(offset);
-      /*new NativeComponent('n-mesh-collider', {type: 'hologram', convex: false}, tree2).addTo(offset);
-      new NativeComponent('n-mesh-collider', {type: 'hologram', convex: false}, tree3).addTo(offset);*/
       new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, obj.clone()).addTo(big);
-      /*new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, tree2.clone()).addTo(big);
-      new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, tree3.clone()).addTo(big);
       obj.addEventListener('cursordown', function(type) {shrink(type);});
-      tree2.addEventListener('cursordown', function(type) {shrink(type);});
-      tree3.addEventListener('cursordown', function(type) {shrink(type);});*/
+    }
+    
+    function chair(obj) {
+      obj.scale.divideScalar(6.5);
+      obj.position.set(-3.5,0,-1);
+      obj.rotation.y = THREE.Math.degToRad(40);
+      //obj.addEventListener('cursordown', function(type) {shrink(type);});
+      new NativeComponent('n-mesh-collider', {type: 'hologram', convex: false}, obj).addTo(offset);
+      new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, obj.clone()).addTo(big);
+    }
+    function table(obj) {
+      console.log('table',obj)
+      obj.scale.divideScalar(1.33);
+      obj.position.set(-2.5,0,.5);
+      //obj.rotation.y = THREE.Math.degToRad(40);
+      var color  = new THREE.Color(.5,.5,.6);
+      obj.children[0].material.color = color
+      obj.children[1].material.color = color;
+      obj.addEventListener('cursordown', function(type) {shrink(type);});
+      new NativeComponent('n-mesh-collider', {type: 'hologram', convex: false}, obj).addTo(offset);
+      new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, obj.clone()).addTo(big);
+    }
+    
+    var tableGroup = new THREE.Group();
+    tableGroup.position.set(-2.5,.975,.5);
+    var bigTableGroup = tableGroup.clone();
+    
+    function cutlery(obj) {
+      console.log('TeaSpoon', obj.children[0]);
+      console.log('Knife', obj.children[1]);
+      console.log('Fork', obj.children[2]);
+      console.log('TableSpoon', obj.children[3]);
+      obj.scale.divideScalar(75);
+      obj.rotation.y = THREE.Math.degToRad(180);
+      var sx = new THREE.Group();
+      var sy = new THREE.Group();
+      var sz = new THREE.Group();
+      obj.add(sz);
+      sz.add(sy);
+      sy.add(sx);
+      sx.add(obj.children[3]);
+      console.log('spoon', sz);
+      sz.rotation.z = THREE.Math.degToRad(-21);
+      sy.rotation.y = THREE.Math.degToRad(-90);
+      sx.rotation.x = THREE.Math.degToRad(180);
+      
+      //obj.children[3].rotation.set(THREE.Math.degToRad(-110),THREE.Math.degToRad(0),THREE.Math.degToRad(90));
+      //obj.children[3].quaternion.set(0.4,-.5,.6,-.4);
+      sz.position.set(20,4.8,44);
+      tableGroup.add(obj);
+      new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, obj.clone()).addTo(bigTableGroup);
+      //bigTableGroup.add(obj.clone());
+      
+      //obj.position.set(-3.4,.79,3.75);
+      //obj.addEventListener('cursordown', function(type) {shrink(type);});
+    }
+    
+    function bowl(obj) {
+      console.log('Bowl', obj);
+      obj.scale.divideScalar(6);
+      obj.position.set(-.1,0,-.5);
+      obj.rotation.y = THREE.Math.degToRad(250);
+      
+      var soup = new THREE.Mesh(new THREE.CylinderGeometry(.1,.1,.1), new THREE.MeshBasicMaterial());
+      soup.position.set(-.1,1,-.5,);
+      tableGroup.add(obj, soup);
+      new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, obj.clone()).addTo(bigTableGroup);
+      //bigTableGroup.add(obj.clone());
+      
+      //obj.position.set(-3.4,.79,3.75);
+      //obj.addEventListener('cursordown', function(type) {shrink(type);});
     }
     
     var hands = false;
@@ -200,6 +351,7 @@
     var syncTimes = {};
     var pS = [];
     
+    var players = {};
     var bodys = [];
     var bigBodys = [];
     var heads = [];
@@ -209,15 +361,52 @@
     var lHands = [];
     var biglHands = [];
     
+    var syncRate = 500;
     var syncPlayers = sync.child('players');
-    var syncYou;
-
-    var i = new THREE.Vector2(0,0);
-    new TWEEN.Tween(i).to({x:1}, 1000)
-      .onUpdate(function(){
-        //console.log(i.x)
+    var syncYou = syncPlayers.push();
+    syncYou.onDisconnect().setWithPriority(null, 10);
+    var syncId = syncYou.key();
+    console.log(syncId);
+    var date = (new Date()).toISOString();
+    date = date.replace('T', ' ');
+    date = date.replace('Z', '');
+    sync.child('log').child(date.replace('.', ':')).set(user.displayName);
+    
+    
+    var tag = new THREE.TextureLoader().load('https://bengarfield.github.io/AltVR/nametag.png');
+    var nbox = new THREE.Mesh(new THREE.BoxGeometry(.5,.5,.5), new THREE.MeshBasicMaterial({color: 0x0000ff}));
+    var ntext = new THREE.Mesh(new THREE.PlaneGeometry(1.15,.5), new THREE.MeshBasicMaterial({map: tag, transparent: true, opacity: 0}));
+    for (var i = 0; i < ntext.geometry.vertices.length; i++) {
+      ntext.geometry.vertices[i].z = -.05;
+    }
+    nbox.position.set(-3,1,-3);
+    ntext.position.y = .8;
+    nbox.add(ntext);
+    scene.add(nbox);
+    var alpha = '00';
+    var i = {a: 0, b: 0};
+    var fadeIn = new TWEEN.Tween(i).to({a:255, b:1}, 1000).onUpdate(function(){ntext.material.opacity = i.b; alpha = Math.round(i.a).toString(16); if (alpha.length == 1) {alpha = '0' + alpha;}}).onStart(function(){ntext.position.y = .8;});
+    var fadeOut2 = new TWEEN.Tween(i).to({a:0, b:0}, 1000).onUpdate(function(){ntext.material.opacity = i.b; alpha = Math.round(i.a).toString(16); if (alpha.length == 1) {alpha = '0' + alpha;}}).onComplete(function(){ntext.position.y = -1000;});
+    var fadeOut = new TWEEN.Tween(i).to({a:255, b:1}, 100).delay(2000).chain(fadeOut2);
+    
+    nbox.addEventListener('cursordown', function(){fadeOut.stop();fadeIn.start()});
+    nbox.addEventListener('cursorenter', function(){if(i.a > 0){fadeOut.stop();fadeIn.start()}});
+    nbox.addEventListener('cursorleave', function(){if(i.a > 0){fadeOut.start()}});
+    
+    nbox.addBehavior(new altspaceutil.behaviors.NativeComponent('n-mesh-collider', {convex: false, type: 'hologram'}));
+    ntext.addBehaviors(
+      new altspaceutil.behaviors.NativeComponent('n-text', {height: 0.3, fontSize: 3, verticalAlign: 'top'}),
+      new altspaceutil.behaviors.NativeComponent('n-billboard'),
+      new (function NativeTextUpdate() {
+        this.type = 'NativeTextUpdate';
+        this.awake = function(o) {
+          this.nTextComponent = o.getBehaviorByType('n-text');
+        }
+        this.update = function() {
+          this.nTextComponent.data.text = '<#ffffff' + alpha + '>' + user.displayName;
+        }
       })
-      .start();
+    );
     
     var map = new THREE.Mesh(new THREE.BoxGeometry(1,.02,1), new THREE.MeshBasicMaterial({map: grass}));
     map.position.y = 1.3;
@@ -242,40 +431,43 @@
     var c = new THREE.Mesh(new THREE.CircleGeometry(.005), new THREE.MeshBasicMaterial({color: 0xffff00}));
     c.position.set(-.28,1.311,0);
     c.rotation.x = -Math.PI/2
-    var screen = new THREE.Mesh(new THREE.PlaneGeometry(.32,.18), new THREE.MeshBasicMaterial());
-    screen.position.set(.5,1.42,0);
-    screen.rotation.y = -Math.PI/2;
+    var floorPlane = new THREE.Mesh(new THREE.PlaneGeometry(1000,1000), new THREE.MeshBasicMaterial({color: 0x007700}));
+    floorPlane.position.set(0,-.01,0);
+    floorPlane.rotation.x = -Math.PI/2;
+    scene.add(floorPlane);
+    console.log('fp',floorPlane);
+    var bigFloor = floorPlane.clone();
+    bigFloor.scale.divideScalar(20);
+    bigFloor.position.y = -.05;
+    new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigFloor);
     var room = new THREE.Mesh(new THREE.BoxGeometry(10,5,10), new THREE.MeshBasicMaterial({map: grid, color: 0xaaaaaa, side: THREE.BackSide}));
     room.position.y = 2.51;
     room.userData.altspace = {collider: {enabled: false}};
-    var black = new THREE.Mesh(new THREE.BoxGeometry(1000,6,1000), new THREE.MeshBasicMaterial({color: 0x000000, side: THREE.BackSide}));
-    black.position.set(4,2.99,-8);
+    var black = new THREE.Mesh(new THREE.BoxGeometry(1000,6,1000), new THREE.MeshBasicMaterial({color: 0x08cad8, side: THREE.BackSide}));
+    black.position.set(0,2.98,0);
     
-    var floor = new THREE.Mesh(new THREE.BoxGeometry(20,.01,20), new THREE.MeshBasicMaterial({transparent: true, opacity: 0}));
-    floor.position.y = 0.005;
-    new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, floor);
+    var miniHider = new THREE.Mesh(new THREE.BoxGeometry(10,1,10), new THREE.MeshBasicMaterial({color: 0x08cad8}));
+    miniHider.position.y = 6;
+    miniHider.position.z = -14;
+    miniHider.userData.altspace = {collider: {enabled: false}};
+    scene.add(miniHider);
     
     var offset = new THREE.Group();
     offset.position.set(0,0,-14);
-    //offset.add(male, mHead, female, fHead, shrink);
-    offset.add(map, table, leg.clone());
+    offset.add(map, table, leg.clone(), tableGroup);
     
     var portalHolder = new THREE.Group();
     var grow = new THREE.TextureLoader().load('https://bengarfield.github.io/AltVR/grow.png');;
     map.addEventListener('cursordown', function(type) {shrink(type);});
     function shrink(type) {
-      //var v = type.detail.point;
-      console.log(type.point);
-      //v = v.sub(new THREE.Vector3(hand.position.x, hand.position.y, hand.position.z * -1));
-      //console.log(hand);
-
       var c = new THREE.Vector3().copy(type.point);
       c.sub(new THREE.Vector3(0,0,14));
-      console.log(c);
+      //console.log(c);
       c.multiplyScalar(25);
 
       var s = skeleton.getJoint('Spine');
 
+      portalHolder.children = [];
       portalHolder.position.set(s.position.x, s.position.y, s.position.z);
       portalHolder.quaternion.set(s.quaternion.x, s.quaternion.y, s.quaternion.z, s.quaternion.w);
       scene.add(portalHolder);
@@ -288,23 +480,25 @@
       cock.rotation.x = THREE.Math.degToRad(-25)
       new NativeComponent('n-mesh-collider', {type: 'hologram'}, cock);
       cock.addEventListener('cursordown', function() {
+        portalHolder.children = [];
         portalHolder.position.set(s.position.x, s.position.y, s.position.z);
         portalHolder.quaternion.set(s.quaternion.x, s.quaternion.y, s.quaternion.z, s.quaternion.w);
         var config = {targetPosition: {x: s.position.x / 25 + offset.position.x, y: 0, z: s.position.z / 25 + offset.position.z}, targetQuaternion: {x: s.quaternion.x, y: s.quaternion.y, z: s.quaternion.z, w: s.quaternion.w}};
         var portal = new NativeComponent('n-portal', config).addTo(portalHolder);
         scene.remove(scene.children[scene.children.length - 1]);
-        setTimeout(function() {portalHolder.children = [];}, 2000);
+        //setTimeout(function() {portalHolder.children = [];}, 2000);
       });
 
-      setTimeout(function() {portalHolder.children = []; new NativeComponent('n-cockpit-parent', null, cock).addTo(scene);}, 2000);
+      /*setTimeout(function() {portalHolder.children = [];*/ new NativeComponent('n-cockpit-parent', null, cock).addTo(scene);//}, 2000);
     }
     var big = offset.clone();
     new NativeComponent('n-mesh-collider', {type: 'environment'}, big.children[0]);
     big.position.y = -140;
     big.scale.multiplyScalar(25);
-    var black2 = new THREE.Mesh(new THREE.BoxGeometry(50,6,50), new THREE.MeshBasicMaterial({color: 0x000000, side: THREE.BackSide}));
-    black2.position.set(0,2.99,0);
-    big.add(floor, black2, leg);
+    var black2 = new THREE.Mesh(new THREE.BoxGeometry(50,8,50), new THREE.MeshBasicMaterial({color: 0x08cad8, side: THREE.BackSide}));
+    black2.position.set(0,2,0);
+    black2.userData.altspace = {collider: {enabled: false}};
+    big.add(black2, leg, bigTableGroup, bigFloor);
 
     
     var phead = new THREE.Group();
@@ -355,7 +549,6 @@
         var s = skeleton.getJoint('Spine');
         var h = skeleton.getJoint('Head');
         you.body = {pos:s.position,quat:{x:s.quaternion.x,y:s.quaternion.y,z:s.quaternion.z,w:s.quaternion.w}};
-        you.lastUpdate = Math.round(performance.now());
         you.head = {pos:h.position,quat:{x:h.quaternion.x,y:h.quaternion.y,z:h.quaternion.z,w:h.quaternion.w}};
         you.hands = hands;
         if (hands) {
@@ -369,231 +562,215 @@
         }
       }
 
-      setInterval(updateSync, 200);
+      setInterval(updateSync, syncRate);
+      
+      syncPlayers.on('child_added', function(childSnapshot, prevChildKey) {
+        // code to handle new child.
+        console.log(childSnapshot.key(), childSnapshot.val());
+        console.log(childSnapshot.val().name + ' has joined');
+        if (childSnapshot.val().id != user.userId){
+          addPlayer(childSnapshot.val(), childSnapshot.key());
+        
+          syncPlayers.child(childSnapshot.key()).on('value', function(data){
+            //console.log('change', childSnapshot.key(), data.val());
+            if (data.val() != null) {
+              var key = childSnapshot.key();
+              smallTween(players[key].small.getObjectByName('head'), data.val().head.pos, data.val().head.quat);
+              smallTween(players[key].small.getObjectByName('body'), data.val().body.pos, data.val().body.quat);           
+              bigTween(players[key].big.getObjectByName('head'), data.val().head.pos, data.val().head.quat);
+              bigTween(players[key].big.getObjectByName('body'), data.val().body.pos, data.val().body.quat);
 
-      syncPlayers.on('value', function(data){
-        for (var p in data.val()) {
-          //console.log(p)
-          if (data.val()[p].id == user.userId) {
-            syncYou = syncPlayers.child(p);
-          } else {
-            //console.log('no');
-            var alreadyHere = false;
-            for (var o in otherPlayers) {
-              if (o == p) {
-                alreadyHere = true;
+              if (data.val().hands) {
+                if (data.val().avatar.type == 'robothead-propellerhead-01' || data.val().avatar.type == 'robothead-roundguy-01') {
+                  players[key].small.getObjectByName('body').getObjectByName('BodyArms').visible = false;
+                  players[key].big.getObjectByName('body').getObjectByName('BodyArms').visible = false;
+                }
+                if (data.val().avatar.type == 'rubenoid-male-01' || data.val().avatar.type == 'rubenoid-female-01') {
+                  players[key].small.getObjectByName('body').getObjectByName('Arms').visible = false;
+                  players[key].small.getObjectByName('body').getObjectByName('ArmsSleeves').visible = false;
+                  players[key].big.getObjectByName('body').getObjectByName('Arms').visible = false;
+                  players[key].big.getObjectByName('body').getObjectByName('ArmsSleeves').visible = false;
+                }
+                players[key].small.getObjectByName('lHand').getObjectByName('HandLeft').visible = true;
+                players[key].small.getObjectByName('rHand').getObjectByName('HandRight').visible = true;
+                players[key].big.getObjectByName('lHand').getObjectByName('HandLeft').visible = true;
+                players[key].big.getObjectByName('rHand').getObjectByName('HandRight').visible = true;
+
+                smallTween(players[key].small.getObjectByName('lHand'), data.val().lHand.pos, data.val().lHand.quat);
+                smallTween(players[key].small.getObjectByName('rHand'), data.val().rHand.pos, data.val().rHand.quat);
+                bigTween(players[key].big.getObjectByName('lHand'), data.val().lHand.pos, data.val().lHand.quat);
+                bigTween(players[key].big.getObjectByName('rHand'), data.val().rHand.pos, data.val().rHand.quat);
+              } else {
+                players[key].small.getObjectByName('lHand').getObjectByName('HandLeft').visible = false;
+                players[key].small.getObjectByName('rHand').getObjectByName('HandRight').visible = false;
+                players[key].big.getObjectByName('lHand').getObjectByName('HandLeft').visible = false;
+                players[key].big.getObjectByName('rHand').getObjectByName('HandRight').visible = false;
+                if (data.val().avatar.type == 'rubenoid-male-01' || data.val().avatar.type == 'rubenoid-female-01') {
+                  players[key].small.getObjectByName('lHand').getObjectByName('HandLeftCuff').visible = false;
+                  players[key].small.getObjectByName('rHand').getObjectByName('HandRightCuff').visible = false;
+                  players[key].big.getObjectByName('lHand').getObjectByName('HandLeftCuff').visible = false;
+                  players[key].big.getObjectByName('rHand').getObjectByName('HandRightCuff').visible = false;
+                }
               }
             }
-            //console.log(alreadyHere);
-            if (!alreadyHere) {
-              otherPlayers[p.toString()] = data.val()[p];
-              console.log('Player Joined: ', data.val()[p].name)
-            }
-            otherPlayers[p.toString()] = data.val()[p];
-          }
+          });
         }
-        if (syncYou == null) {
-          syncYou = syncPlayers.push();
-        }
-        updatePlayers();
-        //console.log(otherPlayers);
       });
-      console.log(you);
+      
+      syncPlayers.on('child_removed', function(oldChildSnapshot) {
+        // code to handle child removal.
+        console.log(oldChildSnapshot.val().name + ' has left');
+        offset.remove(players[oldChildSnapshot.key()].small);
+        big.remove(players[oldChildSnapshot.key()].big);
+        delete players[oldChildSnapshot.key()];
+      });
+      
+      function addPlayer(p, key) {
+        //add to map
+        var body = new THREE.Group();
+        body.name = 'body';
+        body.scale.divideScalar(25);
+        var head = new THREE.Group();
+        head.name = 'head';
+        head.scale.divideScalar(25);
+        var rHand = new THREE.Group();
+        rHand.name = 'rHand';
+        rHand.scale.divideScalar(25);
+        var lHand = new THREE.Group();
+        lHand.name = 'lHand';
+        lHand.scale.divideScalar(25);
 
-      function updatePlayers() {
-        for (var p in otherPlayers) {
-          //console.log(otherPlayers[p.toString()].avatar.type);
-          if (playersOnMap.indexOf(p) == -1) {
-            playersOnMap.push(p);
-            //add to map
-            var body = new THREE.Group();
-            body.scale.divideScalar(25);
-            var head = new THREE.Group();
-            head.scale.divideScalar(25);
-            var rHand = new THREE.Group();
-            rHand.scale.divideScalar(25);
-            var lHand = new THREE.Group();
-            lHand.scale.divideScalar(25);
+        var sid = p.avatar.type;
+        var av = avatars[sid].clone();
+        if (sid =='a-series-m01' || sid == 'pod-classic' || sid == 's-series-f01' || sid == 's-series-m01' || sid == 'x-series-m02') {
+          var pColor = p.avatar.color.pColor;
+          var hColor = p.avatar.color.hColor;
+          var hands = p.hands;
 
-            var sid = otherPlayers[p.toString()].avatar.type;
-            var av = avatars[sid].clone();
-            if (sid =='a-series-m01' || sid == 'pod-classic' || sid == 's-series-f01' || sid == 's-series-m01' || sid == 'x-series-m02') {
-              var pColor = otherPlayers[p.toString()].avatar.color.pColor;
-              var hColor = otherPlayers[p.toString()].avatar.color.hColor;
-              var hands = otherPlayers[p.toString()].hands;
-              console.log(pColor, hColor);
-              console.log(p);
-              console.log(sid, avatars[sid]);
+          var prim = av.getObjectByName('Body').material.clone();
+          var high = av.getObjectByName('BodyGlow').material.clone();
 
-              var prim = av.getObjectByName('Body').material.clone();
-              var high = av.getObjectByName('BodyGlow').material.clone();
+          av.getObjectByName('Body').material = prim;
+          av.getObjectByName('Head').material = prim;
+          av.getObjectByName('HandRight').material = prim;
+          av.getObjectByName('HandLeft').material = prim;
+          av.getObjectByName('BodyGlow').material = high;
+          av.getObjectByName('HeadGlow').material = high;
 
-              av.getObjectByName('Body').material = prim;
-              av.getObjectByName('Head').material = prim;
-              av.getObjectByName('HandRight').material = prim;
-              av.getObjectByName('HandLeft').material = prim;
-              av.getObjectByName('BodyGlow').material = high;
-              av.getObjectByName('HeadGlow').material = high;
-
-              body.add(av.getObjectByName('Body'), av.getObjectByName('BodyGlow'));
-              head.add(av.getObjectByName('Head'), av.getObjectByName('HeadGlow'));
-              rHand.add(av.getObjectByName('HandRight'));
-              lHand.add(av.getObjectByName('HandLeft'));
-
-              var highP = Math.max(pColor[0], pColor[1], pColor[2]);
-              var highH = Math.max(hColor[0], hColor[1], hColor[2]);
-              console.log(highP);
-              if (highP > 255) {
-                for (var i = 0; i < 3; i++) {
-                  pColor[i] = Math.floor(pColor[i] / highP * 255);
-                }
-                if (sid == 's-series-m01') {
-                  var tex = new THREE.TextureLoader().load('https://bengarfield.github.io/AltVR/avatar/s-series-m01_diff_bright.png');  
-                  prim.map = tex;
-                  prim.needsUpdate = true;
-                }
-              }
-              if (highH > 255) {
-                high.map = null;
-                for (var i = 0; i < 3; i++) {
-                  hColor[i] = Math.floor(hColor[i] / highH * 255);
-                }
-              }
-
-              prim.color.set('rgb(' + pColor[0] + ',' + pColor[1] + ',' + pColor[2] + ')');
-              high.color.set('rgb(' + hColor[0] + ',' + hColor[1] + ',' + hColor[2] + ')');
-            } else if (sid == 'robothead-roundguy-01' || sid == 'robothead-propellerhead-01') {
-              if (sid == 'robothead-roundguy-01') {
-                body.add(av.getObjectByName('Body'));
-              } else {
-                head.add(av.getObjectByName('Prop'));
-              }
-              body.add(av.getObjectByName('BodyArms'));
-              head.add(av.getObjectByName('Head'));
-              rHand.add(av.getObjectByName('HandRight'));
-              lHand.add(av.getObjectByName('HandLeft'));
-            } else if (sid == 'rubenoid-male-01' || sid == 'rubenoid-female-01') {
-              var skin = av.getObjectByName('Head').material.clone();
-              var hair = av.getObjectByName('Hair').material.clone();
-              var clothing = av.getObjectByName('Body').material.clone();
-
-              av.getObjectByName('Arms').material = skin;
-              av.getObjectByName('Head').material = skin;
-              av.getObjectByName('HandRight').material = skin;
-              av.getObjectByName('HandLeft').material = skin;
-              av.getObjectByName('Hair').material = hair;
-              av.getObjectByName('ArmsSleeves').material = clothing;
-              av.getObjectByName('Body').material = clothing;
-              av.getObjectByName('HandRightCuff').material = clothing;
-              av.getObjectByName('HandLeftCuff').material = clothing;
-
-              body.add(av.getObjectByName('Body'), av.getObjectByName('Arms'), av.getObjectByName('ArmsSleeves'));
-              head.add(av.getObjectByName('Head'), av.getObjectByName('Hair'));
-              rHand.add(av.getObjectByName('HandRight'), av.getObjectByName('HandRightCuff'));
-              lHand.add(av.getObjectByName('HandLeft'), av.getObjectByName('HandLeftCuff'));
-              var s = new THREE.TextureLoader().load('https://bengarfield.github.io/AltVR/avatar/' + sid + '_skin-0' + otherPlayers[p.toString()].avatar.tex[1] + '.png');
-              var h = new THREE.TextureLoader().load('https://bengarfield.github.io/AltVR/avatar/' + sid + '_hair-0' + otherPlayers[p.toString()].avatar.tex[0] + '.png');
-              var c = new THREE.TextureLoader().load('https://bengarfield.github.io/AltVR/avatar/' + sid + '_clothing-0' + otherPlayers[p.toString()].avatar.tex[2] + '.png');
-              skin.map = s;
-              hair.map = h;
-              clothing.map = c;
-            }
-
-            offset.add(body, head, lHand, rHand);
-            bodys.push(body);
-            heads.push(head);
-            lHands.push(lHand);
-            rHands.push(rHand);
-            var b = body.clone();
-            b.scale.multiplyScalar(25);
-            var h = head.clone();
-            h.scale.multiplyScalar(25);
-            var lh = lHand.clone();
-            lh.scale.multiplyScalar(25);
-            var rh = rHand.clone();
-            rh.scale.multiplyScalar(25);
-            big.add(b, h, lh, rh);
-            bigBodys.push(b);
-            bigHeads.push(h);
-            biglHands.push(lh);
-            bigrHands.push(rh);
-
-            //propleller
-            if (sid == 'robothead-propellerhead-01') {
-              new TWEEN.Tween(heads[heads.length - 1].getObjectByName('Prop').rotation).to({y:Math.PI * 2}, 200).repeat(Infinity).start();
-              new TWEEN.Tween(bigHeads[bigHeads.length - 1].getObjectByName('Prop').rotation).to({y:Math.PI * 2}, 200).repeat(Infinity).start();
-            }
-            
-            syncTimes[p] = {lastUpdate: 0, time: 0};
+          body.add(av.getObjectByName('Body'), av.getObjectByName('BodyGlow'));
+          if (sid =='a-series-m01') {
+            head.add(av.getObjectByName('HeadGlow'));
+          } else {
+            head.add(av.getObjectByName('Head'), av.getObjectByName('HeadGlow'));
           }
+          rHand.add(av.getObjectByName('HandRight'));
+          lHand.add(av.getObjectByName('HandLeft'));
+
+          var highP = Math.max(pColor[0], pColor[1], pColor[2]);
+          var highH = Math.max(hColor[0], hColor[1], hColor[2]);
+          if (highP > 255) {
+            for (var i = 0; i < 3; i++) {
+              pColor[i] = Math.floor(pColor[i] / highP * 255);
+            }
+            if (sid == 's-series-m01') {
+              var tex = new THREE.TextureLoader().load('https://bengarfield.github.io/AltVR/avatar/s-series-m01_diff_bright.png');  
+              prim.map = tex;
+              prim.needsUpdate = true;
+            }
+          }
+          if (highH > 255) {
+            high.map = null;
+            for (var i = 0; i < 3; i++) {
+              hColor[i] = Math.floor(hColor[i] / highH * 255);
+            }
+          }
+
+          prim.color.set('rgb(' + pColor[0] + ',' + pColor[1] + ',' + pColor[2] + ')');
+          high.color.set('rgb(' + hColor[0] + ',' + hColor[1] + ',' + hColor[2] + ')');
+        } else if (sid == 'robothead-roundguy-01' || sid == 'robothead-propellerhead-01') {
+          if (sid == 'robothead-roundguy-01') {
+            body.add(av.getObjectByName('Body'));
+          } else {
+            head.add(av.getObjectByName('Prop'));
+          }
+          body.add(av.getObjectByName('BodyArms'));
+          head.add(av.getObjectByName('Head'));
+          rHand.add(av.getObjectByName('HandRight'));
+          lHand.add(av.getObjectByName('HandLeft'));
+        } else if (sid == 'rubenoid-male-01' || sid == 'rubenoid-female-01') {
+          var skin = av.getObjectByName('Head').material.clone();
+          var hair = av.getObjectByName('Hair').material.clone();
+          var clothing = av.getObjectByName('Body').material.clone();
+
+          av.getObjectByName('Arms').material = skin;
+          av.getObjectByName('Head').material = skin;
+          av.getObjectByName('HandRight').material = skin;
+          av.getObjectByName('HandLeft').material = skin;
+          av.getObjectByName('Hair').material = hair;
+          av.getObjectByName('ArmsSleeves').material = clothing;
+          av.getObjectByName('Body').material = clothing;
+          av.getObjectByName('HandRightCuff').material = clothing;
+          av.getObjectByName('HandLeftCuff').material = clothing;
+          
+          if (sid == 'rubenoid-female-01') {
+            av.getObjectByName('Ankles').material = skin;
+            body.add(av.getObjectByName('Ankles'));
+          }
+          
+          body.add(av.getObjectByName('Body'), av.getObjectByName('Arms'), av.getObjectByName('ArmsSleeves'));
+          head.add(av.getObjectByName('Head'), av.getObjectByName('Hair'));
+          rHand.add(av.getObjectByName('HandRight'), av.getObjectByName('HandRightCuff'));
+          lHand.add(av.getObjectByName('HandLeft'), av.getObjectByName('HandLeftCuff'));
+          var s = new THREE.TextureLoader().load('https://bengarfield.github.io/AltVR/avatar/' + sid + '_skin-0' + p.avatar.tex[1] + '.png');
+          var h = new THREE.TextureLoader().load('https://bengarfield.github.io/AltVR/avatar/' + sid + '_hair-0' + p.avatar.tex[0] + '.png');
+          var c = new THREE.TextureLoader().load('https://bengarfield.github.io/AltVR/avatar/' + sid + '_clothing-0' + p.avatar.tex[2] + '.png');
+          skin.map = s;
+          hair.map = h;
+          clothing.map = c;
         }
-        for (var i = 0; i < playersOnMap.length; i++) {
-          //console.log(playersOnMap.length,playersOnMap);
-          if (playersOnMap.length > 0){
-              //console.log(i);
-            if (otherPlayers[playersOnMap[i]].lastUpdate != syncTimes[playersOnMap[i]].lastUpdate) {
-              syncTimes[playersOnMap[i]].lastUpdate = otherPlayers[playersOnMap[i]].lastUpdate;
-              syncTimes[playersOnMap[i]].time = performance.now();
-
-              smallTween(heads[i], otherPlayers[playersOnMap[i]].head.pos, otherPlayers[playersOnMap[i]].head.quat);
-              smallTween(bodys[i], otherPlayers[playersOnMap[i]].body.pos, otherPlayers[playersOnMap[i]].body.quat);           
-              bigTween(bigHeads[i], otherPlayers[playersOnMap[i]].head.pos, otherPlayers[playersOnMap[i]].head.quat);
-              bigTween(bigBodys[i], otherPlayers[playersOnMap[i]].body.pos, otherPlayers[playersOnMap[i]].body.quat);
-
-              if (otherPlayers[playersOnMap[i]].hands) {
-                if (otherPlayers[playersOnMap[i]].avatar.type == 'robothead-propellerhead-01' || otherPlayers[playersOnMap[i]].avatar.type == 'robothead-roundguy-01') {
-                  bodys[i].getObjectByName('BodyArms').visible = false;
-                  bigBodys[i].getObjectByName('BodyArms').visible = false;
-                }
-                if (otherPlayers[playersOnMap[i]].avatar.type == 'rubenoid-male-01' || otherPlayers[playersOnMap[i]].avatar.type == 'rubenoid-female-01') {
-                  bodys[i].getObjectByName('Arms').visible = false;
-                  bodys[i].getObjectByName('ArmsSleeves').visible = false;
-                  bigBodys[i].getObjectByName('Arms').visible = false;
-                  bigBodys[i].getObjectByName('ArmsSleeves').visible = false;
-                }
-                lHands[i].visible = true;
-                rHands[i].visible = true;
-                biglHands[i].visible = true;
-                bigrHands[i].visible = true;
-
-                smallTween(lHands[i], otherPlayers[playersOnMap[i]].lHand.pos, otherPlayers[playersOnMap[i]].lHand.quat);
-                smallTween(rHands[i], otherPlayers[playersOnMap[i]].rHand.pos, otherPlayers[playersOnMap[i]].rHand.quat);
-                bigTween(biglHands[i], otherPlayers[playersOnMap[i]].lHand.pos, otherPlayers[playersOnMap[i]].lHand.quat);
-                bigTween(bigrHands[i], otherPlayers[playersOnMap[i]].rHand.pos, otherPlayers[playersOnMap[i]].rHand.quat);
-              } else {
-                lHands[i].visible = false;
-                rHands[i].visible = false;
-                biglHands[i].visible = false;
-                bigrHands[i].visible = false;
-              }
-
-            } else if (syncTimes[playersOnMap[i]].time < performance.now() - 5000) {
-              /*console.log('remove', syncTimes[playersOnMap[i]].time, performance.now() - 5000);
-              syncPlayers.child(playersOnMap[i]).remove();
-              playersOnMap.splice(i, 1);
-              heads.splice(i, 1);
-              bodys.splice(i, 1);
-              bigHeads.splice(i, 1);
-              bigBodys.splice(i, 1);
-              lHands.splice(i, 1);
-              rHands.splice(i, 1);
-              biglHands.splice(i, 1);
-              bigrHands.splice(i, 1);
-              console.log(playersOnMap);*/
-              //big.remove(bigHeads[i], bigBodys[i], bigrHands[i], biglHands[i]);
-              //console.log('remove');
-            }
-          }
+        
+        
+        
+        var smallPlayer = new THREE.Group();
+        var bigPlayer = new THREE.Group();
+        smallPlayer.add(body, head, lHand, rHand);
+        offset.add(smallPlayer);
+        var b = body.clone();
+        b.scale.multiplyScalar(25);
+        var h = head.clone();
+        h.scale.multiplyScalar(25);
+        var lh = lHand.clone();
+        lh.scale.multiplyScalar(25);
+        var rh = rHand.clone();
+        rh.scale.multiplyScalar(25);
+        bigPlayer.add(b, h, lh, rh);
+        big.add(bigPlayer);
+        players[key] = {big: bigPlayer, small: smallPlayer};
+        
+        console.log(bigPlayer.children[1].children[0])
+        bigPlayer.children[1].addBehavior(new altspaceutil.behaviors.NativeComponent('n-mesh-collider', { convex: false, type: 'environment' }));
+        bigPlayer.children[2].addBehavior(new altspaceutil.behaviors.NativeComponent('n-mesh-collider', { convex: false, type: 'environment' }));
+        bigPlayer.children[3].addBehavior(new altspaceutil.behaviors.NativeComponent('n-mesh-collider', { convex: false, type: 'environment' }));
+        
+        
+        //Player name
+        addNameTextBig(bigPlayer, p.name);
+        addNameTextSmall(smallPlayer, p.name);
+        
+        //propleller
+        if (sid == 'robothead-propellerhead-01') {
+          new TWEEN.Tween(head.getObjectByName('Prop').rotation).to({y:Math.PI * 2}, 200).repeat(Infinity).start();
+          new TWEEN.Tween(h.getObjectByName('Prop').rotation).to({y:Math.PI * 2}, 200).repeat(Infinity).start();
         }
       }
     }
     
     function smallTween(part, pos, quat) {
-      new TWEEN.Tween(part.position).to({x:(pos.x - offset.position.x) / 25, y:(pos.y - big.position.y) / 25, z:(pos.z - offset.position.z) / 25}, 200).start();
+      new TWEEN.Tween(part.position).to({x:(pos.x - offset.position.x) / 25, y:(pos.y - big.position.y) / 25, z:(pos.z - offset.position.z) / 25}, syncRate).start();
       //new TWEEN.Tween(part.quaternion).to({x:quat.x, y:quat.y, z:quat.z, w:quat.w}, 200).start();
       var i = new THREE.Vector2(0,0);
       var newQuat = new THREE.Quaternion(quat.x,quat.y,quat.z,quat.w);
-      new TWEEN.Tween(i).to({x:1}, 200)
+      new TWEEN.Tween(i).to({x:1}, syncRate)
       .onUpdate(function(){
         //console.log(i.x);
         part.quaternion.slerp(newQuat, i.x);
@@ -601,11 +778,11 @@
       .start();
     }
     function bigTween(part, pos, quat) {
-      new TWEEN.Tween(part.position).to({x:pos.x - offset.position.x, y:pos.y - offset.position.y, z:pos.z - offset.position.z}, 200).start();
+      new TWEEN.Tween(part.position).to({x:pos.x - offset.position.x, y:pos.y - offset.position.y, z:pos.z - offset.position.z}, syncRate).start();
       //new TWEEN.Tween(part.quaternion).to({x:quat.x, y:quat.y, z:quat.z, w:quat.w}, 200).start();
       var i = new THREE.Vector2(0,0);
       var newQuat = new THREE.Quaternion(quat.x,quat.y,quat.z,quat.w);
-      new TWEEN.Tween(i).to({x:1}, 200)
+      new TWEEN.Tween(i).to({x:1}, syncRate)
       .onUpdate(function(){
         //console.log(i.x);
         part.quaternion.slerp(newQuat, i.x);
@@ -613,25 +790,84 @@
       .start();
     }
     
+    function addNameTextSmall(player, name) {
+      var ntext = new THREE.Mesh(new THREE.PlaneGeometry(2.1,1), new THREE.MeshBasicMaterial({map: tag, transparent: true, opacity: 0}));
+      for (var i = 0; i < ntext.geometry.vertices.length; i++) {
+        ntext.geometry.vertices[i].z = -.05;
+      }
+      ntext.position.y = -1000;
+      var col = new THREE.Mesh(new THREE.CylinderGeometry(.4,.4,1.6), new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0}));
+      player.children[0].add(ntext, col);
+      var alpha = '00';
+      var i = {a: 0, b: 0};
+      var fadeIn = new TWEEN.Tween(i).to({a:255, b:1}, 1000).onUpdate(function(){ntext.material.opacity = i.b; alpha = Math.round(i.a).toString(16); if (alpha.length == 1) {alpha = '0' + alpha;}}).onStart(function(){ntext.position.y = 1.5;});
+      var fadeOut2 = new TWEEN.Tween(i).to({a:0, b:0}, 1000).onUpdate(function(){ntext.material.opacity = i.b; alpha = Math.round(i.a).toString(16); if (alpha.length == 1) {alpha = '0' + alpha;}}).onComplete(function(){ntext.position.y = -1000;});
+      var fadeOut = new TWEEN.Tween(i).to({a:255, b:1}, 100).delay(2000).chain(fadeOut2);
+
+      player.children[0].addEventListener('cursorenter', function(){fadeOut.stop();fadeIn.start()});
+      player.children[0].addEventListener('cursorleave', function(){if(i.a > 0){fadeOut.start()}});
+      ntext.addBehavior(new altspaceutil.behaviors.NativeComponent('n-mesh-collider', {convex: false, type: 'hologram'}));
+      col.addBehavior(new altspaceutil.behaviors.NativeComponent('n-mesh-collider', {convex: false, type: 'hologram'}));
+      ntext.addBehaviors(
+        new altspaceutil.behaviors.NativeComponent('n-text', {height: .4, fontSize: 4, verticalAlign: 'top'}),
+        new altspaceutil.behaviors.NativeComponent('n-billboard'),
+        new (function NativeTextUpdate() {
+          this.type = 'NativeTextUpdate';
+          this.awake = function(o) {
+            this.nTextComponent = o.getBehaviorByType('n-text');
+          }
+          this.update = function() {
+            this.nTextComponent.data.text = '<#ffffff' + alpha + '>' + name;
+          }
+        })
+      );
+    }
+    
+    function addNameTextBig(player, name) {
+      var ntext = new THREE.Mesh(new THREE.PlaneGeometry(.65,.3), new THREE.MeshBasicMaterial({map: tag, transparent: true, opacity: 0}));
+      for (var i = 0; i < ntext.geometry.vertices.length; i++) {
+        ntext.geometry.vertices[i].z = -.01;
+      }
+      ntext.position.y = -1000;
+      player.children[0].add(ntext);
+      player.children[0].addBehavior(new altspaceutil.behaviors.NativeComponent('n-mesh-collider', {convex: false, type: 'hologram'}));
+      var alpha = '00';
+      var i = {a: 0, b: 0};
+      var fadeIn = new TWEEN.Tween(i).to({a:255, b:1}, 1000).onUpdate(function(){ntext.material.opacity = i.b; alpha = Math.round(i.a).toString(16); if (alpha.length == 1) {alpha = '0' + alpha;}}).onStart(function(){ntext.position.y = .9;});
+      var fadeOut2 = new TWEEN.Tween(i).to({a:0, b:0}, 1000).onUpdate(function(){ntext.material.opacity = i.b; alpha = Math.round(i.a).toString(16); if (alpha.length == 1) {alpha = '0' + alpha;}}).onComplete(function(){ntext.position.y = -1000;});
+      var fadeOut = new TWEEN.Tween(i).to({a:255, b:1}, 100).delay(2000).chain(fadeOut2);
+
+      player.children[0].addEventListener('cursordown', function(){fadeOut.stop();fadeIn.start()});
+      player.children[0].addEventListener('cursorenter', function(){if(i.a > 0){fadeOut.stop();fadeIn.start()}});
+      player.children[0].addEventListener('cursorleave', function(){if(i.a > 0){fadeOut.start()}});
+      
+      
+      ntext.addBehaviors(
+        new altspaceutil.behaviors.NativeComponent('n-text', {height: 0.1, fontSize: 1, verticalAlign: 'top'}),
+        new altspaceutil.behaviors.NativeComponent('n-billboard'),
+        new (function NativeTextUpdate() {
+          this.type = 'NativeTextUpdate';
+          this.awake = function(o) {
+            this.nTextComponent = o.getBehaviorByType('n-text');
+          }
+          this.update = function() {
+            this.nTextComponent.data.text = '<#ffffff' + alpha + '>' + name;
+          }
+        })
+      );
+    }
+    
     loop();
     function loop() {
-      var head = skeleton.getJoint('Head').position;
-      var headQ = skeleton.getJoint('Head').quaternion;
-      var spine = skeleton.getJoint('Spine').position;
-      var spineQ = skeleton.getJoint('Spine').quaternion;
-      
       if (skeleton.trackingJoints.LeftHand0 != undefined && skeleton.trackingJoints.RightHand0 != undefined && !hands) {
         hands = true;
         console.log('Hands found.')
       }
-      
       //TWEEN.Update();
-  
-      
       requestAnimationFrame(loop);
     }
+    //scene.addEventListener('cursordown', function(event){console.log(event)});
   });
-    
 </script>
 </body>
 </html>
