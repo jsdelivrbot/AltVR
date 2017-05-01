@@ -334,7 +334,7 @@
       obj.rotation.y = THREE.Math.degToRad(250);
       
       var soup = new THREE.Mesh(new THREE.CylinderGeometry(.1,.1,.1), new THREE.MeshBasicMaterial());
-      soup.position.set(-.1,1,-.5,);
+      soup.position.set(-.1,1,-.5);
       tableGroup.add(obj, soup);
       new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, obj.clone()).addTo(bigTableGroup);
       //bigTableGroup.add(obj.clone());
