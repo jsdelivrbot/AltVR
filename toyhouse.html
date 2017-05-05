@@ -115,6 +115,8 @@
     loader.load('https://bengarfield.github.io/AltVR/models/table.obj', 'https://bengarfield.github.io/AltVR/models/table.mtl', table);
     loader.load('https://bengarfield.github.io/AltVR/models/cutlery.obj', 'https://bengarfield.github.io/AltVR/models/cutlery.mtl', cutlery);
     loader.load('https://bengarfield.github.io/AltVR/models/bowl.obj', 'https://bengarfield.github.io/AltVR/models/bowl.mtl', bowl);
+    loader.load('https://bengarfield.github.io/AltVR/models/glass.obj', 'https://bengarfield.github.io/AltVR/models/glass.mtl', glass);
+    loader.load('https://bengarfield.github.io/AltVR/models/mouse.obj', 'https://bengarfield.github.io/AltVR/models/mouse.mtl', mouse);
     
     function house(obj) {
       console.log(obj);
@@ -150,8 +152,8 @@
       big.add(bHouse);
       
       var bigHouse = obj.clone();
+      bigHouse.remove(bigHouse.getObjectByName('Wall2'), bigHouse.getObjectByName('Cube.029'));
       new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse.getObjectByName('Wall1'));
-      new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse.getObjectByName('Wall2'));
       new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse.getObjectByName('Wall3'));
       new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse.getObjectByName('Wall4'));
       new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse.getObjectByName('Wall5'));
@@ -167,8 +169,8 @@
       bigHouse.rotation.y = 0;
       offset.add(bigHouse);
       var bigHouse2 = bigHouse.clone();
+      
       new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse2.getObjectByName('Wall1'));
-      new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse2.getObjectByName('Wall2'));
       new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse2.getObjectByName('Wall3'));
       new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse2.getObjectByName('Wall4'));
       new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse2.getObjectByName('Wall5'));
@@ -177,7 +179,6 @@
       new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse2.getObjectByName('Wall8'));
       new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse2.getObjectByName('Wall9'));
       new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse2.getObjectByName('Cube.028'));
-      new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse2.getObjectByName('Cube.029'));
       new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse2.getObjectByName('Cube.030'));
       new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse2.getObjectByName('Cube.031'));
       new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse2.getObjectByName('Plane'));
@@ -195,33 +196,24 @@
           obj.children[i].material = obj.children[i].material.materials[0];
         }
       }
-      obj.children = [obj.getObjectByName('Cube.003'), obj.getObjectByName('Plane.001_Plane.003'), obj.getObjectByName('Plane.002_Plane.004'), obj.getObjectByName('Plane.003_Plane.005'), obj.getObjectByName('Plane.004_Plane.006'), obj.getObjectByName('Plane.005_Plane.007'), obj.getObjectByName('Plane.006_Plane.008')];
+      obj.children = [obj.getObjectByName('Cube.003'), obj.getObjectByName('Plane.001_Plane.003'), obj.getObjectByName('Plane.002_Plane.004'), obj.getObjectByName('Plane.003_Plane.005'), obj.getObjectByName('Plane.004_Plane.006'), obj.getObjectByName('Plane.005_Plane.007'), obj.getObjectByName('Plane.006_Plane.008'), obj.getObjectByName('Cube.029')];
       
       var holeT = new THREE.TextureLoader().load('https://bengarfield.github.io/AltVR/models/hole.png');
       var hole2T = new THREE.TextureLoader().load('https://bengarfield.github.io/AltVR/models/hole2.png');
       obj.getObjectByName('Plane.002_Plane.004').material.map = holeT;
       obj.getObjectByName('Plane.001_Plane.003').material.map = hole2T;
       
+      obj.getObjectByName('Plane.002_Plane.004').position.y += .001;
+      
       obj.scale.set(1,1.4,1.5);
       obj.scale.divideScalar(125);
       obj.position.set(-.3,1.28,0);
-      //obj.rotation.y = Math.PI;
       
       var bigHouse = obj.clone();
       new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse.getObjectByName('Cube.003'));
-      /*new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse.getObjectByName('Wall2'));
-      new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse.getObjectByName('Wall3'));
-      new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse.getObjectByName('Wall4'));
-      new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse.getObjectByName('Wall5'));
-      new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse.getObjectByName('Wall6'));
-      new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse.getObjectByName('Wall7'));
-      new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse.getObjectByName('Wall8'));
-      new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigHouse.getObjectByName('Wall9'));
-      new NativeComponent('n-mesh-collider', {type: 'hologram', convex: false}, bigHouse.getObjectByName('Roof1'));
-      new NativeComponent('n-mesh-collider', {type: 'hologram', convex: false}, bigHouse.getObjectByName('Roof2'));*/
       
       bigHouse.scale.multiplyScalar(25);
-      bigHouse.position.set(-.5,-.84,1);
+      bigHouse.position.set(-.85,-.84,1);
       var bigHouse2 = bigHouse.clone();
       //bigHouse2.scale.multiplyScalar(25);
       //bigHouse2.position.set(-.7,-.84,1);
@@ -230,10 +222,6 @@
       offset.add(bigHouse);
       big.add(bigHouse2);
     }
-    
-    /*var hole = new THREE.Mesh(new THREE.BoxGeometry(.1,.1,.1), new THREE.MeshBasicMaterial({color: 0x111111, side: THREE.BackSide}));
-    hole.position.set(0,0,0);
-    scene.add(hole);*/
     
     function tree(obj) {
       console.log('tree: ', obj);
@@ -286,9 +274,9 @@
       obj.position.set(-2.5,0,.5);
       //obj.rotation.y = THREE.Math.degToRad(40);
       var color  = new THREE.Color(.5,.5,.6);
-      obj.children[0].material.color = color
+      obj.children[0].material.color = color;
       obj.children[1].material.color = color;
-      obj.addEventListener('cursordown', function(type) {shrink(type);});
+      //obj.addEventListener('cursordown', function(type) {shrink(type);});
       new NativeComponent('n-mesh-collider', {type: 'hologram', convex: false}, obj).addTo(offset);
       new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, obj.clone()).addTo(big);
     }
@@ -319,12 +307,17 @@
       //obj.children[3].rotation.set(THREE.Math.degToRad(-110),THREE.Math.degToRad(0),THREE.Math.degToRad(90));
       //obj.children[3].quaternion.set(0.4,-.5,.6,-.4);
       sz.position.set(20,4.8,44);
+      obj.children[0].position.set(-20,0,40);
+      obj.children[1].position.set(-20,0,40);
+      obj.children[2].position.set(-20,0,40);
       tableGroup.add(obj);
       new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, obj.clone()).addTo(bigTableGroup);
       //bigTableGroup.add(obj.clone());
       
       //obj.position.set(-3.4,.79,3.75);
       //obj.addEventListener('cursordown', function(type) {shrink(type);});
+      
+      addBooks();
     }
     
     function bowl(obj) {
@@ -333,14 +326,105 @@
       obj.position.set(-.1,0,-.5);
       obj.rotation.y = THREE.Math.degToRad(250);
       
-      var soup = new THREE.Mesh(new THREE.CylinderGeometry(.1,.1,.1), new THREE.MeshBasicMaterial());
-      soup.position.set(-.1,1,-.5);
+      var soup = new THREE.Mesh(new THREE.CylinderGeometry(.09,.09,.005,16), new THREE.MeshBasicMaterial({color: 0x880000, transparent: true, opacity: 0.95}));
+      soup.position.set(-.1,.06,-.5);
       tableGroup.add(obj, soup);
+      var bigSoup = soup.clone();
+      bigSoup.userData.altspace = {collider: {enabled: false}};
+      bigTableGroup.add(bigSoup);
       new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, obj.clone()).addTo(bigTableGroup);
-      //bigTableGroup.add(obj.clone());
+    }
+    
+    function glass(obj) {
+      console.log('Glass', obj);
+      obj.scale.divideScalar(6);
+      obj.position.set(.15,0,-.3);
+      obj.children[0].material.transparent = true;
+      obj.children[0].material.opacity = .5;
+      var color  = new THREE.Color(.7,1,1);
+      obj.children[0].material.color = color;
+      obj.rotation.y = THREE.Math.degToRad(250);
       
-      //obj.position.set(-3.4,.79,3.75);
-      //obj.addEventListener('cursordown', function(type) {shrink(type);});
+      var water = new THREE.Mesh(new THREE.CylinderGeometry(.045,.03,.1,8), new THREE.MeshBasicMaterial({color: 0x0088aa, transparent: true, opacity: 0.5, side: THREE.DoubleSide}));
+      water.position.set(.15,.06,-.3);
+      tableGroup.add(obj, water);
+      var bigWater = water.clone();
+      bigWater.userData.altspace = {collider: {enabled: false}};
+      bigTableGroup.add(bigWater);
+      
+      new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, obj.clone()).addTo(bigTableGroup);
+    }
+    
+    function mouse(obj) {
+      console.log('Mouse', obj);
+      obj.scale.divideScalar(20);
+      obj.position.set(-4.75,0,1.75);
+      obj.rotation.y = THREE.Math.degToRad(180);
+      offset.add(obj);
+      new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, obj.clone()).addTo(big);
+    }
+    
+    function addBooks() {
+      var book = new THREE.Group();
+      book.name = 'book';
+      book.position.set(0,0.01,0.4);
+      var bookBox = new THREE.Mesh(new THREE.BoxGeometry(.2,.02,.15), new THREE.MeshBasicMaterial({transparent: true, opacity: 0}));
+      var bookFront = new THREE.Mesh(new THREE.PlaneGeometry(.2,.15), new THREE.MeshBasicMaterial({color: 0x220000}));
+      bookFront.rotation.x = -Math.PI/2;
+      bookFront.position.y = .01;
+      var bookSide1 = new THREE.Mesh(new THREE.PlaneGeometry(.2,.02), new THREE.MeshBasicMaterial({color: 0x330000}));
+      bookSide1.position.z = .075;
+      var bookSide2 = new THREE.Mesh(new THREE.PlaneGeometry(.15,.02), new THREE.MeshBasicMaterial({color: 0xaaaaaa}));
+      bookSide2.rotation.y = Math.PI/2;
+      bookSide2.position.x = .1;
+      var bookSide3 = new THREE.Mesh(new THREE.PlaneGeometry(.2,.02), new THREE.MeshBasicMaterial({color: 0x999999}));
+      bookSide3.rotation.y = Math.PI;
+      bookSide3.position.z = -.075;
+      var bookSide4 = new THREE.Mesh(new THREE.PlaneGeometry(.15,.02), new THREE.MeshBasicMaterial({color: 0xaaaaaa}));
+      bookSide4.rotation.y = -Math.PI/2;
+      bookSide4.position.x = -.1;
+
+      book.add(bookBox, bookFront, bookSide1, bookSide2, bookSide3, bookSide4);
+      tableGroup.add(book);
+      var book2 = book.clone();
+      book2.position.set(-.01,.03,.38);
+      book2.rotation.y = .1;
+      book2.children[1].material = new THREE.MeshBasicMaterial({color: 0x002200});
+      book2.children[2].material = new THREE.MeshBasicMaterial({color: 0x003300});
+      var book3 = book.clone();
+      book3.position.set(-.02,.05,.36);
+      book3.rotation.y = .2;
+      book3.children[1].material = new THREE.MeshBasicMaterial({color: 0x000022});
+      book3.children[2].material = new THREE.MeshBasicMaterial({color: 0x000033});
+      var book4 = book.clone();
+      book4.position.set(-.01,.07,.35);
+      book4.rotation.y = -.1;
+      tableGroup.add(book, book2, book3, book4);
+      bigBook = book.clone();
+      bigBook2 = book2.clone();
+      bigBook3 = book3.clone();
+      bigBook4 = book4.clone();
+      new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigBook.children[0]);
+      bigBook.children[1].userData.altspace = {collider: {enabled: false}};
+      bigBook.children[2].userData.altspace = {collider: {enabled: false}};
+      bigBook.children[3].userData.altspace = {collider: {enabled: false}};
+      bigBook.children[4].userData.altspace = {collider: {enabled: false}};
+      new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigBook2.children[0]);
+      bigBook2.children[1].userData.altspace = {collider: {enabled: false}};
+      bigBook2.children[2].userData.altspace = {collider: {enabled: false}};
+      bigBook2.children[3].userData.altspace = {collider: {enabled: false}};
+      bigBook2.children[4].userData.altspace = {collider: {enabled: false}};
+      new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigBook3.children[0]);
+      bigBook3.children[1].userData.altspace = {collider: {enabled: false}};
+      bigBook3.children[2].userData.altspace = {collider: {enabled: false}};
+      bigBook3.children[3].userData.altspace = {collider: {enabled: false}};
+      bigBook3.children[4].userData.altspace = {collider: {enabled: false}};
+      new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, bigBook4.children[0]);
+      bigBook4.children[1].userData.altspace = {collider: {enabled: false}};
+      bigBook4.children[2].userData.altspace = {collider: {enabled: false}};
+      bigBook4.children[3].userData.altspace = {collider: {enabled: false}};
+      bigBook4.children[4].userData.altspace = {collider: {enabled: false}};
+      bigTableGroup.add(bigBook, bigBook2, bigBook3, bigBook4);
     }
     
     var hands = false;
@@ -382,7 +466,7 @@
     nbox.position.set(-3,1,-3);
     ntext.position.y = .8;
     nbox.add(ntext);
-    scene.add(nbox);
+    //scene.add(nbox);
     var alpha = '00';
     var i = {a: 0, b: 0};
     var fadeIn = new TWEEN.Tween(i).to({a:255, b:1}, 1000).onUpdate(function(){ntext.material.opacity = i.b; alpha = Math.round(i.a).toString(16); if (alpha.length == 1) {alpha = '0' + alpha;}}).onStart(function(){ntext.position.y = .8;});
@@ -432,10 +516,9 @@
     c.position.set(-.28,1.311,0);
     c.rotation.x = -Math.PI/2
     var floorPlane = new THREE.Mesh(new THREE.PlaneGeometry(1000,1000), new THREE.MeshBasicMaterial({color: 0x007700}));
-    floorPlane.position.set(0,-.01,0);
+    floorPlane.position.set(0,-.05,0);
     floorPlane.rotation.x = -Math.PI/2;
     scene.add(floorPlane);
-    console.log('fp',floorPlane);
     var bigFloor = floorPlane.clone();
     bigFloor.scale.divideScalar(20);
     bigFloor.position.y = -.05;
@@ -443,8 +526,8 @@
     var room = new THREE.Mesh(new THREE.BoxGeometry(10,5,10), new THREE.MeshBasicMaterial({map: grid, color: 0xaaaaaa, side: THREE.BackSide}));
     room.position.y = 2.51;
     room.userData.altspace = {collider: {enabled: false}};
-    var black = new THREE.Mesh(new THREE.BoxGeometry(1000,6,1000), new THREE.MeshBasicMaterial({color: 0x08cad8, side: THREE.BackSide}));
-    black.position.set(0,2.98,0);
+    var black = new THREE.Mesh(new THREE.BoxGeometry(1000,8,1000), new THREE.MeshBasicMaterial({color: 0x08cad8, side: THREE.DoubleSide}));
+    black.position.set(0,2,0);
     
     var miniHider = new THREE.Mesh(new THREE.BoxGeometry(10,1,10), new THREE.MeshBasicMaterial({color: 0x08cad8}));
     miniHider.position.y = 6;
@@ -455,6 +538,15 @@
     var offset = new THREE.Group();
     offset.position.set(0,0,-14);
     offset.add(map, table, leg.clone(), tableGroup);
+    
+    var big = offset.clone();
+    new NativeComponent('n-mesh-collider', {type: 'environment'}, big.children[0]);
+    big.position.y = -140;
+    big.scale.multiplyScalar(25);
+    var black2 = new THREE.Mesh(new THREE.BoxGeometry(50,8,50), new THREE.MeshBasicMaterial({color: 0x08cad8, side: THREE.DoubleSide}));
+    black2.position.set(0,2,0);
+    black2.userData.altspace = {collider: {enabled: false}};
+    big.add(black2, leg, bigTableGroup, bigFloor);
     
     var portalHolder = new THREE.Group();
     var grow = new THREE.TextureLoader().load('https://bengarfield.github.io/AltVR/grow.png');;
@@ -486,20 +578,10 @@
         var config = {targetPosition: {x: s.position.x / 25 + offset.position.x, y: 0, z: s.position.z / 25 + offset.position.z}, targetQuaternion: {x: s.quaternion.x, y: s.quaternion.y, z: s.quaternion.z, w: s.quaternion.w}};
         var portal = new NativeComponent('n-portal', config).addTo(portalHolder);
         scene.remove(scene.children[scene.children.length - 1]);
-        //setTimeout(function() {portalHolder.children = [];}, 2000);
       });
 
-      /*setTimeout(function() {portalHolder.children = [];*/ new NativeComponent('n-cockpit-parent', null, cock).addTo(scene);//}, 2000);
+      new NativeComponent('n-cockpit-parent', null, cock).addTo(scene);
     }
-    var big = offset.clone();
-    new NativeComponent('n-mesh-collider', {type: 'environment'}, big.children[0]);
-    big.position.y = -140;
-    big.scale.multiplyScalar(25);
-    var black2 = new THREE.Mesh(new THREE.BoxGeometry(50,8,50), new THREE.MeshBasicMaterial({color: 0x08cad8, side: THREE.BackSide}));
-    black2.position.set(0,2,0);
-    black2.userData.altspace = {collider: {enabled: false}};
-    big.add(black2, leg, bigTableGroup, bigFloor);
-
     
     var phead = new THREE.Group();
     var body = new THREE.Group();
@@ -797,15 +879,15 @@
       }
       ntext.position.y = -1000;
       var col = new THREE.Mesh(new THREE.CylinderGeometry(.4,.4,1.6), new THREE.MeshBasicMaterial({color: 0xffffff, transparent: true, opacity: 0}));
-      player.children[0].add(ntext, col);
+      player.children[0].add(ntext/*, col*/);
       var alpha = '00';
       var i = {a: 0, b: 0};
       var fadeIn = new TWEEN.Tween(i).to({a:255, b:1}, 1000).onUpdate(function(){ntext.material.opacity = i.b; alpha = Math.round(i.a).toString(16); if (alpha.length == 1) {alpha = '0' + alpha;}}).onStart(function(){ntext.position.y = 1.5;});
       var fadeOut2 = new TWEEN.Tween(i).to({a:0, b:0}, 1000).onUpdate(function(){ntext.material.opacity = i.b; alpha = Math.round(i.a).toString(16); if (alpha.length == 1) {alpha = '0' + alpha;}}).onComplete(function(){ntext.position.y = -1000;});
       var fadeOut = new TWEEN.Tween(i).to({a:255, b:1}, 100).delay(2000).chain(fadeOut2);
 
-      player.children[0].addEventListener('cursorenter', function(){fadeOut.stop();fadeIn.start()});
-      player.children[0].addEventListener('cursorleave', function(){if(i.a > 0){fadeOut.start()}});
+      player.addEventListener('cursorenter', function(){fadeOut.stop();fadeIn.start()});
+      player.addEventListener('cursorleave', function(){if(i.a > 0){fadeOut.start()}});
       ntext.addBehavior(new altspaceutil.behaviors.NativeComponent('n-mesh-collider', {convex: false, type: 'hologram'}));
       col.addBehavior(new altspaceutil.behaviors.NativeComponent('n-mesh-collider', {convex: false, type: 'hologram'}));
       ntext.addBehaviors(
