@@ -1,5 +1,6 @@
 # Blender v2.78 (sub 0) OBJ File: 'mouse.blend'
 # www.blender.org
+mtllib mouse.mtl
 o basemesh_body_default
 v -0.381445 0.716316 -0.049099
 v -0.376109 0.725969 -0.402760
@@ -2600,6 +2601,7 @@ vn -0.2795 0.9102 0.3055
 vn 0.4242 0.6100 -0.6693
 vn -0.5076 -0.8334 0.2188
 vn -0.4804 -0.8167 0.3198
+usemtl Material.001
 s 1
 f 1/1/1 2/2/2 3/3/3 4/4/4
 f 1/1/1 5/5/5 6/6/6 7/7/7
