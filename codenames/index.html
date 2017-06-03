@@ -111,12 +111,10 @@
     var isSM = false;
     
     altspace.getUser().then(function(user){
-      console.log(user);
       var dataRequest = (THREE.FileLoader ? new THREE.FileLoader() : new THREE.XHRLoader(/* DEPRECATED: r83 */));
       dataRequest.setWithCredentials(true);
       dataRequest.load('https://account.altvr.com/api/v1/users/' + user.userId, onLoaded, undefined, undefined);
       function onLoaded(obj) {
-        console.log('123')
         var name = JSON.parse(obj).users[0].username;
         if (findGetParameter('sm1') == null) {
           console.log('replace')
@@ -124,13 +122,14 @@
         } else {
           if (name == findGetParameter('sm1') || name == findGetParameter('sm2')) {
             isSM = true;
-            var url = location.href + '&hud';
-          }
-          if (!findGetParameter('hud')){
-            altspace.open(url, '_experience', {hidden: true});
+            console.log('spymaster');
+            if (!findGetParameter('hud')){
+              var url = location.href + '&hud';
+              altspace.open(url, '_experience', {hidden: true});
+            }
           }
         }
-      }
+      
     
       words.on('value', function(data){
         if (data.val() != null) {
@@ -197,6 +196,7 @@
         e.srcElement.style.backgroundColor = colors[Number(e.srcElement.id) - 1];
         };
       }
+    }
     });
   });
   
