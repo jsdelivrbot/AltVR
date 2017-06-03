@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Codenames</title>
+  <script src="https://cdn.rawgit.com/mrdoob/three.js/r84/build/three.min.js"></script>
+  <script src="https://sdk.altvr.com/libs/altspace.js/2.4.4/altspace.min.js"></script>
+  <style>
+    body {
+      /*background-color: white;*/
+      text-align: center;
+      font-family: "Verdana";
+      font-weight: bold;
+    }
+    th, td {
+      background-color: black;
+      color: white;
+      border: 3px solid white;
+      border-radius: 15px;
+      width: 20%;
+      height: 99px;
+      text-align: center;
+      font-size: 24px;
+    } 
+  </style>
+</head>
+<body>
+  <table style='width: 100%'>
+  <tr>
+    <td id='a1'>1</td>
+    <td id='a2'>2</td> 
+    <td id='a3'>3</td>
+    <td id='a4'>4</td> 
+    <td id='a5'>5</td>
+  </tr>
+  <tr>
+    <td id='a6'>6</td>
+    <td id='a7'>7</td> 
+    <td id='a8'>8</td>
+    <td id='a9'>9</td> 
+    <td id='a10'>10</td>
+  </tr>
+  <tr>
+    <td id='a11'>11</td>
+    <td id='a12'>12</td> 
+    <td id='a13'>13</td>
+    <td id='a14'>14</td> 
+    <td id='a15'>15</td>
+  </tr>
+  <tr>
+    <td id='a16'>16</td>
+    <td id='a17'>17</td> 
+    <td id='a18'>18</td>
+    <td id='a19'>19</td> 
+    <td id='a20'>20</td>
+  </tr>
+  <tr>
+    <td id='a21'>21</td>
+    <td id='a22'>22</td> 
+    <td id='a23'>23</td>
+    <td id='a24'>24</td> 
+    <td id='a25'>25</td>
+  </tr>
+</table>
+  <button>Shuffle</button>
+<script>
+  var list = ['Hollywood','Well','Foot','New York','Spring','Court','Tube','Point','Tablet','Slip','Date','Drill','Lemon','Bell',
+'Screen','Fair','Torch','State','Match','Iron','Block','France','Australia','Limousine','Stream','Glove','Nurse','Leprechaun',
+'Play','Tooth','Arm','Bermuda','Diamond','Whale','Comic','Mammoth','Green','Pass','Missile','Paste','Drop','Pheonix',
+'Marble','Staff','Figure','Park','Centaur','Shadow','Fish','Cotton','Egypt','Theater','Scale','Fall','Track','Force',
+'Dinosaur','Bill','Mine','Turkey','March','Contract','Bridge','Robin','Line','Plate','Band','Fire','Bank','Boom',
+'Cat','Shot','Suit','Chocolate','Roulette','Mercury','Moon','Net','Lawyer','Satellite','Angel','Spider','Germany','Fork',
+'Pitch','King','Crane','Trip','Dog','Conductor','Part','Bugle','Witch','Ketchup','Press','Spine','Worm','Alps',
+'Bond','Pan','Beijing','Racket','Cross','Seal','Aztec','Maple','Parachute','Hotel','Berry','Soldier','Ray','Post',
+'Greece','Square','Mass','Bat','Wave','Car','Smuggler','England','Crash','Tail','Card','Horn','Capital','Fence',
+'Deck','Buffalo','Microscope','Jet','Duck','Ring','Train','Field','Gold','Tick','Check','Queen','Strike','Kangaroo',
+'Spike','Scientist','Engine','Shakespeare','Wind','Kid','Embassy','Robot','Note','Ground','Draft','Ham','War','Mouse',
+'Center','Chick','China','Bolt','Spot','Piano','Pupil','Plot','Lion','Police','Head','Litter','Concert','Mug',
+'Vacuum','Atlantis','Straw','Switch','Skyscraper','Laser','Scuba Diver','Africa','Plastic','Dwarf','Lap','Life','Honey','Horseshoe',
+'Unicorn','Spy','Pants','Wall','Paper','Sound','Ice','Tag','Web','Fan','Orange','Temple','Canada','Scorpion',
+'Undertaker','Mail','Europe','Soul','Apple','Pole','Tap','Mouth','Ambulance','Dress','Ice Cream','Rabbit','Buck','Agent',
+'Sock','Nut','Boot','Ghost','Oil','Superhero','Code','Kiwi','Hospital','Saturn','Film','Button','Snowman','Helicopter',
+'Loch Ness','Log','Princess','Time','Cook','Revolution','Shoe','Mole','Spell','Grass','Washer','Game','Beat','Hole',
+'Horse','Pirate','Link','Dance','Fly','Pit','Server','School','Lock','Brush','Pool','Star','Jam','Organ',
+'Berlin','Face','Luck','Amazon','Cast','Gas','Club','Sink','Water','Chair','Shark','Jupiter','Copper','Jack',
+'Platypus','Stick','Olive','Grace','Bear','Glass','Row','Pistol','London','Rock','Van','Vet','Beach','Charge',
+'Port','Disease','Palm','Moscow','Pin','Washington','Pyramid','Opera','Casino','Pilot','String','Night',
+'Chest','Yard','Teacher','Pumpkin','Thief','Bark','Bug','Mint','Cycle','Telescope','Calf','Air',
+'Box','Mount','Thumb','Antarctica','Trunk','Snow','Penguin','Root','Bar','File','Hawk','Battery',
+'Compound','Slug','Octopus','Whip','America','Ivory','Pound','Sub','Cliff','Lab','Eagle','Genious',
+'Ship','Dice','Hood','Heart','Novel','Pipe','Himalayas','Crown','Round','India','Needle','Shop',
+'Watch','Lead','Tie','Table','Cell','Cover','Czech','Back','Bomb','Ruler','Forest','Bottle',
+'Space','Hook','Doctor','Ball','Bow','Degree','Rome','Plane','Giant','Nail','Dragon','Stadium',
+'Flute','Carrot','Wake','Fighter','Model','Tokyo','Eye','Mexico','Hand','Swing','Key','Alien',
+'Tower','Poison','Cricket','Cold','Knife','Church','Board','Cloak','Ninja','Olympus','Belt','Light',
+'Death','Stock','Millionarie','Day','Knight','Pie','Bed','Circle','Rose','Change','Cap','Triangle'];
+  
+  var colors = ['red','red','red','red','red','red','red','red','red','blue','blue','blue','blue','blue','blue','blue','blue','yellow','yellow','yellow','yellow','yellow','yellow','yellow','black'];
+  
+  var rev = [];
+  
+  var config = {
+    baseRefUrl: "https://altvr-apps.firebaseio.com/",
+    authorId: "BenG",
+    appId: "Codenames"
+  }
+  altspace.utilities.sync.connect(config).then(function(sync){
+    var words = sync.instance.child('words');
+    var key = sync.instance.child('key');
+    var revealed = sync.instance.child('revealed');
+    
+    var isSM = false;
+    
+    altspace.getUser().then(function(user){
+      console.log(user);
+      var dataRequest = (THREE.FileLoader ? new THREE.FileLoader() : new THREE.XHRLoader(/* DEPRECATED: r83 */));
+      dataRequest.setWithCredentials(true);
+      dataRequest.load('https://account.altvr.com/api/v1/users/' + user.userId, onLoaded, undefined, undefined);
+      function onLoaded(obj) {
+        console.log('123')
+        var name = JSON.parse(obj).users[0].username;
+        //if (name == findGetParameter('sm1') || name == findGetParameter('sm2')) {
+          //isSM = true;
+          var url = location.href + '&hud';
+          if (findGetParameter('sm1') == null) {
+            console.log('replace')
+            location.replace(location.href + '&sm1=0&sm2=0')
+          } else {
+            if (!findGetParameter('hud')){
+              altspace.open(url, '_experience', {hidden: true});
+            }
+          }
+        }
+      //}
+    
+      words.on('value', function(data){
+        if (data.val() != null) {
+          for (var i = 0; i < 5; i++) {
+            for (var j = 0; j < 5; j++) {
+              document.querySelector('table').rows[i].cells[j].innerHTML = data.val()[(i * 5) + (j + 1) - 1];
+            }
+          }
+        }
+      });
+
+      key.on('value', function(data){
+        if (data.val() != null) {
+          colors = data.val();
+          if (isSM) {
+            for (var i = 0; i < 5; i++) {
+              for (var j = 0; j < 5; j++) {
+                document.querySelector('table').rows[i].cells[j].style.borderColor = data.val()[(i * 5) + (j + 1) - 1];
+              }
+            }
+          }
+        }
+      });
+
+      revealed.on('child_added', function(childSnapshot, prevChildKey){
+        var id = childSnapshot.val();
+        console.log('rev', id, document.querySelector('#' + id));
+        document.querySelector('#' + id).style.backgroundColor = colors[Number(id.slice(1,id.length)) - 1];
+        document.querySelector('#' + id).innerHTML = '';
+      });
+
+      revealed.on('child_removed', function(oldChildSnapshot) {
+        for (var i = 0; i < 5; i++) {
+          for (var j = 0; j < 5; j++) {
+            document.querySelector('table').rows[i].cells[j].style.backgroundColor = 'black';
+          }
+        }
+      });
+
+      document.querySelector('button').addEventListener('mousedown', function(){
+        //console.log(list);
+        //console.log(document.querySelector('table'));
+        shuffleArray(list);
+        shuffleArray(colors);
+        words.set(list.slice(0,25));
+        key.set(colors);
+        rev = [];
+        revealed.set([]);
+        for (var i = 0; i < 5; i++) {
+          for (var j = 0; j < 5; j++) {
+            document.querySelector('table').rows[i].cells[j].innerHTML = list[(i * 5) + (j + 1) - 1];
+            //document.querySelector('table').rows[i].cells[j].setAttribute('bgcolor', colors[(i * 5) + (j + 1) - 1]);
+          }
+        }
+      });
+
+      var cells = document.getElementsByTagName("td"); 
+      for (var i = 0; i < cells.length; i++) { 
+      cells[i].onclick = function(e){
+        console.log(colors[Number(e.srcElement.id) - 1]);
+        rev.push(e.srcElement.id);
+        revealed.push(e.srcElement.id);
+        e.srcElement.innerHTML = '';
+        e.srcElement.style.backgroundColor = colors[Number(e.srcElement.id) - 1];
+        };
+      }
+    });
+  });
+  
+  function shuffleArray(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+    }
+    return array;
+  }
+  
+  function findGetParameter(parameterName) {
+    var result = null,
+        tmp = [];
+    location.search
+    .substr(1)
+        .split("&")
+        .forEach(function (item) {
+        tmp = item.split("=");
+        if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+    });
+    return result;
+  }
+</script>
+</body>
+</html>
