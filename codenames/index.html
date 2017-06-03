@@ -118,19 +118,19 @@
       function onLoaded(obj) {
         console.log('123')
         var name = JSON.parse(obj).users[0].username;
-        //if (name == findGetParameter('sm1') || name == findGetParameter('sm2')) {
-          //isSM = true;
-          var url = location.href + '&hud';
-          if (findGetParameter('sm1') == null) {
-            console.log('replace')
-            location.replace(location.href + '&sm1=0&sm2=0')
-          } else {
-            if (!findGetParameter('hud')){
-              altspace.open(url, '_experience', {hidden: true});
-            }
+        if (findGetParameter('sm1') == null) {
+          console.log('replace')
+          location.replace(location.href + '&sm1=0&sm2=0')
+        } else {
+          if (name == findGetParameter('sm1') || name == findGetParameter('sm2')) {
+            isSM = true;
+            var url = location.href + '&hud';
+          }
+          if (!findGetParameter('hud')){
+            altspace.open(url, '_experience', {hidden: true});
           }
         }
-      //}
+      }
     
       words.on('value', function(data){
         if (data.val() != null) {
