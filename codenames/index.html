@@ -7,7 +7,7 @@
   <style>
     body {
       /*background-color: white;*/
-      text-align: center;
+      text-align: left;
       font-family: "Verdana";
       font-weight: bold;
     }
@@ -17,10 +17,30 @@
       border: 3px solid white;
       border-radius: 15px;
       width: 20%;
-      height: 99px;
+      height: 95px;
       text-align: center;
       font-size: 24px;
-    } 
+    }
+    button {
+      width: 200px;
+      height: 30px;
+      background-color: black;
+      border: 3px solid white;
+      font-weight: bold;
+      color: white;
+      text-align: left;
+    }
+    .smr {
+      text-align: left;
+      border: 3px solid red;
+    }
+    .smb {
+      text-align: left;
+      border: 3px solid blue;
+    }
+    .shuffle {
+      text-align: center;
+    }
   </style>
 </head>
 <body>
@@ -61,8 +81,13 @@
     <td id='a25'>25</td>
   </tr>
 </table>
-  <button>Shuffle</button>
+  <p></p>
+  <button class='smr'>Red:</button>
+  <button class='smb'>Blue:</button>
+  aaaaaaaaaaaaaaaaaa
+  <button class='shuffle'>Shuffle</button>
 <script>
+  var sim = new altspace.utilities.Simulation();
   var list = ['Hollywood','Well','Foot','New York','Spring','Court','Tube','Point','Tablet','Slip','Date','Drill','Lemon','Bell',
 'Screen','Fair','Torch','State','Match','Iron','Block','France','Australia','Limousine','Stream','Glove','Nurse','Leprechaun',
 'Play','Tooth','Arm','Bermuda','Diamond','Whale','Comic','Mammoth','Green','Pass','Missile','Paste','Drop','Pheonix',
@@ -107,8 +132,13 @@
     var words = sync.instance.child('words');
     var key = sync.instance.child('key');
     var revealed = sync.instance.child('revealed');
+    var spyMR = sync.instance.child('red');
+    var spyMB = sync.instance.child('blue');
     
     var isSM = false;
+    var team = '';
+    var red = false;
+    var blue = false;
     
     altspace.getUser().then(function(user){
       var dataRequest = (THREE.FileLoader ? new THREE.FileLoader() : new THREE.XHRLoader(/* DEPRECATED: r83 */));
@@ -130,76 +160,257 @@
           }
         }
       
-    
-      words.on('value', function(data){
-        if (data.val() != null) {
-          for (var i = 0; i < 5; i++) {
-            for (var j = 0; j < 5; j++) {
-              document.querySelector('table').rows[i].cells[j].innerHTML = data.val()[(i * 5) + (j + 1) - 1];
-            }
-          }
-        }
-      });
-
-      key.on('value', function(data){
-        if (data.val() != null) {
-          colors = data.val();
-          if (isSM) {
+        words.on('value', function(data){
+          if (data.val() != null) {
             for (var i = 0; i < 5; i++) {
               for (var j = 0; j < 5; j++) {
-                document.querySelector('table').rows[i].cells[j].style.borderColor = data.val()[(i * 5) + (j + 1) - 1];
+                document.querySelector('table').rows[i].cells[j].innerHTML = data.val()[(i * 5) + (j + 1) - 1];
               }
             }
           }
-        }
-      });
-
-      revealed.on('child_added', function(childSnapshot, prevChildKey){
-        var id = childSnapshot.val();
-        console.log('rev', id, document.querySelector('#' + id));
-        document.querySelector('#' + id).style.backgroundColor = colors[Number(id.slice(1,id.length)) - 1];
-        document.querySelector('#' + id).innerHTML = '';
-      });
-
-      revealed.on('child_removed', function(oldChildSnapshot) {
-        for (var i = 0; i < 5; i++) {
-          for (var j = 0; j < 5; j++) {
-            document.querySelector('table').rows[i].cells[j].style.backgroundColor = 'black';
+        });
+        key.on('value', function(data){
+          if (data.val() != null) {
+            colors = data.val();
+            if (isSM) {
+              for (var i = 0; i < 5; i++) {
+                for (var j = 0; j < 5; j++) {
+                  document.querySelector('table').rows[i].cells[j].style.borderColor = data.val()[(i * 5) + (j + 1) - 1];
+                }
+              }
+            }
           }
-        }
-      });
-
-      document.querySelector('button').addEventListener('mousedown', function(){
-        //console.log(list);
-        //console.log(document.querySelector('table'));
-        shuffleArray(list);
-        shuffleArray(colors);
-        words.set(list.slice(0,25));
-        key.set(colors);
-        rev = [];
-        revealed.set([]);
-        for (var i = 0; i < 5; i++) {
-          for (var j = 0; j < 5; j++) {
-            document.querySelector('table').rows[i].cells[j].innerHTML = list[(i * 5) + (j + 1) - 1];
-            //document.querySelector('table').rows[i].cells[j].setAttribute('bgcolor', colors[(i * 5) + (j + 1) - 1]);
+        });
+        revealed.on('child_added', function(childSnapshot, prevChildKey){
+          var id = childSnapshot.val();
+          console.log('rev', id, document.querySelector('#' + id));
+          document.querySelector('#' + id).style.backgroundColor = colors[Number(id.slice(1,id.length)) - 1];
+          document.querySelector('#' + id).innerHTML = '';
+        });
+        revealed.on('child_removed', function(oldChildSnapshot) {
+          for (var i = 0; i < 5; i++) {
+            for (var j = 0; j < 5; j++) {
+              document.querySelector('table').rows[i].cells[j].style.backgroundColor = 'black';
+            }
           }
+        });
+        spyMR.on('value', function(data){
+          if (data.val() == null) {
+            red = false;
+            document.querySelector('.smr').innerHTML = 'Red:';
+            if (team == 'red') {
+              isSM = false;
+              team = '';
+              red = false;
+              hideColors();
+            }
+          } else {
+            red = true;
+            document.querySelector('.smr').innerHTML = 'Red: ' + data.val();
+          }
+        });
+        spyMB.on('value', function(data){
+          if (data.val() == null) {
+            blue = false;
+            document.querySelector('.smb').innerHTML = 'Blue:';
+            if (team == 'blue') {
+              isSM = false;
+              team = '';
+              blue = false;
+              hideColors();
+            }
+          } else {
+            red = true;
+            document.querySelector('.smr').innerHTML = 'Red: ' + data.val();
+          }
+        });
+        /*document.querySelector('button').addEventListener('mousedown', function(){
+          //console.log(list);
+          //console.log(document.querySelector('table'));
+          shuffleArray(list);
+          shuffleArray(colors);
+          words.set(list.slice(0,25));
+          key.set(colors);
+          rev = [];
+          revealed.set([]);
+          for (var i = 0; i < 5; i++) {
+            for (var j = 0; j < 5; j++) {
+              document.querySelector('table').rows[i].cells[j].innerHTML = list[(i * 5) + (j + 1) - 1];
+              //document.querySelector('table').rows[i].cells[j].setAttribute('bgcolor', colors[(i * 5) + (j + 1) - 1]);
+            }
+          }
+        });*/
+        var cells = document.getElementsByTagName("td"); 
+        for (var i = 0; i < cells.length; i++) { 
+        cells[i].onclick = function(e){
+          console.log(colors[Number(e.srcElement.id) - 1]);
+          rev.push(e.srcElement.id);
+          revealed.push(e.srcElement.id);
+          e.srcElement.innerHTML = '';
+          e.srcElement.style.backgroundColor = colors[Number(e.srcElement.id) - 1];
+          };
         }
-      });
 
-      var cells = document.getElementsByTagName("td"); 
-      for (var i = 0; i < cells.length; i++) { 
-      cells[i].onclick = function(e){
-        console.log(colors[Number(e.srcElement.id) - 1]);
-        rev.push(e.srcElement.id);
-        revealed.push(e.srcElement.id);
-        e.srcElement.innerHTML = '';
-        e.srcElement.style.backgroundColor = colors[Number(e.srcElement.id) - 1];
-        };
+        var mat = new THREE.MeshBasicMaterial({color: 0x00ff00, transparent: true, opacity: 0});
+        var a = 285;
+        var b = 157;
+        var c = 30;
+        var d = -100;
+        var e = -227;
+
+        var a1 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
+        a1.position.set(-504,a,0);
+        var a2 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
+        a2.position.set(-252,a,0);
+        var a3 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
+        a3.position.set(0,a,0);
+        var a4 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
+        a4.position.set(252,a,0);
+        var a5 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
+        a5.position.set(504,a,0);
+
+        var b1 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
+        b1.position.set(-504,b,0);
+        var b2 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
+        b2.position.set(-252,b,0);
+        var b3 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
+        b3.position.set(0,b,0);
+        var b4 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
+        b4.position.set(252,b,0);
+        var b5 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
+        b5.position.set(504,b,0);
+
+        var c1 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
+        c1.position.set(-504,c,0);
+        var c2 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
+        c2.position.set(-252,c,0);
+        var c3 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
+        c3.position.set(0,c,0);
+        var c4 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
+        c4.position.set(252,c,0);
+        var c5 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
+        c5.position.set(504,c,0);
+
+        var d1 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
+        d1.position.set(-504,d,0);
+        var d2 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
+        d2.position.set(-252,d,0);
+        var d3 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
+        d3.position.set(0,d,0);
+        var d4 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
+        d4.position.set(252,d,0);
+        var d5 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
+        d5.position.set(504,d,0);
+
+        var e1 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
+        e1.position.set(-504,e,0);
+        var e2 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
+        e2.position.set(-252,e,0);
+        var e3 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
+        e3.position.set(0,e,0);
+        var e4 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
+        e4.position.set(252,e,0);
+        var e5 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
+        e5.position.set(504,e,0);
+
+        var redSm = new THREE.Mesh(new THREE.BoxGeometry(300,35,1), mat);
+        redSm.position.set(-504,-330,0);
+        var blueSm = new THREE.Mesh(new THREE.BoxGeometry(300,35,1), mat);
+        blueSm.position.set(-248,-330,0);
+        var shuf = new THREE.Mesh(new THREE.BoxGeometry(300,35,1), mat);
+        shuf.position.set(254,-330,0);
+
+        var grid = [a1,a2,a3,a4,a5, b1,b2,b3,b4,b5, c1,c2,c3,c4,c5, d1,d2,d3,d4,d5, e1,e2,e3,e4,e5];
+        for (var i = 0; i < grid.length; i++) {
+          //console.log(i);
+          grid[i].name = i + 1;
+          grid[i].addEventListener('cursorup', function(e){
+            if (isSM) {
+              console.log(e.target.name);
+              var cell = document.querySelector('#a' + e.target.name);
+              console.log(cell);
+              revealed.push('a' + e.target.name);
+            }
+          });
+        }
+
+        redSm.addEventListener('cursorup', function(){
+          if (red && user.isModerator) {
+            spyMR.set(null);
+          } else if (team == '' && !red) {
+            console.log('red');
+            isSM = true;
+            team = 'red';
+            red = true;
+            document.querySelector('.smr').innerHTML = 'Red: ' + user.displayName;
+            spyMR.set(user.displayName);
+          } else if (team == 'red') {
+            isSM = false;
+            team = '';
+            red = false;
+            document.querySelector('.smr').innerHTML = 'Red:';
+            spyMR.set(null);
+            hideColors();
+          }
+        });
+        blueSm.addEventListener('cursorup', function(){
+          if (blue && user.isModerator) {
+            spyMB.set(null);
+          } else if (team == '' && !blue) {
+            console.log('blue');
+            isSM = true;
+            team = 'blue';
+            blue = true;
+            spyMB.set(user.displayName);
+            document.querySelector('.smb').innerHTML = 'Blue: ' + user.displayName;
+          } else if (team == 'blue') {
+            isSM = false;
+            team = '';
+            blue = false;
+            document.querySelector('.smb').innerHTML = 'Blue:';
+            spyMB.set(null);
+            hideColors();
+          }
+        });
+        shuf.addEventListener('cursorup', function(){
+          if (isSM || user.isModerator){
+            shuffleArray(list);
+            shuffleArray(colors);
+            words.set(list.slice(0,25));
+            key.set(colors);
+            rev = [];
+            revealed.set([]);
+            for (var i = 0; i < 5; i++) {
+              for (var j = 0; j < 5; j++) {
+                document.querySelector('table').rows[i].cells[j].innerHTML = list[(i * 5) + (j + 1) - 1];
+                //document.querySelector('table').rows[i].cells[j].setAttribute('bgcolor', colors[(i * 5) + (j + 1) - 1]);
+              }
+            }
+          }
+        });
+
+        /*c3.addEventListener('cursordown', function(){
+          console.log('box click');
+        });*/
+        sim.scene.add(a1,a2,a3,a4,a5, b1,b2,b3,b4,b5, c1,c2,c3,c4,c5, d1,d2,d3,d4,d5, e1,e2,e3,e4,e5, redSm,blueSm,shuf);
+
+
       }
-    }
     });
   });
+
+  altspace.getDocument().then(function(doc){
+    doc.userData.altspace = {collider: {enabled: false}};
+  });
   
+  function hideColors() {
+    for (var i = 0; i < 5; i++) {
+      for (var j = 0; j < 5; j++) {
+        document.querySelector('table').rows[i].cells[j].style.borderColor = 'white';
+      }
+    }
+  }
+
   function shuffleArray(array) {
     for (var i = array.length - 1; i > 0; i--) {
       var j = Math.floor(Math.random() * (i + 1));
