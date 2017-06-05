@@ -140,6 +140,8 @@
     var team = '';
     var red = false;
     var blue = false;
+    var redName = '';
+    var blueName = '';
     
     altspace.getUser().then(function(user){
       var dataRequest = (THREE.FileLoader ? new THREE.FileLoader() : new THREE.XHRLoader(/* DEPRECATED: r83 */));
@@ -180,6 +182,16 @@
                 }
               }
             }
+            
+            document.querySelector('.smr').innerHTML = 'Red: ' + redName;
+            document.querySelector('.smb').innerHTML = 'Blue: ' + blueName;
+            var count = {};
+            colors.forEach(function(x) { count[x] = (count[x] || 0)+1; });
+            if (count.red == 9) {
+              document.querySelector('.smr').innerHTML += ' &#9733';
+            } else {
+              document.querySelector('.smb').innerHTML += ' &#9733';
+            }
           }
         });
         revealed.on('child_added', function(childSnapshot, prevChildKey){
@@ -199,6 +211,7 @@
           if (data.val() == null) {
             red = false;
             document.querySelector('.smr').innerHTML = 'Red:';
+            redName = '';
             if (team == 'red') {
               isSM = false;
               team = '';
@@ -208,12 +221,14 @@
           } else {
             red = true;
             document.querySelector('.smr').innerHTML = 'Red: ' + data.val();
+            redName = data.val();
           }
         });
         spyMB.on('value', function(data){
           if (data.val() == null) {
             blue = false;
             document.querySelector('.smb').innerHTML = 'Blue:';
+            blueName = '';
             if (team == 'blue') {
               isSM = false;
               team = '';
@@ -223,6 +238,7 @@
           } else {
             blue = true;
             document.querySelector('.smb').innerHTML = 'Blue: ' + data.val();
+            blueName = data.val();
           }
         });
         /*document.querySelector('button').addEventListener('mousedown', function(){
@@ -393,9 +409,6 @@
               }
               //document.querySelector('.smb').innerHTML += '★';
             }
-
-            
-            console.log(count);
 
             shuffleArray(colors);
             words.set(list.slice(0,25));
