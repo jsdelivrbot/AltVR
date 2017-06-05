@@ -120,6 +120,7 @@
 'Death','Stock','Millionarie','Day','Knight','Pie','Bed','Circle','Rose','Change','Cap','Triangle'];
   
   var colors = ['red','red','red','red','red','red','red','red','red','blue','blue','blue','blue','blue','blue','blue','blue','yellow','yellow','yellow','yellow','yellow','yellow','yellow','black'];
+  var colors2 = ['red','red','red','red','red','red','red','red','blue','blue','blue','blue','blue','blue','blue','blue','blue','yellow','yellow','yellow','yellow','yellow','yellow','yellow','black'];
   
   var rev = [];
   
@@ -375,6 +376,27 @@
         shuf.addEventListener('cursorup', function(){
           if (isSM || user.isModerator){
             shuffleArray(list);
+            //red or blue
+            var rand = Math.round(Math.random());
+            var count = {};
+            colors.forEach(function(x) { count[x] = (count[x] || 0)+1; });
+            if (rand == 0) {
+              console.log('red');
+              if (count.red == 8) {
+                colors[colors.indexOf('blue')] = 'red'
+              }
+              //document.querySelector('.smr').innerHTML += '★';
+            } else {
+              console.log('blue');
+              if (count.blue == 8) {
+                colors[colors.indexOf('red')] = 'blue'
+              }
+              //document.querySelector('.smb').innerHTML += '★';
+            }
+
+            
+            console.log(count);
+
             shuffleArray(colors);
             words.set(list.slice(0,25));
             key.set(colors);
