@@ -120,7 +120,6 @@
 'Death','Stock','Millionarie','Day','Knight','Pie','Bed','Circle','Rose','Change','Cap','Triangle'];
   
   var colors = ['red','red','red','red','red','red','red','red','red','blue','blue','blue','blue','blue','blue','blue','blue','yellow','yellow','yellow','yellow','yellow','yellow','yellow','black'];
-  var colors2 = ['red','red','red','red','red','red','red','red','blue','blue','blue','blue','blue','blue','blue','blue','blue','yellow','yellow','yellow','yellow','yellow','yellow','yellow','black'];
   
   var rev = [];
   
@@ -361,6 +360,7 @@
             red = true;
             document.querySelector('.smr').innerHTML = 'Red: ' + user.displayName;
             spyMR.set(user.displayName);
+            showColors();
           } else if (team == 'red') {
             isSM = false;
             team = '';
@@ -380,6 +380,7 @@
             blue = true;
             spyMB.set(user.displayName);
             document.querySelector('.smb').innerHTML = 'Blue: ' + user.displayName;
+            showColors();
           } else if (team == 'blue') {
             isSM = false;
             team = '';
@@ -442,6 +443,14 @@
     for (var i = 0; i < 5; i++) {
       for (var j = 0; j < 5; j++) {
         document.querySelector('table').rows[i].cells[j].style.borderColor = 'white';
+      }
+    }
+  }
+
+  function showColors() {
+    for (var i = 0; i < 5; i++) {
+      for (var j = 0; j < 5; j++) {
+        document.querySelector('table').rows[i].cells[j].style.borderColor = colors[(i * 5) + (j + 1) - 1];
       }
     }
   }
