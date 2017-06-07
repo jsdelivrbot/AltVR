@@ -181,16 +181,7 @@
                 }
               }
             }
-            
-            document.querySelector('.smr').innerHTML = 'Red: ' + redName;
-            document.querySelector('.smb').innerHTML = 'Blue: ' + blueName;
-            //var count = {};
-            //colors.forEach(function(x) { count[x] = (count[x] || 0)+1; });
-            if (countColors().red == 9) {
-              document.querySelector('.smr').innerHTML += ' &#9733';
-            } else {
-              document.querySelector('.smb').innerHTML += ' &#9733';
-            }
+            updateNames();
           }
         });
         revealed.on('child_added', function(childSnapshot, prevChildKey){
@@ -209,7 +200,6 @@
         spyMR.on('value', function(data){
           if (data.val() == null) {
             red = false;
-            document.querySelector('.smr').innerHTML = 'Red:';
             redName = '';
             if (team == 'red') {
               isSM = false;
@@ -219,17 +209,13 @@
             }
           } else {
             red = true;
-            document.querySelector('.smr').innerHTML = 'Red: ' + data.val();
             redName = data.val();
           }
-          if (countColors().red == 9) {
-            document.querySelector('.smr').innerHTML += ' &#9733';
-          }
+          updateNames();
         });
         spyMB.on('value', function(data){
           if (data.val() == null) {
             blue = false;
-            document.querySelector('.smb').innerHTML = 'Blue:';
             blueName = '';
             if (team == 'blue') {
               isSM = false;
@@ -239,12 +225,9 @@
             }
           } else {
             blue = true;
-            document.querySelector('.smb').innerHTML = 'Blue: ' + data.val();
             blueName = data.val();
           }
-          if (countColors().blue == 9) {
-            document.querySelector('.smb').innerHTML += ' &#9733';
-          }
+          updateNames();
         });
         /*document.querySelector('button').addEventListener('mousedown', function(){
           //console.log(list);
@@ -360,46 +343,34 @@
           if (red && user.isModerator) {
             spyMR.set(null);
           } else if (team == '' && !red) {
-            console.log('red');
             isSM = true;
             team = 'red';
             red = true;
-            document.querySelector('.smr').innerHTML = 'Red: ' + user.displayName;
             spyMR.set(user.displayName);
             showColors();
           } else if (team == 'red') {
             isSM = false;
             team = '';
             red = false;
-            document.querySelector('.smr').innerHTML = 'Red:';
             spyMR.set(null);
             hideColors();
-          }
-          if (countColors().red == 9) {
-            document.querySelector('.smr').innerHTML += ' &#9733';
           }
         });
         blueSm.addEventListener('cursorup', function(){
           if (blue && user.isModerator) {
             spyMB.set(null);
           } else if (team == '' && !blue) {
-            console.log('blue');
             isSM = true;
             team = 'blue';
             blue = true;
             spyMB.set(user.displayName);
-            document.querySelector('.smb').innerHTML = 'Blue: ' + user.displayName;
             showColors();
           } else if (team == 'blue') {
             isSM = false;
             team = '';
             blue = false;
-            document.querySelector('.smb').innerHTML = 'Blue:';
             spyMB.set(null);
             hideColors();
-          }
-          if (countColors().blue == 9) {
-            document.querySelector('.smb').innerHTML += ' &#9733';
           }
         });
         shuf.addEventListener('cursorup', function(){
@@ -445,6 +416,16 @@
 
       }
     });
+
+    function updateNames() {
+      document.querySelector('.smr').innerHTML = 'Red: ' + redName;
+      document.querySelector('.smb').innerHTML = 'Blue: ' + blueName;
+      if (countColors().red == 9) {
+        document.querySelector('.smr').innerHTML += ' &#9733';
+      } else {
+        document.querySelector('.smb').innerHTML += ' &#9733';
+      }
+    }
   });
 
   altspace.getDocument().then(function(doc){
@@ -472,6 +453,8 @@
     colors.forEach(function(x) { count[x] = (count[x] || 0)+1; });
     return count;
   }
+
+  
 
   function shuffleArray(array) {
     for (var i = array.length - 1; i > 0; i--) {
