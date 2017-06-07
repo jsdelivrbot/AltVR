@@ -531,7 +531,7 @@ if (findGetParameter('undercover')) {
   list = list2;
 }
 if (findGetParameter('mixed')) {
-  list += ',' + list2;
+  list.concat(list2);
 }
 </script>
 </body>
