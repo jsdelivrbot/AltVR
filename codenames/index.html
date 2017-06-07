@@ -527,10 +527,9 @@
 'Line','Stiletto','Turd','Touch','Daddy','Wet','Pimp','Hell','Liquor','Burn','Drag','Cougar',
 'Briefs','Stones','Naked','Orgy','Chest','Whip','Pig','Jugs','Lighter','Cannons','Down','Clap'];
 
-if (findGetParameter('undercover')) {
+if (findGetParameter('mode') == 'undercover') {
   list = list2;
-}
-if (findGetParameter('mixed')) {
+} else if (findGetParameter('mode') == 'mixed') {
   list = list.concat(list2);
 }
 </script>
