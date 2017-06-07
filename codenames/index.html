@@ -3,7 +3,7 @@
 <head>
   <title>Codenames</title>
   <script src="https://cdn.rawgit.com/mrdoob/three.js/r84/build/three.min.js"></script>
-  <script src="https://sdk.altvr.com/libs/altspace.js/2.4.4/altspace.min.js"></script>
+  <script src="https://sdk.altvr.com/libs/altspace.js/2.5.0/altspace.min.js"></script>
   <style>
     body {
       /*background-color: white;*/
@@ -184,9 +184,9 @@
             
             document.querySelector('.smr').innerHTML = 'Red: ' + redName;
             document.querySelector('.smb').innerHTML = 'Blue: ' + blueName;
-            var count = {};
-            colors.forEach(function(x) { count[x] = (count[x] || 0)+1; });
-            if (count.red == 9) {
+            //var count = {};
+            //colors.forEach(function(x) { count[x] = (count[x] || 0)+1; });
+            if (countColors().red == 9) {
               document.querySelector('.smr').innerHTML += ' &#9733';
             } else {
               document.querySelector('.smb').innerHTML += ' &#9733';
@@ -222,6 +222,9 @@
             document.querySelector('.smr').innerHTML = 'Red: ' + data.val();
             redName = data.val();
           }
+          if (countColors().red == 9) {
+            document.querySelector('.smr').innerHTML += ' &#9733';
+          }
         });
         spyMB.on('value', function(data){
           if (data.val() == null) {
@@ -238,6 +241,9 @@
             blue = true;
             document.querySelector('.smb').innerHTML = 'Blue: ' + data.val();
             blueName = data.val();
+          }
+          if (countColors().blue == 9) {
+            document.querySelector('.smb').innerHTML += ' &#9733';
           }
         });
         /*document.querySelector('button').addEventListener('mousedown', function(){
@@ -369,6 +375,9 @@
             spyMR.set(null);
             hideColors();
           }
+          if (countColors().red == 9) {
+            document.querySelector('.smr').innerHTML += ' &#9733';
+          }
         });
         blueSm.addEventListener('cursorup', function(){
           if (blue && user.isModerator) {
@@ -388,6 +397,9 @@
             document.querySelector('.smb').innerHTML = 'Blue:';
             spyMB.set(null);
             hideColors();
+          }
+          if (countColors().blue == 9) {
+            document.querySelector('.smb').innerHTML += ' &#9733';
           }
         });
         shuf.addEventListener('cursorup', function(){
@@ -453,6 +465,12 @@
         document.querySelector('table').rows[i].cells[j].style.borderColor = colors[(i * 5) + (j + 1) - 1];
       }
     }
+  }
+
+  function countColors() {
+    var count = {};
+    colors.forEach(function(x) { count[x] = (count[x] || 0)+1; });
+    return count;
   }
 
   function shuffleArray(array) {
