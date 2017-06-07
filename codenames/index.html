@@ -148,7 +148,7 @@
       dataRequest.load('https://account.altvr.com/api/v1/users/' + user.userId, onLoaded, undefined, undefined);
       function onLoaded(obj) {
         var name = JSON.parse(obj).users[0].username;
-        if (findGetParameter('sm1') == null) {
+        /*if (findGetParameter('sm1') == null) {
           console.log('replace')
           location.replace(location.href + '&sm1=0&sm2=0')
         } else {
@@ -160,7 +160,7 @@
               altspace.open(url, '_experience', {hidden: true});
             }
           }
-        }
+        }*/
       
         words.on('value', function(data){
           if (data.val() != null) {
