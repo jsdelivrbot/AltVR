@@ -361,12 +361,12 @@
             var count = {};
             colors.forEach(function(x) { count[x] = (count[x] || 0)+1; });
             if (rand == 0) {
-              if (count.red == 8) {
+              if (count.darkred == 8) {
                 colors[colors.indexOf('darkblue')] = 'darkred'
               }
               //document.querySelector('.smr').innerHTML += '★';
             } else {
-              if (count.blue == 8) {
+              if (count.darkblue == 8) {
                 colors[colors.indexOf('darkred')] = 'darkblue'
               }
               //document.querySelector('.smb').innerHTML += '★';
