@@ -41,30 +41,36 @@
     .shuffle {
       text-align: center;
     }
+    .turn {
+      text-align: center;
+      width: 345px;
+    }
   </style>
 </head>
 <body>
   <table style='width: 100%'>
   <tr>
-    <td id='a1'>1</td><td id='a2'>2</td><td id='a3'>3</td><td id='a4'>4</td> <td id='a5'>5</td>
+    <td id='a1'></td><td id='a2'></td><td id='a3'></td><td id='a4'></td> <td id='a5'></td>
   </tr>
   <tr>
-    <td id='a6'>6</td><td id='a7'>7</td> <td id='a8'>8</td><td id='a9'>9</td> <td id='a10'>10</td>
+    <td id='a6'></td><td id='a7'></td> <td id='a8'></td><td id='a9'></td> <td id='a10'></td>
   </tr>
   <tr>
-    <td id='a11'>11</td><td id='a12'>12</td> <td id='a13'>13</td><td id='a14'>14</td> <td id='a15'>15</td>
+    <td id='a11'></td><td id='a12'></td> <td id='a13'></td><td id='a14'></td> <td id='a15'></td>
   </tr>
   <tr>
-    <td id='a16'>16</td><td id='a17'>17</td> <td id='a18'>18</td><td id='a19'>19</td> <td id='a20'>20</td>
+    <td id='a16'></td><td id='a17'></td> <td id='a18'></td><td id='a19'></td> <td id='a20'></td>
   </tr>
   <tr>
-    <td id='a21'>21</td><td id='a22'>22</td> <td id='a23'>23</td><td id='a24'>24</td> <td id='a25'>25</td>
+    <td id='a21'></td><td id='a22'></td> <td id='a23'></td><td id='a24'></td> <td id='a25'></td>
   </tr>
 </table>
   <p></p>
   <button class='smr'>Red:</button>
   <button class='smb'>Blue:</button>
-  aaaaaaaaaaaaaaaaaa
+  a
+  <button class='turn'>.</button>
+  a
   <button class='shuffle'>Shuffle</button>
 <script>
   var sim = new altspace.utilities.Simulation();
@@ -114,6 +120,7 @@
     var revealed = sync.instance.child('revealed');
     var spyMR = sync.instance.child('red');
     var spyMB = sync.instance.child('blue');
+    var currTeam = sync.instance.child('current');
     
     var isSM = false;
     var team = '';
@@ -149,6 +156,8 @@
                 document.querySelector('table').rows[i].cells[j].innerHTML = data.val()[(i * 5) + (j + 1) - 1];
               }
             }
+          } else {
+            shuffle();
           }
         });
         key.on('value', function(data){
@@ -209,6 +218,17 @@
           }
           updateNames();
         });
+        currTeam.on('value', function(data){
+          if (data.val() == 'red') {
+            document.querySelector('.turn').innerHTML = 'Red Teams Turn'
+            document.querySelector('.turn').style.borderColor = 'darkred';
+            document.querySelector('.turn').style.backgroundColor = 'darkred';
+          } else if (data.val() == 'blue') {
+            document.querySelector('.turn').innerHTML = 'Blue Teams Turn'
+            document.querySelector('.turn').style.borderColor = 'darkblue';
+            document.querySelector('.turn').style.backgroundColor = 'darkblue';
+          }
+        });
         /*document.querySelector('button').addEventListener('mousedown', function(){
           //console.log(list);
           //console.log(document.querySelector('table'));
@@ -242,68 +262,71 @@
         var c = 30;
         var d = -100;
         var e = -227;
+        var z = 0;
 
         var a1 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
-        a1.position.set(-504,a,0);
+        a1.position.set(-504,a,z);
         var a2 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
-        a2.position.set(-252,a,0);
+        a2.position.set(-252,a,z);
         var a3 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
-        a3.position.set(0,a,0);
+        a3.position.set(0,a,z);
         var a4 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
-        a4.position.set(252,a,0);
+        a4.position.set(252,a,z);
         var a5 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
-        a5.position.set(504,a,0);
+        a5.position.set(504,a,z);
 
         var b1 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
-        b1.position.set(-504,b,0);
+        b1.position.set(-504,b,z);
         var b2 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
-        b2.position.set(-252,b,0);
+        b2.position.set(-252,b,z);
         var b3 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
-        b3.position.set(0,b,0);
+        b3.position.set(0,b,z);
         var b4 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
-        b4.position.set(252,b,0);
+        b4.position.set(252,b,z);
         var b5 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
-        b5.position.set(504,b,0);
+        b5.position.set(504,b,z);
 
         var c1 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
-        c1.position.set(-504,c,0);
+        c1.position.set(-504,c,z);
         var c2 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
-        c2.position.set(-252,c,0);
+        c2.position.set(-252,c,z);
         var c3 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
-        c3.position.set(0,c,0);
+        c3.position.set(0,c,z);
         var c4 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
-        c4.position.set(252,c,0);
+        c4.position.set(252,c,z);
         var c5 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
-        c5.position.set(504,c,0);
+        c5.position.set(504,c,z);
 
         var d1 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
-        d1.position.set(-504,d,0);
+        d1.position.set(-504,d,z);
         var d2 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
-        d2.position.set(-252,d,0);
+        d2.position.set(-252,d,z);
         var d3 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
-        d3.position.set(0,d,0);
+        d3.position.set(0,d,z);
         var d4 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
-        d4.position.set(252,d,0);
+        d4.position.set(252,d,z);
         var d5 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
-        d5.position.set(504,d,0);
+        d5.position.set(504,d,z);
 
         var e1 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
-        e1.position.set(-504,e,0);
+        e1.position.set(-504,e,z);
         var e2 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
-        e2.position.set(-252,e,0);
+        e2.position.set(-252,e,z);
         var e3 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
-        e3.position.set(0,e,0);
+        e3.position.set(0,e,z);
         var e4 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
-        e4.position.set(252,e,0);
+        e4.position.set(252,e,z);
         var e5 = new THREE.Mesh(new THREE.BoxGeometry(300,125,1), mat);
-        e5.position.set(504,e,0);
+        e5.position.set(504,e,z);
 
         var redSm = new THREE.Mesh(new THREE.BoxGeometry(300,35,1), mat);
-        redSm.position.set(-504,-330,0);
+        redSm.position.set(-504,-330,z);
         var blueSm = new THREE.Mesh(new THREE.BoxGeometry(300,35,1), mat);
-        blueSm.position.set(-248,-330,0);
+        blueSm.position.set(-248,-330,z);
+        var turn = new THREE.Mesh(new THREE.BoxGeometry(520,35,1), mat);
+        turn.position.set(120,-330,z);
         var shuf = new THREE.Mesh(new THREE.BoxGeometry(300,35,1), mat);
-        shuf.position.set(254,-330,0);
+        shuf.position.set(484,-330,z);
 
         var grid = [a1,a2,a3,a4,a5, b1,b2,b3,b4,b5, c1,c2,c3,c4,c5, d1,d2,d3,d4,d5, e1,e2,e3,e4,e5];
         for (var i = 0; i < grid.length; i++) {
@@ -353,43 +376,63 @@
             hideColors();
           }
         });
-        shuf.addEventListener('cursorup', function(){
-          if (isSM || user.isModerator){
-            shuffleArray(list);
-            //red or blue
-            var rand = Math.round(Math.random());
-            var count = {};
-            colors.forEach(function(x) { count[x] = (count[x] || 0)+1; });
-            if (rand == 0) {
-              if (count.darkred == 8) {
-                colors[colors.indexOf('darkblue')] = 'darkred'
-              }
-              //document.querySelector('.smr').innerHTML += '★';
-            } else {
-              if (count.darkblue == 8) {
-                colors[colors.indexOf('darkred')] = 'darkblue'
-              }
-              //document.querySelector('.smb').innerHTML += '★';
-            }
-
-            shuffleArray(colors);
-            words.set(list.slice(0,25));
-            key.set(colors);
-            rev = [];
-            revealed.set([]);
-            for (var i = 0; i < 5; i++) {
-              for (var j = 0; j < 5; j++) {
-                document.querySelector('table').rows[i].cells[j].innerHTML = list[(i * 5) + (j + 1) - 1];
-                //document.querySelector('table').rows[i].cells[j].setAttribute('bgcolor', colors[(i * 5) + (j + 1) - 1]);
-              }
+        turn.addEventListener('cursorup', function(){
+          //change team
+          if (isSM || user.isModerator) {
+            if (document.querySelector('.turn').innerHTML == 'Red Teams Turn' && (team == 'red' || user.isModerator)) {
+              document.querySelector('.turn').innerHTML = 'Blue Teams Turn'
+              document.querySelector('.turn').style.borderColor = 'darkblue';
+              document.querySelector('.turn').style.backgroundColor = 'darkblue';
+              currTeam.set('blue');
+            } else if (document.querySelector('.turn').innerHTML == 'Blue Teams Turn' && (team == 'blue' || user.isModerator)) {
+              document.querySelector('.turn').innerHTML = 'Red Teams Turn';
+              document.querySelector('.turn').style.borderColor = 'darkred';
+              document.querySelector('.turn').style.backgroundColor = 'darkred';
+              currTeam.set('red');
             }
           }
         });
+        shuf.addEventListener('cursorup', function(){
+          if (isSM || user.isModerator){
+            shuffle();
+          }
+        });
+
+        function shuffle() {
+          shuffleArray(list);
+          //red or blue
+          var rand = Math.round(Math.random());
+          var count = {};
+          colors.forEach(function(x) { count[x] = (count[x] || 0)+1; });
+          if (rand == 0) {
+            currTeam.set('red');
+            if (count.darkred == 8) {
+              colors[colors.indexOf('darkblue')] = 'darkred'
+            }
+          } else {
+            currTeam.set('blue');
+            if (count.darkblue == 8) {
+              colors[colors.indexOf('darkred')] = 'darkblue'
+            }
+          }
+
+          shuffleArray(colors);
+          words.set(list.slice(0,25));
+          key.set(colors);
+          rev = [];
+          revealed.set([]);
+          for (var i = 0; i < 5; i++) {
+            for (var j = 0; j < 5; j++) {
+              document.querySelector('table').rows[i].cells[j].innerHTML = list[(i * 5) + (j + 1) - 1];
+              //document.querySelector('table').rows[i].cells[j].setAttribute('bgcolor', colors[(i * 5) + (j + 1) - 1]);
+            }
+          }
+        }
 
         /*c3.addEventListener('cursordown', function(){
           console.log('box click');
         });*/
-        sim.scene.add(a1,a2,a3,a4,a5, b1,b2,b3,b4,b5, c1,c2,c3,c4,c5, d1,d2,d3,d4,d5, e1,e2,e3,e4,e5, redSm,blueSm,shuf);
+        sim.scene.add(a1,a2,a3,a4,a5, b1,b2,b3,b4,b5, c1,c2,c3,c4,c5, d1,d2,d3,d4,d5, e1,e2,e3,e4,e5, redSm,blueSm,turn,shuf);
 
 
       }
@@ -400,8 +443,14 @@
       document.querySelector('.smb').innerHTML = 'Blue: ' + blueName;
       if (countColors().darkred == 9) {
         document.querySelector('.smr').innerHTML += ' &#9733';
+        /*document.querySelector('.turn').innerHTML = 'Red Teams Turn';
+        document.querySelector('.turn').style.borderColor = 'darkred';
+        document.querySelector('.turn').style.backgroundColor = 'darkred';*/
       } else {
         document.querySelector('.smb').innerHTML += ' &#9733';
+        /*document.querySelector('.turn').innerHTML = 'Blue Teams Turn';
+        document.querySelector('.turn').style.borderColor = 'darkblue';
+        document.querySelector('.turn').style.backgroundColor = 'darkblue';*/
       }
     }
   });
@@ -489,12 +538,15 @@
 'Briefs','Stones','Naked','Orgy','Chest','Whip','Pig','Jugs','Lighter','Cannons','Down','Clap'];
 
 
-list = list.concat([/*'Vivian','Ben',*/'Covfefe']);
+list = list.concat([/*'Vivian','Ben',*/'Covfefe','Maybe']);
 
 if (findGetParameter('mode') == 'undercover') {
   list = list2;
 } else if (findGetParameter('mode') == 'mixed') {
   list = list.concat(list2);
+  list = list.filter(function(item,index,inputArray){
+    return inputArray.indexOf(item) == index;
+  });
 }
 </script>
 </body>
