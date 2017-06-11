@@ -220,11 +220,11 @@
         });
         currTeam.on('value', function(data){
           if (data.val() == 'red') {
-            document.querySelector('.turn').innerHTML = 'Red Teams Turn'
+            document.querySelector('.turn').innerHTML = "Red Team's Turn"
             document.querySelector('.turn').style.borderColor = 'darkred';
             document.querySelector('.turn').style.backgroundColor = 'darkred';
           } else if (data.val() == 'blue') {
-            document.querySelector('.turn').innerHTML = 'Blue Teams Turn'
+            document.querySelector('.turn').innerHTML = "Blue Team's Turn"
             document.querySelector('.turn').style.borderColor = 'darkblue';
             document.querySelector('.turn').style.backgroundColor = 'darkblue';
           }
@@ -379,13 +379,13 @@
         turn.addEventListener('cursorup', function(){
           //change team
           if (isSM || user.isModerator) {
-            if (document.querySelector('.turn').innerHTML == 'Red Teams Turn' && (team == 'red' || user.isModerator)) {
-              document.querySelector('.turn').innerHTML = 'Blue Teams Turn'
+            if (document.querySelector('.turn').innerHTML == "Red Team's Turn" && (team == 'red' || user.isModerator)) {
+              document.querySelector('.turn').innerHTML = "Blue Team's Turn"
               document.querySelector('.turn').style.borderColor = 'darkblue';
               document.querySelector('.turn').style.backgroundColor = 'darkblue';
               currTeam.set('blue');
-            } else if (document.querySelector('.turn').innerHTML == 'Blue Teams Turn' && (team == 'blue' || user.isModerator)) {
-              document.querySelector('.turn').innerHTML = 'Red Teams Turn';
+            } else if (document.querySelector('.turn').innerHTML == "Blue Team's Turn" && (team == 'blue' || user.isModerator)) {
+              document.querySelector('.turn').innerHTML = "Red Team's Turn";
               document.querySelector('.turn').style.borderColor = 'darkred';
               document.querySelector('.turn').style.backgroundColor = 'darkred';
               currTeam.set('red');
