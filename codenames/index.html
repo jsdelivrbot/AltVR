@@ -195,6 +195,7 @@
               team = '';
               red = false;
               hideColors();
+              spyMR.onDisconnect().cancel();
             }
           } else {
             red = true;
@@ -211,6 +212,7 @@
               team = '';
               blue = false;
               hideColors();
+              spyMB.onDisconnect().cancel();
             }
           } else {
             blue = true;
@@ -350,12 +352,14 @@
             team = 'red';
             red = true;
             spyMR.set(user.displayName);
+            spyMR.onDisconnect().set(null);
             showColors();
           } else if (team == 'red') {
             isSM = false;
             team = '';
             red = false;
             spyMR.set(null);
+            spyMR.onDisconnect().cancel();
             hideColors();
           }
         });
@@ -367,12 +371,14 @@
             team = 'blue';
             blue = true;
             spyMB.set(user.displayName);
+            spyMB.onDisconnect().set(null);
             showColors();
           } else if (team == 'blue') {
             isSM = false;
             team = '';
             blue = false;
             spyMB.set(null);
+            spyMB.onDisconnect().cancel();
             hideColors();
           }
         });
@@ -428,13 +434,7 @@
             }
           }
         }
-
-        /*c3.addEventListener('cursordown', function(){
-          console.log('box click');
-        });*/
         sim.scene.add(a1,a2,a3,a4,a5, b1,b2,b3,b4,b5, c1,c2,c3,c4,c5, d1,d2,d3,d4,d5, e1,e2,e3,e4,e5, redSm,blueSm,turn,shuf);
-
-
       }
     });
 
@@ -443,14 +443,8 @@
       document.querySelector('.smb').innerHTML = 'Blue: ' + blueName;
       if (countColors().darkred == 9) {
         document.querySelector('.smr').innerHTML += ' &#9733';
-        /*document.querySelector('.turn').innerHTML = 'Red Teams Turn';
-        document.querySelector('.turn').style.borderColor = 'darkred';
-        document.querySelector('.turn').style.backgroundColor = 'darkred';*/
       } else {
         document.querySelector('.smb').innerHTML += ' &#9733';
-        /*document.querySelector('.turn').innerHTML = 'Blue Teams Turn';
-        document.querySelector('.turn').style.borderColor = 'darkblue';
-        document.querySelector('.turn').style.backgroundColor = 'darkblue';*/
       }
     }
   });
@@ -480,8 +474,6 @@
     colors.forEach(function(x) { count[x] = (count[x] || 0)+1; });
     return count;
   }
-
-  
 
   function shuffleArray(array) {
     for (var i = array.length - 1; i > 0; i--) {
