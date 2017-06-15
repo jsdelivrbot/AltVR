@@ -411,18 +411,18 @@
             console.log(cell);
             if (document.querySelector('#a' + e.target.name).innerHTML != '') {
               revealed.push('a' + e.target.name);
-              if (colors[Number(id.slice(1,id.length)) - 1] == 'black') {
+              if (colors[cell - 1] == 'black') {
                 syncSound.set('assassin');
               } else {
                 if (currentTeam == 'red') {
-                  if (colors[Number(id.slice(1,id.length)) - 1] == 'darkred') {
+                  if (colors[cell - 1] == 'darkred') {
                     syncSound.set('win');
                   } else {
                     syncSound.set('fail');
                     currTeam.set('blue');
                   }
                 } else {
-                  if (colors[Number(id.slice(1,id.length)) - 1] == 'darkblue') {
+                  if (colors[cell - 1] == 'darkblue') {
                     syncSound.set('win');
                   } else {
                     syncSound.set('fail');
