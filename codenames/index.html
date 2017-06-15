@@ -122,6 +122,7 @@
     var spyMR = sync.instance.child('red');
     var spyMB = sync.instance.child('blue');
     var currTeam = sync.instance.child('current');
+    var syncSound = sync.instance.child('sound');
     
     var isSM = false;
     var team = '';
@@ -222,7 +223,7 @@
         //console.log('rev', id, document.querySelector('#' + id));
         document.querySelector('#' + id).style.backgroundColor = colors[Number(id.slice(1,id.length)) - 1];
         document.querySelector('#' + id).innerHTML = '';
-        if (colors[Number(id.slice(1,id.length)) - 1] == 'black') {
+        /*if (colors[Number(id.slice(1,id.length)) - 1] == 'black') {
           playSound('assassin');
         } else {
           if (currentTeam == 'red') {
@@ -240,7 +241,7 @@
               currTeam.set('red');
             }
           }
-        }
+        }*/
       });
       revealed.on('child_removed', function(oldChildSnapshot) {
         for (var i = 0; i < 5; i++) {
@@ -294,6 +295,11 @@
           document.querySelector('.turn').style.backgroundColor = 'darkblue';
         }
         currentTeam = data.val();
+      });
+      syncSound.on('value', function(data){
+        if (data.val() != null) {
+          playSound(data.val())
+        }
       });
       /*document.querySelector('button').addEventListener('mousedown', function(){
         //console.log(list);
@@ -405,6 +411,26 @@
             console.log(cell);
             if (document.querySelector('#a' + e.target.name).innerHTML != '') {
               revealed.push('a' + e.target.name);
+              if (colors[Number(id.slice(1,id.length)) - 1] == 'black') {
+                syncSound.set('assassin');
+              } else {
+                if (currentTeam == 'red') {
+                  if (colors[Number(id.slice(1,id.length)) - 1] == 'darkred') {
+                    syncSound.set('win');
+                  } else {
+                    syncSound.set('fail');
+                    currTeam.set('blue');
+                  }
+                } else {
+                  if (colors[Number(id.slice(1,id.length)) - 1] == 'darkblue') {
+                    syncSound.set('win');
+                  } else {
+                    syncSound.set('fail');
+                    currTeam.set('red');
+                  }
+                }
+              }
+              setTimeout(function(){syncSound.set(null);}, 500);
             }
           }
         });
