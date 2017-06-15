@@ -408,21 +408,21 @@
           if (isSM) {
             console.log(e.target.name);
             var cell = document.querySelector('#a' + e.target.name);
-            console.log(Number(cell) - 1);
+            console.log(cell);
             if (document.querySelector('#a' + e.target.name).innerHTML != '') {
               revealed.push('a' + e.target.name);
-              if (colors[Number(cell) - 1] == 'black') {
+              if (colors[Number(cell.id.slice(1,cell.id.length)) - 1] == 'black') {
                 syncSound.set('assassin');
               } else {
                 if (currentTeam == 'red') {
-                  if (colors[Number(cell) - 1] == 'darkred') {
+                  if (colors[Number(cell.id.slice(1,cell.id.length)) - 1] == 'darkred') {
                     syncSound.set('win');
                   } else {
                     syncSound.set('fail');
                     currTeam.set('blue');
                   }
                 } else {
-                  if (colors[Number(cell) - 1] == 'darkblue') {
+                  if (colors[Number(cell.id.slice(1,cell.id.length)) - 1] == 'darkblue') {
                     syncSound.set('win');
                   } else {
                     syncSound.set('fail');
