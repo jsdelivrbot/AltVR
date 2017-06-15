@@ -159,7 +159,7 @@
     sim.scene.add(assassinSound);
     assassinSound.addBehavior(
       new altspaceutil.behaviors.NativeComponent('n-sound', {
-        src: /Mobile/i.test(navigator.userAgent) ? 'fail.mp3' : 'fail.ogg', // MP3 Supported For Mobile Devices, OGG Supported For Everything Else
+        src: /Mobile/i.test(navigator.userAgent) ? 'assassin.mp3' : 'assassin.ogg', // MP3 Supported For Mobile Devices, OGG Supported For Everything Else
         autoplay: false,
         loop: false,
         volume: 0.5,
