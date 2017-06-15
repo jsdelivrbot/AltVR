@@ -180,6 +180,30 @@
         maxDistance: 12,
       })
     );
+    var redSound = new THREE.Object3D();
+    sim.scene.add(redSound);
+    redSound.addBehavior(
+      new altspaceutil.behaviors.NativeComponent('n-sound', {
+        src: /Mobile/i.test(navigator.userAgent) ? 'red.mp3' : 'red.ogg', // MP3 Supported For Mobile Devices, OGG Supported For Everything Else
+        autoplay: false,
+        loop: false,
+        volume: 0.5,
+        minDistance: 1,
+        maxDistance: 12,
+      })
+    );
+    var blueSound = new THREE.Object3D();
+    sim.scene.add(blueSound);
+    blueSound.addBehavior(
+      new altspaceutil.behaviors.NativeComponent('n-sound', {
+        src: /Mobile/i.test(navigator.userAgent) ? 'blue.mp3' : 'blue.ogg', // MP3 Supported For Mobile Devices, OGG Supported For Everything Else
+        autoplay: false,
+        loop: false,
+        volume: 0.5,
+        minDistance: 1,
+        maxDistance: 12,
+      })
+    );
     function playSound(sound) {
       if (sound == 'click') {
         clickSound.getBehaviorByType('n-sound').callComponent('play');
@@ -189,6 +213,10 @@
         winSound.getBehaviorByType('n-sound').callComponent('play');
       } else if (sound == 'assassin') {
         assassinSound.getBehaviorByType('n-sound').callComponent('play');
+      } else if (sound == 'red') {
+        redSound.getBehaviorByType('n-sound').callComponent('play');
+      } else if (sound == 'blue') {
+        blueSound.getBehaviorByType('n-sound').callComponent('play');
       }
     }
     
@@ -413,6 +441,19 @@
               revealed.push('a' + e.target.name);
               if (colors[Number(cell.id.slice(1,cell.id.length)) - 1] == 'black') {
                 syncSound.set('assassin');
+                if (currentTeam == 'red') {
+                  setTimeout(function(){syncSound.set('blue');}, 3000);
+                  setTimeout(function(){syncSound.set(null);}, 3500);
+                  document.querySelector('.turn').innerHTML = "Blue Team Wins"
+                  document.querySelector('.turn').style.borderColor = 'darkblue';
+                  document.querySelector('.turn').style.backgroundColor = 'darkblue';
+                } else {
+                  setTimeout(function(){syncSound.set('red');}, 3000);
+                  setTimeout(function(){syncSound.set(null);}, 3500);
+                  document.querySelector('.turn').innerHTML = "Red Team Wins"
+                  document.querySelector('.turn').style.borderColor = 'darkred';
+                  document.querySelector('.turn').style.backgroundColor = 'darkred';
+                }
               } else {
                 if (currentTeam == 'red') {
                   if (colors[Number(cell.id.slice(1,cell.id.length)) - 1] == 'darkred') {
@@ -429,8 +470,22 @@
                     currTeam.set('red');
                   }
                 }
+                if (countColors2()['rgb(139, 0, 0)'] == countColors().darkred) {
+                  setTimeout(function(){syncSound.set('red');}, 2000);
+                  setTimeout(function(){syncSound.set(null);}, 2500);
+                  document.querySelector('.turn').innerHTML = "Red Team Wins"
+                  document.querySelector('.turn').style.borderColor = 'darkred';
+                  document.querySelector('.turn').style.backgroundColor = 'darkred';
+                } else if (countColors2()['rgb(0, 0, 139)'] == countColors().darkblue) {
+                  setTimeout(function(){syncSound.set('blue');}, 2000);
+                  setTimeout(function(){syncSound.set(null);}, 2500);
+                  document.querySelector('.turn').innerHTML = "Blue Team Wins"
+                  document.querySelector('.turn').style.borderColor = 'darkblue';
+                  document.querySelector('.turn').style.backgroundColor = 'darkblue';
+                } else {
+                  setTimeout(function(){syncSound.set(null);}, 500);
+                }
               }
-              setTimeout(function(){syncSound.set(null);}, 500);
             }
           }
         });
@@ -454,7 +509,7 @@
           spyMR.onDisconnect().cancel();
           hideColors();
         }
-        playSound('click');
+        //playSound('click');
       });
       blueSm.addEventListener('cursorup', function(){
         if (blue && user.isModerator) {
@@ -564,6 +619,17 @@
   function countColors() {
     var count = {};
     colors.forEach(function(x) { count[x] = (count[x] || 0)+1; });
+    return count;
+  }
+
+  function countColors2() {
+    var count = {};
+    var cells = [a1.style.backgroundColor,a2.style.backgroundColor,a3.style.backgroundColor,a4.style.backgroundColor,a5.style.backgroundColor,
+    a6.style.backgroundColor,a7.style.backgroundColor,a8.style.backgroundColor,a9.style.backgroundColor,a10.style.backgroundColor,
+    a11.style.backgroundColor,a12.style.backgroundColor,a13.style.backgroundColor,a14.style.backgroundColor,a15.style.backgroundColor,
+    a16.style.backgroundColor,a17.style.backgroundColor,a18.style.backgroundColor,a19.style.backgroundColor,a20.style.backgroundColor,
+    a21.style.backgroundColor,a22.style.backgroundColor,a23.style.backgroundColor,a24.style.backgroundColor,a25.style.backgroundColor];
+    cells.forEach(function(x) { count[x] = (count[x] || 0)+1; });
     return count;
   }
 
