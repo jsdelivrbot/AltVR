@@ -221,26 +221,28 @@
         var id = childSnapshot.val();
         //console.log('rev', id, document.querySelector('#' + id));
         document.querySelector('#' + id).style.backgroundColor = colors[Number(id.slice(1,id.length)) - 1];
-        document.querySelector('#' + id).innerHTML = '';
-        if (colors[Number(id.slice(1,id.length)) - 1] == 'black') {
-          playSound('assassin');
-        } else {
-          if (currentTeam == 'red') {
-            if (colors[Number(id.slice(1,id.length)) - 1] == 'darkred') {
-              playSound('win');
-            } else {
-              playSound('fail');
-              currTeam.set('blue');
-            }
+        if (document.querySelector('#' + id).innerHTML != '') {
+          if (colors[Number(id.slice(1,id.length)) - 1] == 'black') {
+            playSound('assassin');
           } else {
-            if (colors[Number(id.slice(1,id.length)) - 1] == 'darkblue') {
-              playSound('win');
+            if (currentTeam == 'red') {
+              if (colors[Number(id.slice(1,id.length)) - 1] == 'darkred') {
+                playSound('win');
+              } else {
+                playSound('fail');
+                currTeam.set('blue');
+              }
             } else {
-              playSound('fail');
-              currTeam.set('red');
+              if (colors[Number(id.slice(1,id.length)) - 1] == 'darkblue') {
+                playSound('win');
+              } else {
+                playSound('fail');
+                currTeam.set('red');
+              }
             }
           }
         }
+        document.querySelector('#' + id).innerHTML = '';
       });
       revealed.on('child_removed', function(oldChildSnapshot) {
         for (var i = 0; i < 5; i++) {
