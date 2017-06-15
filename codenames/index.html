@@ -317,12 +317,21 @@
           document.querySelector('.turn').innerHTML = "Red Team's Turn"
           document.querySelector('.turn').style.borderColor = 'darkred';
           document.querySelector('.turn').style.backgroundColor = 'darkred';
+          currentTeam = data.val();
         } else if (data.val() == 'blue') {
           document.querySelector('.turn').innerHTML = "Blue Team's Turn"
           document.querySelector('.turn').style.borderColor = 'darkblue';
           document.querySelector('.turn').style.backgroundColor = 'darkblue';
+          currentTeam = data.val();
+        } else if (data.val() == 'redwins') {
+          document.querySelector('.turn').innerHTML = "Red Team Wins"
+          document.querySelector('.turn').style.borderColor = 'darkred';
+          document.querySelector('.turn').style.backgroundColor = 'darkred';
+        } else if (data.val() == 'bluewins') {
+          document.querySelector('.turn').innerHTML = "Blue Team Wins"
+          document.querySelector('.turn').style.borderColor = 'darkblue';
+          document.querySelector('.turn').style.backgroundColor = 'darkblue';
         }
-        currentTeam = data.val();
       });
       syncSound.on('value', function(data){
         if (data.val() != null) {
@@ -473,15 +482,11 @@
                 if (countColors2()['rgb(139, 0, 0)'] == countColors().darkred) {
                   setTimeout(function(){syncSound.set('red');}, 2000);
                   setTimeout(function(){syncSound.set(null);}, 2500);
-                  document.querySelector('.turn').innerHTML = "Red Team Wins"
-                  document.querySelector('.turn').style.borderColor = 'darkred';
-                  document.querySelector('.turn').style.backgroundColor = 'darkred';
+                  currTeam.set('redwins');
                 } else if (countColors2()['rgb(0, 0, 139)'] == countColors().darkblue) {
                   setTimeout(function(){syncSound.set('blue');}, 2000);
                   setTimeout(function(){syncSound.set(null);}, 2500);
-                  document.querySelector('.turn').innerHTML = "Blue Team Wins"
-                  document.querySelector('.turn').style.borderColor = 'darkblue';
-                  document.querySelector('.turn').style.backgroundColor = 'darkblue';
+                  currTeam.set('bluewins');
                 } else {
                   setTimeout(function(){syncSound.set(null);}, 500);
                 }
