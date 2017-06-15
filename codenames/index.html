@@ -408,7 +408,7 @@
           if (isSM) {
             console.log(e.target.name);
             var cell = document.querySelector('#a' + e.target.name);
-            console.log(cell);
+            console.log(cell - 1);
             if (document.querySelector('#a' + e.target.name).innerHTML != '') {
               revealed.push('a' + e.target.name);
               if (colors[cell - 1] == 'black') {
