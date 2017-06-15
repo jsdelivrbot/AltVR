@@ -221,28 +221,26 @@
         var id = childSnapshot.val();
         //console.log('rev', id, document.querySelector('#' + id));
         document.querySelector('#' + id).style.backgroundColor = colors[Number(id.slice(1,id.length)) - 1];
-        if (document.querySelector('#' + id).innerHTML != '') {
-          if (colors[Number(id.slice(1,id.length)) - 1] == 'black') {
-            playSound('assassin');
-          } else {
-            if (currentTeam == 'red') {
-              if (colors[Number(id.slice(1,id.length)) - 1] == 'darkred') {
-                playSound('win');
-              } else {
-                playSound('fail');
-                currTeam.set('blue');
-              }
+        document.querySelector('#' + id).innerHTML = '';
+        if (colors[Number(id.slice(1,id.length)) - 1] == 'black') {
+          playSound('assassin');
+        } else {
+          if (currentTeam == 'red') {
+            if (colors[Number(id.slice(1,id.length)) - 1] == 'darkred') {
+              playSound('win');
             } else {
-              if (colors[Number(id.slice(1,id.length)) - 1] == 'darkblue') {
-                playSound('win');
-              } else {
-                playSound('fail');
-                currTeam.set('red');
-              }
+              playSound('fail');
+              currTeam.set('blue');
+            }
+          } else {
+            if (colors[Number(id.slice(1,id.length)) - 1] == 'darkblue') {
+              playSound('win');
+            } else {
+              playSound('fail');
+              currTeam.set('red');
             }
           }
         }
-        document.querySelector('#' + id).innerHTML = '';
       });
       revealed.on('child_removed', function(oldChildSnapshot) {
         for (var i = 0; i < 5; i++) {
@@ -405,7 +403,9 @@
             console.log(e.target.name);
             var cell = document.querySelector('#a' + e.target.name);
             console.log(cell);
-            revealed.push('a' + e.target.name);
+            if (document.querySelector('#a' + e.target.name).innerHTML != '') {
+              revealed.push('a' + e.target.name);
+            }
           }
         });
       }
