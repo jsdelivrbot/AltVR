@@ -155,6 +155,18 @@
         maxDistance: 12,
       })
     );
+    var assassinSound = new THREE.Object3D();
+    sim.scene.add(assassinSound);
+    assassinSound.addBehavior(
+      new altspaceutil.behaviors.NativeComponent('n-sound', {
+        src: /Mobile/i.test(navigator.userAgent) ? 'fail.mp3' : 'fail.ogg', // MP3 Supported For Mobile Devices, OGG Supported For Everything Else
+        autoplay: false,
+        loop: false,
+        volume: 0.5,
+        minDistance: 1,
+        maxDistance: 12,
+      })
+    );
     var winSound = new THREE.Object3D();
     sim.scene.add(winSound);
     winSound.addBehavior(
@@ -174,6 +186,8 @@
         failSound.getBehaviorByType('n-sound').callComponent('play');
       } else if (sound == 'win') {
         winSound.getBehaviorByType('n-sound').callComponent('play');
+      } else if (sound == 'assassin') {
+        assassinSound.getBehaviorByType('n-sound').callComponent('play');
       }
     }
     
@@ -208,17 +222,23 @@
         //console.log('rev', id, document.querySelector('#' + id));
         document.querySelector('#' + id).style.backgroundColor = colors[Number(id.slice(1,id.length)) - 1];
         document.querySelector('#' + id).innerHTML = '';
-        if (currentTeam == 'red') {
-          if (colors[Number(id.slice(1,id.length)) - 1] == 'darkred') {
-            playSound('win');
-          } else {
-            playSound('fail');
-          }
+        if (colors[Number(id.slice(1,id.length)) - 1] == 'black') {
+          playSound('assassin');
         } else {
-          if (colors[Number(id.slice(1,id.length)) - 1] == 'darkblue') {
-            playSound('win');
+          if (currentTeam == 'red') {
+            if (colors[Number(id.slice(1,id.length)) - 1] == 'darkred') {
+              playSound('win');
+            } else {
+              playSound('fail');
+              currTeam.set('blue');
+            }
           } else {
-            playSound('fail');
+            if (colors[Number(id.slice(1,id.length)) - 1] == 'darkblue') {
+              playSound('win');
+            } else {
+              playSound('fail');
+              currTeam.set('red');
+            }
           }
         }
       });
