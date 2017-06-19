@@ -134,18 +134,21 @@
 
     var clickSound = new THREE.Object3D();
     var failSound = new THREE.Object3D();
+    var bystanderSound = new THREE.Object3D();
     var assassinSound = new THREE.Object3D();
     var winSound = new THREE.Object3D();
     var redSound = new THREE.Object3D();
     var blueSound = new THREE.Object3D();
     setupSounds();
-    sim.scene.add(clickSound,failSound,assassinSound,winSound,redSound,blueSound);
+    sim.scene.add(clickSound,failSound,bystanderSound,assassinSound,winSound,redSound,blueSound);
 
     function playSound(sound) {
       if (sound == 'click') {
         clickSound.getBehaviorByType('n-sound').callComponent('play');
       } else if (sound == 'fail') {
         failSound.getBehaviorByType('n-sound').callComponent('play');
+      } else if (sound == 'bystander') {
+        bystanderSound.getBehaviorByType('n-sound').callComponent('play');
       } else if (sound == 'win') {
         winSound.getBehaviorByType('n-sound').callComponent('play');
       } else if (sound == 'assassin') {
@@ -382,14 +385,22 @@
                   if (colors[Number(cell.id.slice(1,cell.id.length)) - 1] == 'darkred') {
                     syncSound.set('win');
                   } else {
-                    syncSound.set('fail');
+                    if (colors[Number(cell.id.slice(1,cell.id.length)) - 1] == 'darkblue') {
+                      syncSound.set('fail');
+                    } else {
+                      syncSound.set('bystander');
+                    }
                     currTeam.set('blue');
                   }
                 } else {
                   if (colors[Number(cell.id.slice(1,cell.id.length)) - 1] == 'darkblue') {
                     syncSound.set('win');
-                  } else {
-                    syncSound.set('fail');
+                  } else  {
+                    if (colors[Number(cell.id.slice(1,cell.id.length)) - 1] == 'darkred') {
+                      syncSound.set('fail');
+                    } else {
+                      syncSound.set('bystander');
+                    }
                     currTeam.set('red');
                   }
                 }
@@ -517,6 +528,7 @@
     function setupSounds() {
       var click = 'sounds/click';
       var fail = 'sounds/fail';
+      var bystander = 'sounds/fail';
       var assassin = 'sounds/assassin';
       var win = 'sounds/win2';
       var redS = 'sounds/red';
@@ -525,6 +537,7 @@
       if (findGetParameter('sounds') == '2') {
         click = 'sounds/click';
         fail = 'sounds/whip';
+        //bystander = 'sounds/fail';
         assassin = 'sounds/lock';
         win = 'sounds/win2';
         redS = 'sounds/red';
@@ -547,6 +560,16 @@
           autoplay: false,
           loop: false,
           volume: 0.5,
+          minDistance: 1,
+          maxDistance: 12,
+        })
+      );
+      bystanderSound.addBehavior(
+        new altspaceutil.behaviors.NativeComponent('n-sound', {
+          src: /Mobile/i.test(navigator.userAgent) ? bystander + '.mp3' : bystander + '.ogg',
+          autoplay: false,
+          loop: false,
+          volume: 0.8,
           minDistance: 1,
           maxDistance: 12,
         })
