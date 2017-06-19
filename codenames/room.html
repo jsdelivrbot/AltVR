@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Buttons</title>
+  <script src="https://aframe.io/releases/0.3.0/aframe.js"></script>
+  <script src="https://sdk.altvr.com/libs/altspace.js/2.4.0/altspace.min.js"></script>
+</head>
+<body>
+  <a-scene altspace='fullspace: true'>
+    <a-entity position='-2.37 1.78 -5.83' scale='3 3 3' n-layout-browser='url: about:blank; isEnclosure: true'></a-entity>
+    <a-entity scale='100 100 100' n-layout-browser='url: http://ravenworks.ca/altspace/sculpTogether/; isEnclosure: true'></a-entity>
+    <a-entity position='8.5 8.5 -1.5' scale='5 5 5' rotation='0 -90 0' n-layout-browser='url: https://video-jukebox.firebaseapp.com/?room=codenames'></a-entity>
+
+    <a id='link' href='altspace://account.altvr.com/api/spaces/campfire-lobby'></a>
+    <a id='coma' href='altspace://account.altvr.com/api/events/667738242228945250'></a>
+    
+    <a-box position='8.9 1.8 4.6' scale='.1 .4 1.4' color='#777' altspace-cursor-collider='enabled: false'></a-box>
+    
+    <!-- <a-cylinder position='8.9 1.9 4.1' rotation='0 0 90 ' scale='.025 .15 .025' color='red' n-mesh-collider='type: hologram'></a-cylinder> -->
+    
+    <a-box position='8.9 1.5 4.65' scale='.1 .2 .35' color='#777' altspace-cursor-collider='enabled: false'></a-box>
+    <a-cylinder id='button' position='8.9 1.5 4.6' rotation='0 0 90 ' scale='.05 .15 .05' color='red' n-mesh-collider='type: hologram'></a-cylinder>
+    <a-cylinder id='kickbutton' position='8.9 1.5 4.75' rotation='0 0 90 ' scale='.03 .15 .03' color='yellow' n-mesh-collider='type: hologram'></a-cylinder>
+    <a-entity id='text' position='0 0 -2' n-text='text: ' n-skeleton-parent='part: head'></a-entity>
+    
+    <a-entity id='t1' position='0 -5 0' scale='10 1 10' geometry='primitive: box' material='visible: false' n-mesh-collider='type: environment; convex: false'></a-entity>
+    <a-entity id='portal' position='0 -10 0' n-portal='targetEntity: #t1'></a-entity>
+    
+    <a-entity id='fly'></a-entity>
+    <a-entity id='buttons'></a-entity>
+    
+    <a-entity id='info' position='2.4 1.7 -8.8'>
+      <a-image id='infoImage' position='0 -100 0' scale='5.135 1.8 1' src="https://bengarfield.github.io/AltVR/codenames/vivRules.png"></a-image>
+      <a-image id='infoImage2' position='0 -100 0' scale='9.117 1.86 1' src="https://bengarfield.github.io/AltVR/codenames/manualsmall.jpg"></a-image>
+      <a-box id='showInfo' position='-1 -100 0' scale='1 .3 .1' color='red'></a-box>
+      <a-box id='showInfo2' position='1 -100 0' scale='1 .3 .1' color='blue'></a-box>
+    </a-entity>
+    
+  </a-scene>
+  <script>
+  //altspace.open('http://www.google.com/#q=how+to+play+codenames', '_experience', {icon: 'http://bengarfield.github.io/AltVR/codenames/icon.png', hidden: true});
+  var config = {
+    baseRefUrl: "https://altvr-apps.firebaseio.com/",
+    authorId: "BenG",
+    appId: "Kicker"
+  }
+  Promise.all([
+    altspace.utilities.sync.connect(config),
+    altspace.getUser(),
+    altspace.getThreeJSTrackingSkeleton(),
+  ]).then(function(results){
+    var sync = results[0];
+    var user = results[1];
+    var s = results[2];
+    
+    document.querySelector('a-scene').object3D.add(s);
+    
+    var players = sync.instance.child('players');
+    var you = players.child(user.displayName + user.userId);
+    var kick = sync.instance.child('kick');
+    var kick2 = sync.instance.child('realkick');
+    var showI = sync.instance.child('show');
+    var showI2 = sync.instance.child('show2');
+    
+    var realkick = false;
+    
+    var playerList = [];
+    var playerObj = {};
+    var playerIds = [];
+    
+    var stay = false;
+    var show = false;
+    var show2 = false;
+    
+    if (user.isModerator) {
+      showInfo.object3D.position.y = -1.4;
+      showInfo2.object3D.position.y = -1.4;
+      showInfo.addEventListener('mouseup', function(){
+        show = !show;
+        showI.set(show);
+      });
+      showInfo2.addEventListener('mouseup', function(){
+        show2 = !show2;
+        showI2.set(show2);
+      });
+    }
+    
+    showI.on('value', function(data){
+      if (data.val() != null) {
+        show = data.val();
+        if (show) {
+          infoImage.object3D.position.y = 0;
+          showInfo.setAttribute('color', 'green');
+          if (show2) {
+            showI2.set(false);
+          }
+        } else {
+          infoImage.object3D.position.y = -100;
+          showInfo.setAttribute('color', 'red');
+        }
+      }
+    });
+    
+    showI2.on('value', function(data){
+      if (data.val() != null) {
+        show2 = data.val();
+        if (show2) {
+          infoImage2.object3D.position.y = 0;
+          showInfo2.setAttribute('color', 'green');
+          if (show) {
+            showI.set(false);
+          }
+        } else {
+          infoImage2.object3D.position.y = -100;
+          showInfo2.setAttribute('color', 'blue');
+        }
+      }
+    });
+
+    for (var i = 0; i < 27; i++) {
+      var y = 1.9;
+      var z = 4 + (i * .15);
+      if (i > 8) {
+        y = 1.8;
+        z = 4 + ((i - 9) * .15);
+      }
+      if (i > 17) {
+        y = 1.7;
+        z = 4 + ((i - 18) * .15);
+      }
+      var b = document.createElement('a-cylinder');
+      b.setAttribute('id', 'abutton' + i);
+      b.setAttribute('position', {x:8.9,y:y - 1000,z:z});
+      b.setAttribute('scale', '.025 .15 .025');
+      b.setAttribute('rotation', '0 0 90');
+      b.setAttribute('color', '#f00');
+      b.setAttribute('n-mesh-collider', 'type: hologram');
+      buttons.appendChild(b);
+      
+      if(user.isModerator/* || user.displayName == 'Dr Shipman'*/){
+        b.addEventListener('mouseup', function(e){
+          var id = Number(e.target.id.slice(7,e.target.id.length));
+          console.log(id, playerObj[playerIds[id]].name, playerObj[playerIds[id]].id);
+          //console.log(playerList[id].name, playerList[id].id);
+          players.child(playerIds[id]).child('kick').set(!playerObj[playerIds[id]].kick);
+        });
+        document.querySelector('#abutton' + i).object3D.children[0].addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({
+          joints: [['Index','Right',3],['Index','Left',3]],
+          jointCubeSize: .1
+        }));
+        document.querySelector('#abutton' + i).object3D.children[0].addEventListener('jointcollisionenter', function(e){
+          var id = Number(e.target.el.id.slice(7,e.target.el.id.length));
+          //console.log(playerList[id].name, playerList[id].id);
+          players.child(playerIds[id]).child('kick').set(!playerObj[playerIds[id]].kick);
+        });
+
+        var t = document.createElement('a-entity');
+        t.setAttribute('id', 'name' + i);
+        t.setAttribute('position', {x:8.84,y:y + .05 - 1000,z:z});
+        t.setAttribute('scale', '.03 .03 .03');
+        t.setAttribute('rotation', '0 -90 0');
+        t.setAttribute('n-text', 'text: ' + i);
+        buttons.appendChild(t);
+      }
+    }    
+    
+    if(user.isModerator/* || user.displayName == 'Dr Shipman'*/){
+      document.querySelector('#button').addEventListener('mouseup', function(){
+        kick.set('yes');
+        setTimeout(function(){kick.set(null);}, 5000);
+      });
+      var kicking = false;
+      button.object3D.children[0].addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({joints: [['Index','Right',3],['Index','Left',3]], jointCubeSize: .1}));
+      button.object3D.children[0].addEventListener('jointcollisionenter', function(e){
+        if (!kicking) {
+          kicking = true;
+          button.setAttribute('color', 'green');
+          kick.set('yes');
+          setTimeout(function(){button.setAttribute('color', 'red'); kicking = false}, 5000);
+        }
+      });
+      kickbutton.addEventListener('mouseup', function(){
+        if (realkick) {
+          kickbutton.setAttribute('color', 'red');
+          kick2.set(false);
+        } else {
+          kickbutton.setAttribute('color', 'yellow');
+          kick2.set(true);
+        }
+      });
+      kickbutton.object3D.children[0].addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({joints: [['Index','Right',3],['Index','Left',3]], jointCubeSize: .1}));
+      kickbutton.object3D.children[0].addEventListener('jointcollisionenter', function(e){
+        if (realkick) {
+          kickbutton.setAttribute('color', 'red');
+          kick2.set(false);
+        } else {
+          kickbutton.setAttribute('color', 'yellow');
+          kick2.set(true);
+        }
+      });
+    }
+
+    setTimeout(function(){
+    
+    players.on('child_added', function(data){
+      console.log(data.val());
+      playerList.push(data.val());
+      playerObj[data.key()] = data.val();
+      playerIds.push(data.key());
+      playerIds.sort();
+      console.log(playerObj);
+      //addButton(playerList.length - 1);
+      updateButtons();
+    });
+      
+    }, 500);
+
+    players.on('child_changed', function(data){
+      //console.log(data.val());
+      var id;
+      for (var i = 0; i < playerList.length; i++) {
+        if (playerList[i].id == data.val().id) {
+          id = i;
+          playerList[i].kick = data.val().kick;
+        }
+      }
+      playerObj[data.key()].kick = data.val().kick;
+      updateButtons();
+    });
+
+    players.on('child_removed', function(data){
+      //console.log(data.val());
+      for (var i = 0; i < playerList.length; i++) {
+        if (playerList[i].id == data.val().id) {
+          playerList.splice(i,1);
+          //updateButtons();
+        }
+      }
+      console.log(playerObj);
+      delete playerObj[data.key()];
+      console.log(playerObj);
+      console.log(playerIds);
+      playerIds.splice(playerIds.indexOf(data.key()),1);
+      console.log(playerIds);
+      updateButtons();
+    });
+
+    you.child('kick').on('value', function(data){
+      stay = !data.val();
+    });
+
+    kick.on('value', function(data){
+      if (data.val() != null) {
+        button.setAttribute('color', 'green');
+        setTimeout(function(){kick.set(null);}, 5000);
+        if (!stay) {
+          getKicked();
+        }
+      } else {
+        button.setAttribute('color', 'red');
+      }
+    });
+
+    kick2.on('value', function(data){
+      if (data.val() != null) {
+        if (data.val()) {
+          kickbutton.setAttribute('color', 'yellow');
+        } else {
+          kickbutton.setAttribute('color', 'red');
+        }
+        realkick = data.val();
+      } else {
+        realkick = false;
+      }
+    });
+
+    you.onDisconnect().set(null);
+    you.set({name: user.displayName, id: user.userId, kick: false});
+
+    function updateButtons() {
+      for (var i = 0; i < playerIds.length; i++) {
+        var b = document.querySelector('#abutton' + i);
+        if (b.object3D.position.y <= 0) {
+          b.object3D.position.y += 1000;
+          console.log('Button added');
+        }
+        if (user.isModerator) {
+          var t = document.querySelector('#name' + i);
+          if (t.object3D.position.y < 0) {
+            t.object3D.position.y += 1000;
+          }
+        t.setAttribute('n-text', 'text: ' + playerObj[playerIds[i]].name);
+        }
+        if (playerObj[playerIds[i]].kick) {
+          b.setAttribute('color', '#0f0');
+        } else {
+          b.setAttribute('color', '#f00');
+        }
+      }
+      for (var i = playerIds.length; i < 27; i++) {
+        var b = document.querySelector('#abutton' + i);
+        if (b.object3D.position.y > 0) {
+          b.object3D.position.y -= 1000;
+          console.log('Button removed');
+        }
+        if (user.isModerator) {
+          var t = document.querySelector('#name' + i);
+          if (t.object3D.position.y > 0) {
+            t.object3D.position.y -= 1000;
+          }
+        }
+      }
+    }
+
+    function getKicked() {
+      var sp = s.getJoint('Spine').position;
+      console.log(sp);
+      var text = document.querySelector('#text');
+      /*text.setAttribute('n-text', 'text: 5');
+      setTimeout(function(){text.setAttribute('n-text', 'text: 4');}, 1000);
+      setTimeout(function(){text.setAttribute('n-text', 'text: 3');}, 2000);
+      setTimeout(function(){text.setAttribute('n-text', 'text: 2');}, 3000);
+      setTimeout(function(){text.setAttribute('n-text', 'text: 1');}, 4000);*/
+      setTimeout(function(){/*document.querySelector('#portal').setAttribute('position', {x:sp.x,y:sp.y,z:sp.z});*/text.setAttribute('n-text', 'text: ');}, 5000)
+
+      /*setTimeout(function(){*/fly.innerHTML = "<a-box position='0 -1.7 0' scale='5 1 5' material='visible: false' n-skeleton-parent='part: spine' n-mesh-collider='type: environment; convex: false'><a-animation attribute='position' to='0 -1 0' dur='10000'></a-animation></a-box>";/*}, 1000);*/
+
+      //setTimeout(function(){document.querySelector('#t1').setAttribute('position', '1000 0 0');text.setAttribute('n-text', 'text: Bye!');}, 6000);
+      if (realkick) {
+        if (findGetParameter('to') == 'coma'){}
+        setTimeout(function(){
+          if (findGetParameter('to') == 'coma'){
+            document.querySelector('#coma').click();
+          } else {
+            document.querySelector('#link').click();
+          }
+        }, 8000);
+      }
+      setTimeout(function(){fly.innerHTML = '';text.setAttribute('n-text', 'text: ');}, 10000);
+    }
+      
+  });
+    
+  function findGetParameter(parameterName) {
+    var result = null,
+        tmp = [];
+    location.search
+    .substr(1)
+        .split("&")
+        .forEach(function (item) {
+        tmp = item.split("=");
+        if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+    });
+    return result;
+  }
+  
+  </script>
+</body>
+</html>
