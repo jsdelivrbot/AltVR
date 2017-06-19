@@ -133,77 +133,14 @@
     var currentTeam = '';
 
     var clickSound = new THREE.Object3D();
-    sim.scene.add(clickSound);
-    clickSound.addBehavior(
-      new altspaceutil.behaviors.NativeComponent('n-sound', {
-        src: /Mobile/i.test(navigator.userAgent) ? 'click.mp3' : 'click.ogg', // MP3 Supported For Mobile Devices, OGG Supported For Everything Else
-        autoplay: false,
-        loop: false,
-        volume: 0.5,
-        minDistance: 1,
-        maxDistance: 12,
-      })
-    );
     var failSound = new THREE.Object3D();
-    sim.scene.add(failSound);
-    failSound.addBehavior(
-      new altspaceutil.behaviors.NativeComponent('n-sound', {
-        src: /Mobile/i.test(navigator.userAgent) ? 'fail.mp3' : 'fail.ogg', // MP3 Supported For Mobile Devices, OGG Supported For Everything Else
-        autoplay: false,
-        loop: false,
-        volume: 0.5,
-        minDistance: 1,
-        maxDistance: 12,
-      })
-    );
     var assassinSound = new THREE.Object3D();
-    sim.scene.add(assassinSound);
-    assassinSound.addBehavior(
-      new altspaceutil.behaviors.NativeComponent('n-sound', {
-        src: /Mobile/i.test(navigator.userAgent) ? 'assassin.mp3' : 'assassin.ogg', // MP3 Supported For Mobile Devices, OGG Supported For Everything Else
-        autoplay: false,
-        loop: false,
-        volume: 0.5,
-        minDistance: 1,
-        maxDistance: 12,
-      })
-    );
     var winSound = new THREE.Object3D();
-    sim.scene.add(winSound);
-    winSound.addBehavior(
-      new altspaceutil.behaviors.NativeComponent('n-sound', {
-        src: /Mobile/i.test(navigator.userAgent) ? 'win2.mp3' : 'win2.ogg', // MP3 Supported For Mobile Devices, OGG Supported For Everything Else
-        autoplay: false,
-        loop: false,
-        volume: 0.5,
-        minDistance: 1,
-        maxDistance: 12,
-      })
-    );
     var redSound = new THREE.Object3D();
-    sim.scene.add(redSound);
-    redSound.addBehavior(
-      new altspaceutil.behaviors.NativeComponent('n-sound', {
-        src: /Mobile/i.test(navigator.userAgent) ? 'red.mp3' : 'red.ogg', // MP3 Supported For Mobile Devices, OGG Supported For Everything Else
-        autoplay: false,
-        loop: false,
-        volume: 0.5,
-        minDistance: 1,
-        maxDistance: 12,
-      })
-    );
     var blueSound = new THREE.Object3D();
-    sim.scene.add(blueSound);
-    blueSound.addBehavior(
-      new altspaceutil.behaviors.NativeComponent('n-sound', {
-        src: /Mobile/i.test(navigator.userAgent) ? 'blue.mp3' : 'blue.ogg', // MP3 Supported For Mobile Devices, OGG Supported For Everything Else
-        autoplay: false,
-        loop: false,
-        volume: 0.5,
-        minDistance: 1,
-        maxDistance: 12,
-      })
-    );
+    setupSounds();
+    sim.scene.add(clickSound,failSound,assassinSound,winSound,redSound,blueSound);
+
     function playSound(sound) {
       if (sound == 'click') {
         clickSound.getBehaviorByType('n-sound').callComponent('play');
@@ -251,25 +188,6 @@
         //console.log('rev', id, document.querySelector('#' + id));
         document.querySelector('#' + id).style.backgroundColor = colors[Number(id.slice(1,id.length)) - 1];
         document.querySelector('#' + id).innerHTML = '';
-        /*if (colors[Number(id.slice(1,id.length)) - 1] == 'black') {
-          playSound('assassin');
-        } else {
-          if (currentTeam == 'red') {
-            if (colors[Number(id.slice(1,id.length)) - 1] == 'darkred') {
-              playSound('win');
-            } else {
-              playSound('fail');
-              currTeam.set('blue');
-            }
-          } else {
-            if (colors[Number(id.slice(1,id.length)) - 1] == 'darkblue') {
-              playSound('win');
-            } else {
-              playSound('fail');
-              currTeam.set('red');
-            }
-          }
-        }*/
       });
       revealed.on('child_removed', function(oldChildSnapshot) {
         for (var i = 0; i < 5; i++) {
@@ -594,6 +512,85 @@
       } else {
         document.querySelector('.smb').innerHTML += ' &#9733';
       }
+    }
+
+    function setupSounds() {
+      var click = 'sounds/click';
+      var fail = 'sounds/fail';
+      var assassin = 'sounds/assassin';
+      var win = 'sounds/win2';
+      var redS = 'sounds/red';
+      var blueS = 'sounds/blue';
+
+      if (findGetParameter('sounds') == '2') {
+        click = 'sounds/click';
+        fail = 'sounds/whip';
+        assassin = 'sounds/lock';
+        win = 'sounds/win2';
+        redS = 'sounds/red';
+        blueS = 'sounds/blue';
+      }
+
+      clickSound.addBehavior(
+        new altspaceutil.behaviors.NativeComponent('n-sound', {
+          src: /Mobile/i.test(navigator.userAgent) ? click + '.mp3' : click + '.ogg',
+          autoplay: false,
+          loop: false,
+          volume: 0.5,
+          minDistance: 1,
+          maxDistance: 12,
+        })
+      );
+      failSound.addBehavior(
+        new altspaceutil.behaviors.NativeComponent('n-sound', {
+          src: /Mobile/i.test(navigator.userAgent) ? fail + '.mp3' : fail + '.ogg',
+          autoplay: false,
+          loop: false,
+          volume: 0.5,
+          minDistance: 1,
+          maxDistance: 12,
+        })
+      );
+      assassinSound.addBehavior(
+        new altspaceutil.behaviors.NativeComponent('n-sound', {
+          src: /Mobile/i.test(navigator.userAgent) ? assassin + '.mp3' : assassin + '.ogg',
+          autoplay: false,
+          loop: false,
+          volume: 0.8,
+          minDistance: 1,
+          maxDistance: 12,
+        })
+      );
+      winSound.addBehavior(
+        new altspaceutil.behaviors.NativeComponent('n-sound', {
+          src: /Mobile/i.test(navigator.userAgent) ? win + '.mp3' : win + '.ogg',
+          autoplay: false,
+          loop: false,
+          volume: 0.5,
+          minDistance: 1,
+          maxDistance: 12,
+        })
+      );
+      redSound.addBehavior(
+        new altspaceutil.behaviors.NativeComponent('n-sound', {
+          src: /Mobile/i.test(navigator.userAgent) ? redS + '.mp3' : redS + '.ogg',
+          autoplay: false,
+          loop: false,
+          volume: 0.5,
+          minDistance: 1,
+          maxDistance: 12,
+        })
+      );
+      blueSound.addBehavior(
+        new altspaceutil.behaviors.NativeComponent('n-sound', {
+          src: /Mobile/i.test(navigator.userAgent) ? blueS + '.mp3' : blueS + '.ogg',
+          autoplay: false,
+          loop: false,
+          volume: 0.5,
+          minDistance: 1,
+          maxDistance: 12,
+        })
+      );
     }
   });
 
