@@ -59,6 +59,7 @@
         this.grabbedObject = { 'left': null, 'right': null };
         this.grabSystem = this.el.sceneEl.systems['grab-object-system'];
         this.syncSystem = this.el.sceneEl.systems['sync-system'];
+        this.syncSetup = false;
 
         this.el.object3D.addEventListener('jointcollisionenter', (function(event) {
           if(event.detail.joints && event.detail.joints[0]) {
@@ -98,10 +99,6 @@
             ]
           })
         );
-        
-        if (!this.data.spawner) {
-          console.log('no spawn', this.el.getAttribute('mixin'), this);
-        }
       },
       tick: function(time, deltaTime) {
         var gamepads = altspace.getGamepads();
@@ -110,6 +107,19 @@
         }
 
         for(var part of this.data.parts) this.updateHandObject(part);
+
+        if (!this.data.spawner && !this.syncSetup && this.syncSystem.connection != undefined) {
+          this.syncSetup = true;
+          var pos = this.el.parentEl.object3D.position;
+          var y = pos.y;
+          this.syncSystem.connection.instance.child('grabObjects').child(this.el.getAttribute('mixin')).on('value', function(data){
+            if (data.val()) {
+              pos.y = -1000;
+            } else {
+              pos.y = y;
+            }
+          });
+        }
       },
       updateHandObject: function(hand) {
         var isPrevTriggerPressed = this.isTriggerPressed[hand];
@@ -120,10 +130,10 @@
             this.grabSystem.updateGrabbedObject(this.data.group, null);
             this.syncSystem.removeLast(this.grabbedObject[hand]);
             this.grabbedObject[hand] = null;
-            this.syncSystem.connection.instance.child('grabObjects').child(this.data.group).set(false);
-            console.log('dropped');
+            
             if (!this.data.spawner) {
               console.log('respawn');
+              this.syncSystem.connection.instance.child('grabObjects').child(this.el.getAttribute('mixin')).set(false);
             }
           }
         } else {
@@ -159,10 +169,10 @@
             this.grabbedObject[hand] = 'go-' + THREE.Math.generateUUID();
             this.grabSystem.updateGrabbedObject(this.data.group, this.el.object3D);
             this.syncSystem.instantiate(this.data.mixin.join(' ') + ' grab-object-' + ((hand === 'left') ? 'left' : 'right'), this.el.sceneEl, this.el, this.grabbedObject[hand]);
-            this.syncSystem.connection.instance.child('grabObjects').child(this.data.group).set(true);
-            console.log('grabbed');
+            
             if (!this.data.spawner) {
               console.log('despawn');
+              this.syncSystem.connection.instance.child('grabObjects').child(this.el.getAttribute('mixin')).set(true);
             }
           }
         }
@@ -271,14 +281,14 @@
       
       <a-entity position='.3 0 -.1' rotation='-10 -10 0'>
         <a-mixin id="frame3" obj-model='obj: url(frame.obj); mtl: url(3.mtl)' collapse-model></a-mixin>
-        <a-entity mixin="frame3" grab-object="group: 3; parts: right; mixin: frame3 rightpos; spawner: false"></a-entity>
-        <a-entity mixin="frame3" grab-object="group: 3; parts: left; mixin: frame3 leftpos; spawner: false"></a-entity>
+        <a-entity mixin="frame3" grab-object="group: 3; parts: right; mixin: frame3 rightpos"></a-entity>
+        <a-entity mixin="frame3" grab-object="group: 3; parts: left; mixin: frame3 leftpos"></a-entity>
       </a-entity>
       
       <a-entity position='.7 0 0' rotation='-10 -5 0'>
       <a-mixin id="frame4" obj-model='obj: url(frame.obj); mtl: url(4.mtl)' collapse-model></a-mixin>
-        <a-entity mixin="frame4" grab-object="group: 4; parts: right; mixin: frame4 rightpos"></a-entity>
-        <a-entity mixin="frame4" grab-object="group: 4; parts: left; mixin: frame4 leftpos"></a-entity>
+        <a-entity mixin="frame4" grab-object="group: 4; parts: right; mixin: frame4 rightpos; spawner: false"></a-entity>
+        <a-entity mixin="frame4" grab-object="group: 4; parts: left; mixin: frame4 leftpos; spawner: false"></a-entity>
       </a-entity>
     </a-entity>
     
@@ -372,7 +382,7 @@
         }
       });
       
-      var grabObjects = sync.instance.child('grabObjects');
+      /*var grabObjects = sync.instance.child('grabObjects');
       grabObjects.on('child_changed', function(childSnapshot, prevChildKey){
         console.log(childSnapshot.key(), childSnapshot.val());
         if (childSnapshot.val()) {
@@ -380,7 +390,7 @@
         } else {
           document.querySelector('#frame' + childSnapshot.key()).parentElement.object3D.position.y = 0;
         }
-      });
+      });*/
 
       var realkick = false;
 
