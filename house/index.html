@@ -230,12 +230,6 @@
     
     <a-entity id='fly'></a-entity>
 
-    <a-entity position="0 1.5 0" rotation="0 0 0" scale="1 1 1">
-      <a-mixin id="crystalSword" obj-model='obj: url(frame.obj); mtl: url(frame.mtl)' position="0 0 0" rotation="0 0 0" scale="1 1 1" collapse-model></a-mixin>
-      <a-entity id="crystalSwordRight" mixin="crystalSword" grab-object="group: meleeWeapon; parts: right; mixin: crystalSword rightpos"></a-entity>
-      <a-entity id="crystalSwordLeft" mixin="crystalSword" grab-object="group: meleeWeapon; parts: left; mixin: crystalSword rightpos"></a-entity>
-    </a-entity>
-
     <a-plane id='poolcover' scale='10 15 .01' position='5 -.1 14' rotation='-90 0 0' material='visible: false' n-box-collider='type: environment; convex: false'></a-plane>
     <a-box id='roof' scale='2 .7 .8' position='-6.2 6 2.85' rotation='45 0 0' material='visible: true' n-box-collider='type: environment; convex: false'></a-box>
     
