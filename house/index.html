@@ -46,6 +46,10 @@
         group: {
           type: 'string',
           default: 'default'
+        },
+        spawner: {
+          type: 'boolean',
+          default: 'true'
         }
       },
       init: function() {
@@ -94,6 +98,10 @@
             ]
           })
         );
+        
+        if (!this.data.spawner) {
+          console.log('no spawn', this);
+        }
       },
       tick: function(time, deltaTime) {
         var gamepads = altspace.getGamepads();
