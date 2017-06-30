@@ -357,6 +357,11 @@
           }
         }
       });
+      
+      var grabObjects = sync.instance.child('grabObjects');
+      grabObjects.on('child_changed', function(childSnapshot, prevChildKey){
+        console.log(childSnapshot.key(), childSnapshot.val());
+      });
 
       var realkick = false;
 
