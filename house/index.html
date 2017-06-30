@@ -361,6 +361,11 @@
       var grabObjects = sync.instance.child('grabObjects');
       grabObjects.on('child_changed', function(childSnapshot, prevChildKey){
         console.log(childSnapshot.key(), childSnapshot.val());
+        if (childSnapshot.val()) {
+          document.querySelector('#frame' + childSnapshot.key()).parentElement.object3D.position.y = -100;
+        } else {
+          document.querySelector('#frame' + childSnapshot.key()).parentElement.object3D.position.y = 0;
+        }
       });
 
       var realkick = false;
