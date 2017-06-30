@@ -122,6 +122,9 @@
             this.grabbedObject[hand] = null;
             this.syncSystem.connection.instance.child('grabObjects').child(this.data.group).set(false);
             console.log('dropped');
+            if (!this.data.spawner) {
+              console.log('respawn');
+            }
           }
         } else {
 
@@ -158,6 +161,9 @@
             this.syncSystem.instantiate(this.data.mixin.join(' ') + ' grab-object-' + ((hand === 'left') ? 'left' : 'right'), this.el.sceneEl, this.el, this.grabbedObject[hand]);
             this.syncSystem.connection.instance.child('grabObjects').child(this.data.group).set(true);
             console.log('grabbed');
+            if (!this.data.spawner) {
+              console.log('despawn');
+            }
           }
         }
       }
