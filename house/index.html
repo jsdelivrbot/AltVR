@@ -112,6 +112,7 @@
             this.grabSystem.updateGrabbedObject(this.data.group, null);
             this.syncSystem.removeLast(this.grabbedObject[hand]);
             this.grabbedObject[hand] = null;
+            this.syncSystem.connection.instance.child('grabObjects').child(this.data.group).set(false);
             console.log('dropped');
           }
         } else {
@@ -147,6 +148,7 @@
             this.grabbedObject[hand] = 'go-' + THREE.Math.generateUUID();
             this.grabSystem.updateGrabbedObject(this.data.group, this.el.object3D);
             this.syncSystem.instantiate(this.data.mixin.join(' ') + ' grab-object-' + ((hand === 'left') ? 'left' : 'right'), this.el.sceneEl, this.el, this.grabbedObject[hand]);
+            this.syncSystem.connection.instance.child('grabObjects').child(this.data.group).set(true);
             console.log('grabbed');
           }
         }
