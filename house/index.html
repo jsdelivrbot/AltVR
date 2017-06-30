@@ -100,7 +100,7 @@
         );
         
         if (!this.data.spawner) {
-          console.log('no spawn', this);
+          console.log('no spawn', this.el.getAttribute('mixin'), this);
         }
       },
       tick: function(time, deltaTime) {
