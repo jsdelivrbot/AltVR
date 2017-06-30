@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>House</title>
+  <script src="https://aframe.io/releases/0.3.0/aframe.js"></script>
+  <script src="https://sdk.altvr.com/libs/altspace.js/2.4.0/altspace.min.js"></script>
+  <script>
+    // n-skeleton-parent only works with root meshes at the moment. Since most model loaders use a root
+    // container object, we need to collapse the model so that n-skeleton-parent can access the mesh directly.
+    AFRAME.registerComponent('collapse-model', {
+        init: function () {
+            this.el.addEventListener('model-loaded', function () {
+                this.el.object3DMap.mesh.updateMatrixWorld();
+                var mesh;
+                this.el.object3DMap.mesh.traverse(function (obj) {
+                    if (!mesh && obj instanceof THREE.Mesh) {
+                        mesh = obj;
+                    }
+                }.bind(this))
+                if (mesh) {
+                    mesh.scale.copy(mesh.getWorldScale());
+                    this.el.setObject3D('mesh', mesh);
+                    // setObject3D emits this event in a-frame 0.4.0
+                    this.el.emit('object3dset', {
+                        type: 'mesh'
+                    });
+                }
+            }.bind(this));
+        }
+    });
+
+    //-----------------------GRAB OBJECTS------------------
+
+    AFRAME.registerComponent('grab-object', {
+      dependencies: ['grab-object-system'],
+      schema: {
+        mixin: {
+          type: 'array'
+        },
+        parts: {
+          type: 'array',
+          default: ['left', 'right']
+        },
+        group: {
+          type: 'string',
+          default: 'default'
+        }
+      },
+      init: function() {
+        this.isHandInRange = { 'left': false, 'right': false };
+        this.isTriggerPressed = { 'left': false, 'right': false };
+        this.gamepad = { 'left': null, 'right': null };
+        this.grabbedObject = { 'left': null, 'right': null };
+        this.grabSystem = this.el.sceneEl.systems['grab-object-system'];
+        this.syncSystem = this.el.sceneEl.systems['sync-system'];
+
+        this.el.object3D.addEventListener('jointcollisionenter', (function(event) {
+          if(event.detail.joints && event.detail.joints[0]) {
+            if(/Left/.test(event.detail.joints[0].name)) this.isHandInRange['left'] = true;
+            else if(/Right/.test(event.detail.joints[0].name)) this.isHandInRange['right'] = true;
+          }
+        }).bind(this));
+
+        this.el.object3D.addEventListener('jointcollisionleave', (function(event) {
+          if(event.detail.joints && event.detail.joints[0]) {
+            if(/Left/.test(event.detail.joints[0].name)) this.isHandInRange['left'] = false;
+            else if(/Right/.test(event.detail.joints[0].name)) this.isHandInRange['right'] = false;
+          }
+        }).bind(this));
+
+        this.el.object3D.addBehaviors(
+          new altspace.utilities.behaviors.JointCollisionEvents({
+            jointCubeSize: 0.1,
+            joints: [
+              ['Hand', 'Left', 0],
+              ['Thumb', 'Left', 3],
+              ['Index', 'Left', 3],
+              ['Middle', 'Left', 3],
+              ['Ring', 'Left', 3],
+              ['Pinky', 'Left', 3]
+            ]
+          }),
+          new altspace.utilities.behaviors.JointCollisionEvents({
+            jointCubeSize: 0.1,
+            joints: [
+              ['Hand', 'Right', 0],
+              ['Thumb', 'Right', 3],
+              ['Index', 'Right', 3],
+              ['Middle', 'Right', 3],
+              ['Ring', 'Right', 3],
+              ['Pinky', 'Right', 3]
+            ]
+          })
+        );
+      },
+      tick: function(time, deltaTime) {
+        var gamepads = altspace.getGamepads();
+        for(var gamepad of gamepads) {
+          if(gamepad.connected && !this.gamepad[gamepad.hand]) this.gamepad[gamepad.hand] = gamepad;
+        }
+
+        for(var part of this.data.parts) this.updateHandObject(part);
+      },
+      updateHandObject: function(hand) {
+        var isPrevTriggerPressed = this.isTriggerPressed[hand];
+        this.isTriggerPressed[hand] = (this.gamepad[hand] && this.gamepad[hand].connected && this.gamepad[hand].buttons[1].pressed);
+
+        if(this.grabbedObject[hand]) {
+          if(!this.isTriggerPressed[hand] && this.el.object3D === this.grabSystem.getGrabbedObject(this.data.group)) {
+            this.grabSystem.updateGrabbedObject(this.data.group, null);
+            this.syncSystem.removeLast(this.grabbedObject[hand]);
+            this.grabbedObject[hand] = null;
+            console.log('dropped');
+          }
+        } else {
+
+          //Check to see if people are allowed to grab said object based off of what the object's group and their player class is
+          var grabAllowed = true;
+
+          switch(this.data.group) {
+            /*case 'meleeWeapon':
+            case 'heavyShield': {
+              if(playerClass !== 'berserker') grabAllowed = false;
+              break;
+            }
+            case 'rangedWeapon':
+            case 'knife': {
+              if(playerClass !== 'assassin') grabAllowed = false;
+              break;
+            }
+            case 'staff':
+            case 'wand': {
+              if(playerClass !== 'spellcaster') grabAllowed =false;
+
+              break;
+            }*/
+            default: {
+              //Leave empty
+              break;
+            }
+          }
+
+
+          if(this.isHandInRange[hand] && !this.grabSystem.getGrabbedObject(this.data.group) && (this.isTriggerPressed[hand] && !isPrevTriggerPressed && grabAllowed)) {
+            this.grabbedObject[hand] = 'go-' + THREE.Math.generateUUID();
+            this.grabSystem.updateGrabbedObject(this.data.group, this.el.object3D);
+            this.syncSystem.instantiate(this.data.mixin.join(' ') + ' grab-object-' + ((hand === 'left') ? 'left' : 'right'), this.el.sceneEl, this.el, this.grabbedObject[hand]);
+            console.log('grabbed');
+          }
+        }
+      }
+    });
+
+    //------------------------GRAB OBJECTS SYSTEM--------------
+
+    AFRAME.registerSystem('grab-object-system', {
+      init: function() {
+        this.grabGroups = {};
+
+        var mixin = document.createElement('a-mixin');
+        mixin.setAttribute('id', 'grab-object-left');
+        mixin.setAttribute('n-skeleton-parent', 'part: hand; side: left; index: 0');
+        mixin.setAttribute('sync', '');
+        mixin.setAttribute('sync-n-skeleton-parent', '');
+        this.sceneEl.appendChild(mixin);
+
+        var mixin = document.createElement('a-mixin');
+        mixin.setAttribute('id', 'grab-object-right');
+        mixin.setAttribute('n-skeleton-parent', 'part: hand; side: right; index: 0');
+        mixin.setAttribute('sync', '');
+        mixin.setAttribute('sync-n-skeleton-parent', '');
+        this.sceneEl.appendChild(mixin);
+      },
+      getGrabbedObject: function(groupName) {
+        return this.grabGroups[groupName];
+      },
+      updateGrabbedObject: function(groupName, object) {
+        if(!object) delete this.grabGroups[groupName];
+        else this.grabGroups[groupName] = object;
+      }
+    });
+  </script>
+</head>
+<body>
+  <a-scene altspace='fullspace: true' sync-system='author: BenG; app: Kicker; refUrl: https://altvr-apps.firebaseio.com/' grab-object-system>
+    <a-entity position='7.505 1.33 1.465' scale='.55 .55 1' rotation='0 -120 0' n-layout-browser='url: https://video-jukebox.firebaseapp.com/?category=house-party&room=nighthouse'></a-entity>
+    <!-- <a-entity n-layout-browser='url: http://output.jsbin.com/gazutu?altspace-sync-instance=nighthouse&sounds=2&mode=1; isEnclosure: true'></a-entity> -->
+    <!-- <a-entity scale='100 100 100' n-layout-browser='url: http://ravenworks.ca/altspace/sculpTogether/; isEnclosure: true'></a-entity> -->
+
+    <a id='link' href='altspace://account.altvr.com/api/spaces/campfire-lobby'></a>
+    <a id='coma' href='altspace://account.altvr.com/api/events/667738242228945250'></a>
+    <a id='house' href='altspace://account.altvr.com/api/spaces/experience-space-707549238216622625'></a>
+    
+    <a-assets>
+      <img id="image1" src="http://pbs.twimg.com/media/DC40L50XcAATzSt.jpg:large">
+      <img id="image2" src="https://pbs.twimg.com/media/DCocduTXkAAZ6kd.jpg:large">
+      <img id="image3" src="https://pbs.twimg.com/media/DDDLYHQXkAEwrCS.jpg:large">
+      <img id="image4" src="http://i.imgur.com/x1Hx1ph.jpg">
+      
+      <a-mixin id='handpic1' geometry='primitive: plane' scale='.3 .25 .25' position='.11 -.15 -.15' rotation='45 0 -90' material='src: #image1' n-skeleton-parent='part: hand; side: left' sync sync-n-skeleton-parent></a-mixin>
+      <a-mixin id='handpic2' geometry='primitive: plane' scale='.3 .25 .25' position='.11 -.15 -.15' rotation='45 0 -90' material='src: #image2' n-skeleton-parent='part: hand; side: left' sync sync-n-skeleton-parent></a-mixin>
+      <a-mixin id='handpic3' geometry='primitive: plane' scale='.3 .25 .25' position='.11 -.15 -.15' rotation='45 0 -90' material='src: #image3' n-skeleton-parent='part: hand; side: left' sync sync-n-skeleton-parent></a-mixin>
+      <a-mixin id='handpic4' geometry='primitive: plane' scale='.3 .25 .25' position='.11 -.15 -.15' rotation='45 0 -90' material='src: #image4' n-skeleton-parent='part: hand; side: left' sync sync-n-skeleton-parent></a-mixin>
+      
+      <a-mixin id='leftframe' position='.11 -.15 -.15' rotation='45 0 -90' obj-model='obj: url(frame.obj); mtl: url(frame.mtl)' collapse-model n-skeleton-parent='part: hand; side: left' sync sync-n-skeleton-parent></a-mixin>
+
+      <a-mixin id='rightframe' position='-.11 -.15 -.15' rotation='45 0 90' obj-model='obj: url(frame.obj); mtl: url(frame.mtl)' collapse-model n-skeleton-parent='part: hand; side: right' sync sync-n-skeleton-parent></a-mixin>
+      <a-mixin id='handpic3right' geometry='primitive: plane' scale='.3 .25 .25' position='-.11 -.15 -.15' rotation='45 0 90' material='src: #image3' n-skeleton-parent='part: hand; side: right' sync sync-n-skeleton-parent></a-mixin>
+
+      <a-mixin id='rightpos' position='-.11 -.15 -.15' rotation='45 0 90'></a-mixin>
+      <a-mixin id='leftpos' position='.11 -.15 -.15' rotation='45 0 -90'></a-mixin>
+
+    </a-assets>
+    
+    <a-entity id='panel' position='-17.86 -.31 2.55'>
+      <a-box position='8.9 1.8 4.6' scale='.08 .4 1.4' color='#111' altspace-cursor-collider='enabled: false'></a-box>
+      <a-box position='8.9 1.5 4.65' scale='.08 .2 .35' color='#111' altspace-cursor-collider='enabled: false'></a-box>
+      <a-cylinder id='button' position='8.9 1.5 4.6' rotation='0 0 90' scale='.05 .15 .05' color='#300' n-mesh-collider='type: hologram'></a-cylinder>
+      <a-cylinder id='kickbutton' position='8.9 1.5 4.75' rotation='0 0 90' scale='.03 .15 .03' color='#330' n-mesh-collider='type: hologram'></a-cylinder>
+
+      <a-entity id='pooltext' position='8.84 1.88 3' scale='.03 .03 .03' rotation='0 -90 0'></a-entity>
+      <a-cylinder id='poolbutton' position='8.9 1.8 3' rotation='0 0 90' scale='.05 .15 .05' color='#300' n-mesh-collider='type: hologram'></a-cylinder>
+
+      <a-entity id='codetext' position='8.84 1.88 3.3' scale='.03 .03 .03' rotation='0 -90 0'></a-entity>
+      <a-cylinder id='codebutton' position='8.9 1.8 3.3' rotation='0 0 90' scale='.05 .15 .05' color='#300' n-mesh-collider='type: hologram'></a-cylinder>
+      <a-entity id='buttons'></a-entity>
+    </a-entity>
+    
+    <a-entity id='fly'></a-entity>
+
+    <a-entity position="0 1.5 0" rotation="0 0 0" scale="1 1 1">
+      <a-mixin id="crystalSword" obj-model='obj: url(frame.obj); mtl: url(frame.mtl)' position="0 0 0" rotation="0 0 0" scale="1 1 1" collapse-model></a-mixin>
+      <a-entity id="crystalSwordRight" mixin="crystalSword" grab-object="group: meleeWeapon; parts: right; mixin: crystalSword rightpos"></a-entity>
+      <a-entity id="crystalSwordLeft" mixin="crystalSword" grab-object="group: meleeWeapon; parts: left; mixin: crystalSword rightpos"></a-entity>
+    </a-entity>
+
+    <a-plane id='poolcover' scale='10 15 .01' position='5 -.1 14' rotation='-90 0 0' material='visible: false' n-box-collider='type: environment; convex: false'></a-plane>
+    <a-box id='roof' scale='2 .7 .8' position='-6.2 6 2.85' rotation='45 0 0' material='visible: true' n-box-collider='type: environment; convex: false'></a-box>
+    
+    <a-entity id='info' position='-6 1.7 23' rotation='0 180 0'>
+      <a-image id='infoImage' position='0 -100 0' scale='5.135 1.8 1' src="https://bengarfield.github.io/AltVR/codenames/vivRules.png" altspace-cursor-collider='enabled: false'></a-image>
+      <a-image id='infoImage2' position='0 -100 0' scale='9.117 1.86 1' src="https://bengarfield.github.io/AltVR/codenames/manualsmall.jpg" altspace-cursor-collider='enabled: false'></a-image>
+      <a-box id='showInfo' position='-1 -100 0' scale='1 .3 .1' color='red'></a-box>
+      <a-box id='showInfo2' position='1 -100 0' scale='1 .3 .1' color='blue'></a-box>
+    </a-entity>
+    
+    <a-entity id='photos' position='8.1 1.12 -.8' rotation='0 -90 0'>
+      <a-entity position='-.2 0 0' rotation='-10 -15 0'>
+        <a-mixin id="frame1" obj-model='obj: url(frame.obj); mtl: url(1.mtl)' collapse-model></a-mixin>
+        <a-entity mixin="frame1" grab-object="group: meleeWeapon; parts: right; mixin: frame1 rightpos"></a-entity>
+        <a-entity mixin="frame1" grab-object="group: meleeWeapon; parts: left; mixin: frame1 leftpos"></a-entity>
+      </a-entity>
+      
+      <a-entity position='-.6 0 -.1' rotation='-10 10 0'>
+        <a-mixin id="frame2" obj-model='obj: url(frame.obj); mtl: url(2.mtl)' collapse-model></a-mixin>
+        <a-entity mixin="frame2" grab-object="group: meleeWeapon; parts: right; mixin: frame2 rightpos"></a-entity>
+        <a-entity mixin="frame2" grab-object="group: meleeWeapon; parts: left; mixin: frame2 leftpos"></a-entity>
+      </a-entity>
+      
+      <a-entity position='.3 0 -.1' rotation='-10 -10 0'>
+        <a-mixin id="frame3" obj-model='obj: url(frame.obj); mtl: url(3.mtl)' collapse-model></a-mixin>
+        <a-entity mixin="frame3" grab-object="group: meleeWeapon; parts: right; mixin: frame3 rightpos"></a-entity>
+        <a-entity mixin="frame3" grab-object="group: meleeWeapon; parts: left; mixin: frame3 leftpos"></a-entity>
+      </a-entity>
+      
+      <a-entity position='.7 0 0' rotation='-10 -5 0'>
+      <a-mixin id="frame4" obj-model='obj: url(frame.obj); mtl: url(4.mtl)' collapse-model></a-mixin>
+        <a-entity mixin="frame4" grab-object="group: meleeWeapon; parts: right; mixin: frame4 rightpos"></a-entity>
+        <a-entity mixin="frame4" grab-object="group: meleeWeapon; parts: left; mixin: frame4 leftpos"></a-entity>
+      </a-entity>
+    </a-entity>
+    
+    <!-- paintings -->
+    
+    <a-plane id='painting1' position='-.625 1.515 2.28' scale='.55 1.08 1' rotation='0 180 0' src='https://bengarfield.github.io/AltVR/house/1.jpg' altspace-cursor-collider='enabled: false'></a-plane>
+    <a-plane id='painting2' position='2.31 -1.456 -3.19' scale='.45 1.045 1' altspace-cursor-collider='enabled: false'></a-plane>
+    <a-plane id='painting3' position='4.956 -1.674 -3.188' scale='1.53 .735 1' altspace-cursor-collider='enabled: false'></a-plane>
+    
+  </a-scene>
+  <script>
+  //altspace.open('http://www.google.com/#q=how+to+play+codenames', '_experience', {icon: 'http://bengarfield.github.io/AltVR/codenames/icon.png', hidden: true});
+  var scene = document.querySelector('a-scene');
+  scene.addEventListener('connected', function() {
+    var sync = scene.systems['sync-system'].connection;
+    Promise.all([
+      altspace.getUser(),
+      altspace.getThreeJSTrackingSkeleton(),
+    ]).then(function(results){
+      var user = results[0];
+      var s = results[1];
+
+      if (user.isModerator) {
+        //scene.systems['sync-system'].instantiate('leftframe', scene, scene, 'frame1' + user.userId);
+        /*for (var i = 0; i < handtest.children.length; i++) {
+          handtest.children[i].setAttribute('n-skeleton-parent', 'part: hand; side: left');
+        }*/
+      }
+
+      var inControl = false;
+
+      if (user.isModerator || user.userId == '613349871495152349') {
+        inControl = true;
+      }
+      
+      var holding = 0;
+      
+      // pic1.addEventListener('mouseup', function(){
+      //   instantiatePic(1);
+      // });
+      // pic2.addEventListener('mouseup', function(){
+      //   instantiatePic(2);
+      // });
+      // pic3.addEventListener('mouseup', function(){
+      //   instantiatePic(3);
+      // });
+      // pic4.addEventListener('mouseup', function(){
+      //   instantiatePic(4);
+      // });
+      
+      function instantiatePic(pic) {
+        scene.systems['sync-system'].removeLast('pic' + user.userId);
+        if (holding == pic) {
+          holding = 0;
+          scene.systems['sync-system'].removeLast('frame' + user.userId);
+        } else {
+          if (holding == 0) {
+            scene.systems['sync-system'].instantiate('leftframe', scene, scene, 'frame' + user.userId);
+          }
+          holding = pic;
+          scene.systems['sync-system'].instantiate('handpic' + pic, scene, scene, 'pic' + user.userId);
+        }
+      }
+
+      document.querySelector('a-scene').object3D.add(s);
+
+      var players = sync.instance.child('players');
+      var you = players.child(user.displayName + user.userId);
+      var kick = sync.instance.child('kick');
+      var kick2 = sync.instance.child('realkick');
+
+      var showI = sync.instance.child('show');
+      var showI2 = sync.instance.child('show2');
+
+
+      var coverOn = false;
+      var syncpool = sync.instance.child('poolcover');
+      syncpool.on('value', function(data){
+        if (data.val() == null) {
+          syncpool.set(false);
+        } else {
+          if (data.val()) {
+            poolbutton.setAttribute('color', '#030');
+            poolcover.setAttribute('position', '5 -.1 14');
+            coverOn = true;
+          } else {
+            poolbutton.setAttribute('color', '#300');
+            poolcover.setAttribute('position', '5 -10 14');
+            coverOn = false;
+          }
+        }
+      });
+
+      var realkick = false;
+
+      var playerList = [];
+      var playerObj = {};
+      var playerIds = [];
+
+      var stay = false;
+      var show = false;
+      var show2 = false;
+
+      if (user.isModerator) {
+        showInfo.object3D.position.y = -1.4;
+        showInfo2.object3D.position.y = -1.4;
+        showInfo.addEventListener('mouseup', function(){
+          show = !show;
+          showI.set(show);
+        });
+        showInfo2.addEventListener('mouseup', function(){
+          show2 = !show2;
+          showI2.set(show2);
+        });
+      }
+
+      showI.on('value', function(data){
+        if (data.val() != null) {
+          show = data.val();
+          if (show) {
+            infoImage.object3D.position.y = 0;
+            showInfo.setAttribute('color', 'green');
+            if (show2) {
+              showI2.set(false);
+            }
+          } else {
+            infoImage.object3D.position.y = -100;
+            showInfo.setAttribute('color', 'red');
+          }
+        }
+      });
+
+      showI2.on('value', function(data){
+        if (data.val() != null) {
+          show2 = data.val();
+          if (show2) {
+            infoImage2.object3D.position.y = 0;
+            showInfo2.setAttribute('color', 'green');
+            if (show) {
+              showI.set(false);
+            }
+          } else {
+            infoImage2.object3D.position.y = -100;
+            showInfo2.setAttribute('color', 'blue');
+          }
+        }
+      });
+
+      for (var i = 0; i < 27; i++) {
+        var y = 1.9;
+        var z = 4 + (i * .15);
+        if (i > 8) {
+          y = 1.8;
+          z = 4 + ((i - 9) * .15);
+        }
+        if (i > 17) {
+          y = 1.7;
+          z = 4 + ((i - 18) * .15);
+        }
+        var b = document.createElement('a-cylinder');
+        b.setAttribute('id', 'abutton' + i);
+        b.setAttribute('position', {x:8.9,y:y - 1000,z:z});
+        b.setAttribute('scale', '.025 .15 .025');
+        b.setAttribute('rotation', '0 0 90');
+        b.setAttribute('color', '#300');
+        b.setAttribute('n-mesh-collider', 'type: hologram');
+        buttons.appendChild(b);
+
+        if(inControl){
+          b.addEventListener('mouseup', function(e){
+            var id = Number(e.target.id.slice(7,e.target.id.length));
+            console.log(id, playerObj[playerIds[id]].name, playerObj[playerIds[id]].id);
+            players.child(playerIds[id]).child('kick').set(!playerObj[playerIds[id]].kick);
+          });
+          document.querySelector('#abutton' + i).object3D.children[0].addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({
+            joints: [['Index','Right',3],['Index','Left',3]],
+            jointCubeSize: .1
+          }));
+          document.querySelector('#abutton' + i).object3D.children[0].addEventListener('jointcollisionenter', function(e){
+            var id = Number(e.target.el.id.slice(7,e.target.el.id.length));
+            players.child(playerIds[id]).child('kick').set(!playerObj[playerIds[id]].kick);
+          });
+
+          var t = document.createElement('a-entity');
+          t.setAttribute('id', 'name' + i);
+          t.setAttribute('position', {x:8.84,y:y + .05 - 1000,z:z});
+          t.setAttribute('scale', '.03 .03 .03');
+          t.setAttribute('rotation', '0 -90 0');
+          t.setAttribute('n-text', 'text: ' + i);
+          buttons.appendChild(t);
+        }
+      }    
+
+      if(inControl){
+        document.querySelector('#button').addEventListener('mouseup', function(){
+          kick.set('yes');
+          setTimeout(function(){kick.set(null);}, 5000);
+        });
+        var kicking = false;
+        button.object3D.children[0].addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({joints: [['Index','Right',3],['Index','Left',3]], jointCubeSize: .1}));
+        button.object3D.children[0].addEventListener('jointcollisionenter', function(e){
+          if (!kicking) {
+            kicking = true;
+            button.setAttribute('color', '#030');
+            kick.set('yes');
+            setTimeout(function(){button.setAttribute('color', '#300'); kicking = false}, 5000);
+          }
+        });
+        kickbutton.addEventListener('mouseup', function(){
+          if (realkick) {
+            kickbutton.setAttribute('color', '#300');
+            kick2.set(false);
+          } else {
+            kickbutton.setAttribute('color', '#330');
+            kick2.set(true);
+          }
+        });
+        kickbutton.object3D.children[0].addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({joints: [['Index','Right',3],['Index','Left',3]], jointCubeSize: .1}));
+        kickbutton.object3D.children[0].addEventListener('jointcollisionenter', function(e){
+          if (realkick) {
+            kickbutton.setAttribute('color', '#300');
+            kick2.set(false);
+          } else {
+            kickbutton.setAttribute('color', '#330');
+            kick2.set(true);
+          }
+        });
+
+        pooltext.setAttribute('n-text', 'text: <color=#555>Pool Cover');
+        poolbutton.addEventListener('mouseup', function(){
+          if (coverOn) {
+            poolbutton.setAttribute('color', '#300');
+            syncpool.set(false);
+          } else {
+            poolbutton.setAttribute('color', '#330');
+            syncpool.set(true);
+          }
+        });
+        poolbutton.object3D.children[0].addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({joints: [['Index','Right',3],['Index','Left',3]], jointCubeSize: .1}));
+        poolbutton.object3D.children[0].addEventListener('jointcollisionenter', function(e){
+          if (coverOn) {
+            poolbutton.setAttribute('color', '#300');
+            syncpool.set(false);
+          } else {
+            poolbutton.setAttribute('color', '#330');
+            syncpool.set(true);
+          }
+        });
+
+        codetext.setAttribute('n-text', 'text: <color=#555>Codenames');
+      }
+
+      setTimeout(function(){
+
+      players.on('child_added', function(data){
+        console.log(data.val());
+        playerList.push(data.val());
+        playerObj[data.key()] = data.val();
+        playerIds.push(data.key());
+        playerIds.sort();
+        console.log(playerObj);
+        updateButtons();
+      });
+
+      }, 500);
+
+      players.on('child_changed', function(data){
+        var id;
+        for (var i = 0; i < playerList.length; i++) {
+          if (playerList[i].id == data.val().id) {
+            id = i;
+            playerList[i].kick = data.val().kick;
+          }
+        }
+        playerObj[data.key()].kick = data.val().kick;
+        updateButtons();
+      });
+
+      players.on('child_removed', function(data){
+        for (var i = 0; i < playerList.length; i++) {
+          if (playerList[i].id == data.val().id) {
+            playerList.splice(i,1);
+          }
+        }
+        console.log(playerObj);
+        delete playerObj[data.key()];
+        console.log(playerObj);
+        console.log(playerIds);
+        playerIds.splice(playerIds.indexOf(data.key()),1);
+        console.log(playerIds);
+        updateButtons();
+      });
+
+      you.child('kick').on('value', function(data){
+        stay = !data.val();
+      });
+
+      kick.on('value', function(data){
+        if (data.val() != null) {
+          button.setAttribute('color', '#030');
+          setTimeout(function(){kick.set(null);}, 5000);
+          if (!stay) {
+            getKicked();
+          }
+        } else {
+          button.setAttribute('color', '#300');
+        }
+      });
+
+      kick2.on('value', function(data){
+        if (data.val() != null) {
+          if (data.val()) {
+            kickbutton.setAttribute('color', '#330');
+          } else {
+            kickbutton.setAttribute('color', '#300');
+          }
+          realkick = data.val();
+        } else {
+          realkick = false;
+        }
+      });
+
+      you.onDisconnect().set(null);
+      you.set({name: user.displayName, id: user.userId, kick: false});
+
+      function updateButtons() {
+        for (var i = 0; i < playerIds.length; i++) {
+          var b = document.querySelector('#abutton' + i);
+          if (b.object3D.position.y <= 0) {
+            b.object3D.position.y += 1000;
+            console.log('Button added');
+          }
+          if (inControl) {
+            var t = document.querySelector('#name' + i);
+            if (t.object3D.position.y < 0) {
+              t.object3D.position.y += 1000;
+            }
+          t.setAttribute('n-text', 'text: <color=#555>' + playerObj[playerIds[i]].name);
+          }
+          if (playerObj[playerIds[i]].kick) {
+            b.setAttribute('color', '#030');
+          } else {
+            b.setAttribute('color', '#300');
+          }
+        }
+        for (var i = playerIds.length; i < 27; i++) {
+          var b = document.querySelector('#abutton' + i);
+          if (b.object3D.position.y > 0) {
+            b.object3D.position.y -= 1000;
+            console.log('Button removed');
+          }
+          if (inControl) {
+            var t = document.querySelector('#name' + i);
+            if (t.object3D.position.y > 0) {
+              t.object3D.position.y -= 1000;
+            }
+          }
+        }
+      }
+
+      function getKicked() {
+        var sp = s.getJoint('Spine').position;
+        console.log(sp);
+        var text = document.querySelector('#text');
+        /*text.setAttribute('n-text', 'text: 5');
+        setTimeout(function(){text.setAttribute('n-text', 'text: 4');}, 1000);
+        setTimeout(function(){text.setAttribute('n-text', 'text: 3');}, 2000);
+        setTimeout(function(){text.setAttribute('n-text', 'text: 2');}, 3000);
+        setTimeout(function(){text.setAttribute('n-text', 'text: 1');}, 4000);*/
+        setTimeout(function(){/*document.querySelector('#portal').setAttribute('position', {x:sp.x,y:sp.y,z:sp.z});*/text.setAttribute('n-text', 'text: ');}, 5000)
+
+        /*setTimeout(function(){*/fly.innerHTML = "<a-box position='0 -1.7 0' scale='5 1 5' material='visible: false' n-skeleton-parent='part: spine' n-mesh-collider='type: environment; convex: false'><a-animation attribute='position' to='0 -1 0' dur='10000'></a-animation></a-box>";/*}, 1000);*/
+
+        //setTimeout(function(){document.querySelector('#t1').setAttribute('position', '1000 0 0');text.setAttribute('n-text', 'text: Bye!');}, 6000);
+        if (realkick) {
+          if (findGetParameter('to') == 'coma'){}
+          setTimeout(function(){
+            if (findGetParameter('to') == 'coma'){
+              document.querySelector('#coma').click();
+            } else if (findGetParameter('to') == 'house'){
+              document.querySelector('#house').click();
+            } else {
+              document.querySelector('#link').click();
+            }
+          }, 8000);
+        }
+        setTimeout(function(){fly.innerHTML = '';text.setAttribute('n-text', 'text: ');}, 10000);
+      }
+
+    });
+
+    function findGetParameter(parameterName) {
+      var result = null,
+          tmp = [];
+      location.search
+      .substr(1)
+          .split("&")
+          .forEach(function (item) {
+          tmp = item.split("=");
+          if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+      });
+      return result;
+    }
+  });
+  
+  </script>
+</body>
+</html>
