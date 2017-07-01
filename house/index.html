@@ -6,6 +6,7 @@
   <title>House</title>
   <script src="https://aframe.io/releases/0.3.0/aframe.js"></script>
   <script src="https://sdk.altvr.com/libs/altspace.js/2.4.0/altspace.min.js"></script>
+  <script src="https://cdn.rawgit.com/norybiak/UltimateLoader/v0.4.6/dist/UltimateLoader.min.js"></script>
   <script>
     // n-skeleton-parent only works with root meshes at the moment. Since most model loaders use a root
     // container object, we need to collapse the model so that n-skeleton-parent can access the mesh directly.
@@ -295,7 +296,7 @@
     </a-entity>
 
     <a-entity position='-1.5 1.45 .2' rotation='0 90 0'>
-      <a-mixin id="viv" obj-model='obj: url(viv.obj); mtl: url(viv.mtl)' collapse-model></a-mixin>
+      <a-mixin id="viv" ultimate-loader='viv.obj' collapse-model></a-mixin>
       <a-entity mixin="viv" grab-object="group: r; parts: right; mixin: viv rightav; spawner: false"></a-entity>
       <a-entity mixin="viv" grab-object="group: l; parts: left; mixin: viv leftav; spawner: false"></a-entity>
     </a-entity>
