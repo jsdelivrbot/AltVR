@@ -238,6 +238,8 @@
       <a-mixin id='rightpos' position='-.11 -.15 -.15' rotation='45 0 90'></a-mixin>
       <a-mixin id='leftpos' position='.11 -.15 -.15' rotation='45 0 -90'></a-mixin>
 
+      <a-mixin id='rightav' position='.03 -.03 -.08' rotation='90 0 90'></a-mixin>
+      <a-mixin id='leftav' position='-.03 -.03 -.08' rotation='90 0 -90'></a-mixin>
     </a-assets>
     
     <a-entity id='panel' position='-17.86 -.31 2.55'>
@@ -269,28 +271,41 @@
     <a-entity id='photos' position='8.1 1.105 -.8' rotation='0 -90 0'>
       <a-entity position='-.2 0 0' rotation='-10 -15 0'>
         <a-mixin id="frame1" obj-model='obj: url(frame.obj); mtl: url(1.mtl)' collapse-model></a-mixin>
-        <a-entity mixin="frame1" grab-object="group: 1; parts: right; mixin: frame1 rightpos; spawner: false"></a-entity>
-        <a-entity mixin="frame1" grab-object="group: 1; parts: left; mixin: frame1 leftpos; spawner: false"></a-entity>
+        <a-entity mixin="frame1" grab-object="group: r; parts: right; mixin: frame1 rightpos; spawner: false"></a-entity>
+        <a-entity mixin="frame1" grab-object="group: l; parts: left; mixin: frame1 leftpos; spawner: false"></a-entity>
       </a-entity>
       
       <a-entity position='-.6 0 -.1' rotation='-10 10 0'>
         <a-mixin id="frame2" obj-model='obj: url(frame.obj); mtl: url(2.mtl)' collapse-model></a-mixin>
-        <a-entity mixin="frame2" grab-object="group: 2; parts: right; mixin: frame2 rightpos; spawner: false"></a-entity>
-        <a-entity mixin="frame2" grab-object="group: 2; parts: left; mixin: frame2 leftpos; spawner: false"></a-entity>
+        <a-entity mixin="frame2" grab-object="group: r; parts: right; mixin: frame2 rightpos; spawner: false"></a-entity>
+        <a-entity mixin="frame2" grab-object="group: l; parts: left; mixin: frame2 leftpos; spawner: false"></a-entity>
       </a-entity>
       
       <a-entity position='.3 0 -.1' rotation='-10 -10 0'>
         <a-mixin id="frame3" obj-model='obj: url(frame.obj); mtl: url(3.mtl)' collapse-model></a-mixin>
-        <a-entity mixin="frame3" grab-object="group: 3; parts: right; mixin: frame3 rightpos"></a-entity>
-        <a-entity mixin="frame3" grab-object="group: 3; parts: left; mixin: frame3 leftpos"></a-entity>
+        <a-entity mixin="frame3" grab-object="group: r; parts: right; mixin: frame3 rightpos"></a-entity>
+        <a-entity mixin="frame3" grab-object="group: l; parts: left; mixin: frame3 leftpos"></a-entity>
       </a-entity>
       
       <a-entity position='.7 0 0' rotation='-10 -5 0'>
-      <a-mixin id="frame4" obj-model='obj: url(frame.obj); mtl: url(4.mtl)' collapse-model></a-mixin>
-        <a-entity mixin="frame4" grab-object="group: 4; parts: right; mixin: frame4 rightpos; spawner: false"></a-entity>
-        <a-entity mixin="frame4" grab-object="group: 4; parts: left; mixin: frame4 leftpos; spawner: false"></a-entity>
+        <a-mixin id="frame4" obj-model='obj: url(frame.obj); mtl: url(4.mtl)' collapse-model></a-mixin>
+        <a-entity mixin="frame4" grab-object="group: r; parts: right; mixin: frame4 rightpos; spawner: false"></a-entity>
+        <a-entity mixin="frame4" grab-object="group: l; parts: left; mixin: frame4 leftpos; spawner: false"></a-entity>
       </a-entity>
     </a-entity>
+
+    <a-entity position='-1.5 1.45 .2' rotation='0 90 0'>
+      <a-mixin id="viv" obj-model='obj: url(viv.obj); mtl: url(viv.mtl)' collapse-model></a-mixin>
+      <a-entity mixin="viv" grab-object="group: r; parts: right; mixin: viv rightav; spawner: false"></a-entity>
+      <a-entity mixin="viv" grab-object="group: l; parts: left; mixin: viv leftav; spawner: false"></a-entity>
+    </a-entity>
+
+    <a-entity position='-1.5 1.45 .3' rotation='0 90 0'>
+      <a-mixin id="ben" obj-model='obj: url(ben.obj); mtl: url(ben.mtl)' collapse-model></a-mixin>
+      <a-entity mixin="ben" grab-object="group: r; parts: right; mixin: ben rightav; spawner: false"></a-entity>
+      <a-entity mixin="ben" grab-object="group: l; parts: left; mixin: ben leftav; spawner: false"></a-entity>
+    </a-entity>
+
     
     <!-- paintings -->
     
