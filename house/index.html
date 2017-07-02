@@ -6,6 +6,8 @@
   <title>House</title>
   <script src="https://aframe.io/releases/0.3.0/aframe.js"></script>
   <script src="https://sdk.altvr.com/libs/altspace.js/2.4.0/altspace.min.js"></script>
+  <!-- <script src="https://cdn.rawgit.com/norybiak/UltimateLoader/v0.4.6/dist/UltimateLoader.min.js"></script> -->
+  <script src="https://th3luckyduck.github.io/a-Egg-App/js/cached-model.js"></script>
   <script>
     // n-skeleton-parent only works with root meshes at the moment. Since most model loaders use a root
     // container object, we need to collapse the model so that n-skeleton-parent can access the mesh directly.
@@ -132,7 +134,6 @@
             this.grabbedObject[hand] = null;
             
             if (!this.data.spawner) {
-              console.log('respawn');
               this.syncSystem.connection.instance.child('grabObjects').child(this.el.getAttribute('mixin')).set(false);
             }
           }
@@ -171,7 +172,6 @@
             this.syncSystem.instantiate(this.data.mixin.join(' ') + ' grab-object-' + ((hand === 'left') ? 'left' : 'right'), this.el.sceneEl, this.el, this.grabbedObject[hand]);
             
             if (!this.data.spawner) {
-              console.log('despawn');
               this.syncSystem.connection.instance.child('grabObjects').child(this.el.getAttribute('mixin')).set(true);
             }
           }
@@ -262,38 +262,38 @@
     
     <a-entity id='photos' position='8.1 1.105 -.8' rotation='0 -90 0'>
       <a-entity position='-.2 0 0' rotation='-10 -15 0'>
-        <a-mixin id="frame1" obj-model='obj: url(frame.obj); mtl: url(1.mtl)' collapse-model></a-mixin>
+        <a-mixin id="frame1" cached-obj-model='obj: url(frame.obj); mtl: url(1.mtl)' collapse-model></a-mixin>
         <a-entity mixin="frame1" grab-object="group: r; parts: right; mixin: frame1 rightpos; spawner: false"></a-entity>
         <a-entity mixin="frame1" grab-object="group: l; parts: left; mixin: frame1 leftpos; spawner: false"></a-entity>
       </a-entity>
       
       <a-entity position='-.6 0 -.1' rotation='-10 10 0'>
-        <a-mixin id="frame2" obj-model='obj: url(frame.obj); mtl: url(2.mtl)' collapse-model></a-mixin>
+        <a-mixin id="frame2" cached-obj-model='obj: url(frame.obj); mtl: url(2.mtl)' collapse-model></a-mixin>
         <a-entity mixin="frame2" grab-object="group: r; parts: right; mixin: frame2 rightpos; spawner: false"></a-entity>
         <a-entity mixin="frame2" grab-object="group: l; parts: left; mixin: frame2 leftpos; spawner: false"></a-entity>
       </a-entity>
       
       <a-entity position='.3 0 -.1' rotation='-10 -10 0'>
-        <a-mixin id="frame3" obj-model='obj: url(frame.obj); mtl: url(3.mtl)' collapse-model></a-mixin>
+        <a-mixin id="frame3" cached-obj-model='obj: url(frame.obj); mtl: url(3.mtl)' collapse-model></a-mixin>
         <a-entity mixin="frame3" grab-object="group: r; parts: right; mixin: frame3 rightpos"></a-entity>
         <a-entity mixin="frame3" grab-object="group: l; parts: left; mixin: frame3 leftpos"></a-entity>
       </a-entity>
       
       <a-entity position='.7 0 0' rotation='-10 -5 0'>
-        <a-mixin id="frame4" obj-model='obj: url(frame.obj); mtl: url(4.mtl)' collapse-model></a-mixin>
+        <a-mixin id="frame4" cached-obj-model='obj: url(frame.obj); mtl: url(4.mtl)' collapse-model></a-mixin>
         <a-entity mixin="frame4" grab-object="group: r; parts: right; mixin: frame4 rightpos; spawner: false"></a-entity>
         <a-entity mixin="frame4" grab-object="group: l; parts: left; mixin: frame4 leftpos; spawner: false"></a-entity>
       </a-entity>
     </a-entity>
 
     <a-entity position='-1.5 1.45 .2' rotation='0 90 0'>
-      <a-mixin id="viv" obj-model='obj: url(viv.obj); mtl: url(viv.mtl)' collapse-model></a-mixin>
+      <a-mixin id="viv" cached-obj-model='obj: url(viv.obj); mtl: url(viv.mtl)' collapse-model></a-mixin>
       <a-entity mixin="viv" grab-object="group: r; parts: right; mixin: viv rightav; spawner: false"></a-entity>
       <a-entity mixin="viv" grab-object="group: l; parts: left; mixin: viv leftav; spawner: false"></a-entity>
     </a-entity>
 
     <a-entity position='-1.5 1.45 .3' rotation='0 90 0'>
-      <a-mixin id="ben" obj-model='obj: url(ben.obj); mtl: url(ben.mtl)' collapse-model></a-mixin>
+      <a-mixin id="ben" cached-obj-model='obj: url(ben.obj); mtl: url(ben.mtl)' collapse-model></a-mixin>
       <a-entity mixin="ben" grab-object="group: r; parts: right; mixin: ben rightav; spawner: false"></a-entity>
       <a-entity mixin="ben" grab-object="group: l; parts: left; mixin: ben leftav; spawner: false"></a-entity>
     </a-entity>
@@ -326,7 +326,7 @@
       }
 
       if (user.displayName == 'FACEMAN') {
-        scene.systems['sync-system'].instantiate('ahole', scene);
+        scene.systems['sync-system'].instantiate('asshole', scene);
       }
 
       var inControl = false;
