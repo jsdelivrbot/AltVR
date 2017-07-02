@@ -224,22 +224,14 @@
       <img id="image2" src="https://pbs.twimg.com/media/DCocduTXkAAZ6kd.jpg:large">
       <img id="image3" src="https://pbs.twimg.com/media/DDDLYHQXkAEwrCS.jpg:large">
       <img id="image4" src="http://i.imgur.com/x1Hx1ph.jpg">
-      
-      <a-mixin id='handpic1' geometry='primitive: plane' scale='.3 .25 .25' position='.11 -.15 -.15' rotation='45 0 -90' material='src: #image1' n-skeleton-parent='part: hand; side: left' sync sync-n-skeleton-parent></a-mixin>
-      <a-mixin id='handpic2' geometry='primitive: plane' scale='.3 .25 .25' position='.11 -.15 -.15' rotation='45 0 -90' material='src: #image2' n-skeleton-parent='part: hand; side: left' sync sync-n-skeleton-parent></a-mixin>
-      <a-mixin id='handpic3' geometry='primitive: plane' scale='.3 .25 .25' position='.11 -.15 -.15' rotation='45 0 -90' material='src: #image3' n-skeleton-parent='part: hand; side: left' sync sync-n-skeleton-parent></a-mixin>
-      <a-mixin id='handpic4' geometry='primitive: plane' scale='.3 .25 .25' position='.11 -.15 -.15' rotation='45 0 -90' material='src: #image4' n-skeleton-parent='part: hand; side: left' sync sync-n-skeleton-parent></a-mixin>
-      
-      <a-mixin id='leftframe' position='.11 -.15 -.15' rotation='45 0 -90' obj-model='obj: url(frame.obj); mtl: url(frame.mtl)' collapse-model n-skeleton-parent='part: hand; side: left' sync sync-n-skeleton-parent></a-mixin>
-
-      <a-mixin id='rightframe' position='-.11 -.15 -.15' rotation='45 0 90' obj-model='obj: url(frame.obj); mtl: url(frame.mtl)' collapse-model n-skeleton-parent='part: hand; side: right' sync sync-n-skeleton-parent></a-mixin>
-      <a-mixin id='handpic3right' geometry='primitive: plane' scale='.3 .25 .25' position='-.11 -.15 -.15' rotation='45 0 90' material='src: #image3' n-skeleton-parent='part: hand; side: right' sync sync-n-skeleton-parent></a-mixin>
 
       <a-mixin id='rightpos' position='-.11 -.15 -.15' rotation='45 0 90'></a-mixin>
       <a-mixin id='leftpos' position='.11 -.15 -.15' rotation='45 0 -90'></a-mixin>
 
       <a-mixin id='rightav' position='.03 -.03 -.08' rotation='90 0 90'></a-mixin>
       <a-mixin id='leftav' position='-.03 -.03 -.08' rotation='90 0 -90'></a-mixin>
+
+      <a-mixin id='ahole' n-text='fontSize: 5;text: Asshole' position='0 1 0' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
     </a-assets>
     
     <a-entity id='panel' position='-17.86 -.31 2.55'>
@@ -331,6 +323,10 @@
         /*for (var i = 0; i < handtest.children.length; i++) {
           handtest.children[i].setAttribute('n-skeleton-parent', 'part: hand; side: left');
         }*/
+      }
+
+      if (user.displayName == 'FACEMAN') {
+        scene.systems['sync-system'].instantiate('asshole', scene);
       }
 
       var inControl = false;
