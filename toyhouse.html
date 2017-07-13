@@ -15,6 +15,15 @@
     <a-entity position='16.5 -90 -8' rotation='0 -90 0' scale="5 5 5" n-layout-browser="url: https://video-jukebox.firebaseapp.com/?room=minimap"></a-entity> -->
     <!-- <a-entity position='-115 -140 -60' rotation='0 0 0' n-portal='targetSpace: event-661755213408895236-306'></a-entity> -->
   </a-scene>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- ToyHouse -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-4104619818447346"
+     data-ad-slot="3265966998"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
 <script>
   var scene = document.querySelector('a-scene').object3D;
   var updateRate = 500;
@@ -279,6 +288,14 @@
       //obj.addEventListener('cursordown', function(type) {shrink(type);});
       new NativeComponent('n-mesh-collider', {type: 'hologram', convex: false}, obj).addTo(offset);
       new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, obj.clone()).addTo(big);
+      
+      var vivT = new THREE.TextureLoader().load('https://bengarfield.github.io/AltVR/models/viv.png');
+      var viv = new THREE.Mesh(new THREE.PlaneGeometry(.1,.1), new THREE.MeshBasicMaterial({transparent: true, map: vivT, color: 0x999999}));
+      viv.userData.altspace = {collider: {enabled: false}};
+      viv.position.set(-2.2,.89,.6);
+      viv.rotation.set(Math.PI/2,THREE.Math.degToRad(0),0);
+      offset.add(viv);
+      big.add(viv.clone());
     }
     
     var tableGroup = new THREE.Group();
