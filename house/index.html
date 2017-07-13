@@ -334,35 +334,7 @@
 
       if (user.isModerator || user.userId == '613349871495152349') {
         inControl = true;
-      }
-      
-      var holding = 0;
-      
-      // pic1.addEventListener('mouseup', function(){
-      //   instantiatePic(1);
-      // });
-      // pic2.addEventListener('mouseup', function(){
-      //   instantiatePic(2);
-      // });
-      // pic3.addEventListener('mouseup', function(){
-      //   instantiatePic(3);
-      // });
-      // pic4.addEventListener('mouseup', function(){
-      //   instantiatePic(4);
-      // });
-      
-      function instantiatePic(pic) {
-        scene.systems['sync-system'].removeLast('pic' + user.userId);
-        if (holding == pic) {
-          holding = 0;
-          scene.systems['sync-system'].removeLast('frame' + user.userId);
-        } else {
-          if (holding == 0) {
-            scene.systems['sync-system'].instantiate('leftframe', scene, scene, 'frame' + user.userId);
-          }
-          holding = pic;
-          scene.systems['sync-system'].instantiate('handpic' + pic, scene, scene, 'pic' + user.userId);
-        }
+        altspace.open('http://output.jsbin.com/vezefux?altspace-sync-instance=nighthouse', '_experience', {hidden: true});
       }
 
       document.querySelector('a-scene').object3D.add(s);
