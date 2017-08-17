@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Hive</title>
+  <script src="https://aframe.io/releases/0.3.0/aframe.js"></script>
+  <script src="https://sdk.altvr.com/libs/altspace.js/2.6.0/altspace.min.js"></script>
+  <script src="house/cached-model.js"></script>
+  <script>
+    // n-skeleton-parent only works with root meshes at the moment. Since most model loaders use a root
+    // container object, we need to collapse the model so that n-skeleton-parent can access the mesh directly.
+    AFRAME.registerComponent('collapse-model', {
+        init: function () {
+            this.el.addEventListener('model-loaded', function () {
+                this.el.object3DMap.mesh.updateMatrixWorld();
+                var mesh;
+                this.el.object3DMap.mesh.traverse(function (obj) {
+                    if (!mesh && obj instanceof THREE.Mesh) {
+                        mesh = obj;
+                    }
+                }.bind(this))
+                if (mesh) {
+                    mesh.scale.copy(mesh.getWorldScale());
+                    this.el.setObject3D('mesh', mesh);
+                    // setObject3D emits this event in a-frame 0.4.0
+                    this.el.emit('object3dset', {
+                        type: 'mesh'
+                    });
+                }
+            }.bind(this));
+        }
+    });
+
+    //-----------------------GRAB OBJECTS------------------
+
+    AFRAME.registerComponent('grab-object', {
+      dependencies: ['grab-object-system'],
+      schema: {
+        mixin: {
+          type: 'array'
+        },
+        parts: {
+          type: 'array',
+          default: ['left', 'right']
+        },
+        group: {
+          type: 'string',
+          default: 'default'
+        },
+        spawner: {
+          type: 'boolean',
+          default: 'true'
+        }
+      },
+      init: function() {
+        this.isHandInRange = { 'left': false, 'right': false };
+        this.isTriggerPressed = { 'left': false, 'right': false };
+        this.gamepad = { 'left': null, 'right': null };
+        this.grabbedObject = { 'left': null, 'right': null };
+        this.grabSystem = this.el.sceneEl.systems['grab-object-system'];
+        this.syncSystem = this.el.sceneEl.systems['sync-system'];
+        this.syncSetup = false;
+
+        this.el.object3D.addEventListener('jointcollisionenter', (function(event) {
+          if(event.detail.joints && event.detail.joints[0]) {
+            if(/Left/.test(event.detail.joints[0].name)) this.isHandInRange['left'] = true;
+            else if(/Right/.test(event.detail.joints[0].name)) this.isHandInRange['right'] = true;
+          }
+        }).bind(this));
+
+        this.el.object3D.addEventListener('jointcollisionleave', (function(event) {
+          if(event.detail.joints && event.detail.joints[0]) {
+            if(/Left/.test(event.detail.joints[0].name)) this.isHandInRange['left'] = false;
+            else if(/Right/.test(event.detail.joints[0].name)) this.isHandInRange['right'] = false;
+          }
+        }).bind(this));
+
+        this.el.object3D.addBehaviors(
+          new altspace.utilities.behaviors.JointCollisionEvents({
+            jointCubeSize: 0.1,
+            joints: [
+              ['Hand', 'Left', 0],
+              ['Thumb', 'Left', 3],
+              ['Index', 'Left', 3],
+              ['Middle', 'Left', 3],
+              ['Ring', 'Left', 3],
+              ['Pinky', 'Left', 3]
+            ]
+          }),
+          new altspace.utilities.behaviors.JointCollisionEvents({
+            jointCubeSize: 0.1,
+            joints: [
+              ['Hand', 'Right', 0],
+              ['Thumb', 'Right', 3],
+              ['Index', 'Right', 3],
+              ['Middle', 'Right', 3],
+              ['Ring', 'Right', 3],
+              ['Pinky', 'Right', 3]
+            ]
+          })
+        );
+      },
+      tick: function(time, deltaTime) {
+        var gamepads = altspace.getGamepads();
+        for(var gamepad of gamepads) {
+          if(gamepad.connected && !this.gamepad[gamepad.hand]) this.gamepad[gamepad.hand] = gamepad;
+        }
+
+        for(var part of this.data.parts) this.updateHandObject(part);
+
+        if (!this.data.spawner && !this.syncSetup && this.syncSystem.connection != undefined) {
+          this.syncSetup = true;
+          var pos = this.el.parentEl.object3D.position;
+          var y = pos.y;
+          this.syncSystem.connection.instance.child('grabObjects').child(this.el.getAttribute('mixin')).on('value', function(data){
+            if (data.val()) {
+              pos.y = -1000;
+            } else {
+              pos.y = y;
+            }
+          });
+        }
+      },
+      updateHandObject: function(hand) {
+        var isPrevTriggerPressed = this.isTriggerPressed[hand];
+        this.isTriggerPressed[hand] = (this.gamepad[hand] && this.gamepad[hand].connected && this.gamepad[hand].buttons[1].pressed);
+
+        if(this.grabbedObject[hand]) {
+          if(!this.isTriggerPressed[hand] && this.el.object3D === this.grabSystem.getGrabbedObject(this.data.group)) {
+            this.grabSystem.updateGrabbedObject(this.data.group, null);
+            this.syncSystem.removeLast(this.grabbedObject[hand]);
+            this.grabbedObject[hand] = null;
+            
+            if (!this.data.spawner) {
+              this.syncSystem.connection.instance.child('grabObjects').child(this.el.getAttribute('mixin')).set(false);
+            }
+          }
+        } else {
+
+          //Check to see if people are allowed to grab said object based off of what the object's group and their player class is
+          var grabAllowed = true;
+
+          switch(this.data.group) {
+            /*case 'meleeWeapon':
+            case 'heavyShield': {
+              if(playerClass !== 'berserker') grabAllowed = false;
+              break;
+            }
+            case 'rangedWeapon':
+            case 'knife': {
+              if(playerClass !== 'assassin') grabAllowed = false;
+              break;
+            }
+            case 'staff':
+            case 'wand': {
+              if(playerClass !== 'spellcaster') grabAllowed =false;
+
+              break;
+            }*/
+            default: {
+              //Leave empty
+              break;
+            }
+          }
+
+
+          if(this.isHandInRange[hand] && !this.grabSystem.getGrabbedObject(this.data.group) && (this.isTriggerPressed[hand] && !isPrevTriggerPressed && grabAllowed)) {
+            this.grabbedObject[hand] = 'go-' + THREE.Math.generateUUID();
+            this.grabSystem.updateGrabbedObject(this.data.group, this.el.object3D);
+            this.syncSystem.instantiate(this.data.mixin.join(' ') + ' grab-object-' + ((hand === 'left') ? 'left' : 'right'), this.el.sceneEl, this.el, this.grabbedObject[hand]);
+            
+            if (!this.data.spawner) {
+              this.syncSystem.connection.instance.child('grabObjects').child(this.el.getAttribute('mixin')).set(true);
+            }
+          }
+        }
+      }
+    });
+
+    //------------------------GRAB OBJECTS SYSTEM--------------
+
+    AFRAME.registerSystem('grab-object-system', {
+      init: function() {
+        this.grabGroups = {};
+
+        var mixin = document.createElement('a-mixin');
+        mixin.setAttribute('id', 'grab-object-left');
+        mixin.setAttribute('n-skeleton-parent', 'part: hand; side: left; index: 0');
+        mixin.setAttribute('sync', '');
+        mixin.setAttribute('sync-n-skeleton-parent', '');
+        this.sceneEl.appendChild(mixin);
+
+        var mixin = document.createElement('a-mixin');
+        mixin.setAttribute('id', 'grab-object-right');
+        mixin.setAttribute('n-skeleton-parent', 'part: hand; side: right; index: 0');
+        mixin.setAttribute('sync', '');
+        mixin.setAttribute('sync-n-skeleton-parent', '');
+        this.sceneEl.appendChild(mixin);
+      },
+      getGrabbedObject: function(groupName) {
+        return this.grabGroups[groupName];
+      },
+      updateGrabbedObject: function(groupName, object) {
+        if(!object) delete this.grabGroups[groupName];
+        else this.grabGroups[groupName] = object;
+      }
+    });
+  </script>
+</head>
+<body>
+  <a-scene altspace='fullspace: true' sync-system='author: BenG; app: Hive; refUrl: https://altvr-apps.firebaseio.com/' grab-object-system>
+    <a-plane position='1.9 7.25 31.65' scale='8.32 4.68 1' rotation='0 180 0' src='hive.jpg'></a-plane>
+    
+    <a-entity rotation='0 24 0'>
+      <a-entity position='3.25 .95 2.15'>
+        <a-entity position='1.6 1.1 1' rotation='0 -90 0' scale='.2 .2 .2' n-text='width: 15; text: Grab your favorite and post a selfie! 
+
+#AltspaceBuzz
+@AltspaceVR
+@VRchazen'></a-entity>
+        <a-mixin id='rightav' position='.03 -.03 -.08' rotation='90 0 90'></a-mixin>
+        <a-mixin id='leftav' position='-.03 -.03 -.08' rotation='90 0 -90'></a-mixin>
+        
+        <a-entity position='0 .01 0' rotation='0 -90 0'>
+          <a-mixin id="viv" cached-obj-model='obj: url(house/avatars/viv2.obj); mtl: url(house/avatars/viv2.mtl)' collapse-model></a-mixin>
+          <a-entity mixin="viv" grab-object="group: r; parts: right; mixin: viv rightav"></a-entity>
+          <a-entity mixin="viv" grab-object="group: l; parts: left; mixin: viv leftav"></a-entity>
+        </a-entity>
+        
+        <a-entity position='0 .01 .3' rotation='0 -90 0'>
+          <a-mixin id="jj" cached-obj-model='obj: url(house/avatars/malesmall.obj); mtl: url(house/avatars/justjohn.mtl)' collapse-model></a-mixin>
+          <a-entity mixin="jj" grab-object="group: r; parts: right; mixin: jj rightav"></a-entity>
+          <a-entity mixin="jj" grab-object="group: l; parts: left; mixin: jj leftav"></a-entity>
+        </a-entity>
+        
+        <a-entity position='0 .01 .6' rotation='0 -90 0'>
+          <a-mixin id="ben" cached-obj-model='obj: url(house/avatars/malesmall.obj); mtl: url(house/ben.mtl)' collapse-model></a-mixin>
+          <a-entity mixin="ben" grab-object="group: r; parts: right; mixin: ben rightav"></a-entity>
+          <a-entity mixin="ben" grab-object="group: l; parts: left; mixin: ben leftav"></a-entity>
+        </a-entity>
+        
+        <a-entity position='0 .01 .9' rotation='0 -90 0'>
+          <a-mixin id="lisa" cached-obj-model='obj: url(house/avatars/lisasmall.obj); mtl: url(house/avatars/lisa.mtl)' collapse-model></a-mixin>
+          <a-entity mixin="lisa" grab-object="group: r; parts: right; mixin: lisa rightav"></a-entity>
+          <a-entity mixin="lisa" grab-object="group: l; parts: left; mixin: lisa leftav"></a-entity>
+        </a-entity>
+        
+        <a-entity position='0 .01 1.2' rotation='0 -90 0'>
+          <a-mixin id="bruce" cached-obj-model='obj: url(house/avatars/bruce.obj); mtl: url(house/avatars/bruce.mtl)' collapse-model></a-mixin>
+          <a-entity mixin="bruce" grab-object="group: r; parts: right; mixin: bruce rightav"></a-entity>
+          <a-entity mixin="bruce" grab-object="group: l; parts: left; mixin: bruce leftav"></a-entity>
+        </a-entity>
+        
+        <a-entity position='0 .01 1.5' rotation='0 -90 0'>
+          <a-mixin id="fae" cached-obj-model='obj: url(house/avatars/femalesmall.obj); mtl: url(house/avatars/fae.mtl)' collapse-model></a-mixin>
+          <a-entity mixin="fae" grab-object="group: r; parts: right; mixin: fae rightav"></a-entity>
+          <a-entity mixin="fae" grab-object="group: l; parts: left; mixin: fae leftav"></a-entity>
+        </a-entity>
+        
+        <a-entity position='0 .01 1.8' rotation='0 -90 0'>
+          <a-mixin id="dormin" cached-obj-model='obj: url(house/avatars/rubemalesmall.obj); mtl: url(house/avatars/dormin.mtl)' collapse-model></a-mixin>
+          <a-entity mixin="dormin" grab-object="group: r; parts: right; mixin: dormin rightav"></a-entity>
+          <a-entity mixin="dormin" grab-object="group: l; parts: left; mixin: dormin leftav"></a-entity>
+        </a-entity>
+        
+        <a-entity position='-.08 0 0' rotation='-90 -90 0' scale='.04 .04 .04' n-text='text: Vivian'></a-entity>
+        <a-entity position='-.08 0 .3' rotation='-90 -90 0' scale='.04 .04 .04' n-text='text: JustJohn'></a-entity>
+        <a-entity position='-.08 0 .6' rotation='-90 -90 0' scale='.04 .04 .04' n-text='text: Ben'></a-entity>
+        <a-entity position='-.08 0 .9' rotation='-90 -90 0' scale='.04 .04 .04' n-text='text: Lisa'></a-entity>
+        <a-entity position='-.08 0 1.2' rotation='-90 -90 0' scale='.04 .04 .04' n-text='text: Bruce'></a-entity>
+        <a-entity position='-.08 0 1.5' rotation='-90 -90 0' scale='.04 .04 .04' n-text='text: Fae'></a-entity>
+        <a-entity position='-.08 0 1.8' rotation='-90 -90 0' scale='.04 .04 .04' n-text='text: Dormin'></a-entity>
+        
+      </a-entity>
+    </a-entity>
+  </a-scene>
+  <script>
+  </script>
+</body>
+</html>
+
