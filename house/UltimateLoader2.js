@@ -298,10 +298,10 @@ var UltimateLoader = UltimateLoader || {};
 	{
 		model.object3d = cache.model.object3d.clone();
 
-		//model.object3d.position.set(0,0,0);
+		/*model.object3d.position.set(0,0,0);
 		model.object3d.rotation.set(0,0,0);
 		model.object3d.quaternion.set(0,0,0,1);
-		model.object3d.scale.set( 1, 1, 1 );
+		model.object3d.scale.set( 1, 1, 1 );*/
 		
 		model.object3d.traverse(function (child)
 		{
