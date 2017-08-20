@@ -8,6 +8,7 @@
   <script src="https://sdk.altvr.com/libs/altspace.js/2.4.0/altspace.min.js"></script>
   <!-- <script src="https://cdn.rawgit.com/norybiak/UltimateLoader/v0.4.6/dist/UltimateLoader.min.js"></script> -->
   <script src="cached-model.js"></script>
+  <script src="UltimateLoader2.js"></script>
   <script>
     // n-skeleton-parent only works with root meshes at the moment. Since most model loaders use a root
     // container object, we need to collapse the model so that n-skeleton-parent can access the mesh directly.
@@ -207,6 +208,42 @@
         else this.grabGroups[groupName] = object;
       }
     });
+
+    //----------------Cached Avatar Loader-----------------------
+
+    AFRAME.registerComponent('avatar', {
+      schema: {
+        sid: {
+          type: 'string'
+        },
+        colors: {
+          type: 'src'
+        }
+      },
+      init: function() {
+        var self = this;
+          
+        var models = {
+          's-series-m01':  'https://bengarfield.github.io/AltVR/house/avatars/malesmall.obj',
+          's-series-f01':  'https://bengarfield.github.io/AltVR/house/avatars/femalesmall.obj',
+          'rubenoid-male':  'https://bengarfield.github.io/AltVR/house/avatars/rubemalesmall.obj'
+        };
+        
+        var objects = {
+          model: {url: models[this.data.sid]},
+          tex: {url: this.data.colors}
+        };
+
+        UltimateLoader.load(objects).then(function(result){
+          var mesh = result[0].children[0].clone();
+
+          mesh.material = mesh.material.clone();
+          mesh.material.map = result[1];
+          self.el.setObject3D('mesh', mesh);
+          self.el.emit('object3dset', {type: 'mesh'});
+        });
+      }
+    });
   </script>
 </head>
 <body>
@@ -293,7 +330,7 @@
     </a-entity>
 
     <a-entity position='-1.5 1.45 .2' rotation='0 90 0'>
-      <a-mixin id="ben" cached-obj-model='obj: url(avatars/malesmall.obj); mtl: url(ben.mtl)' collapse-model></a-mixin>
+      <a-mixin id="ben" avatar='sid: s-series-m01; colors: url(ben.jpg)' collapse-model></a-mixin>
       <a-entity mixin="ben" grab-object="group: r; parts: right; mixin: ben rightav; spawner: false"></a-entity>
       <a-entity mixin="ben" grab-object="group: l; parts: left; mixin: ben leftav; spawner: false"></a-entity>
     </a-entity>
@@ -305,7 +342,7 @@
     </a-entity> -->
 
     <a-entity position='7.3 1.02 -6.87' rotation='0 -90 0'>
-      <a-mixin id="rocka" cached-obj-model='obj: url(avatars/femalesmall.obj); mtl: url(avatars/rocka.mtl)' collapse-model></a-mixin>
+      <a-mixin id="rocka" avatar='sid: s-series-f01; colors: url(avatars/rocka.jpg)' collapse-model></a-mixin>
       <a-entity mixin="rocka" grab-object="group: r; parts: right; mixin: rocka rightav; spawner: false"></a-entity>
       <a-entity mixin="rocka" grab-object="group: l; parts: left; mixin: rocka leftav; spawner: false"></a-entity>
     </a-entity>
@@ -329,26 +366,26 @@
     </a-entity> -->
 
     <a-entity position='8.2 .95 -.1' rotation='0 -90 0'>
-      <a-mixin id="oddity" cached-obj-model='obj: url(avatars/malesmall.obj); mtl: url(avatars/oddity.mtl)' collapse-model></a-mixin>
+      <a-mixin id="oddity" avatar='sid: s-series-m01; colors: url(avatars/oddity.jpg)' collapse-model></a-mixin>
       <a-entity mixin="oddity" grab-object="group: r; parts: right; mixin: oddity rightav; spawner: false"></a-entity>
       <a-entity mixin="oddity" grab-object="group: l; parts: left; mixin: oddity leftav; spawner: false"></a-entity>
     </a-entity>
 
     <a-entity position='-1.9 1.95 -4.65' rotation='0 -120 0'>
-      <a-mixin id="rez" cached-obj-model='obj: url(avatars/malesmall.obj); mtl: url(avatars/rez.mtl)' collapse-model></a-mixin>
+      <a-mixin id="rez" avatar='sid: s-series-m01; colors: url(avatars/rez.jpg)' collapse-model></a-mixin>
       <a-entity mixin="rez" grab-object="group: r; parts: right; mixin: rez rightav; spawner: false"></a-entity>
       <a-entity mixin="rez" grab-object="group: l; parts: left; mixin: rez leftav; spawner: false"></a-entity>
     </a-entity>
 
     <a-entity id='newavs' position='0 0 0'>
     <a-entity position='-7.94 .82 -4.5' rotation='0 0 0'>
-      <a-mixin id="auzrea" cached-obj-model='obj: url(avatars/femalesmall.obj); mtl: url(avatars/auzrea.mtl)' collapse-model></a-mixin>
+      <a-mixin id="auzrea" avatar='sid: s-series-f01; colors: url(avatars/new/Auzrea.jpg)' collapse-model></a-mixin>
       <a-entity mixin="auzrea" grab-object="group: r; parts: right; mixin: auzrea rightav; spawner: false"></a-entity>
       <a-entity mixin="auzrea" grab-object="group: l; parts: left; mixin: auzrea leftav; spawner: false"></a-entity>
     </a-entity>
 
     <a-entity position='3.35 1.3 -2.63' rotation='0 0 0'>
-      <a-mixin id="chris" cached-obj-model='obj: url(avatars/malesmall.obj); mtl: url(avatars/chris.mtl)' collapse-model></a-mixin>
+      <a-mixin id="chris" avatar='sid: s-series-m01; colors: url(avatars/new/Chris.jpg)' collapse-model></a-mixin>
       <a-entity mixin="chris" grab-object="group: r; parts: right; mixin: chris rightav; spawner: false"></a-entity>
       <a-entity mixin="chris" grab-object="group: l; parts: left; mixin: chris leftav; spawner: false"></a-entity>
     </a-entity>
@@ -360,37 +397,37 @@
     </a-entity>
 
     <a-entity position='-6 1.86 -5.8' rotation='0 0 0'>
-      <a-mixin id="justjohn" cached-obj-model='obj: url(avatars/malesmall.obj); mtl: url(avatars/justjohn.mtl)' collapse-model></a-mixin>
+      <a-mixin id="justjohn" avatar='sid: s-series-m01; colors: url(avatars/new/JustJohn.jpg)' collapse-model></a-mixin>
       <a-entity mixin="justjohn" grab-object="group: r; parts: right; mixin: justjohn rightav; spawner: false"></a-entity>
       <a-entity mixin="justjohn" grab-object="group: l; parts: left; mixin: justjohn leftav; spawner: false"></a-entity>
     </a-entity>
 
     <a-entity position='-.35 1.02 -7.55' rotation='0 0 0'>
-      <a-mixin id="megan" cached-obj-model='obj: url(avatars/femalesmall.obj); mtl: url(avatars/megan.mtl)' collapse-model></a-mixin>
+      <a-mixin id="megan" avatar='sid: s-series-f01; colors: url(avatars/new/Megan.jpg)' collapse-model></a-mixin>
       <a-entity mixin="megan" grab-object="group: r; parts: right; mixin: megan rightav; spawner: false"></a-entity>
       <a-entity mixin="megan" grab-object="group: l; parts: left; mixin: megan leftav; spawner: false"></a-entity>
     </a-entity>
 
     <a-entity position='8.2 .84 1.5' rotation='0 -120 0'>
-      <a-mixin id="paul" cached-obj-model='obj: url(avatars/malesmall.obj); mtl: url(avatars/paul.mtl)' collapse-model></a-mixin>
+      <a-mixin id="paul" avatar='sid: s-series-m01; colors: url(avatars/new/Paul.jpg)' collapse-model></a-mixin>
       <a-entity mixin="paul" grab-object="group: r; parts: right; mixin: paul rightav; spawner: false"></a-entity>
       <a-entity mixin="paul" grab-object="group: l; parts: left; mixin: paul leftav; spawner: false"></a-entity>
     </a-entity>
 
     <a-entity position='-7.94 .82 -4.4' rotation='0 180 0'>
-      <a-mixin id="sandro" cached-obj-model='obj: url(avatars/malesmall.obj); mtl: url(avatars/sandro.mtl)' collapse-model></a-mixin>
+      <a-mixin id="sandro" avatar='sid: s-series-m01; colors: url(avatars/new/Sandro.jpg)' collapse-model></a-mixin>
       <a-entity mixin="sandro" grab-object="group: r; parts: right; mixin: sandro rightav; spawner: false"></a-entity>
       <a-entity mixin="sandro" grab-object="group: l; parts: left; mixin: sandro leftav; spawner: false"></a-entity>
     </a-entity>
 
     <a-entity position='5.15 1.02 -8.17' rotation='0 -90 0'>
-      <a-mixin id="shannon" cached-obj-model='obj: url(avatars/femalesmall.obj); mtl: url(avatars/shannon.mtl)' collapse-model></a-mixin>
+      <a-mixin id="shannon" avatar='sid: s-series-f01; colors: url(avatars/new/Shannon.jpg)' collapse-model></a-mixin>
       <a-entity mixin="shannon" grab-object="group: r; parts: right; mixin: shannon rightav; spawner: false"></a-entity>
       <a-entity mixin="shannon" grab-object="group: l; parts: left; mixin: shannon leftav; spawner: false"></a-entity>
     </a-entity>
 
     <a-entity position='8.26 .95 -.55' rotation='0 -90 0'>
-      <a-mixin id="tahla" cached-obj-model='obj: url(avatars/femalesmall.obj); mtl: url(avatars/tahla.mtl)' collapse-model></a-mixin>
+      <a-mixin id="tahla" avatar='sid: s-series-f01; colors: url(avatars/new/Tahla.jpg)' collapse-model></a-mixin>
       <a-entity mixin="tahla" grab-object="group: r; parts: right; mixin: tahla rightav; spawner: false"></a-entity>
       <a-entity mixin="tahla" grab-object="group: l; parts: left; mixin: tahla leftav; spawner: false"></a-entity>
     </a-entity>
@@ -402,19 +439,19 @@
     </a-entity>
 
     <a-entity position='-4.55 2.23 -3' rotation='0 0 0'>
-      <a-mixin id="waco" cached-obj-model='obj: url(avatars/malesmall.obj); mtl: url(avatars/waco.mtl)' collapse-model></a-mixin>
+      <a-mixin id="waco" avatar='sid: s-series-m01; colors: url(avatars/new/Waco.jpg)' collapse-model></a-mixin>
       <a-entity mixin="waco" grab-object="group: r; parts: right; mixin: waco rightav; spawner: false"></a-entity>
       <a-entity mixin="waco" grab-object="group: l; parts: left; mixin: waco leftav; spawner: false"></a-entity>
     </a-entity>
 
     <a-entity position='-4.45 2.23 -3' rotation='0 0 0'>
-      <a-mixin id="shoo" cached-obj-model='obj: url(avatars/femalesmall.obj); mtl: url(avatars/shoo.mtl)' collapse-model></a-mixin>
+      <a-mixin id="shoo" avatar='sid: s-series-f01; colors: url(avatars/new/Shoo.jpg)' collapse-model></a-mixin>
       <a-entity mixin="shoo" grab-object="group: r; parts: right; mixin: shoo rightav; spawner: false"></a-entity>
       <a-entity mixin="shoo" grab-object="group: l; parts: left; mixin: shoo leftav; spawner: false"></a-entity>
     </a-entity>
 
     <a-entity position='9.3 2.15 20.85' rotation='0 230 0'>
-      <a-mixin id="erock" cached-obj-model='obj: url(avatars/malesmall.obj); mtl: url(avatars/erock.mtl)' collapse-model></a-mixin>
+      <a-mixin id="erock" avatar='sid: s-series-m01; colors: url(avatars/new/Erock.jpg)' collapse-model></a-mixin>
       <a-entity mixin="erock" grab-object="group: r; parts: right; mixin: erock rightav; spawner: false"></a-entity>
       <a-entity mixin="erock" grab-object="group: l; parts: left; mixin: erock leftav; spawner: false"></a-entity>
     </a-entity>
