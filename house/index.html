@@ -267,6 +267,7 @@
       <a-mixin id='leftav' position='-.03 -.03 -.08' rotation='90 0 -90'></a-mixin>
 
       <a-mixin id='ahole' n-text='fontSize: 5;text: Asshole' position='0 1 0' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
+      <a-mixin id='shutup' n-text='fontSize: 5;text: Shut Up!' position='0 1 0' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
     </a-assets>
     
     <a-entity id='panel' position='-17.86 -.31 2.55'>
@@ -500,6 +501,9 @@
 
       if (user.displayName == 'FACEMAN') {
         scene.systems['sync-system'].instantiate('ahole', scene);
+      }
+      if (user.displayName == 'JustJohn') {
+        scene.systems['sync-system'].instantiate('shutup', scene);
       }
 
       var inControl = false;
