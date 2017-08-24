@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width">
   <title>House</title>
   <script src="https://aframe.io/releases/0.3.0/aframe.js"></script>
-  <script src="https://sdk.altvr.com/libs/altspace.js/2.4.0/altspace.min.js"></script>
+  <script src="https://sdk.altvr.com/libs/altspace.js/2.6.1/altspace.min.js"></script>
   <!-- <script src="https://cdn.rawgit.com/norybiak/UltimateLoader/v0.4.6/dist/UltimateLoader.min.js"></script> -->
   <script src="cached-model.js"></script>
   <script src="UltimateLoader2.js"></script>
@@ -506,6 +506,12 @@
     <a-plane id='painting3' position='4.956 -1.674 -3.188' scale='1.53 .735 1' altspace-cursor-collider='enabled: false'></a-plane>
     
     <a-sphere id='blindSphere' position='0 -1000 0' radius='.2' material='color:black; side: back' n-skeleton-parent='part: head'></a-sphere>
+
+    <a-box id='door' position='4.84 1.1 -8.25' scale='.83 2.2 .05' material='opacity: 0' n-box-collider='type: hologram'></a-box>
+    <a-box position='5.3 0 -16' scale='7 .01 15' material='opacity: 0' n-box-collider='type: environment; convex: false'></a-box>
+    <a-entity id='target' position='4.84 .5 -9' rotation='0 180 0'></a-entity>
+    <a-entity id='doorPortal' position='0 -100 0' rotation='0 180 0' n-portal='targetEntity: #target' n-skeleton-parent='part: head'></a-entity>
+
   </a-scene>
   <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
   <!-- Chambers -->
@@ -518,6 +524,14 @@
   </script>
   <script>
   //altspace.open('http://www.google.com/#q=how+to+play+codenames', '_experience', {icon: 'http://bengarfield.github.io/AltVR/codenames/icon.png', hidden: true});
+
+  door.addEventListener('mouseup', function(){
+    doorPortal.setAttribute('position', '0 0 0');
+    setTimeout(function(){
+      doorPortal.setAttribute('position', '0 -100 0');
+    }, 1);
+  });
+
   var scene = document.querySelector('a-scene');
   scene.addEventListener('connected', function() {
     var sync = scene.systems['sync-system'].connection;
