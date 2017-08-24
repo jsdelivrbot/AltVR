@@ -7,6 +7,7 @@
   <script src="https://aframe.io/releases/0.3.0/aframe.js"></script>
   <script src="https://sdk.altvr.com/libs/altspace.js/2.6.0/altspace.min.js"></script>
   <script src="house/cached-model.js"></script>
+  <script src="house/UltimateLoader2.js"></script>
   <script>
     // n-skeleton-parent only works with root meshes at the moment. Since most model loaders use a root
     // container object, we need to collapse the model so that n-skeleton-parent can access the mesh directly.
@@ -206,6 +207,48 @@
         else this.grabGroups[groupName] = object;
       }
     });
+    
+    //----------------Cached Avatar Loader-----------------------
+
+    AFRAME.registerComponent('avatar', {
+      schema: {
+        sid: {
+          type: 'string'
+        },
+        colors: {
+          type: 'src'
+        }
+      },
+      init: function() {
+        var self = this;
+          
+        var models = {
+          's-series-m01':  'https://bengarfield.github.io/AltVR/house/avatars/malesmall.obj',
+          's-series-f01':  'https://bengarfield.github.io/AltVR/house/avatars/femalesmall.obj',
+          'pod-classic':  'https://bengarfield.github.io/AltVR/house/avatars/podclassic.obj',
+          'rubenoid-male':  'https://bengarfield.github.io/AltVR/house/avatars/rubemalesmall.obj',
+          'rubenoid-female':  'https://bengarfield.github.io/AltVR/house/viv.obj',
+          'vivian':  'https://bengarfield.github.io/AltVR/house/avatars/viv2.obj',
+          'lisa':  'https://bengarfield.github.io/AltVR/house/avatars/lisa.obj',
+          'bruce':  'https://bengarfield.github.io/AltVR/house/avatars/bruce.obj',
+          'picture-frame':  'https://bengarfield.github.io/AltVR/house/frame.obj'
+        };
+        
+        var objects = {
+          model: {url: models[this.data.sid]},
+          tex: {url: this.data.colors}
+        };
+
+        UltimateLoader.load(objects).then(function(result){
+          var mesh = result[0].children[0].clone();
+
+          mesh.material = mesh.material.clone();
+          mesh.material.map = result[1];
+          self.el.setObject3D('mesh', mesh);
+          self.el.emit('object3dset', {type: 'mesh'});
+        });
+      }
+    });
   </script>
 </head>
 <body>
@@ -216,50 +259,50 @@
       <a-entity position='3.25 .95 2.15'>
         <a-entity position='1.6 1.1 1' rotation='0 -90 0' scale='.2 .2 .2' n-text='width: 15; text: Grab your favorite and post a selfie! 
 
-#AltspaceBuzz
+#TheHiveVR
 @AltspaceVR
 @VRchazen'></a-entity>
         <a-mixin id='rightav' position='.03 -.03 -.08' rotation='90 0 90'></a-mixin>
         <a-mixin id='leftav' position='-.03 -.03 -.08' rotation='90 0 -90'></a-mixin>
         
         <a-entity position='0 .01 0' rotation='0 -90 0'>
-          <a-mixin id="viv" cached-obj-model='obj: url(house/avatars/viv2.obj); mtl: url(house/avatars/viv2.mtl)' collapse-model></a-mixin>
+          <a-mixin id="viv" avatar='sid: vivian; colors: url(house/avatars/VivianTexture.jpg)' collapse-model></a-mixin>
           <a-entity mixin="viv" grab-object="group: r; parts: right; mixin: viv rightav"></a-entity>
           <a-entity mixin="viv" grab-object="group: l; parts: left; mixin: viv leftav"></a-entity>
         </a-entity>
         
         <a-entity position='0 .01 .3' rotation='0 -90 0'>
-          <a-mixin id="jj" cached-obj-model='obj: url(house/avatars/malesmall.obj); mtl: url(house/avatars/justjohn.mtl)' collapse-model></a-mixin>
+          <a-mixin id="jj" avatar='sid: s-series-m01; colors: url(house/avatars/new/JustJohn.jpg)' collapse-model></a-mixin>
           <a-entity mixin="jj" grab-object="group: r; parts: right; mixin: jj rightav"></a-entity>
           <a-entity mixin="jj" grab-object="group: l; parts: left; mixin: jj leftav"></a-entity>
         </a-entity>
         
         <a-entity position='0 .01 .6' rotation='0 -90 0'>
-          <a-mixin id="ben" cached-obj-model='obj: url(house/avatars/malesmall.obj); mtl: url(house/ben.mtl)' collapse-model></a-mixin>
+          <a-mixin id="ben" avatar='sid: s-series-m01; colors: url(house/ben.jpg)' collapse-model></a-mixin>
           <a-entity mixin="ben" grab-object="group: r; parts: right; mixin: ben rightav"></a-entity>
           <a-entity mixin="ben" grab-object="group: l; parts: left; mixin: ben leftav"></a-entity>
         </a-entity>
         
         <a-entity position='0 .01 .9' rotation='0 -90 0'>
-          <a-mixin id="lisa" cached-obj-model='obj: url(house/avatars/lisasmall.obj); mtl: url(house/avatars/lisa.mtl)' collapse-model></a-mixin>
+          <a-mixin id="lisa" avatar='sid: lisa; colors: url(house/avatars/Lisa.jpg)' collapse-model></a-mixin>
           <a-entity mixin="lisa" grab-object="group: r; parts: right; mixin: lisa rightav"></a-entity>
           <a-entity mixin="lisa" grab-object="group: l; parts: left; mixin: lisa leftav"></a-entity>
         </a-entity>
         
         <a-entity position='0 .01 1.2' rotation='0 -90 0'>
-          <a-mixin id="bruce" cached-obj-model='obj: url(house/avatars/bruce.obj); mtl: url(house/avatars/bruce.mtl)' collapse-model></a-mixin>
+          <a-mixin id="bruce" avatar='sid: bruce; colors: url(house/avatars/Bruce.jpg)' collapse-model></a-mixin>
           <a-entity mixin="bruce" grab-object="group: r; parts: right; mixin: bruce rightav"></a-entity>
           <a-entity mixin="bruce" grab-object="group: l; parts: left; mixin: bruce leftav"></a-entity>
         </a-entity>
         
         <a-entity position='0 .01 1.5' rotation='0 -90 0'>
-          <a-mixin id="fae" cached-obj-model='obj: url(house/avatars/femalesmall.obj); mtl: url(house/avatars/fae.mtl)' collapse-model></a-mixin>
+          <a-mixin id="fae" avatar='sid: s-series-f01; colors: url(house/avatars/fae.jpg)' collapse-model></a-mixin>
           <a-entity mixin="fae" grab-object="group: r; parts: right; mixin: fae rightav"></a-entity>
           <a-entity mixin="fae" grab-object="group: l; parts: left; mixin: fae leftav"></a-entity>
         </a-entity>
         
         <a-entity position='0 .01 1.8' rotation='0 -90 0'>
-          <a-mixin id="dormin" cached-obj-model='obj: url(house/avatars/rubemalesmall.obj); mtl: url(house/avatars/dormin.mtl)' collapse-model></a-mixin>
+          <a-mixin id="dormin" avatar='sid: rubenoid-male; colors: url(house/avatars/dormin.jpg)' collapse-model></a-mixin>
           <a-entity mixin="dormin" grab-object="group: r; parts: right; mixin: dormin rightav"></a-entity>
           <a-entity mixin="dormin" grab-object="group: l; parts: left; mixin: dormin leftav"></a-entity>
         </a-entity>
