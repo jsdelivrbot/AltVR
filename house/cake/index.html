@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Cake</title>
+  <script src="https://aframe.io/releases/0.3.0/aframe.js"></script>
+  <script src="https://sdk.altvr.com/libs/altspace.js/2.4.0/altspace.min.js"></script>
+  <!-- <script src="https://cdn.rawgit.com/norybiak/UltimateLoader/v0.4.6/dist/UltimateLoader.min.js"></script> -->
+  <!-- <script src="cached-model.js"></script> -->
+  <script src="UltimateLoader2.js"></script>
+  <script>
+    // n-skeleton-parent only works with root meshes at the moment. Since most model loaders use a root
+    // container object, we need to collapse the model so that n-skeleton-parent can access the mesh directly.
+    AFRAME.registerComponent('collapse-model', {
+        init: function () {
+            this.el.addEventListener('model-loaded', function () {
+                this.el.object3DMap.mesh.updateMatrixWorld();
+                var mesh;
+                this.el.object3DMap.mesh.traverse(function (obj) {
+                    if (!mesh && obj instanceof THREE.Mesh) {
+                        mesh = obj;
+                    }
+                }.bind(this))
+                if (mesh) {
+                    mesh.scale.copy(mesh.getWorldScale());
+                    this.el.setObject3D('mesh', mesh);
+                    // setObject3D emits this event in a-frame 0.4.0
+                    this.el.emit('object3dset', {
+                        type: 'mesh'
+                    });
+                }
+            }.bind(this));
+        }
+    });
+
+    //-----------------------GRAB OBJECTS------------------
+
+    AFRAME.registerComponent('grab-object', {
+      dependencies: ['grab-object-system'],
+      schema: {
+        mixin: {
+          type: 'array'
+        },
+        parts: {
+          type: 'array',
+          default: ['left', 'right']
+        },
+        group: {
+          type: 'string',
+          default: 'default'
+        },
+        spawner: {
+          type: 'boolean',
+          default: 'true'
+        },
+        object: {
+        	type: 'string',
+        	default: 'default'
+        }
+      },
+      init: function() {
+        this.isHandInRange = { 'left': false, 'right': false };
+        this.isTriggerPressed = { 'left': false, 'right': false };
+        this.gamepad = { 'left': null, 'right': null };
+        this.grabbedObject = { 'left': null, 'right': null };
+        this.grabSystem = this.el.sceneEl.systems['grab-object-system'];
+        this.syncSystem = this.el.sceneEl.systems['sync-system'];
+        this.syncSetup = false;
+
+        this.el.object3D.addEventListener('jointcollisionenter', (function(event) {
+          if(event.detail.joints && event.detail.joints[0]) {
+            if(/Left/.test(event.detail.joints[0].name)) this.isHandInRange['left'] = true;
+            else if(/Right/.test(event.detail.joints[0].name)) this.isHandInRange['right'] = true;
+          }
+        }).bind(this));
+
+        this.el.object3D.addEventListener('jointcollisionleave', (function(event) {
+          if(event.detail.joints && event.detail.joints[0]) {
+            if(/Left/.test(event.detail.joints[0].name)) this.isHandInRange['left'] = false;
+            else if(/Right/.test(event.detail.joints[0].name)) this.isHandInRange['right'] = false;
+          }
+        }).bind(this));
+
+        this.el.object3D.addBehaviors(
+          new altspace.utilities.behaviors.JointCollisionEvents({
+            jointCubeSize: 0.1,
+            joints: [
+              ['Hand', 'Left', 0],
+              ['Thumb', 'Left', 3],
+              ['Index', 'Left', 3],
+              ['Middle', 'Left', 3],
+              ['Ring', 'Left', 3],
+              ['Pinky', 'Left', 3]
+            ]
+          }),
+          new altspace.utilities.behaviors.JointCollisionEvents({
+            jointCubeSize: 0.1,
+            joints: [
+              ['Hand', 'Right', 0],
+              ['Thumb', 'Right', 3],
+              ['Index', 'Right', 3],
+              ['Middle', 'Right', 3],
+              ['Ring', 'Right', 3],
+              ['Pinky', 'Right', 3]
+            ]
+          })
+        );
+      },
+      tick: function(time, deltaTime) {
+        var gamepads = altspace.getGamepads();
+        for(var gamepad of gamepads) {
+          if(gamepad.connected && !this.gamepad[gamepad.hand]) this.gamepad[gamepad.hand] = gamepad;
+        }
+
+        for(var part of this.data.parts) this.updateHandObject(part);
+
+        if (!this.data.spawner && !this.syncSetup && this.syncSystem.connection != undefined) {
+          this.syncSetup = true;
+          var pos = this.el.parentEl.object3D.position;
+          var y = pos.y;
+          this.syncSystem.connection.instance.child('grabObjects').child(this.el.getAttribute('mixin')).on('value', function(data){
+            if (data.val()) {
+              pos.y = -1000;
+            } else {
+              pos.y = y;
+            }
+          });
+        }
+      },
+      updateHandObject: function(hand) {
+        var isPrevTriggerPressed = this.isTriggerPressed[hand];
+        this.isTriggerPressed[hand] = (this.gamepad[hand] && this.gamepad[hand].connected && this.gamepad[hand].buttons[1].pressed);
+
+        if(this.grabbedObject[hand]) {
+          if(!this.isTriggerPressed[hand] && this.el.object3D === this.grabSystem.getGrabbedObject(this.data.group)) {
+            this.grabSystem.updateGrabbedObject(this.data.group, null);
+            this.syncSystem.removeLast(this.grabbedObject[hand]);
+            if (this.data.object == 'slice') {
+            	this.syncSystem.removeLast(this.grabbedObject[hand]);
+            	this.syncSystem.removeLast(this.grabbedObject[hand]);
+            } else if (this.data.object == 'cake') {
+              this.syncSystem.removeLast(this.grabbedObject[hand]);
+              this.syncSystem.removeLast(this.grabbedObject[hand]);
+              this.syncSystem.removeLast(this.grabbedObject[hand]);
+              this.syncSystem.removeLast(this.grabbedObject[hand]);
+              this.syncSystem.removeLast(this.grabbedObject[hand]);
+              this.syncSystem.removeLast(this.grabbedObject[hand]);
+              this.syncSystem.removeLast(this.grabbedObject[hand]);
+              this.syncSystem.removeLast(this.grabbedObject[hand]);
+              this.syncSystem.removeLast(this.grabbedObject[hand]);
+              this.syncSystem.connection.instance.child('cakeState').set('placed');
+            }
+            this.grabbedObject[hand] = null;
+            
+            if (!this.data.spawner) {
+              //this.syncSystem.connection.instance.child('grabObjects').child(this.el.getAttribute('mixin')).set(false);
+            }
+          }
+        } else {
+
+          //Check to see if people are allowed to grab said object based off of what the object's group and their player class is
+          var grabAllowed = true;
+
+          switch(this.data.group) {
+            /*case 'meleeWeapon':
+            case 'heavyShield': {
+              if(playerClass !== 'berserker') grabAllowed = false;
+              break;
+            }
+            case 'rangedWeapon':
+            case 'knife': {
+              if(playerClass !== 'assassin') grabAllowed = false;
+              break;
+            }
+            case 'staff':
+            case 'wand': {
+              if(playerClass !== 'spellcaster') grabAllowed =false;
+
+              break;
+            }*/
+            default: {
+              //Leave empty
+              break;
+            }
+          }
+
+
+          if(this.isHandInRange[hand] && !this.grabSystem.getGrabbedObject(this.data.group) && (this.isTriggerPressed[hand] && !isPrevTriggerPressed && grabAllowed)) {
+            //this.grabbedObject[hand] = 'go-' + THREE.Math.generateUUID();
+
+            this.grabbedObject[hand] = 'go-' + this.syncSystem.userInfo.userId + '-' + hand;
+
+            this.grabSystem.updateGrabbedObject(this.data.group, this.el.object3D);
+            
+            if (this.data.object == 'slice') {
+            	this.syncSystem.instantiate('slice1_3 ' + ((hand === 'left') ? 'left' : 'right') + 'HandCake' + ' grab-object-' + ((hand === 'left') ? 'left' : 'right'), this.el.sceneEl, this.el, this.grabbedObject[hand]);
+            	this.syncSystem.instantiate('slice1_2 ' + ((hand === 'left') ? 'left' : 'right') + 'HandCake' + ' grab-object-' + ((hand === 'left') ? 'left' : 'right'), this.el.sceneEl, this.el, this.grabbedObject[hand]);
+            	this.syncSystem.instantiate('slice1_1 ' + ((hand === 'left') ? 'left' : 'right') + 'HandCake' + ' grab-object-' + ((hand === 'left') ? 'left' : 'right'), this.el.sceneEl, this.el, this.grabbedObject[hand]);
+            } else if (this.data.object == 'cake') {
+              this.syncSystem.instantiate('cakeWhole' + ' grab-object-' + ((hand === 'left') ? 'left' : 'right'), this.el.sceneEl, this.el, this.grabbedObject[hand]);
+              this.syncSystem.instantiate('candle1' + ' grab-object-' + ((hand === 'left') ? 'left' : 'right'), this.el.sceneEl, this.el, this.grabbedObject[hand]);
+              this.syncSystem.instantiate('candle2' + ' grab-object-' + ((hand === 'left') ? 'left' : 'right'), this.el.sceneEl, this.el, this.grabbedObject[hand]);
+              this.syncSystem.instantiate('candle3' + ' grab-object-' + ((hand === 'left') ? 'left' : 'right'), this.el.sceneEl, this.el, this.grabbedObject[hand]);
+              this.syncSystem.instantiate('candle4' + ' grab-object-' + ((hand === 'left') ? 'left' : 'right'), this.el.sceneEl, this.el, this.grabbedObject[hand]);
+              this.syncSystem.instantiate('candle5' + ' grab-object-' + ((hand === 'left') ? 'left' : 'right'), this.el.sceneEl, this.el, this.grabbedObject[hand]);
+              this.syncSystem.instantiate('candle6' + ' grab-object-' + ((hand === 'left') ? 'left' : 'right'), this.el.sceneEl, this.el, this.grabbedObject[hand]);
+              this.syncSystem.instantiate('candle7' + ' grab-object-' + ((hand === 'left') ? 'left' : 'right'), this.el.sceneEl, this.el, this.grabbedObject[hand]);
+              this.syncSystem.instantiate('candle8' + ' grab-object-' + ((hand === 'left') ? 'left' : 'right'), this.el.sceneEl, this.el, this.grabbedObject[hand]);
+              this.syncSystem.instantiate('plate' + ' grab-object-' + ((hand === 'left') ? 'left' : 'right'), this.el.sceneEl, this.el, this.grabbedObject[hand]);
+            } else {
+            	this.syncSystem.instantiate(this.data.mixin.join(' ') + ' grab-object-' + ((hand === 'left') ? 'left' : 'right'), this.el.sceneEl, this.el, this.grabbedObject[hand]);
+            }
+            
+            if (!this.data.spawner) {
+              this.syncSystem.connection.instance.child('grabObjects').child(this.el.getAttribute('mixin')).set(true);
+            }
+          }
+        }
+      }
+    });
+
+    //------------------------GRAB OBJECTS SYSTEM--------------
+
+    AFRAME.registerSystem('grab-object-system', {
+      init: function() {
+        this.grabGroups = {};
+
+        var mixin = document.createElement('a-mixin');
+        mixin.setAttribute('id', 'grab-object-left');
+        mixin.setAttribute('n-skeleton-parent', 'part: hand; side: left; index: 0');
+        mixin.setAttribute('sync', '');
+        mixin.setAttribute('sync-n-skeleton-parent', '');
+        this.sceneEl.appendChild(mixin);
+
+        var mixin = document.createElement('a-mixin');
+        mixin.setAttribute('id', 'grab-object-right');
+        mixin.setAttribute('n-skeleton-parent', 'part: hand; side: right; index: 0');
+        mixin.setAttribute('sync', '');
+        mixin.setAttribute('sync-n-skeleton-parent', '');
+        this.sceneEl.appendChild(mixin);
+      },
+      getGrabbedObject: function(groupName) {
+        return this.grabGroups[groupName];
+      },
+      updateGrabbedObject: function(groupName, object) {
+        if(!object) delete this.grabGroups[groupName];
+        else this.grabGroups[groupName] = object;
+      }
+    });
+
+    //----------------Cached Models-----------------------
+
+    AFRAME.registerComponent('cached-model', {
+      schema: {
+        obj: {
+          type: 'src'
+        },
+        texture: {
+          type: 'src'
+        }
+      },
+      init: function() {
+        var self = this;
+
+        var objects = {
+          model: {url: this.data.obj},
+          tex: {url: this.data.texture}
+        };
+
+        UltimateLoader.load(objects).then(function(result){
+          var mesh = result[0].children[0].clone();
+
+          mesh.material = mesh.material.clone();
+          mesh.material.map = result[1];
+          self.el.setObject3D('mesh', mesh);
+          self.el.emit('object3dset', {type: 'mesh'});
+        });
+      }
+    });
+  </script>
+</head>
+<body>
+  <a-scene altspace='fullspace: true' sync-system='author: BenG; app: Cake; refUrl: https://altvr-apps.firebaseio.com/' grab-object-system>
+    <!-- <a-entity id='cake' position='-4.6 1 -3' scale='.1 .1 .1' cached-obj-model='obj: url(cake.obj); mtl: url(cake.mtl)'></a-entity> -->
+
+    <a-mixin id='rightHandCake' position='.04 -.22 -.04' rotation='-70 0 90' scale='.1 .1 .1'></a-mixin>
+    <a-mixin id='leftHandCake' position='-.04 -.22 -.04' rotation='-115 0 -90' scale='.1 .1 .1'></a-mixin>
+
+    <a-entity id='cake' position='-4.6 -100 -3' rotation='0 90 0' scale='.1 .1 .1'>
+      <a-entity cached-model='obj: url(cake.obj); texture: url(cake.png)'></a-entity>
+      <a-cylinder position='0 -.1 0' radius='2.4' height='.1' color='#666'></a-cylinder>
+      <a-entity id='candles' position='0 1 0'>
+        <a-mixin id='candle' position='0 0 1.3' scale='5 5 5' cached-model='obj: url(../avatars/malesmall.obj); texture: url(../ben.jpg)'></a-mixin>
+        <a-entity rotation='0 0 0'>
+          <a-entity mixin='candle'></a-entity>
+        </a-entity>
+        <a-entity rotation='0 45 0'>
+          <a-entity mixin='candle'></a-entity>
+        </a-entity>
+        <a-entity rotation='0 90 0'>
+          <a-entity mixin='candle'></a-entity>
+        </a-entity>
+        <a-entity rotation='0 135 0'>
+          <a-entity mixin='candle'></a-entity>
+        </a-entity>
+        <a-entity rotation='0 180 0'>
+          <a-entity mixin='candle'></a-entity>
+        </a-entity>
+        <a-entity rotation='0 225 0'>
+          <a-entity mixin='candle'></a-entity>
+        </a-entity>
+        <a-entity rotation='0 270 0'>
+          <a-entity mixin='candle'></a-entity>
+        </a-entity>
+        <a-entity rotation='0 315 0'>
+          <a-entity mixin='candle'></a-entity>
+        </a-entity>
+      </a-entity>
+    </a-entity>
+
+    <a-entity id='cakeSlices' position='-4.6 -100 -3' rotation='0 90 0' scale='.1 .1 .1'>
+      <a-cylinder position='0 -.1 0' radius='2.4' height='.1' color='#666'></a-cylinder>
+	    <a-entity id='slice1' position='.1 0 .2'>
+        <a-mixin id='slice1m' cached-model='obj: url(slice1.obj); texture: url(cake.png)'></a-mixin>
+        <a-mixin id='slice1_1' cached-model='obj: url(slice1_1.obj); texture: url(cake.png)'></a-mixin>
+        <a-mixin id='slice1_2' cached-model='obj: url(slice1_2.obj); texture: url(cake.png)'></a-mixin>
+        <a-mixin id='slice1_3' cached-model='obj: url(slice1_3.obj); texture: url(cake.png)'></a-mixin>
+		    <a-entity mixin='slice1m' grab-object='group: r; parts: right; mixin: slice1_3 rightHandCake; spawner: false; object: slice'></a-entity>
+		    <a-entity mixin='slice1m' grab-object='group: l; parts: left; mixin: slice1_3 leftHandCake; spawner: false; object: slice'></a-entity>
+	    </a-entity>
+
+      <a-entity id='slice2' position='.2 0 .1'>
+        <a-mixin id='slice2m' cached-model='obj: url(slice2.obj); texture: url(cake.png)'></a-mixin>
+        <a-entity mixin='slice2m' grab-object='group: r; parts: right; mixin: slice1_3 rightHandCake; spawner: false; object: slice'></a-entity>
+        <a-entity mixin='slice2m' grab-object='group: l; parts: left; mixin: slice1_3 leftHandCake; spawner: false; object: slice'></a-entity>
+      </a-entity>
+
+      <a-entity id='slice3' position='.2 0 -.1'>
+        <a-mixin id='slice3m' cached-model='obj: url(slice3.obj); texture: url(cake.png)'></a-mixin>
+        <a-entity mixin='slice3m' grab-object='group: r; parts: right; mixin: slice1_3 rightHandCake; spawner: false; object: slice'></a-entity>
+        <a-entity mixin='slice3m' grab-object='group: l; parts: left; mixin: slice1_3 leftHandCake; spawner: false; object: slice'></a-entity>
+      </a-entity>
+
+      <a-entity id='slice4' position='.1 0 -.2'>
+        <a-mixin id='slice4m' cached-model='obj: url(slice4.obj); texture: url(cake.png)'></a-mixin>
+        <a-entity mixin='slice4m' grab-object='group: r; parts: right; mixin: slice1_3 rightHandCake; spawner: false; object: slice'></a-entity>
+        <a-entity mixin='slice4m' grab-object='group: l; parts: left; mixin: slice1_3 leftHandCake; spawner: false; object: slice'></a-entity>
+      </a-entity>
+
+      <a-entity id='slice5' position='-.1 0 -.2'>
+        <a-mixin id='slice5m' cached-model='obj: url(slice5.obj); texture: url(cake.png)'></a-mixin>
+        <a-entity mixin='slice5m' grab-object='group: r; parts: right; mixin: slice1_3 rightHandCake; spawner: false; object: slice'></a-entity>
+        <a-entity mixin='slice5m' grab-object='group: l; parts: left; mixin: slice1_3 leftHandCake; spawner: false; object: slice'></a-entity>
+      </a-entity>
+
+      <a-entity id='slice6' position='-.2 0 -.1'>
+        <a-mixin id='slice6m' cached-model='obj: url(slice6.obj); texture: url(cake.png)'></a-mixin>
+        <a-entity mixin='slice6m' grab-object='group: r; parts: right; mixin: slice1_3 rightHandCake; spawner: false; object: slice'></a-entity>
+        <a-entity mixin='slice6m' grab-object='group: l; parts: left; mixin: slice1_3 leftHandCake; spawner: false; object: slice'></a-entity>
+      </a-entity>
+
+      <a-entity id='slice7' position='-.2 0 .1'>
+        <a-mixin id='slice7m' cached-model='obj: url(slice7.obj); texture: url(cake.png)'></a-mixin>
+        <a-entity mixin='slice7m' grab-object='group: r; parts: right; mixin: slice1_3 rightHandCake; spawner: false; object: slice'></a-entity>
+        <a-entity mixin='slice7m' grab-object='group: l; parts: left; mixin: slice1_3 leftHandCake; spawner: false; object: slice'></a-entity>
+      </a-entity>
+
+      <a-entity id='slice8' position='-.1 0 .2'>
+        <a-mixin id='slice8m' cached-model='obj: url(slice8.obj); texture: url(cake.png)'></a-mixin>
+        <a-entity mixin='slice8m' grab-object='group: r; parts: right; mixin: slice1_3 rightHandCake; spawner: false; object: slice'></a-entity>
+        <a-entity mixin='slice8m' grab-object='group: l; parts: left; mixin: slice1_3 leftHandCake; spawner: false; object: slice'></a-entity>
+      </a-entity>
+    </a-entity>
+
+    <a-entity id='buttons' position='-4.6 -1 -3' rotation='0 90 0' scale='.1 .1 .1'>
+      <a-box id='resetButton' position='-1 0 -5' color='blue'></a-box>
+      <a-box id='clearButton' position='1 0 -5' color='red'></a-box>
+    </a-entity>
+
+    <a-sphere id='headCol' scale='.15 .15 .15' material='visible: false' altspace-cursor-collider='enabled: false'></a-sphere>
+
+    <!-- <a-entity position='0 1.5 0'>
+      <a-entity rotation='180 0 -90' scale='.1 .1 .1' cached-model='obj: url(cake.obj); texture: url(cake.png)'></a-entity>
+
+      <a-entity mixin='candle' scale='.5 .5 .5' position='.1 0 .13' rotation='0 0 -90'></a-entity>
+      <a-entity mixin='candle' scale='.5 .5 .5' position='.1 -.09 .09' rotation='45 0 -90'></a-entity>
+      <a-entity mixin='candle' scale='.5 .5 .5' position='.1 -.13 0' rotation='90 0 -90'></a-entity>
+      <a-entity mixin='candle' scale='.5 .5 .5' position='.1 -.09 -.09' rotation='135 0 -90'></a-entity>
+      <a-entity mixin='candle' scale='.5 .5 .5' position='.1 0 -.13' rotation='180 0 -90'></a-entity>
+      <a-entity mixin='candle' scale='.5 .5 .5' position='.1 .09 -.09' rotation='225 0 -90'></a-entity>
+      <a-entity mixin='candle' scale='.5 .5 .5' position='.1 .13 0' rotation='270 0 -90'></a-entity>
+      <a-entity mixin='candle' scale='.5 .5 .5' position='.1 .09 .09' rotation='315 0 -90'></a-entity>
+
+      <a-mixin id='plate' geometry='primitive: cylinder; radius: .24; height: .01' position='-.005 -.3 -.1' rotation='0 0 90' material='color: #666'></a-mixin>
+
+      <a-entity mixin='plate'></a-entity>
+    </a-entity> -->
+
+
+    <a-entity position='0 0 0'>
+      <a-mixin id='cakeWhole' position='0 -.3 -.1' rotation='180 0 -90' scale='.1 .1 .1' cached-model='obj: url(cake.obj); texture: url(cake.png)'></a-mixin>
+
+      <a-mixin id='candle1' position='.1 -.3 .03' rotation='0 0 -90' scale='.5 .5 .5' cached-model='obj: url(../avatars/malesmall.obj); texture: url(../ben.jpg)'></a-mixin>
+      <a-mixin id='candle2' position='.1 -.39 -.01' rotation='45 0 -90' scale='.5 .5 .5' cached-model='obj: url(../avatars/malesmall.obj); texture: url(../ben.jpg)'></a-mixin>
+      <a-mixin id='candle3' position='.1 -.43 -.1' rotation='90 0 -90' scale='.5 .5 .5' cached-model='obj: url(../avatars/malesmall.obj); texture: url(../ben.jpg)'></a-mixin>
+      <a-mixin id='candle4' position='.1 -.39 -.19' rotation='135 0 -90' scale='.5 .5 .5' cached-model='obj: url(../avatars/malesmall.obj); texture: url(../ben.jpg)'></a-mixin>
+      <a-mixin id='candle5' position='.1 -.3 -.23' rotation='180 0 -90' scale='.5 .5 .5' cached-model='obj: url(../avatars/malesmall.obj); texture: url(../ben.jpg)'></a-mixin>
+      <a-mixin id='candle6' position='.1 -.21 -.19' rotation='225 0 -90' scale='.5 .5 .5' cached-model='obj: url(../avatars/malesmall.obj); texture: url(../ben.jpg)'></a-mixin>
+      <a-mixin id='candle7' position='.1 -.17 -.1' rotation='270 0 -90' scale='.5 .5 .5' cached-model='obj: url(../avatars/malesmall.obj); texture: url(../ben.jpg)'></a-mixin>
+      <a-mixin id='candle8' position='.1 -.21 -.01' rotation='315 0 -90' scale='.5 .5 .5' cached-model='obj: url(../avatars/malesmall.obj); texture: url(../ben.jpg)'></a-mixin>
+
+      <a-mixin id='plate' geometry='primitive: cylinder; radius: .24; height: .01' position='-.005 -.3 -.1' rotation='0 0 90' material='color: #666'></a-mixin>
+
+      <!-- <a-entity mixin='cake' n-skeleton-parent='part: hand; side: left'></a-entity> -->
+      <!-- <a-entity mixin='candle1' n-skeleton-parent='part: hand; side: left'></a-entity>
+      <a-entity mixin='candle2' n-skeleton-parent='part: hand; side: left'></a-entity>
+      <a-entity mixin='candle3' n-skeleton-parent='part: hand; side: left'></a-entity>
+      <a-entity mixin='candle4' n-skeleton-parent='part: hand; side: left'></a-entity>
+      <a-entity mixin='candle5' n-skeleton-parent='part: hand; side: left'></a-entity>
+      <a-entity mixin='candle6' n-skeleton-parent='part: hand; side: left'></a-entity>
+      <a-entity mixin='candle7' n-skeleton-parent='part: hand; side: left'></a-entity>
+      <a-entity mixin='candle8' n-skeleton-parent='part: hand; side: left'></a-entity> -->
+    </a-entity>
+
+    <a-box id='cakeSpawner' position='-7 -100 -8' scale='.2 .2 .2' grab-object='group: l; parts: left; mixin: cakeWhole; spawner: true; object: cake'></a-box>
+  </a-scene>
+  <script>
+	  //altspace.open('http://www.google.com/#q=how+to+play+codenames', '_experience', {icon: 'http://bengarfield.github.io/AltVR/codenames/icon.png', hidden: true});
+	  var scene = document.querySelector('a-scene');
+	  scene.addEventListener('connected', function() {
+	  
+	  Promise.all([
+	      altspace.getUser(),
+	      altspace.getThreeJSTrackingSkeleton(),
+	    ]).then(function(results){
+	      var user = results[0];
+	      var s = results[1];
+
+	      var head = s.getJoint('Head');
+
+	      if (user.isModerator) {
+	      	//reset button
+          buttons.setAttribute('position', '-4.6 1 -3');
+          cakeSpawner.setAttribute('position', '-7 1.5 -8');
+
+	      	//addEventListeners
+	      }
+
+		  var state = 0;
+		  var pos = [[.1,0,0],[.1,0,0],[.1,0,0],[.1,0,0],[-.1,0,0],[-.1,0,0],[-.1,0,0],[-.1,0,0]];
+		  var pos2 = [[.1,0,-.1],[.1,0,-.1],[.1,0,.1],[.1,0,.1],[-.1,0,.1],[-.1,0,.1],[-.1,0,-.1],[-.1,0,-.1]];
+		  var pos3 = [[.1,0,-.2],[.2,0,-.1],[.1,0,.1],[.1,0,.1],[-.1,0,.2],[-.2,0,.1],[-.1,0,-.1],[-.1,0,-.1]];
+		  var pos4 = [[.1,0,.2],[.2,0,.1],[.2,0,-.1],[.1,0,-.2],[-.1,0,-.2],[-.2,0,-.1],[-.2,0,.1],[-.1,0,.2]];
+
+		  cake.addEventListener('mouseup', function(){
+			  //for (var i = 0; i < 8; i++) {
+			    //document.querySelector('#slice' + (i + 1)).setAttribute('position', {x: pos4[i][0], y: pos4[i][1] , z: pos4[i][2]});
+			  //}
+			  //candles.setAttribute('position', '0 -20 0');
+        scene.systems['sync-system'].connection.instance.child('cakeState').set('cut');
+		  });
+
+      resetButton.addEventListener('mouseup', function(){
+        //for (var i = 0; i < 8; i++) {
+          //document.querySelector('#slice' + (i + 1)).setAttribute('position', {x:0, y:0, z:0});
+        //}
+        //candles.setAttribute('position', '0 1 0');
+        scene.systems['sync-system'].connection.instance.child('grabObjects').set(null);
+        scene.systems['sync-system'].connection.instance.child('cakeState').set('placed');
+      });
+
+      clearButton.addEventListener('mouseup', function(){
+        scene.systems['sync-system'].connection.instance.child('grabObjects').set(null);
+        scene.systems['sync-system'].connection.instance.child('cakeState').set(null);
+      });
+
+      scene.systems['sync-system'].connection.instance.child('cakeState').on('value', function(data){
+        if (data.val() != null) {
+          if (data.val() == 'placed') {
+            cake.setAttribute('position', '-4.6 1.03 -3');
+            cakeSlices.setAttribute('position', '-4.6 -100 -3');
+          } else if (data.val() == 'cut') {
+            cake.setAttribute('position', '-4.6 -100 -3');
+            cakeSlices.setAttribute('position', '-4.6 1.03 -3');
+          }
+        } else {
+          cake.setAttribute('position', '-4.6 -100 -3');
+            cakeSlices.setAttribute('position', '-4.6 -100 -3');
+        }
+      });
+
+		  headCol.object3D.addBehaviors(
+		      new altspace.utilities.behaviors.JointCollisionEvents({
+		        jointCubeSize: 0.1, joints: [['Hand', 'Left', 0],['Thumb', 'Left', 3],['Index', 'Left', 3],['Middle', 'Left', 3],['Ring', 'Left', 3],['Pinky', 'Left', 3]]
+		      }),
+		      new altspace.utilities.behaviors.JointCollisionEvents({
+		        jointCubeSize: 0.1, joints: [['Hand', 'Right', 0],['Thumb', 'Right', 3],['Index', 'Right', 3],['Middle', 'Right', 3],['Ring', 'Right', 3],['Pinky', 'Right', 3]]
+		      })
+		    );
+
+		  var cakeState = 0;
+
+		  headCol.object3D.addEventListener('jointcollisionenter', function(event) {
+
+		  	if (/Left/.test(event.detail.joints[0].name)) {
+		  		console.log('Left');
+		  		scene.systems['sync-system'].removeLast('go-' + user.userId + '-left');
+		  	} else {
+		  		console.log('Right');
+		  		scene.systems['sync-system'].removeLast('go-' + user.userId + '-right');
+		  	}
+
+		  	/*console.log('cakeState: ', cakeState);
+		  	if (cakeState == 0) {
+		  		cakeState = 1;
+		  		piece1.setAttribute('scale', '.0001 .0001 .0001');
+		  	} else if (cakeState == 1) {
+		  		cakeState = 2;
+				piece2.setAttribute('scale', '.0001 .0001 .0001');
+		  	} else if (cakeState == 2) {
+		  		cakeState = 3;
+		  		piece3.setAttribute('scale', '.0001 .0001 .0001');
+		  	} else {
+		  		cakeState = 0;
+		  		piece1.setAttribute('scale', '.1 .1 .1');
+		  		piece2.setAttribute('scale', '.1 .1 .1');
+		  		piece3.setAttribute('scale', '.1 .1 .1');
+		  	}*/
+		  });
+
+		  loop();
+		  function loop() {
+		  	requestAnimationFrame(loop);
+		  	headCol.setAttribute('position', {x:head.position.x, y:head.position.y, z:head.position.z});
+		  }
+		});
+	});
+
+  </script>
+</body>
+</html>
