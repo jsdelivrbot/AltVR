@@ -449,6 +449,16 @@
           buttons.setAttribute('position', '-4.6 1 -3');
           cakeSpawner.setAttribute('position', '-7 1.5 -8');
 
+          resetButton.addEventListener('mouseup', function(){
+            scene.systems['sync-system'].connection.instance.child('grabObjects').set(null);
+            scene.systems['sync-system'].connection.instance.child('cakeState').set('placed');
+          });
+
+          clearButton.addEventListener('mouseup', function(){
+            scene.systems['sync-system'].connection.instance.child('grabObjects').set(null);
+            scene.systems['sync-system'].connection.instance.child('cakeState').set(null);
+          });
+
 	      	//addEventListeners
 	      }
 
@@ -465,20 +475,6 @@
 			  //candles.setAttribute('position', '0 -20 0');
         scene.systems['sync-system'].connection.instance.child('cakeState').set('cut');
 		  });
-
-      resetButton.addEventListener('mouseup', function(){
-        //for (var i = 0; i < 8; i++) {
-          //document.querySelector('#slice' + (i + 1)).setAttribute('position', {x:0, y:0, z:0});
-        //}
-        //candles.setAttribute('position', '0 1 0');
-        scene.systems['sync-system'].connection.instance.child('grabObjects').set(null);
-        scene.systems['sync-system'].connection.instance.child('cakeState').set('placed');
-      });
-
-      clearButton.addEventListener('mouseup', function(){
-        scene.systems['sync-system'].connection.instance.child('grabObjects').set(null);
-        scene.systems['sync-system'].connection.instance.child('cakeState').set(null);
-      });
 
       scene.systems['sync-system'].connection.instance.child('cakeState').on('value', function(data){
         if (data.val() != null) {
