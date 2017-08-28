@@ -424,6 +424,7 @@
     </a-entity>
 
     <a-box id='cakeSpawner' position='-7 -100 -8' scale='.2 .2 .2' grab-object='group: l; parts: left; mixin: cakeWhole; spawner: true; object: cake'></a-box>
+    <a-box id='cakeSpawner2' position='-2 -100 -4' scale='.2 .2 .2' grab-object='group: l; parts: left; mixin: cakeWhole; spawner: true; object: cake'></a-box>
 
     <a-entity position='0 -1000 0' mixin='slice1_1'></a-entity>
     <a-entity position='0 -1000 0' mixin='slice1_2'></a-entity>
@@ -448,6 +449,7 @@
 	      	//reset button
           buttons.setAttribute('position', '-4.6 1 -3');
           cakeSpawner.setAttribute('position', '-7 1.5 -8');
+          cakeSpawner2.setAttribute('position', '-2 1 -4');
 
           resetButton.addEventListener('mouseup', function(){
             scene.systems['sync-system'].connection.instance.child('grabObjects').set(null);
