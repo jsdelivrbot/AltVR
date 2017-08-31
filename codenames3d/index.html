@@ -50,7 +50,7 @@
     var sync = scene.systems['sync-system'].connection;
     
     altspace.getSpace().then(function(space){
-      if (space.sid == '2chambers') {
+      if (space.sid == '2chambers' || space.sid == 'test-house') {
         console.log('Approved space.')
       } else {
         location.replace('http://about:blank');
