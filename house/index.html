@@ -270,6 +270,13 @@
 
       <a-mixin id='ahole' n-text='fontSize: 5;text: Asshole' position='0 1 0' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
       <a-mixin id='shutup' n-text='fontSize: 5;text: Shut Up!' position='0 1 0' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
+      <a-mixin id='yourboy' n-text="fontSize: 5;text: It's your boy!" position='0 1 0' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
+
+      <img id='badgeb' src='https://bengarfield.github.io/AltVR/badges/badge.png'>
+      <a-mixin id='badge' geometry='primitive: circle; radius: .038' material='src: #badgeb; side: double' position='-.1 .35 -.15' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
+      <a-mixin id='ring' geometry='primitive: ring; radius-outer: .04; radius-inner: .038' material='color: black; side: double' position='-.1 .35 -.15' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
+      <a-mixin id='pink' material='color: #e512c9; side: double'></a-mixin>
+      <a-mixin id='oddtext' n-text='fontSize: 1; text: <color=black>I am an\nOddity' position='-.1 .35 -.151' scale='.15 .15 .15' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
     </a-assets>
     
     <a-entity id='panel' position='-17.86 -.31 2.55'>
@@ -599,6 +606,9 @@
       if (user.displayName == 'JustJohn') {
         scene.systems['sync-system'].instantiate('shutup', scene);
       }
+      if (user.displayName == 'Oddity') {
+        scene.systems['sync-system'].instantiate('yourboy', scene);
+      }
 
       var inControl = false;
 
@@ -634,6 +644,15 @@
             poolcover.setAttribute('position', '5 -10 14');
             coverOn = false;
           }
+        }
+      });
+
+
+      sync.instance.child('oddbadge').on('value', function(data){
+        if (data.val() == true) {
+          scene.systems['sync-system'].instantiate('badge', scene);
+          scene.systems['sync-system'].instantiate('ring pink', scene);
+          scene.systems['sync-system'].instantiate('oddtext', scene);
         }
       });
       
