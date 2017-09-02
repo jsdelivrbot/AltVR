@@ -270,7 +270,7 @@
 
       <a-mixin id='ahole' n-text='fontSize: 5;text: Asshole' position='0 1 0' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
       <a-mixin id='shutup' n-text='fontSize: 5;text: Shut Up!' position='0 1 0' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
-      <a-mixin id='yourboy' n-text="fontSize: 5;text: It's your boy!" position='0 1 0' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
+      <a-mixin id='yaboy' n-text="fontSize: 5;text: It's ya boy!" position='0 1 0' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
 
       <img id='badgeb' src='https://bengarfield.github.io/AltVR/badges/badge.png'>
       <a-mixin id='badge' geometry='primitive: circle; radius: .038' material='src: #badgeb; side: double' position='-.1 .35 -.15' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
@@ -607,7 +607,7 @@
         scene.systems['sync-system'].instantiate('shutup', scene);
       }
       if (user.displayName == 'Oddity') {
-        scene.systems['sync-system'].instantiate('yourboy', scene);
+        scene.systems['sync-system'].instantiate('yaboy', scene);
       }
 
       var inControl = false;
@@ -828,12 +828,12 @@
       setTimeout(function(){
 
       players.on('child_added', function(data){
-        console.log(data.val());
+        //console.log(data.val());
         playerList.push(data.val());
         playerObj[data.key()] = data.val();
         playerIds.push(data.key());
         playerIds.sort();
-        console.log(playerObj);
+        //console.log(playerObj);
         updateButtons();
       });
 
@@ -903,7 +903,7 @@
           var b = document.querySelector('#abutton' + i);
           if (b.object3D.position.y <= 0) {
             b.object3D.position.y += 1000;
-            console.log('Button added');
+            //console.log('Button added');
           }
           if (inControl) {
             var t = document.querySelector('#name' + i);
@@ -922,7 +922,7 @@
           var b = document.querySelector('#abutton' + i);
           if (b.object3D.position.y > 0) {
             b.object3D.position.y -= 1000;
-            console.log('Button removed');
+            //console.log('Button removed');
           }
           if (inControl) {
             var t = document.querySelector('#name' + i);
