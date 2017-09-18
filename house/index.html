@@ -620,110 +620,109 @@
             //console.log('Yes');
             inControl = true;
             altspace.open('http://output.jsbin.com/vezefux?altspace-sync-instance=nighthouse', '_experience', {icon: 'https://bengarfield.github.io/AltVR/house/icon.png', hidden: true});
-
-            for (var i = 0; i < 27; i++) {
-              var y = 1.9;
-              var z = 4 + (i * .15);
-              if (i > 8) {
-                y = 1.8;
-                z = 4 + ((i - 9) * .15);
-              }
-              if (i > 17) {
-                y = 1.7;
-                z = 4 + ((i - 18) * .15);
-              }
-              var b = document.createElement('a-cylinder');
-              b.setAttribute('id', 'abutton' + i);
-              b.setAttribute('position', {x:8.9,y:y - 1000,z:z});
-              b.setAttribute('scale', '.025 .15 .025');
-              b.setAttribute('rotation', '0 0 90');
-              b.setAttribute('color', '#300');
-              b.setAttribute('n-mesh-collider', 'type: hologram');
-              buttons.appendChild(b);
-
-              if(inControl){
-                b.addEventListener('mouseup', function(e){
-                  var id = Number(e.target.id.slice(7,e.target.id.length));
-                  console.log(id, playerObj[playerIds[id]].name, playerObj[playerIds[id]].id);
-                  players.child(playerIds[id]).child('kick').set(!playerObj[playerIds[id]].kick);
-                });
-                document.querySelector('#abutton' + i).object3D.children[0].addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({
-                  joints: [['Index','Right',3],['Index','Left',3]],
-                  jointCubeSize: .1
-                }));
-                document.querySelector('#abutton' + i).object3D.children[0].addEventListener('jointcollisionenter', function(e){
-                  var id = Number(e.target.el.id.slice(7,e.target.el.id.length));
-                  players.child(playerIds[id]).child('kick').set(!playerObj[playerIds[id]].kick);
-                });
-
-                var t = document.createElement('a-entity');
-                t.setAttribute('id', 'name' + i);
-                t.setAttribute('position', {x:8.84,y:y + .05 - 1000,z:z});
-                t.setAttribute('scale', '.03 .03 .03');
-                t.setAttribute('rotation', '0 -90 0');
-                t.setAttribute('n-text', 'text: ' + i);
-                buttons.appendChild(t);
-              }
+          }
+          for (var i = 0; i < 27; i++) {
+            var y = 1.9;
+            var z = 4 + (i * .15);
+            if (i > 8) {
+              y = 1.8;
+              z = 4 + ((i - 9) * .15);
             }
+            if (i > 17) {
+              y = 1.7;
+              z = 4 + ((i - 18) * .15);
+            }
+            var b = document.createElement('a-cylinder');
+            b.setAttribute('id', 'abutton' + i);
+            b.setAttribute('position', {x:8.9,y:y - 1000,z:z});
+            b.setAttribute('scale', '.025 .15 .025');
+            b.setAttribute('rotation', '0 0 90');
+            b.setAttribute('color', '#300');
+            b.setAttribute('n-mesh-collider', 'type: hologram');
+            buttons.appendChild(b);
 
             if(inControl){
-              document.querySelector('#button').addEventListener('mouseup', function(){
-                kick.set('yes');
-                setTimeout(function(){kick.set(null);}, 5000);
+              b.addEventListener('mouseup', function(e){
+                var id = Number(e.target.id.slice(7,e.target.id.length));
+                console.log(id, playerObj[playerIds[id]].name, playerObj[playerIds[id]].id);
+                players.child(playerIds[id]).child('kick').set(!playerObj[playerIds[id]].kick);
               });
-              var kicking = false;
-              button.object3D.children[0].addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({joints: [['Index','Right',3],['Index','Left',3]], jointCubeSize: .1}));
-              button.object3D.children[0].addEventListener('jointcollisionenter', function(e){
-                if (!kicking) {
-                  kicking = true;
-                  button.setAttribute('color', '#030');
-                  kick.set('yes');
-                  setTimeout(function(){button.setAttribute('color', '#300'); kicking = false}, 5000);
-                }
-              });
-              kickbutton.addEventListener('mouseup', function(){
-                if (realkick) {
-                  kickbutton.setAttribute('color', '#300');
-                  kick2.set(false);
-                } else {
-                  kickbutton.setAttribute('color', '#330');
-                  kick2.set(true);
-                }
-              });
-              kickbutton.object3D.children[0].addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({joints: [['Index','Right',3],['Index','Left',3]], jointCubeSize: .1}));
-              kickbutton.object3D.children[0].addEventListener('jointcollisionenter', function(e){
-                if (realkick) {
-                  kickbutton.setAttribute('color', '#300');
-                  kick2.set(false);
-                } else {
-                  kickbutton.setAttribute('color', '#330');
-                  kick2.set(true);
-                }
+              document.querySelector('#abutton' + i).object3D.children[0].addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({
+                joints: [['Index','Right',3],['Index','Left',3]],
+                jointCubeSize: .1
+              }));
+              document.querySelector('#abutton' + i).object3D.children[0].addEventListener('jointcollisionenter', function(e){
+                var id = Number(e.target.el.id.slice(7,e.target.el.id.length));
+                players.child(playerIds[id]).child('kick').set(!playerObj[playerIds[id]].kick);
               });
 
-              pooltext.setAttribute('n-text', 'text: <color=#555>Pool Cover');
-              poolbutton.addEventListener('mouseup', function(){
-                if (coverOn) {
-                  poolbutton.setAttribute('color', '#300');
-                  syncpool.set(false);
-                } else {
-                  poolbutton.setAttribute('color', '#330');
-                  syncpool.set(true);
-                }
-              });
-              poolbutton.object3D.children[0].addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({joints: [['Index','Right',3],['Index','Left',3]], jointCubeSize: .1}));
-              poolbutton.object3D.children[0].addEventListener('jointcollisionenter', function(e){
-                if (coverOn) {
-                  poolbutton.setAttribute('color', '#300');
-                  syncpool.set(false);
-                } else {
-                  poolbutton.setAttribute('color', '#330');
-                  syncpool.set(true);
-                }
-              });
-
-              codetext.setAttribute('n-text', 'text: <color=#555>Codenames');
+              var t = document.createElement('a-entity');
+              t.setAttribute('id', 'name' + i);
+              t.setAttribute('position', {x:8.84,y:y + .05 - 1000,z:z});
+              t.setAttribute('scale', '.03 .03 .03');
+              t.setAttribute('rotation', '0 -90 0');
+              t.setAttribute('n-text', 'text: ' + i);
+              buttons.appendChild(t);
             }
+          }
+
+          if(inControl){
+            document.querySelector('#button').addEventListener('mouseup', function(){
+              kick.set('yes');
+              setTimeout(function(){kick.set(null);}, 5000);
+            });
+            var kicking = false;
+            button.object3D.children[0].addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({joints: [['Index','Right',3],['Index','Left',3]], jointCubeSize: .1}));
+            button.object3D.children[0].addEventListener('jointcollisionenter', function(e){
+              if (!kicking) {
+                kicking = true;
+                button.setAttribute('color', '#030');
+                kick.set('yes');
+                setTimeout(function(){button.setAttribute('color', '#300'); kicking = false}, 5000);
+              }
+            });
+            kickbutton.addEventListener('mouseup', function(){
+              if (realkick) {
+                kickbutton.setAttribute('color', '#300');
+                kick2.set(false);
+              } else {
+                kickbutton.setAttribute('color', '#330');
+                kick2.set(true);
+              }
+            });
+            kickbutton.object3D.children[0].addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({joints: [['Index','Right',3],['Index','Left',3]], jointCubeSize: .1}));
+            kickbutton.object3D.children[0].addEventListener('jointcollisionenter', function(e){
+              if (realkick) {
+                kickbutton.setAttribute('color', '#300');
+                kick2.set(false);
+              } else {
+                kickbutton.setAttribute('color', '#330');
+                kick2.set(true);
+              }
+            });
+
+            pooltext.setAttribute('n-text', 'text: <color=#555>Pool Cover');
+            poolbutton.addEventListener('mouseup', function(){
+              if (coverOn) {
+                poolbutton.setAttribute('color', '#300');
+                syncpool.set(false);
+              } else {
+                poolbutton.setAttribute('color', '#330');
+                syncpool.set(true);
+              }
+            });
+            poolbutton.object3D.children[0].addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({joints: [['Index','Right',3],['Index','Left',3]], jointCubeSize: .1}));
+            poolbutton.object3D.children[0].addEventListener('jointcollisionenter', function(e){
+              if (coverOn) {
+                poolbutton.setAttribute('color', '#300');
+                syncpool.set(false);
+              } else {
+                poolbutton.setAttribute('color', '#330');
+                syncpool.set(true);
+              }
+            });
+
+            codetext.setAttribute('n-text', 'text: <color=#555>Codenames');
           }
         }
       });
