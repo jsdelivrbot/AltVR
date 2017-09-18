@@ -4,7 +4,6 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>House</title>
-  <script src="https://cdn.rawgit.com/mrdoob/three.js/r84/build/three.min.js"></script>
   <script src="https://aframe.io/releases/0.3.0/aframe.js"></script>
   <script src="https://sdk.altvr.com/libs/altspace.js/2.6.1/altspace.min.js"></script>
   <!-- <script src="https://cdn.rawgit.com/norybiak/UltimateLoader/v0.4.6/dist/UltimateLoader.min.js"></script> -->
@@ -270,13 +269,6 @@
 
       <a-mixin id='ahole' n-text='fontSize: 5;text: Asshole' position='0 1 0' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
       <a-mixin id='shutup' n-text='fontSize: 5;text: Shut Up!' position='0 1 0' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
-      <a-mixin id='yaboy' n-text="fontSize: 5;text: It's ya boy!" position='0 1 0' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
-
-      <img id='badgeb' src='https://bengarfield.github.io/AltVR/badges/badge.png'>
-      <a-mixin id='badge' geometry='primitive: circle; radius: .038' material='src: #badgeb; side: double' position='-.1 .35 -.15' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
-      <a-mixin id='ring' geometry='primitive: ring; radius-outer: .04; radius-inner: .038' material='color: black; side: double' position='-.1 .35 -.15' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
-      <a-mixin id='pink' material='color: #e512c9; side: double'></a-mixin>
-      <a-mixin id='oddtext' n-text='fontSize: 1; text: <color=black>I am an\nOddity' position='-.1 .35 -.151' scale='.15 .15 .15' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
     </a-assets>
     
     <a-entity id='panel' position='-17.86 -.31 2.55'>
@@ -505,42 +497,6 @@
       <a-entity mixin="ostrog" grab-object="group: r; parts: right; mixin: ostrog rightav; spawner: false"></a-entity>
       <a-entity mixin="ostrog" grab-object="group: l; parts: left; mixin: ostrog leftav; spawner: false"></a-entity>
     </a-entity>
-
-    <a-entity position='-1.4 1.3 -3.5' rotation='0 0 0'>
-      <a-mixin id="tim" avatar='sid: s-series-m01; colors: url(avatars/new/Tim.jpg)' collapse-model></a-mixin>
-      <a-entity mixin="tim" grab-object="group: r; parts: right; mixin: tim rightav; spawner: false"></a-entity>
-      <a-entity mixin="tim" grab-object="group: l; parts: left; mixin: tim leftav; spawner: false"></a-entity>
-    </a-entity>
-
-    <a-entity position='-1.3 1.3 -3.5' rotation='0 0 0'>
-      <a-mixin id="poxxxx" avatar='sid: s-series-m01; colors: url(avatars/new/Poxxxx.jpg)' collapse-model></a-mixin>
-      <a-entity mixin="poxxxx" grab-object="group: r; parts: right; mixin: poxxxx rightav; spawner: false"></a-entity>
-      <a-entity mixin="poxxxx" grab-object="group: l; parts: left; mixin: poxxxx leftav; spawner: false"></a-entity>
-    </a-entity>
-
-    <a-entity position='-1.2 1.3 -3.5' rotation='0 0 0'>
-      <a-mixin id="daedra" avatar='sid: s-series-m01; colors: url(avatars/new/Daedra.jpg)' collapse-model></a-mixin>
-      <a-entity mixin="daedra" grab-object="group: r; parts: right; mixin: daedra rightav; spawner: false"></a-entity>
-      <a-entity mixin="daedra" grab-object="group: l; parts: left; mixin: daedra leftav; spawner: false"></a-entity>
-    </a-entity>
-
-    <a-entity position='-1.1 1.3 -3.5' rotation='0 0 0'>
-      <a-mixin id="matt" avatar='sid: pod-classic; colors: url(avatars/new/Matt.jpg)' collapse-model></a-mixin>
-      <a-entity mixin="matt" grab-object="group: r; parts: right; mixin: matt rightav; spawner: false"></a-entity>
-      <a-entity mixin="matt" grab-object="group: l; parts: left; mixin: matt leftav; spawner: false"></a-entity>
-    </a-entity>
-
-    <a-entity position='-1 1.3 -3.5' rotation='0 0 0'>
-      <a-mixin id="vince" avatar='sid: s-series-m01; colors: url(avatars/new/Vince.jpg)' collapse-model></a-mixin>
-      <a-entity mixin="vince" grab-object="group: r; parts: right; mixin: vince rightav; spawner: false"></a-entity>
-      <a-entity mixin="vince" grab-object="group: l; parts: left; mixin: vince leftav; spawner: false"></a-entity>
-    </a-entity>
-
-    <a-entity position='-.9 1.3 -3.5' rotation='0 0 0'>
-      <a-mixin id="ann" avatar='sid: s-series-f01; colors: url(avatars/new/Ann.jpg)' collapse-model></a-mixin>
-      <a-entity mixin="ann" grab-object="group: r; parts: right; mixin: ann rightav; spawner: false"></a-entity>
-      <a-entity mixin="ann" grab-object="group: l; parts: left; mixin: ann leftav; spawner: false"></a-entity>
-    </a-entity>
       
 <!--     <a-entity position='0 0 0' rotation='0 90 0'>
       <a-mixin id="bigvivian" cached-obj-model='obj: url(https://bengarfield.github.io/AltVR/avatar/Vivian/vivian.obj); mtl: url(https://bengarfield.github.io/AltVR/avatar/Vivian/vivian.mtl)' collapse-model></a-mixin>
@@ -606,14 +562,16 @@
       if (user.displayName == 'JustJohn') {
         scene.systems['sync-system'].instantiate('shutup', scene);
       }
-      if (user.displayName == 'Oddity') {
-        scene.systems['sync-system'].instantiate('yaboy', scene);
-      }
 
       var inControl = false;
 
+      // if (user.userId == '582115151281389721' || user.userId == '613349871495152349' || user.userId == '542562301434134702' || user.userId == '635719319472308908') {
+      //   inControl = true;
+      //   altspace.open('http://output.jsbin.com/vezefux?altspace-sync-instance=nighthouse', '_experience', {hidden: true});
+      //   newavs.setAttribute('position', '0 0 0');
+      // }
+
       sync.app.parent().parent().child('ChamberMasters').once('value', function(data){
-        //console.log(data.val());
         for (name in data.val()) {
           //console.log(name, data.val()[name]);
           if (user.userId == data.val()[name]) {
@@ -621,475 +579,356 @@
             inControl = true;
             altspace.open('http://output.jsbin.com/vezefux?altspace-sync-instance=nighthouse', '_experience', {icon: 'https://bengarfield.github.io/AltVR/house/icon.png', hidden: true});
           }
-          for (var i = 0; i < 27; i++) {
-            var y = 1.9;
-            var z = 4 + (i * .15);
-            if (i > 8) {
-              y = 1.8;
-              z = 4 + ((i - 9) * .15);
-            }
-            if (i > 17) {
-              y = 1.7;
-              z = 4 + ((i - 18) * .15);
-            }
-            var b = document.createElement('a-cylinder');
-            b.setAttribute('id', 'abutton' + i);
-            b.setAttribute('position', {x:8.9,y:y - 1000,z:z});
-            b.setAttribute('scale', '.025 .15 .025');
-            b.setAttribute('rotation', '0 0 90');
-            b.setAttribute('color', '#300');
-            b.setAttribute('n-mesh-collider', 'type: hologram');
-            buttons.appendChild(b);
+        }
 
-            if(inControl){
-              b.addEventListener('mouseup', function(e){
-                var id = Number(e.target.id.slice(7,e.target.id.length));
-                console.log(id, playerObj[playerIds[id]].name, playerObj[playerIds[id]].id);
-                players.child(playerIds[id]).child('kick').set(!playerObj[playerIds[id]].kick);
-              });
-              document.querySelector('#abutton' + i).object3D.children[0].addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({
-                joints: [['Index','Right',3],['Index','Left',3]],
-                jointCubeSize: .1
-              }));
-              document.querySelector('#abutton' + i).object3D.children[0].addEventListener('jointcollisionenter', function(e){
-                var id = Number(e.target.el.id.slice(7,e.target.el.id.length));
-                players.child(playerIds[id]).child('kick').set(!playerObj[playerIds[id]].kick);
-              });
+        document.querySelector('a-scene').object3D.add(s);
 
-              var t = document.createElement('a-entity');
-              t.setAttribute('id', 'name' + i);
-              t.setAttribute('position', {x:8.84,y:y + .05 - 1000,z:z});
-              t.setAttribute('scale', '.03 .03 .03');
-              t.setAttribute('rotation', '0 -90 0');
-              t.setAttribute('n-text', 'text: ' + i);
-              buttons.appendChild(t);
+        var players = sync.instance.child('players');
+        var you = players.child(user.displayName + user.userId);
+        var kick = sync.instance.child('kick');
+        var kick2 = sync.instance.child('realkick');
+
+        var showI = sync.instance.child('show');
+        var showI2 = sync.instance.child('show2');
+
+
+        var coverOn = false;
+        var syncpool = sync.instance.child('poolcover');
+        syncpool.on('value', function(data){
+          if (data.val() == null) {
+            syncpool.set(false);
+          } else {
+            if (data.val()) {
+              poolbutton.setAttribute('color', '#030');
+              poolcover.setAttribute('position', '5 -.1 14');
+              coverOn = true;
+            } else {
+              poolbutton.setAttribute('color', '#300');
+              poolcover.setAttribute('position', '5 -10 14');
+              coverOn = false;
             }
           }
+        });
+        
+        /*var grabObjects = sync.instance.child('grabObjects');
+        grabObjects.on('child_changed', function(childSnapshot, prevChildKey){
+          console.log(childSnapshot.key(), childSnapshot.val());
+          if (childSnapshot.val()) {
+            document.querySelector('#frame' + childSnapshot.key()).parentElement.object3D.position.y = -100;
+          } else {
+            document.querySelector('#frame' + childSnapshot.key()).parentElement.object3D.position.y = 0;
+          }
+        });*/
+
+        var realkick = false;
+
+        var playerList = [];
+        var playerObj = {};
+        var playerIds = [];
+
+        var stay = false;
+        var show = false;
+        var show2 = false;
+
+        if (user.isModerator) {
+          showInfo.object3D.position.y = -1.4;
+          showInfo2.object3D.position.y = -1.4;
+          showInfo.addEventListener('mouseup', function(){
+            show = !show;
+            showI.set(show);
+          });
+          showInfo2.addEventListener('mouseup', function(){
+            show2 = !show2;
+            showI2.set(show2);
+          });
+        }
+
+        showI.on('value', function(data){
+          if (data.val() != null) {
+            show = data.val();
+            if (show) {
+              infoImage.object3D.position.y = 0;
+              showInfo.setAttribute('color', 'green');
+              if (show2) {
+                showI2.set(false);
+              }
+            } else {
+              infoImage.object3D.position.y = -100;
+              showInfo.setAttribute('color', 'red');
+            }
+          }
+        });
+
+        showI2.on('value', function(data){
+          if (data.val() != null) {
+            show2 = data.val();
+            if (show2) {
+              infoImage2.object3D.position.y = 0;
+              showInfo2.setAttribute('color', 'green');
+              if (show) {
+                showI.set(false);
+              }
+            } else {
+              infoImage2.object3D.position.y = -100;
+              showInfo2.setAttribute('color', 'blue');
+            }
+          }
+        });
+
+        for (var i = 0; i < 27; i++) {
+          var y = 1.9;
+          var z = 4 + (i * .15);
+          if (i > 8) {
+            y = 1.8;
+            z = 4 + ((i - 9) * .15);
+          }
+          if (i > 17) {
+            y = 1.7;
+            z = 4 + ((i - 18) * .15);
+          }
+          var b = document.createElement('a-cylinder');
+          b.setAttribute('id', 'abutton' + i);
+          b.setAttribute('position', {x:8.9,y:y - 1000,z:z});
+          b.setAttribute('scale', '.025 .15 .025');
+          b.setAttribute('rotation', '0 0 90');
+          b.setAttribute('color', '#300');
+          b.setAttribute('n-mesh-collider', 'type: hologram');
+          buttons.appendChild(b);
 
           if(inControl){
-            document.querySelector('#button').addEventListener('mouseup', function(){
+            b.addEventListener('mouseup', function(e){
+              var id = Number(e.target.id.slice(7,e.target.id.length));
+              console.log(id, playerObj[playerIds[id]].name, playerObj[playerIds[id]].id);
+              players.child(playerIds[id]).child('kick').set(!playerObj[playerIds[id]].kick);
+            });
+            document.querySelector('#abutton' + i).object3D.children[0].addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({
+              joints: [['Index','Right',3],['Index','Left',3]],
+              jointCubeSize: .1
+            }));
+            document.querySelector('#abutton' + i).object3D.children[0].addEventListener('jointcollisionenter', function(e){
+              var id = Number(e.target.el.id.slice(7,e.target.el.id.length));
+              players.child(playerIds[id]).child('kick').set(!playerObj[playerIds[id]].kick);
+            });
+
+            var t = document.createElement('a-entity');
+            t.setAttribute('id', 'name' + i);
+            t.setAttribute('position', {x:8.84,y:y + .05 - 1000,z:z});
+            t.setAttribute('scale', '.03 .03 .03');
+            t.setAttribute('rotation', '0 -90 0');
+            t.setAttribute('n-text', 'text: ' + i);
+            buttons.appendChild(t);
+          }
+        }    
+
+        if(inControl){
+          document.querySelector('#button').addEventListener('mouseup', function(){
+            kick.set('yes');
+            setTimeout(function(){kick.set(null);}, 5000);
+          });
+          var kicking = false;
+          button.object3D.children[0].addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({joints: [['Index','Right',3],['Index','Left',3]], jointCubeSize: .1}));
+          button.object3D.children[0].addEventListener('jointcollisionenter', function(e){
+            if (!kicking) {
+              kicking = true;
+              button.setAttribute('color', '#030');
               kick.set('yes');
-              setTimeout(function(){kick.set(null);}, 5000);
-            });
-            var kicking = false;
-            button.object3D.children[0].addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({joints: [['Index','Right',3],['Index','Left',3]], jointCubeSize: .1}));
-            button.object3D.children[0].addEventListener('jointcollisionenter', function(e){
-              if (!kicking) {
-                kicking = true;
-                button.setAttribute('color', '#030');
-                kick.set('yes');
-                setTimeout(function(){button.setAttribute('color', '#300'); kicking = false}, 5000);
-              }
-            });
-            kickbutton.addEventListener('mouseup', function(){
-              if (realkick) {
-                kickbutton.setAttribute('color', '#300');
-                kick2.set(false);
-              } else {
-                kickbutton.setAttribute('color', '#330');
-                kick2.set(true);
-              }
-            });
-            kickbutton.object3D.children[0].addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({joints: [['Index','Right',3],['Index','Left',3]], jointCubeSize: .1}));
-            kickbutton.object3D.children[0].addEventListener('jointcollisionenter', function(e){
-              if (realkick) {
-                kickbutton.setAttribute('color', '#300');
-                kick2.set(false);
-              } else {
-                kickbutton.setAttribute('color', '#330');
-                kick2.set(true);
-              }
-            });
-
-            pooltext.setAttribute('n-text', 'text: <color=#555>Pool Cover');
-            poolbutton.addEventListener('mouseup', function(){
-              if (coverOn) {
-                poolbutton.setAttribute('color', '#300');
-                syncpool.set(false);
-              } else {
-                poolbutton.setAttribute('color', '#330');
-                syncpool.set(true);
-              }
-            });
-            poolbutton.object3D.children[0].addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({joints: [['Index','Right',3],['Index','Left',3]], jointCubeSize: .1}));
-            poolbutton.object3D.children[0].addEventListener('jointcollisionenter', function(e){
-              if (coverOn) {
-                poolbutton.setAttribute('color', '#300');
-                syncpool.set(false);
-              } else {
-                poolbutton.setAttribute('color', '#330');
-                syncpool.set(true);
-              }
-            });
-
-            codetext.setAttribute('n-text', 'text: <color=#555>Codenames');
-          }
-        }
-      });
-
-      /*if (user.userId == '582115151281389721' || user.userId == '613349871495152349' || user.userId == '542562301434134702' || user.userId == '635719319472308908') {
-        inControl = true;
-        altspace.open('http://output.jsbin.com/vezefux?altspace-sync-instance=nighthouse', '_experience', {icon: 'https://bengarfield.github.io/AltVR/house/icon.png', hidden: true});
-        //newavs.setAttribute('position', '0 0 0');
-      }*/
-
-      document.querySelector('a-scene').object3D.add(s);
-
-      var players = sync.instance.child('players');
-      var you = players.child(user.displayName + user.userId);
-      var kick = sync.instance.child('kick');
-      var kick2 = sync.instance.child('realkick');
-
-      var showI = sync.instance.child('show');
-      var showI2 = sync.instance.child('show2');
-
-
-      var coverOn = false;
-      var syncpool = sync.instance.child('poolcover');
-      syncpool.on('value', function(data){
-        if (data.val() == null) {
-          syncpool.set(false);
-        } else {
-          if (data.val()) {
-            poolbutton.setAttribute('color', '#030');
-            poolcover.setAttribute('position', '5 -.1 14');
-            coverOn = true;
-          } else {
-            poolbutton.setAttribute('color', '#300');
-            poolcover.setAttribute('position', '5 -10 14');
-            coverOn = false;
-          }
-        }
-      });
-
-
-      sync.instance.child('oddbadge').on('value', function(data){
-        if (data.val() == true) {
-          scene.systems['sync-system'].instantiate('badge', scene);
-          scene.systems['sync-system'].instantiate('ring pink', scene);
-          scene.systems['sync-system'].instantiate('oddtext', scene);
-        }
-      });
-      
-      /*var grabObjects = sync.instance.child('grabObjects');
-      grabObjects.on('child_changed', function(childSnapshot, prevChildKey){
-        console.log(childSnapshot.key(), childSnapshot.val());
-        if (childSnapshot.val()) {
-          document.querySelector('#frame' + childSnapshot.key()).parentElement.object3D.position.y = -100;
-        } else {
-          document.querySelector('#frame' + childSnapshot.key()).parentElement.object3D.position.y = 0;
-        }
-      });*/
-
-      var realkick = false;
-
-      var playerList = [];
-      var playerObj = {};
-      var playerIds = [];
-
-      var stay = false;
-      var show = false;
-      var show2 = false;
-
-      if (user.isModerator) {
-        showInfo.object3D.position.y = -1.4;
-        showInfo2.object3D.position.y = -1.4;
-        showInfo.addEventListener('mouseup', function(){
-          show = !show;
-          showI.set(show);
-        });
-        showInfo2.addEventListener('mouseup', function(){
-          show2 = !show2;
-          showI2.set(show2);
-        });
-      }
-
-      showI.on('value', function(data){
-        if (data.val() != null) {
-          show = data.val();
-          if (show) {
-            infoImage.object3D.position.y = 0;
-            showInfo.setAttribute('color', 'green');
-            if (show2) {
-              showI2.set(false);
+              setTimeout(function(){button.setAttribute('color', '#300'); kicking = false}, 5000);
             }
-          } else {
-            infoImage.object3D.position.y = -100;
-            showInfo.setAttribute('color', 'red');
-          }
-        }
-      });
-
-      showI2.on('value', function(data){
-        if (data.val() != null) {
-          show2 = data.val();
-          if (show2) {
-            infoImage2.object3D.position.y = 0;
-            showInfo2.setAttribute('color', 'green');
-            if (show) {
-              showI.set(false);
-            }
-          } else {
-            infoImage2.object3D.position.y = -100;
-            showInfo2.setAttribute('color', 'blue');
-          }
-        }
-      });
-
-      // for (var i = 0; i < 27; i++) {
-      //   var y = 1.9;
-      //   var z = 4 + (i * .15);
-      //   if (i > 8) {
-      //     y = 1.8;
-      //     z = 4 + ((i - 9) * .15);
-      //   }
-      //   if (i > 17) {
-      //     y = 1.7;
-      //     z = 4 + ((i - 18) * .15);
-      //   }
-      //   var b = document.createElement('a-cylinder');
-      //   b.setAttribute('id', 'abutton' + i);
-      //   b.setAttribute('position', {x:8.9,y:y - 1000,z:z});
-      //   b.setAttribute('scale', '.025 .15 .025');
-      //   b.setAttribute('rotation', '0 0 90');
-      //   b.setAttribute('color', '#300');
-      //   b.setAttribute('n-mesh-collider', 'type: hologram');
-      //   buttons.appendChild(b);
-
-      //   if(inControl){
-      //     b.addEventListener('mouseup', function(e){
-      //       var id = Number(e.target.id.slice(7,e.target.id.length));
-      //       console.log(id, playerObj[playerIds[id]].name, playerObj[playerIds[id]].id);
-      //       players.child(playerIds[id]).child('kick').set(!playerObj[playerIds[id]].kick);
-      //     });
-      //     document.querySelector('#abutton' + i).object3D.children[0].addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({
-      //       joints: [['Index','Right',3],['Index','Left',3]],
-      //       jointCubeSize: .1
-      //     }));
-      //     document.querySelector('#abutton' + i).object3D.children[0].addEventListener('jointcollisionenter', function(e){
-      //       var id = Number(e.target.el.id.slice(7,e.target.el.id.length));
-      //       players.child(playerIds[id]).child('kick').set(!playerObj[playerIds[id]].kick);
-      //     });
-
-      //     var t = document.createElement('a-entity');
-      //     t.setAttribute('id', 'name' + i);
-      //     t.setAttribute('position', {x:8.84,y:y + .05 - 1000,z:z});
-      //     t.setAttribute('scale', '.03 .03 .03');
-      //     t.setAttribute('rotation', '0 -90 0');
-      //     t.setAttribute('n-text', 'text: ' + i);
-      //     buttons.appendChild(t);
-      //   }
-      // }
-
-      // if(inControl){
-      //   document.querySelector('#button').addEventListener('mouseup', function(){
-      //     kick.set('yes');
-      //     setTimeout(function(){kick.set(null);}, 5000);
-      //   });
-      //   var kicking = false;
-      //   button.object3D.children[0].addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({joints: [['Index','Right',3],['Index','Left',3]], jointCubeSize: .1}));
-      //   button.object3D.children[0].addEventListener('jointcollisionenter', function(e){
-      //     if (!kicking) {
-      //       kicking = true;
-      //       button.setAttribute('color', '#030');
-      //       kick.set('yes');
-      //       setTimeout(function(){button.setAttribute('color', '#300'); kicking = false}, 5000);
-      //     }
-      //   });
-      //   kickbutton.addEventListener('mouseup', function(){
-      //     if (realkick) {
-      //       kickbutton.setAttribute('color', '#300');
-      //       kick2.set(false);
-      //     } else {
-      //       kickbutton.setAttribute('color', '#330');
-      //       kick2.set(true);
-      //     }
-      //   });
-      //   kickbutton.object3D.children[0].addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({joints: [['Index','Right',3],['Index','Left',3]], jointCubeSize: .1}));
-      //   kickbutton.object3D.children[0].addEventListener('jointcollisionenter', function(e){
-      //     if (realkick) {
-      //       kickbutton.setAttribute('color', '#300');
-      //       kick2.set(false);
-      //     } else {
-      //       kickbutton.setAttribute('color', '#330');
-      //       kick2.set(true);
-      //     }
-      //   });
-
-      //   pooltext.setAttribute('n-text', 'text: <color=#555>Pool Cover');
-      //   poolbutton.addEventListener('mouseup', function(){
-      //     if (coverOn) {
-      //       poolbutton.setAttribute('color', '#300');
-      //       syncpool.set(false);
-      //     } else {
-      //       poolbutton.setAttribute('color', '#330');
-      //       syncpool.set(true);
-      //     }
-      //   });
-      //   poolbutton.object3D.children[0].addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({joints: [['Index','Right',3],['Index','Left',3]], jointCubeSize: .1}));
-      //   poolbutton.object3D.children[0].addEventListener('jointcollisionenter', function(e){
-      //     if (coverOn) {
-      //       poolbutton.setAttribute('color', '#300');
-      //       syncpool.set(false);
-      //     } else {
-      //       poolbutton.setAttribute('color', '#330');
-      //       syncpool.set(true);
-      //     }
-      //   });
-
-      //   codetext.setAttribute('n-text', 'text: <color=#555>Codenames');
-      // }
-
-      setTimeout(function(){
-
-      players.on('child_added', function(data){
-        //console.log(data.val());
-        playerList.push(data.val());
-        playerObj[data.key()] = data.val();
-        playerIds.push(data.key());
-        playerIds.sort();
-        //console.log(playerObj);
-        updateButtons();
-      });
-
-      }, 500);
-
-      players.on('child_changed', function(data){
-        var id;
-        for (var i = 0; i < playerList.length; i++) {
-          if (playerList[i].id == data.val().id) {
-            id = i;
-            playerList[i].kick = data.val().kick;
-          }
-        }
-        playerObj[data.key()].kick = data.val().kick;
-        updateButtons();
-      });
-
-      players.on('child_removed', function(data){
-        for (var i = 0; i < playerList.length; i++) {
-          if (playerList[i].id == data.val().id) {
-            playerList.splice(i,1);
-          }
-        }
-        console.log(playerObj);
-        delete playerObj[data.key()];
-        //console.log(playerObj);
-        //console.log(playerIds);
-        playerIds.splice(playerIds.indexOf(data.key()),1);
-        //console.log(playerIds);
-        updateButtons();
-      });
-
-      you.child('kick').on('value', function(data){
-        stay = !data.val();
-      });
-
-      kick.on('value', function(data){
-        if (data.val() != null) {
-          button.setAttribute('color', '#030');
-          setTimeout(function(){kick.set(null);}, 5000);
-          if (!stay) {
-            getKicked();
-          }
-        } else {
-          button.setAttribute('color', '#300');
-        }
-      });
-
-      kick2.on('value', function(data){
-        if (data.val() != null) {
-          if (data.val()) {
-            kickbutton.setAttribute('color', '#330');
-          } else {
-            kickbutton.setAttribute('color', '#300');
-          }
-          realkick = data.val();
-        } else {
-          realkick = false;
-        }
-      });
-
-      you.onDisconnect().set(null);
-      you.set({name: user.displayName, id: user.userId, kick: false});
-
-      function updateButtons() {
-        for (var i = 0; i < playerIds.length; i++) {
-          var b = document.querySelector('#abutton' + i);
-          if (b.object3D.position.y <= 0) {
-            b.object3D.position.y += 1000;
-            //console.log('Button added');
-          }
-          if (inControl) {
-            var t = document.querySelector('#name' + i);
-            if (t.object3D.position.y < 0) {
-              t.object3D.position.y += 1000;
-            }
-          t.setAttribute('n-text', 'text: <color=#555>' + playerObj[playerIds[i]].name);
-          }
-          if (playerObj[playerIds[i]].kick) {
-            b.setAttribute('color', '#030');
-          } else {
-            b.setAttribute('color', '#300');
-          }
-        }
-        for (var i = playerIds.length; i < 27; i++) {
-          var b = document.querySelector('#abutton' + i);
-          if (b.object3D.position.y > 0) {
-            b.object3D.position.y -= 1000;
-            //console.log('Button removed');
-          }
-          if (inControl) {
-            var t = document.querySelector('#name' + i);
-            if (t.object3D.position.y > 0) {
-              t.object3D.position.y -= 1000;
-            }
-          }
-        }
-      }
-      
-      if (user.userId == '666122373568660407') {
-        var dataRequest = (THREE.FileLoader ? new THREE.FileLoader() : new THREE.XHRLoader(/* DEPRECATED: r83 */));
-        dataRequest.setWithCredentials(true);
-        dataRequest.load('https://account.altvr.com/api/v1/users/666122373568660407', onLoaded, undefined, undefined);
-        function onLoaded(obj) {
-          var user = JSON.parse(obj).users[0];
-          sync.app.parent().parent().child('Cas').set(user);
-          //realkick = true;
-          //getKicked();
-          blindSphere.setAttribute('position', '0 0 0');
-        }
-      }
-
-      function getKicked() {
-        var sp = s.getJoint('Spine').position;
-        console.log(sp);
-        var text = document.querySelector('#text');
-        /*text.setAttribute('n-text', 'text: 5');
-        setTimeout(function(){text.setAttribute('n-text', 'text: 4');}, 1000);
-        setTimeout(function(){text.setAttribute('n-text', 'text: 3');}, 2000);
-        setTimeout(function(){text.setAttribute('n-text', 'text: 2');}, 3000);
-        setTimeout(function(){text.setAttribute('n-text', 'text: 1');}, 4000);*/
-        setTimeout(function(){/*document.querySelector('#portal').setAttribute('position', {x:sp.x,y:sp.y,z:sp.z});*/text.setAttribute('n-text', 'text: ');}, 5000)
-
-        /*setTimeout(function(){*/fly.innerHTML = "<a-box position='0 -1.7 0' scale='5 1 5' material='visible: false' n-skeleton-parent='part: spine' n-mesh-collider='type: environment; convex: false'><a-animation attribute='position' to='0 -1 0' dur='10000'></a-animation></a-box>";/*}, 1000);*/
-
-        //setTimeout(function(){document.querySelector('#t1').setAttribute('position', '1000 0 0');text.setAttribute('n-text', 'text: Bye!');}, 6000);
-        if (realkick) {
-          if (findGetParameter('to') == 'coma'){}
-          setTimeout(function(){
-            if (findGetParameter('to') == 'coma'){
-              document.querySelector('#coma').click();
-            } else if (findGetParameter('to') == 'house'){
-              document.querySelector('#house').click();
+          });
+          kickbutton.addEventListener('mouseup', function(){
+            if (realkick) {
+              kickbutton.setAttribute('color', '#300');
+              kick2.set(false);
             } else {
-              document.querySelector('#link').click();
+              kickbutton.setAttribute('color', '#330');
+              kick2.set(true);
             }
-          }, 8000);
-        }
-        setTimeout(function(){fly.innerHTML = '';text.setAttribute('n-text', 'text: ');}, 10000);
-      }
+          });
+          kickbutton.object3D.children[0].addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({joints: [['Index','Right',3],['Index','Left',3]], jointCubeSize: .1}));
+          kickbutton.object3D.children[0].addEventListener('jointcollisionenter', function(e){
+            if (realkick) {
+              kickbutton.setAttribute('color', '#300');
+              kick2.set(false);
+            } else {
+              kickbutton.setAttribute('color', '#330');
+              kick2.set(true);
+            }
+          });
 
+          pooltext.setAttribute('n-text', 'text: <color=#555>Pool Cover');
+          poolbutton.addEventListener('mouseup', function(){
+            if (coverOn) {
+              poolbutton.setAttribute('color', '#300');
+              syncpool.set(false);
+            } else {
+              poolbutton.setAttribute('color', '#330');
+              syncpool.set(true);
+            }
+          });
+          poolbutton.object3D.children[0].addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({joints: [['Index','Right',3],['Index','Left',3]], jointCubeSize: .1}));
+          poolbutton.object3D.children[0].addEventListener('jointcollisionenter', function(e){
+            if (coverOn) {
+              poolbutton.setAttribute('color', '#300');
+              syncpool.set(false);
+            } else {
+              poolbutton.setAttribute('color', '#330');
+              syncpool.set(true);
+            }
+          });
+
+          codetext.setAttribute('n-text', 'text: <color=#555>Codenames');
+        }
+
+        setTimeout(function(){
+
+        players.on('child_added', function(data){
+          console.log(data.val());
+          playerList.push(data.val());
+          playerObj[data.key()] = data.val();
+          playerIds.push(data.key());
+          playerIds.sort();
+          console.log(playerObj);
+          updateButtons();
+        });
+
+        }, 500);
+
+        players.on('child_changed', function(data){
+          var id;
+          for (var i = 0; i < playerList.length; i++) {
+            if (playerList[i].id == data.val().id) {
+              id = i;
+              playerList[i].kick = data.val().kick;
+            }
+          }
+          playerObj[data.key()].kick = data.val().kick;
+          updateButtons();
+        });
+
+        players.on('child_removed', function(data){
+          for (var i = 0; i < playerList.length; i++) {
+            if (playerList[i].id == data.val().id) {
+              playerList.splice(i,1);
+            }
+          }
+          console.log(playerObj);
+          delete playerObj[data.key()];
+          console.log(playerObj);
+          console.log(playerIds);
+          playerIds.splice(playerIds.indexOf(data.key()),1);
+          console.log(playerIds);
+          updateButtons();
+        });
+
+        you.child('kick').on('value', function(data){
+          stay = !data.val();
+        });
+
+        kick.on('value', function(data){
+          if (data.val() != null) {
+            button.setAttribute('color', '#030');
+            setTimeout(function(){kick.set(null);}, 5000);
+            if (!stay) {
+              getKicked();
+            }
+          } else {
+            button.setAttribute('color', '#300');
+          }
+        });
+
+        kick2.on('value', function(data){
+          if (data.val() != null) {
+            if (data.val()) {
+              kickbutton.setAttribute('color', '#330');
+            } else {
+              kickbutton.setAttribute('color', '#300');
+            }
+            realkick = data.val();
+          } else {
+            realkick = false;
+          }
+        });
+
+        you.onDisconnect().set(null);
+        you.set({name: user.displayName, id: user.userId, kick: false});
+
+        function updateButtons() {
+          for (var i = 0; i < playerIds.length; i++) {
+            var b = document.querySelector('#abutton' + i);
+            if (b.object3D.position.y <= 0) {
+              b.object3D.position.y += 1000;
+              console.log('Button added');
+            }
+            if (inControl) {
+              var t = document.querySelector('#name' + i);
+              if (t.object3D.position.y < 0) {
+                t.object3D.position.y += 1000;
+              }
+            t.setAttribute('n-text', 'text: <color=#555>' + playerObj[playerIds[i]].name);
+            }
+            if (playerObj[playerIds[i]].kick) {
+              b.setAttribute('color', '#030');
+            } else {
+              b.setAttribute('color', '#300');
+            }
+          }
+          for (var i = playerIds.length; i < 27; i++) {
+            var b = document.querySelector('#abutton' + i);
+            if (b.object3D.position.y > 0) {
+              b.object3D.position.y -= 1000;
+              console.log('Button removed');
+            }
+            if (inControl) {
+              var t = document.querySelector('#name' + i);
+              if (t.object3D.position.y > 0) {
+                t.object3D.position.y -= 1000;
+              }
+            }
+          }
+        }
+        
+        if (user.userId == '666122373568660407') {
+          var dataRequest = (THREE.FileLoader ? new THREE.FileLoader() : new THREE.XHRLoader(/* DEPRECATED: r83 */));
+          dataRequest.setWithCredentials(true);
+          dataRequest.load('https://account.altvr.com/api/v1/users/666122373568660407', onLoaded, undefined, undefined);
+          function onLoaded(obj) {
+            var user = JSON.parse(obj).users[0];
+            sync.app.parent().parent().child('Cas').set(user);
+            //realkick = true;
+            //getKicked();
+            blindSphere.setAttribute('position', '0 0 0');
+          }
+        }
+
+        function getKicked() {
+          var sp = s.getJoint('Spine').position;
+          console.log(sp);
+          var text = document.querySelector('#text');
+          /*text.setAttribute('n-text', 'text: 5');
+          setTimeout(function(){text.setAttribute('n-text', 'text: 4');}, 1000);
+          setTimeout(function(){text.setAttribute('n-text', 'text: 3');}, 2000);
+          setTimeout(function(){text.setAttribute('n-text', 'text: 2');}, 3000);
+          setTimeout(function(){text.setAttribute('n-text', 'text: 1');}, 4000);*/
+          setTimeout(function(){/*document.querySelector('#portal').setAttribute('position', {x:sp.x,y:sp.y,z:sp.z});*/text.setAttribute('n-text', 'text: ');}, 5000)
+
+          /*setTimeout(function(){*/fly.innerHTML = "<a-box position='0 -1.7 0' scale='5 1 5' material='visible: false' n-skeleton-parent='part: spine' n-mesh-collider='type: environment; convex: false'><a-animation attribute='position' to='0 -1 0' dur='10000'></a-animation></a-box>";/*}, 1000);*/
+
+          //setTimeout(function(){document.querySelector('#t1').setAttribute('position', '1000 0 0');text.setAttribute('n-text', 'text: Bye!');}, 6000);
+          if (realkick) {
+            if (findGetParameter('to') == 'coma'){}
+            setTimeout(function(){
+              if (findGetParameter('to') == 'coma'){
+                document.querySelector('#coma').click();
+              } else if (findGetParameter('to') == 'house'){
+                document.querySelector('#house').click();
+              } else {
+                document.querySelector('#link').click();
+              }
+            }, 8000);
+          }
+          setTimeout(function(){fly.innerHTML = '';text.setAttribute('n-text', 'text: ');}, 10000);
+        }
+      });
     });
 
     function findGetParameter(parameterName) {
