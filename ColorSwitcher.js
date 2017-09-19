@@ -5,41 +5,51 @@ document.head.appendChild(script);
 var userId = location.pathname.split('/')[2];
 var token = document.head.children['csrf-token'].content;
 
-document.body.children[4].firstElementChild.innerHTML += '<div class="col-xs-12 col-sm-8 col-md-6"><div class="panel panel-default form-panel" style="padding-left: 0px; padding-right: 0px; margin-top: 0px; margin-bottom: 0px;"><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="mGold">Male Gold</button><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="mBlue">Male Blue</button><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="fGold">Female Gold</button><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="fPink">Female Pink</button><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="fRed">Female Red</button><input type="text" id="username" value="WACOMalt"><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="setC">Set</button><select id="dropdown"><option value="s-series-m01">Male Robot</option><option value="s-series-f01">Female Robot</option><option value="pod-classic">Guest Bot</option><option value="a-series-m01">a-series-m01</option><option value="x-series-m02">x-series-m02</option></select><br><input type="text" id="prim1" value="0"><input type="text" id="prim2" value="0"><input type="text" id="prim3" value="0"><br>x: <input id="primMultiText" type="text" value="1"><input id="primMulti" type="range" min="1" max="10" value="1"><input type="text" id="high1" value="0"><input type="text" id="high2" value="0"><input type="text" id="high3" value="0"><br>x: <input id="highMultiText" type="text" value="1"><input id="highMulti" type="range" min="1" max="10" value="1"><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="setCustom">Set</button></div></div>'
+document.body.children[4].firstElementChild.innerHTML += '<div class="col-xs-12 col-sm-8 col-md-6"><div class="panel panel-default form-panel" style="padding-left: 0px; padding-right: 0px; margin-top: 0px; margin-bottom: 0px;"><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="mGold">Gold</button><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="mTOB">TOB</button><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="mBlue">Blue</button><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="fPink">Pink</button><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="fRed">Red</button><input type="text" id="username" placeholder="Enter username"><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="setC">Get Colors</button><select id="dropdown"><option value="s-series-m01">Male Robot</option><option value="s-series-f01">Female Robot</option><option value="pod-classic">Guest Bot</option><option value="a-series-m01">a-series-m01</option><option value="x-series-m02">x-series-m02</option></select><br><input type="text" id="prim1" value="0"><input type="text" id="prim2" value="0"><input type="text" id="prim3" value="0"><br>x: <input id="primMultiText" type="text" value="1"><input id="primMulti" type="range" min="1" max="10" value="1"><input type="text" id="high1" value="0"><input type="text" id="high2" value="0"><input type="text" id="high3" value="0"><br>x: <input id="highMultiText" type="text" value="1"><input id="highMulti" type="range" min="1" max="10" value="1"><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="setCustom">Set</button></div></div>'
 
 $("#mGold").click(function() {
-  var XHR = createRequest();
-  var data = generateAvatarData('s-series-m01', [500,500,500], [255,230,35]);
-	XHR.send(data);
-  reset();
+ //  var XHR = createRequest();
+ //  var data = generateAvatarData('s-series-m01', [500,500,500], [255,230,35]);
+ // XHR.send(data);
+ //  reset();
+
+  setText([500,500,500], [255,230,35]);
 });
 
-$("#fGold").click(function() {
-  var XHR = createRequest();
-  var data = generateAvatarData('s-series-f01', [500,500,500], [255,230,35]);
-	XHR.send(data);
-  reset();
+$("#mTOB").click(function() {
+ //  var XHR = createRequest();
+ //  var data = generateAvatarData('s-series-f01', [500,500,500], [255,230,35]);
+	// XHR.send(data);
+ //  reset();
+
+  setText([255,230,35], [2000,2000,2000]);
 });
 
 $("#mBlue").click(function() {
-  var XHR = createRequest();
-  var data = generateAvatarData('s-series-m01', [500,900,900], [0,400,1000]);
-	XHR.send(data);
-  reset();
+ //  var XHR = createRequest();
+ //  var data = generateAvatarData('s-series-m01', [500,900,900], [0,400,1000]);
+	// XHR.send(data);
+ //  reset();
+
+  setText([500,900,900], [0,400,1000]);
 });
 
 $("#fPink").click(function() {
-  var XHR = createRequest();
-  var data = generateAvatarData('s-series-f01', [1800,800,1300], [500,0,162]);
-  XHR.send(data);
-  reset();
+  // var XHR = createRequest();
+  // var data = generateAvatarData('s-series-f01', [1800,800,1300], [500,0,162]);
+  // XHR.send(data);
+  // reset();
+
+  setText([1800,800,1300], [500,0,162]);
 });
 
 $("#fRed").click(function() {
-  var XHR = createRequest();
-  var data = generateAvatarData('s-series-f01', [255,0,39], [2000,2000,2000]);
-  XHR.send(data);
-  reset();
+  // var XHR = createRequest();
+  // var data = generateAvatarData('s-series-f01', [255,0,39], [2000,2000,2000]);
+  // XHR.send(data);
+  // reset();
+
+  setText([255,0,39], [2000,2000,2000]);
 });
 
 $("#setC").click(function() {
@@ -49,13 +59,13 @@ $("#setC").click(function() {
 
   function onLoaded(obj) {
     var avatar = JSON.parse(obj).users[0].user_avatar.config.avatar;
-    console.log(avatar);
+    //console.log(avatar);
 
-    var data = generateAvatarData(avatar.avatar_sid, avatar['primary-color'], avatar['highlight-color']);
-    var XHR = createRequest();
-    XHR.send(data);
+    // var data = generateAvatarData(avatar.avatar_sid, avatar['primary-color'], avatar['highlight-color']);
+    // var XHR = createRequest();
+    // XHR.send(data);
 
-    reset();
+    // reset();
 
     prim1.value = avatar['primary-color'][0];
     prim2.value = avatar['primary-color'][1];
@@ -129,6 +139,16 @@ function createRequest() {
 function generateAvatarData(sid, prim, high) {
   var data = 'utf8=%E2%9C%93&_method=patch&user_avatar%5Bavatar_sid%5D=' + sid + '&user_avatar%5Bprimary_color%5D=&user_avatar%5Bprimary_red%5D=' + prim[0] + '&user_avatar%5Bprimary_green%5D=' + prim[1] + '&user_avatar%5Bprimary_blue%5D=' + prim[2] + '&user_avatar%5Bhighlight_red%5D=' + high[0] + '&user_avatar%5Bhighlight_green%5D=' + high[1] + '&user_avatar%5Bhighlight_blue%5D=' + high[2] + '&user_avatar%5Brobothead_highlight_red%5D=&user_avatar%5Brobothead_highlight_green%5D=&user_avatar%5Brobothead_highlight_blue%5D=&user_avatar%5Brubenoid_male_texture_1%5D=1&user_avatar%5Brubenoid_male_texture_2%5D=1&user_avatar%5Brubenoid_male_texture_3%5D=1&user_avatar%5Brubenoid_female_texture_1%5D=1&user_avatar%5Brubenoid_female_texture_2%5D=1&user_avatar%5Brubenoid_female_texture_3%5D=1&user_avatar%5Bhash%5D=';
   return data;
+}
+
+function setText(prim, high) {
+  prim1.value = prim[0];
+  prim2.value = prim[1];
+  prim3.value = prim[2];
+
+  high1.value = high[0];
+  high2.value = high[1];
+  high3.value = high[2];
 }
 
 function reset() {
