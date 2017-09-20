@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>House</title>
+  <script src="https://cdn.rawgit.com/mrdoob/three.js/r84/build/three.min.js"></script>
   <script src="https://aframe.io/releases/0.3.0/aframe.js"></script>
   <script src="https://sdk.altvr.com/libs/altspace.js/2.6.1/altspace.min.js"></script>
   <!-- <script src="https://cdn.rawgit.com/norybiak/UltimateLoader/v0.4.6/dist/UltimateLoader.min.js"></script> -->
@@ -229,7 +230,8 @@
           'pod-classic':  'https://bengarfield.github.io/AltVR/house/avatars/podclassic.obj',
           'rubenoid-male':  'https://bengarfield.github.io/AltVR/house/avatars/rubemalesmall.obj',
           'rubenoid-female':  'https://bengarfield.github.io/AltVR/house/viv.obj',
-          'picture-frame':  'https://bengarfield.github.io/AltVR/house/frame.obj'
+          'picture-frame':  'https://bengarfield.github.io/AltVR/house/frame.obj',
+          'bruce': 'https://bengarfield.github.io/AltVR/house/avatars/bruce.obj'
         };
         
         var objects = {
@@ -269,6 +271,7 @@
 
       <a-mixin id='ahole' n-text='fontSize: 5;text: Asshole' position='0 1 0' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
       <a-mixin id='shutup' n-text='fontSize: 5;text: Shut Up!' position='0 1 0' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
+      <a-mixin id='yaboy' n-text="fontSize: 5;text: It's ya boy!" position='0 1 0' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
     </a-assets>
     
     <a-entity id='panel' position='-17.86 -.31 2.55'>
@@ -519,6 +522,8 @@
     <a-entity id='target' position='4.84 .5 -9' rotation='0 180 0'></a-entity>
     <a-entity id='doorPortal' position='0 -100 0' rotation='0 180 0' n-portal='targetEntity: #target' n-skeleton-parent='part: head'></a-entity>
 
+    <a-entity id='bruce' position='5.3 .1 -16' scale='10 10 10' avatar='sid: bruce; colors: url(avatars/BruceHigh.jpg)'></a-entity>
+
   </a-scene>
   <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
   <!-- Chambers -->
@@ -562,6 +567,9 @@
       if (user.displayName == 'JustJohn') {
         scene.systems['sync-system'].instantiate('shutup', scene);
       }
+      if (user.displayName == 'Oddity') {
+        scene.systems['sync-system'].instantiate('yaboy', scene);
+      }
 
       var inControl = false;
 
@@ -577,7 +585,7 @@
           if (user.userId == data.val()[name]) {
             //console.log('Yes');
             inControl = true;
-            altspace.open('http://output.jsbin.com/vezefux?altspace-sync-instance=nighthouse', '_experience', {icon: 'https://bengarfield.github.io/AltVR/house/icon.png', hidden: true});
+            altspace.open('http://output.jsbin.com/vezefux?altspace-sync-instance=' + findGetParameter('altspace-sync-instance'), '_experience', {icon: 'https://bengarfield.github.io/AltVR/house/icon.png', hidden: true});
           }
         }
 
