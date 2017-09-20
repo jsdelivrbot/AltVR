@@ -5,52 +5,41 @@ document.head.appendChild(script);
 var userId = location.pathname.split('/')[2];
 var token = document.head.children['csrf-token'].content;
 
-document.body.children[4].firstElementChild.innerHTML += '<div class="col-xs-12 col-sm-8 col-md-6"><div class="panel panel-default form-panel" style="padding-left: 0px; padding-right: 0px; margin-top: 0px; margin-bottom: 0px;"><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="mGold">Gold</button><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="mTOB">TOB</button><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="mBlue">Blue</button><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="fPink">Pink</button><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="fRed">Red</button><input type="text" id="username" placeholder="Enter username"><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="setC">Get Colors</button><select id="dropdown"><option value="s-series-m01">Male Robot</option><option value="s-series-f01">Female Robot</option><option value="pod-classic">Guest Bot</option><option value="a-series-m01">a-series-m01</option><option value="x-series-m02">x-series-m02</option></select><br><input type="text" id="prim1" value="0"><input type="text" id="prim2" value="0"><input type="text" id="prim3" value="0"><br>x: <input id="primMultiText" type="text" value="1"><input id="primMulti" type="range" min="1" max="10" value="1"><input type="text" id="high1" value="0"><input type="text" id="high2" value="0"><input type="text" id="high3" value="0"><br>x: <input id="highMultiText" type="text" value="1"><input id="highMulti" type="range" min="1" max="10" value="1"><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="setCustom">Set</button></div></div>'
+if (userId == '582115151281389721' || userId == '613349871495152349') {
+  document.body.children[4].firstElementChild.innerHTML += '<div class="col-xs-12 col-sm-8 col-md-6"><div class="panel panel-default form-panel" style="padding-left: 0px; padding-right: 0px; margin-top: 0px; margin-bottom: 0px;"><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="mGold">Gold</button><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="mTOB">TOB</button><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="mBlue">Blue</button><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="fPink">Pink</button><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="fRed">Red</button><input type="text" id="username" placeholder="Enter username"><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="setC">Get Colors</button><select id="dropdown"><option value="s-series-m01">Male Robot</option><option value="s-series-f01">Female Robot</option><option value="pod-classic">Guest Bot</option><option value="a-series-m01">a-series-m01</option><option value="x-series-m02">x-series-m02</option></select><br><input type="text" id="prim1" value="0"><input type="text" id="prim2" value="0"><input type="text" id="prim3" value="0"><br>x: <input id="primMultiText" type="text" value="1"><input id="primMulti" type="range" min="1" max="10" value="1"><input type="text" id="high1" value="0"><input type="text" id="high2" value="0"><input type="text" id="high3" value="0"><br>x: <input id="highMultiText" type="text" value="1"><input id="highMulti" type="range" min="1" max="10" value="1"><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="setCustom">Set</button></div></div>';
 
-$("#mGold").click(function() {
- //  var XHR = createRequest();
- //  var data = generateAvatarData('s-series-m01', [500,500,500], [255,230,35]);
- // XHR.send(data);
- //  reset();
+  $("#mGold").click(function() {
+   //  var XHR = createRequest();
+   //  var data = generateAvatarData('s-series-m01', [500,500,500], [255,230,35]);
+   // XHR.send(data);
+   //  reset();
+    setText([500,500,500], [255,230,35]);
+  });
 
-  setText([500,500,500], [255,230,35]);
-});
+  $("#mTOB").click(function() {
+    setText([255,230,35], [2000,2000,2000]);
+  });
 
-$("#mTOB").click(function() {
- //  var XHR = createRequest();
- //  var data = generateAvatarData('s-series-f01', [500,500,500], [255,230,35]);
-	// XHR.send(data);
- //  reset();
+  $("#mBlue").click(function() {
+    setText([500,900,900], [0,400,1000]);
+  });
 
-  setText([255,230,35], [2000,2000,2000]);
-});
+  $("#fPink").click(function() {
+    setText([1800,800,1300], [500,0,162]);
+  });
 
-$("#mBlue").click(function() {
- //  var XHR = createRequest();
- //  var data = generateAvatarData('s-series-m01', [500,900,900], [0,400,1000]);
-	// XHR.send(data);
- //  reset();
+  $("#fRed").click(function() {
+    setText([255,0,39], [2000,2000,2000]);
+  });
+} else if (userId == '542562301434134702') {
+  document.body.children[4].firstElementChild.innerHTML += '<div class="col-xs-12 col-sm-8 col-md-6"><div class="panel panel-default form-panel" style="padding-left: 0px; padding-right: 0px; margin-top: 0px; margin-bottom: 0px;"><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="bOddity">Oddity</button><input type="text" id="username" placeholder="Enter username"><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="setC">Get Colors</button><select id="dropdown"><option value="s-series-m01">Male Robot</option><option value="s-series-f01">Female Robot</option><option value="pod-classic">Guest Bot</option><option value="a-series-m01">a-series-m01</option><option value="x-series-m02">x-series-m02</option></select><br><input type="text" id="prim1" value="0"><input type="text" id="prim2" value="0"><input type="text" id="prim3" value="0"><br>x: <input id="primMultiText" type="text" value="1"><input id="primMulti" type="range" min="1" max="10" value="1"><input type="text" id="high1" value="0"><input type="text" id="high2" value="0"><input type="text" id="high3" value="0"><br>x: <input id="highMultiText" type="text" value="1"><input id="highMulti" type="range" min="1" max="10" value="1"><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="setCustom">Set</button></div></div>';
 
-  setText([500,900,900], [0,400,1000]);
-});
-
-$("#fPink").click(function() {
-  // var XHR = createRequest();
-  // var data = generateAvatarData('s-series-f01', [1800,800,1300], [500,0,162]);
-  // XHR.send(data);
-  // reset();
-
-  setText([1800,800,1300], [500,0,162]);
-});
-
-$("#fRed").click(function() {
-  // var XHR = createRequest();
-  // var data = generateAvatarData('s-series-f01', [255,0,39], [2000,2000,2000]);
-  // XHR.send(data);
-  // reset();
-
-  setText([255,0,39], [2000,2000,2000]);
-});
+  $("#bOddity").click(function() {
+    setText([43,59,84], [9000,450,2000]);
+  });
+} else {
+  document.body.children[4].firstElementChild.innerHTML += '<div class="col-xs-12 col-sm-8 col-md-6"><div class="panel panel-default form-panel" style="padding-left: 0px; padding-right: 0px; margin-top: 0px; margin-bottom: 0px;"><input type="text" id="username" placeholder="Enter username"><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="setC">Get Colors</button><select id="dropdown"><option value="s-series-m01">Male Robot</option><option value="s-series-f01">Female Robot</option><option value="pod-classic">Guest Bot</option><option value="a-series-m01">a-series-m01</option><option value="x-series-m02">x-series-m02</option></select><br><input type="text" id="prim1" value="0"><input type="text" id="prim2" value="0"><input type="text" id="prim3" value="0"><br>x: <input id="primMultiText" type="text" value="1"><input id="primMulti" type="range" min="1" max="10" value="1"><input type="text" id="high1" value="0"><input type="text" id="high2" value="0"><input type="text" id="high3" value="0"><br>x: <input id="highMultiText" type="text" value="1"><input id="highMulti" type="range" min="1" max="10" value="1"><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="setCustom">Set</button></div></div>';
+}
 
 $("#setC").click(function() {
   var dataRequest = (THREE.FileLoader ? new THREE.FileLoader() : new THREE.XHRLoader(/* DEPRECATED: r83 */));
