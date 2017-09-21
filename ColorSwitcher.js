@@ -6,7 +6,7 @@ var userId = location.pathname.split('/')[2];
 var token = document.head.children['csrf-token'].content;
 
 if (userId == '582115151281389721' || userId == '613349871495152349') {
-  document.body.children[4].firstElementChild.innerHTML += '<div class="col-xs-12 col-sm-8 col-md-6"><div class="panel panel-default form-panel" style="padding-left: 0px; padding-right: 0px; margin-top: 0px; margin-bottom: 0px;"><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="mGold">Gold</button><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="mTOB">TOB</button><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="mBlue">Blue</button><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="fPink">Pink</button><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="fRed">Red</button><input type="text" id="username" placeholder="Enter username"><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="setC">Get Colors</button><select id="dropdown"><option value="s-series-m01">Male Robot</option><option value="s-series-f01">Female Robot</option><option value="pod-classic">Guest Bot</option><option value="a-series-m01">a-series-m01</option><option value="x-series-m02">x-series-m02</option></select><br><input type="text" id="prim1" value="0"><input type="text" id="prim2" value="0"><input type="text" id="prim3" value="0"><br>x: <input id="primMultiText" type="text" value="1"><input id="primMulti" type="range" min="1" max="10" value="1"><input type="text" id="high1" value="0"><input type="text" id="high2" value="0"><input type="text" id="high3" value="0"><br>x: <input id="highMultiText" type="text" value="1"><input id="highMulti" type="range" min="1" max="10" value="1"><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="setCustom">Set</button></div></div>';
+  document.body.children[4].firstElementChild.innerHTML += '<div class="col-xs-12 col-sm-8 col-md-6"><div class="panel panel-default form-panel" style="padding-left: 0px; padding-right: 0px; margin-top: 0px; margin-bottom: 0px;"><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="mGold">White & Gold</button><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="mTOB">Gold & White</button><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="mBlue">Blue</button><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="fPink">Pink</button><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="fRed">Red & White</button><input type="text" id="username" placeholder="Enter username"><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="setC">Get Colors</button><select id="dropdown"><option value="s-series-m01">Male Robot</option><option value="s-series-f01">Female Robot</option><option value="pod-classic">Guest Bot</option><option value="a-series-m01">a-series-m01</option><option value="x-series-m02">x-series-m02</option></select><br><input type="text" id="prim1" value="0"><input type="text" id="prim2" value="0"><input type="text" id="prim3" value="0"><br>x: <input id="primMultiText" type="text" value="1"><input id="primMulti" type="range" min="1" max="10" value="1"><input type="text" id="high1" value="0"><input type="text" id="high2" value="0"><input type="text" id="high3" value="0"><br>x: <input id="highMultiText" type="text" value="1"><input id="highMulti" type="range" min="1" max="10" value="1"><button name="button" type="submit" class="pill-button--primary" style="margin:auto" id="setCustom">Set</button></div></div>';
 
   $("#mGold").click(function() {
    //  var XHR = createRequest();
@@ -56,9 +56,27 @@ $("#setC").click(function() {
 
     // reset();
 
-    prim1.value = avatar['primary-color'][0];
-    prim2.value = avatar['primary-color'][1];
-    prim3.value = avatar['primary-color'][2];
+    if (avatar['primary-color'][0] == 'black') {
+      prim1.value = '26';
+      prim2.value = '26';
+      prim3.value = '26';
+    } else if (avatar['primary-color'][0] == 'darkgrey') {
+      prim1.value = '77';
+      prim2.value = '77';
+      prim3.value = '77';
+    } else if (avatar['primary-color'][0] == 'grey') {
+      prim1.value = '191';
+      prim2.value = '191';
+      prim3.value = '191';
+    } else if (avatar['primary-color'][0] == 'white') {
+      prim1.value = '255';
+      prim2.value = '255';
+      prim3.value = '255';
+    } else {
+      prim1.value = avatar['primary-color'][0];
+      prim2.value = avatar['primary-color'][1];
+      prim3.value = avatar['primary-color'][2];
+    }
 
     high1.value = avatar['highlight-color'][0];
     high2.value = avatar['highlight-color'][1];
