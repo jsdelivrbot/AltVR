@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Books</title>
+  <script src="https://cdn.rawgit.com/mrdoob/three.js/r84/build/three.min.js"></script>
+  <script src="https://aframe.io/releases/0.3.0/aframe.js"></script>
+  <script src="https://sdk.altvr.com/libs/altspace.js/2.6.1/altspace.min.js"></script>
+  <!-- <script src="https://cdn.rawgit.com/norybiak/UltimateLoader/v0.4.6/dist/UltimateLoader.min.js"></script> -->
+  <!-- <script src="cached-model.js"></script>
+  <script src="UltimateLoader2.js"></script> -->
+  <script>
+    // n-skeleton-parent only works with root meshes at the moment. Since most model loaders use a root
+    // container object, we need to collapse the model so that n-skeleton-parent can access the mesh directly.
+    AFRAME.registerComponent('collapse-model', {
+        init: function () {
+            this.el.addEventListener('model-loaded', function () {
+                this.el.object3DMap.mesh.updateMatrixWorld();
+                var mesh;
+                this.el.object3DMap.mesh.traverse(function (obj) {
+                    if (!mesh && obj instanceof THREE.Mesh) {
+                        mesh = obj;
+                    }
+                }.bind(this))
+                if (mesh) {
+                    mesh.scale.copy(mesh.getWorldScale());
+                    this.el.setObject3D('mesh', mesh);
+                    // setObject3D emits this event in a-frame 0.4.0
+                    this.el.emit('object3dset', {
+                        type: 'mesh'
+                    });
+                }
+            }.bind(this));
+        }
+    });
+
+    //-----------------------GRAB OBJECTS------------------
+
+    AFRAME.registerComponent('grab-object', {
+      dependencies: ['grab-object-system'],
+      schema: {
+        mixin: {
+          type: 'array'
+        },
+        parts: {
+          type: 'array',
+          default: ['left', 'right']
+        },
+        group: {
+          type: 'string',
+          default: 'default'
+        },
+        spawner: {
+          type: 'boolean',
+          default: 'true'
+        }
+      },
+      init: function() {
+        this.isHandInRange = { 'left': false, 'right': false };
+        this.isTriggerPressed = { 'left': false, 'right': false };
+        this.gamepad = { 'left': null, 'right': null };
+        this.grabbedObject = { 'left': null, 'right': null };
+        this.grabSystem = this.el.sceneEl.systems['grab-object-system'];
+        this.syncSystem = this.el.sceneEl.systems['sync-system'];
+        this.syncSetup = false;
+
+        this.el.object3D.addEventListener('jointcollisionenter', (function(event) {
+          if(event.detail.joints && event.detail.joints[0]) {
+            if(/Left/.test(event.detail.joints[0].name)) this.isHandInRange['left'] = true;
+            else if(/Right/.test(event.detail.joints[0].name)) this.isHandInRange['right'] = true;
+          }
+        }).bind(this));
+
+        this.el.object3D.addEventListener('jointcollisionleave', (function(event) {
+          if(event.detail.joints && event.detail.joints[0]) {
+            if(/Left/.test(event.detail.joints[0].name)) this.isHandInRange['left'] = false;
+            else if(/Right/.test(event.detail.joints[0].name)) this.isHandInRange['right'] = false;
+          }
+        }).bind(this));
+
+        this.el.object3D.addBehaviors(
+          new altspace.utilities.behaviors.JointCollisionEvents({
+            jointCubeSize: 0.1,
+            joints: [
+              ['Hand', 'Left', 0],
+              ['Thumb', 'Left', 3],
+              ['Index', 'Left', 3],
+              ['Middle', 'Left', 3],
+              ['Ring', 'Left', 3],
+              ['Pinky', 'Left', 3]
+            ]
+          }),
+          new altspace.utilities.behaviors.JointCollisionEvents({
+            jointCubeSize: 0.1,
+            joints: [
+              ['Hand', 'Right', 0],
+              ['Thumb', 'Right', 3],
+              ['Index', 'Right', 3],
+              ['Middle', 'Right', 3],
+              ['Ring', 'Right', 3],
+              ['Pinky', 'Right', 3]
+            ]
+          })
+        );
+      },
+      tick: function(time, deltaTime) {
+        var gamepads = altspace.getGamepads();
+        for(var gamepad of gamepads) {
+          if(gamepad.connected && !this.gamepad[gamepad.hand]) this.gamepad[gamepad.hand] = gamepad;
+        }
+
+        for(var part of this.data.parts) this.updateHandObject(part);
+
+        if (!this.data.spawner && !this.syncSetup && this.syncSystem.connection != undefined) {
+          this.syncSetup = true;
+          var pos = this.el.parentEl.object3D.position;
+          var y = pos.y;
+          this.syncSystem.connection.instance.child('grabObjects').child(this.el.getAttribute('mixin')).on('value', function(data){
+            if (data.val()) {
+              pos.y = -1000;
+            } else {
+              pos.y = y;
+            }
+          });
+        }
+      },
+      updateHandObject: function(hand) {
+        var isPrevTriggerPressed = this.isTriggerPressed[hand];
+        this.isTriggerPressed[hand] = (this.gamepad[hand] && this.gamepad[hand].connected && this.gamepad[hand].buttons[1].pressed);
+
+        if(this.grabbedObject[hand]) {
+          if(!this.isTriggerPressed[hand] && this.el.object3D === this.grabSystem.getGrabbedObject(this.data.group)) {
+            this.grabSystem.updateGrabbedObject(this.data.group, null);
+            this.syncSystem.removeLast(this.grabbedObject[hand]);
+            this.grabbedObject[hand] = null;
+            
+            if (!this.data.spawner) {
+              this.syncSystem.connection.instance.child('grabObjects').child(this.el.getAttribute('mixin')).set(false);
+            }
+          }
+        } else {
+
+          //Check to see if people are allowed to grab said object based off of what the object's group and their player class is
+          var grabAllowed = true;
+
+          switch(this.data.group) {
+            /*case 'meleeWeapon':
+            case 'heavyShield': {
+              if(playerClass !== 'berserker') grabAllowed = false;
+              break;
+            }
+            case 'rangedWeapon':
+            case 'knife': {
+              if(playerClass !== 'assassin') grabAllowed = false;
+              break;
+            }
+            case 'staff':
+            case 'wand': {
+              if(playerClass !== 'spellcaster') grabAllowed =false;
+
+              break;
+            }*/
+            default: {
+              //Leave empty
+              break;
+            }
+          }
+
+
+          if(this.isHandInRange[hand] && !this.grabSystem.getGrabbedObject(this.data.group) && (this.isTriggerPressed[hand] && !isPrevTriggerPressed && grabAllowed)) {
+            this.grabbedObject[hand] = 'go-' + THREE.Math.generateUUID();
+            this.grabSystem.updateGrabbedObject(this.data.group, this.el.object3D);
+            this.syncSystem.instantiate(this.data.mixin.join(' ') + ' grab-object-' + ((hand === 'left') ? 'left' : 'right'), this.el.sceneEl, this.el, this.grabbedObject[hand]);
+            
+            if (!this.data.spawner) {
+              this.syncSystem.connection.instance.child('grabObjects').child(this.el.getAttribute('mixin')).set(true);
+            }
+          }
+        }
+      }
+    });
+
+    //------------------------GRAB OBJECTS SYSTEM--------------
+
+    AFRAME.registerSystem('grab-object-system', {
+      init: function() {
+        this.grabGroups = {};
+
+        var mixin = document.createElement('a-mixin');
+        mixin.setAttribute('id', 'grab-object-left');
+        mixin.setAttribute('n-skeleton-parent', 'part: hand; side: left; index: 0');
+        mixin.setAttribute('sync', '');
+        mixin.setAttribute('sync-n-skeleton-parent', '');
+        this.sceneEl.appendChild(mixin);
+
+        var mixin = document.createElement('a-mixin');
+        mixin.setAttribute('id', 'grab-object-right');
+        mixin.setAttribute('n-skeleton-parent', 'part: hand; side: right; index: 0');
+        mixin.setAttribute('sync', '');
+        mixin.setAttribute('sync-n-skeleton-parent', '');
+        this.sceneEl.appendChild(mixin);
+      },
+      getGrabbedObject: function(groupName) {
+        return this.grabGroups[groupName];
+      },
+      updateGrabbedObject: function(groupName, object) {
+        if(!object) delete this.grabGroups[groupName];
+        else this.grabGroups[groupName] = object;
+      }
+    });
+
+    //----------------Cached Avatar Loader-----------------------
+
+    AFRAME.registerComponent('avatar', {
+      schema: {
+        sid: {
+          type: 'string'
+        },
+        colors: {
+          type: 'src'
+        }
+      },
+      init: function() {
+        var self = this;
+          
+        var models = {
+          's-series-m01':  'https://bengarfield.github.io/AltVR/house/avatars/malesmall.obj',
+          's-series-f01':  'https://bengarfield.github.io/AltVR/house/avatars/femalesmall.obj',
+          'pod-classic':  'https://bengarfield.github.io/AltVR/house/avatars/podclassic.obj',
+          'rubenoid-male':  'https://bengarfield.github.io/AltVR/house/avatars/rubemalesmall.obj',
+          'rubenoid-female':  'https://bengarfield.github.io/AltVR/house/viv.obj',
+          'picture-frame':  'https://bengarfield.github.io/AltVR/house/frame.obj',
+          'bruce': 'https://bengarfield.github.io/AltVR/house/avatars/bruce.obj'
+        };
+        
+        var objects = {
+          model: {url: models[this.data.sid]},
+          tex: {url: this.data.colors}
+        };
+
+        UltimateLoader.load(objects).then(function(result){
+          var mesh = result[0].children[0].clone();
+
+          mesh.material = mesh.material.clone();
+          mesh.material.map = result[1];
+          self.el.setObject3D('mesh', mesh);
+          self.el.emit('object3dset', {type: 'mesh'});
+        });
+      }
+    });
+  </script>
+</head>
+<body>
+  <a-scene altspace='fullspace: true' sync-system='author: BenG; app: Books; refUrl: https://altvr-apps.firebaseio.com/' grab-object-system>
+
+    <a-mixin id="rightpos" position='-.1 -.07 -.07' rotation='40 0 90'></a-mixin>
+    <a-mixin id="leftpos" position='.1 -.07 -.07' rotation='40 0 -90'></a-mixin>
+
+    <a-entity position='0 1.5 0' rotation='0 0 0'>
+      <a-mixin id="book" scale='1 1 1' obj-model='obj: url(book.obj); mtl: url(book.mtl)' collapse-model></a-mixin>
+      <a-entity mixin="book" grab-object="group: r; parts: right; mixin: book rightpos"></a-entity>
+      <a-entity mixin="book" grab-object="group: l; parts: left; mixin: book leftpos"></a-entity>
+    </a-entity>
+  </a-scene>
+</body>
+</html>
