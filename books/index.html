@@ -262,6 +262,12 @@
       <a-entity mixin="book" grab-object="group: r; parts: right; mixin: book rightpos"></a-entity>
       <a-entity mixin="book" grab-object="group: l; parts: left; mixin: book leftpos"></a-entity>
     </a-entity>
+
+    <a-entity position='.3 1.5 0' rotation='0 0 0'>
+      <a-mixin id="rp1" scale='1 1 1' obj-model='obj: url(book.obj); mtl: url(rp1.mtl)' collapse-model></a-mixin>
+      <a-entity mixin="rp1" grab-object="group: r; parts: right; mixin: rp1 rightpos"></a-entity>
+      <a-entity mixin="rp1" grab-object="group: l; parts: left; mixin: rp1 leftpos"></a-entity>
+    </a-entity>
   </a-scene>
 </body>
 </html>
