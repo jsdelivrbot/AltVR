@@ -43,17 +43,19 @@ for (var i = 0; i < document.querySelectorAll('#button').length; i++) {
 }
 
 changeBack.addEventListener('mouseup', function(){
-  if (currentAvatar.avatar_sid != 'rubenoid-male-01' || currentAvatar.avatar_sid != 'rubenoid-female-01') {
-  	set(currentAvatar.avatar_sid, currentAvatar['primary-color'], currentAvatar['highlight-color']);
-  } else {
+  if (currentAvatar.avatar_sid == 'rubenoid-male-01' || currentAvatar.avatar_sid == 'rubenoid-female-01') {
+  	console.log('human');
   	var XHR = createRequest();
-    var data = 'utf8=%E2%9C%93&_method=patch&user_avatar%5Bavatar_sid%5D=' + currentAvatar.avatar_sid + '&user_avatar%5Bprimary_color%5D=&user_avatar%5Bprimary_red%5D=&user_avatar%5Bprimary_green%5D=&user_avatar%5Bprimary_blue%5D=&user_avatar%5Bhighlight_red%5D=&user_avatar%5Bhighlight_green%5D=&user_avatar%5Bhighlight_blue%5D=&user_avatar%5Brobothead_highlight_red%5D=&user_avatar%5Brobothead_highlight_green%5D=&user_avatar%5Brobothead_highlight_blue%5D=&user_avatar%5Brubenoid_male_texture_1%5D=' + currentAvatar['rubenoid-male-texture-1'] + '&user_avatar%5Brubenoid_male_texture_2%5D=' + currentAvatar['rubenoid-male-texture-2'] + '&user_avatar%5Brubenoid_male_texture_3%5D=' + currentAvatar['rubenoid-male-texture-3'] + '&user_avatar%5Brubenoid_female_texture_1%5D=' + currentAvatar['rubenoid-female-texture-1'] + '&user_avatar%5Brubenoid_female_texture_2%5D=' + currentAvatar['rubenoid-female-texture-2'] + '&user_avatar%5Brubenoid_female_texture_3%5D=' + currentAvatar['rubenoid-female-texture-3'] + '&user_avatar%5Bhash%5D=';
-
+    var data = 'utf8=%E2%9C%93&_method=patch&user_avatar%5Bavatar_sid%5D=' + currentAvatar.avatar_sid + '&user_avatar%5Bprimary_color%5D=&user_avatar%5Bprimary_red%5D=255&user_avatar%5Bprimary_green%5D=255&user_avatar%5Bprimary_blue%5D=255&user_avatar%5Bhighlight_red%5D=0&user_avatar%5Bhighlight_green%5D=255&user_avatar%5Bhighlight_blue%5D=255&user_avatar%5Brobothead_highlight_red%5D=&user_avatar%5Brobothead_highlight_green%5D=&user_avatar%5Brobothead_highlight_blue%5D=&user_avatar%5Brubenoid_male_texture_1%5D=' + currentAvatar['rubenoid-male-texture-1'][0] + '&user_avatar%5Brubenoid_male_texture_2%5D=' + currentAvatar['rubenoid-male-texture-2'][0] + '&user_avatar%5Brubenoid_male_texture_3%5D=' + currentAvatar['rubenoid-male-texture-3'][0] + '&user_avatar%5Brubenoid_female_texture_1%5D=' + currentAvatar['rubenoid-female-texture-1'][0] + '&user_avatar%5Brubenoid_female_texture_2%5D=' + currentAvatar['rubenoid-female-texture-2'][0] + '&user_avatar%5Brubenoid_female_texture_3%5D=' + currentAvatar['rubenoid-female-texture-3'][0] + '&user_avatar%5Bhash%5D=';
+    XHR.send(data);
+	reset();
+  } else {
+  	set(currentAvatar.avatar_sid, currentAvatar['primary-color'], currentAvatar['highlight-color']);
   }
 });
 
 function set (type, prim, high) {
-  console.log(generateAvatarData(type, prim, high));
+  //console.log(generateAvatarData(type, prim, high));
   var XHR = createRequest();
   var data = generateAvatarData(type, prim, high);
   XHR.send(data);
