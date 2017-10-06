@@ -235,6 +235,12 @@
 </head>
 <body>
   <a-scene altspace='fullspace: true' sync-system='author: BenG; app: Hive; refUrl: https://altvr-apps.firebaseio.com/' grab-object-system>
+
+    <img id='badgehex' src='https://bengarfield.github.io/AltVR/Hive/beebadge.png'>
+    <a-mixin id='hexBadge' geometry='primitive: plane' material='src: #badgehex; transparent: true' position='-.1 .35 -.15' rotation='0 180 0' scale='.1 .1 .1' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
+
+    <a-entity one-per-user="mixin: hexBadge"></a-entity>
+    
     <a-plane position='1.9 7.25 31.65' scale='8.32 4.68 1' rotation='0 180 0' src='hive.jpg'></a-plane>
     
     <a-entity rotation='0 24 0'>
