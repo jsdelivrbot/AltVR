@@ -37,6 +37,7 @@ changeBack.addEventListener('mouseup', function(){
 var loop = 0;
 
 rainbow.addEventListener('mouseup', function(){
+  clearInterval(loop);
   var colors = [];
   var x = 250;
   for (var i = 0; i < x; i++) {
