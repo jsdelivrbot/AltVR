@@ -250,14 +250,14 @@
 
     <a-mixin id="rightpos" position='-.1 -.09 -.08' rotation='40 0 90'></a-mixin>
     <a-mixin id="leftpos" position='.1 -.09 -.08' rotation='40 0 -90'></a-mixin>
+    <a-mixin id='book1' cached-obj-model='obj: url(https://bengarfield.github.io/AltVR/books/book.obj); mtl: url(https://bengarfield.github.io/AltVR/books/sacrifice.mtl)'></a-mixin>
+    <a-mixin id='book2' cached-obj-model='obj: url(https://bengarfield.github.io/AltVR/books/book.obj); mtl: url(https://bengarfield.github.io/AltVR/books/watching.mtl)'></a-mixin>
+    <a-mixin id='book3' cached-obj-model='obj: url(https://bengarfield.github.io/AltVR/books/book.obj); mtl: url(https://bengarfield.github.io/AltVR/books/stormfront.mtl)'></a-mixin>
+    <a-mixin id='book4' cached-obj-model='obj: url(https://bengarfield.github.io/AltVR/books/book.obj); mtl: url(https://bengarfield.github.io/AltVR/books/armada.mtl)'></a-mixin>
 
-    <a-entity rotation='0 -66 0'>
+    <!-- Highrise -->
+    <!-- <a-entity rotation='0 -66 0'>
       <a-entity position='3.05 1.185 -3.25'>
-        <a-mixin id='book1' cached-obj-model='obj: url(https://bengarfield.github.io/AltVR/books/book.obj); mtl: url(https://bengarfield.github.io/AltVR/books/sacrifice.mtl)'></a-mixin>
-        <a-mixin id='book2' cached-obj-model='obj: url(https://bengarfield.github.io/AltVR/books/book.obj); mtl: url(https://bengarfield.github.io/AltVR/books/watching.mtl)'></a-mixin>
-        <a-mixin id='book3' cached-obj-model='obj: url(https://bengarfield.github.io/AltVR/books/book.obj); mtl: url(https://bengarfield.github.io/AltVR/books/stormfront.mtl)'></a-mixin>
-        <a-mixin id='book4' cached-obj-model='obj: url(https://bengarfield.github.io/AltVR/books/book.obj); mtl: url(https://bengarfield.github.io/AltVR/books/armada.mtl)'></a-mixin>
-
         <a-entity id='stack1' position='-.75 -.23 -.05'>
           <a-entity position='0 0 0' rotation='-90 85 0' mixin='book1'></a-entity>
           <a-entity position='0 .035 0' rotation='-90 91 0' mixin='book1'></a-entity>
@@ -306,8 +306,62 @@
           <a-entity position='0 .12 .12' rotation='-10 0 0' mixin="book4" grab-object="group: l; parts: left; mixin: book4 leftpos"></a-entity>
         </a-entity>
       </a-entity>
-    </a-entity>
+    </a-entity> -->
 
+    <!-- Halloween -->
+    <a-entity rotation='0 72 0'>
+      <a-entity position='-13.45 1.2 6.4'>
+        <a-entity rotation='0 0 0'>
+        <a-entity id='stack1' position='0 -.23 -.05'>
+          <a-entity position='0 0 0' rotation='-90 85 0' mixin='book1'></a-entity>
+          <a-entity position='0 .035 0' rotation='-90 91 0' mixin='book1'></a-entity>
+          <a-entity position='0 .07 0' rotation='-90 97 0' mixin='book1'></a-entity>
+          <a-entity position='0 .105 0' rotation='-90 89 0' mixin='book1'></a-entity>
+          <a-entity position='0 .14 0' rotation='-90 92 0' mixin='book1'></a-entity>
+          <a-entity position='0 .175 0' rotation='-90 90 0' mixin='book1'></a-entity>
+
+          <a-entity position='0 .12 .12' rotation='-10 0 0' mixin="book1" grab-object="group: r; parts: right; mixin: book1 rightpos"></a-entity>
+          <a-entity position='0 .12 .12' rotation='-10 0 0' mixin="book1" grab-object="group: l; parts: left; mixin: book1 leftpos"></a-entity>
+        </a-entity>
+
+        <a-entity id='stack1' position='.35 -.23 -.05'>
+          <a-entity position='0 0 0' rotation='-90 85 0' mixin='book2'></a-entity>
+          <a-entity position='0 .035 0' rotation='-90 91 0' mixin='book2'></a-entity>
+          <a-entity position='0 .07 0' rotation='-90 97 0' mixin='book2'></a-entity>
+          <a-entity position='0 .105 0' rotation='-90 89 0' mixin='book2'></a-entity>
+          <a-entity position='0 .14 0' rotation='-90 92 0' mixin='book2'></a-entity>
+          <a-entity position='0 .175 0' rotation='-90 90 0' mixin='book2'></a-entity>
+
+          <a-entity position='0 .12 .12' rotation='-10 0 0' mixin="book2" grab-object="group: r; parts: right; mixin: book2 rightpos"></a-entity>
+          <a-entity position='0 .12 .12' rotation='-10 0 0' mixin="book2" grab-object="group: l; parts: left; mixin: book2 leftpos"></a-entity>
+        </a-entity>
+
+        <a-entity id='stack1' position='.7 -.23 -.05'>
+          <a-entity position='0 0 0' rotation='-90 85 0' mixin='book3'></a-entity>
+          <a-entity position='0 .035 0' rotation='-90 91 0' mixin='book3'></a-entity>
+          <a-entity position='0 .07 0' rotation='-90 97 0' mixin='book3'></a-entity>
+          <a-entity position='0 .105 0' rotation='-90 89 0' mixin='book3'></a-entity>
+          <a-entity position='0 .14 0' rotation='-90 92 0' mixin='book3'></a-entity>
+          <a-entity position='0 .175 0' rotation='-90 90 0' mixin='book3'></a-entity>
+
+          <a-entity position='0 .12 .12' rotation='-10 0 0' mixin="book3" grab-object="group: r; parts: right; mixin: book3 rightpos"></a-entity>
+          <a-entity position='0 .12 .12' rotation='-10 0 0' mixin="book3" grab-object="group: l; parts: left; mixin: book3 leftpos"></a-entity>
+        </a-entity>
+
+        <a-entity id='stack1' position='1.05 -.23 -.05'>
+          <a-entity position='0 0 0' rotation='-90 85 0' mixin='book4'></a-entity>
+          <a-entity position='0 .035 0' rotation='-90 91 0' mixin='book4'></a-entity>
+          <a-entity position='0 .07 0' rotation='-90 97 0' mixin='book4'></a-entity>
+          <a-entity position='0 .105 0' rotation='-90 89 0' mixin='book4'></a-entity>
+          <a-entity position='0 .14 0' rotation='-90 92 0' mixin='book4'></a-entity>
+          <a-entity position='0 .175 0' rotation='-90 90 0' mixin='book4'></a-entity>
+
+          <a-entity position='0 .12 .12' rotation='-10 0 0' mixin="book4" grab-object="group: r; parts: right; mixin: book4 rightpos"></a-entity>
+          <a-entity position='0 .12 .12' rotation='-10 0 0' mixin="book4" grab-object="group: l; parts: left; mixin: book4 leftpos"></a-entity>
+        </a-entity>
+      </a-entity>
+      </a-entity>
+    </a-entity>
 
   </a-scene>
 </body>
