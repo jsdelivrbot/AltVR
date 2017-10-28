@@ -68,7 +68,7 @@
     }
 
     altspace.getUser().then(function(user){
-      if (user.isModerator) {
+      if (user.isModerator || user.userId == '528608258831679865') {
         buttons.setAttribute('position', '0 0 0');
       }
     });
