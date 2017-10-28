@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Masks</title>
+  <script src="https://aframe.io/releases/0.3.0/aframe.js"></script>
+  <!--<script src="https://cdn.rawgit.com/mrdoob/three.js/r84/build/three.min.js"></script>-->
+  <script src="https://sdk.altvr.com/libs/altspace.js/2.6.1/altspace.min.js"></script>
+</head>
+<body>
+  <a-scene altspace='fullspace: true' sync-system='author: BenG; app: Masks; refUrl: https://altvr-apps.firebaseio.com/'>
+    <a-mixin id='headPos1' position='0 .07 -.13' rotation='0 180 0' n-skeleton-parent='part: head' sync sync-n-skeleton-parent></a-mixin>
+    <a-mixin id='headPos2' position='0 .02 -.13' rotation='0 180 0' n-skeleton-parent='part: head' sync sync-n-skeleton-parent></a-mixin>
+    <a-mixin id='headPos3' position='0 .04 -.13' rotation='0 180 0' n-skeleton-parent='part: head' sync sync-n-skeleton-parent></a-mixin>
+    <a-mixin id='headPos4' position='0 .07 -.13' rotation='0 180 0' n-skeleton-parent='part: head' sync sync-n-skeleton-parent></a-mixin>
+    <a-mixin id='headPos5' position='0 .04 -.13' rotation='0 180 0' n-skeleton-parent='part: head' sync sync-n-skeleton-parent></a-mixin>
+    <a-mixin id='headPos6' position='0 .01 -.13' rotation='0 180 0' n-skeleton-parent='part: head' sync sync-n-skeleton-parent></a-mixin>
+    <a-mixin id='headPos7' position='0 .04 -.13' rotation='0 180 0' n-skeleton-parent='part: head' sync sync-n-skeleton-parent></a-mixin>
+    <a-mixin id='headPos8' position='0 .05 -.13' rotation='0 180 0' n-skeleton-parent='part: head' sync sync-n-skeleton-parent></a-mixin>
+    
+    <a-mixin id='mask1' geometry='primitive: plane' scale='.6 .6 1' material='src: url(https://bengarfield.github.io/AltVR/masks/pumpkin.png); transparent: true'></a-mixin>
+    <a-mixin id='mask2' geometry='primitive: plane' scale='.35 .35 1' material='src: url(https://bengarfield.github.io/AltVR/masks/gfawkes.png); transparent: true'></a-mixin>
+    <a-mixin id='mask3' geometry='primitive: plane' scale='.35 .5 1' material='src: url(https://bengarfield.github.io/AltVR/masks/scream.png); transparent: true'></a-mixin>
+    <a-mixin id='mask4' geometry='primitive: plane' scale='.4 .4 1' material='src: url(https://bengarfield.github.io/AltVR/masks/chucky.png); transparent: true'></a-mixin>
+    <a-mixin id='mask5' geometry='primitive: plane' scale='.35 .35 1' material='src: url(https://bengarfield.github.io/AltVR/masks/clown.png); transparent: true'></a-mixin>
+    <a-mixin id='mask6' geometry='primitive: plane' scale='.3 .3 1' material='src: url(https://bengarfield.github.io/AltVR/masks/mask.png); transparent: true'></a-mixin>
+    <a-mixin id='mask7' geometry='primitive: plane' scale='.35 .35 1' material='src: url(https://bengarfield.github.io/AltVR/masks/jason.png); transparent: true'></a-mixin>
+    <a-mixin id='mask8' geometry='primitive: plane' scale='.35 .35 1' material='src: url(https://bengarfield.github.io/AltVR/masks/skull.png); transparent: true'></a-mixin>
+    
+    <a-entity id='masks' position='7.8 2.2 9.97' rotation='0 31 0' scale='.7 .7 .7'>
+      <a-entity position='0 0 0' mixin='mask1' instantiator='on: click; mixin: mask1 headPos1'></a-entity>
+      <a-entity position='.7 0 0' mixin='mask2' instantiator='on: click; mixin: mask2 headPos2'></a-entity>
+      <a-entity position='1.4 0 0' mixin='mask3' instantiator='on: click; mixin: mask3 headPos3'></a-entity>
+      <a-entity position='2.1 0 0' mixin='mask4' instantiator='on: click; mixin: mask4 headPos4'></a-entity>
+      <a-entity position='0 -.6 0' mixin='mask5' instantiator='on: click; mixin: mask5 headPos5'></a-entity>
+      <a-entity position='.7 -.6 0' mixin='mask6' instantiator='on: click; mixin: mask6 headPos6'></a-entity>
+      <a-entity position='1.4 -.6 0' mixin='mask7' instantiator='on: click; mixin: mask7 headPos7'></a-entity>
+      <a-entity position='2.1 -.6 0' mixin='mask8' instantiator='on: click; mixin: mask8 headPos8'></a-entity>
+    </a-entity>
+  </a-scene>
+  <script>
+    
+  </script>
+</body>
+</html>
