@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SGD</title>
+  <script src="https://aframe.io/releases/0.3.0/aframe.js"></script>
+  <!--<script src="https://cdn.rawgit.com/mrdoob/three.js/r84/build/three.min.js"></script>-->
+  <script src="https://sdk.altvr.com/libs/altspace.js/2.6.1/altspace.min.js"></script>
+</head>
+<body>
+  <a-scene altspace='fullspace: true'>
+    <a-mixin id='mat' material='color: white; opacity: 0.1'></a-mixin>
+    <a-box position='-2.55 -1.45 -5.9' scale='2.7 2 2.7' opacity='.1'></a-box>
+    <a-entity id='cage' position='-2.53 1.95 -5.9'>
+      <a-cylinder id='round' position='0 0 0' radius='1.95' height='3' open-ended='true' opacity='.1'></a-cylinder>
+      <a-obj-model id='obj' src='SGD.obj' position='0 -1.5 0' material='visible: false' n-mesh-collider='type: environment; convex: false'></a-obj-model>
+    </a-entity>
+
+    <a-entity id='target' position='2.53 1 5.9' rotation='0 180 0'></a-entity>
+    <a-entity id='portal1' position='0 -100 0' rotation='0 0 0' n-portal='targetEntity: #target' n-skeleton-parent='part: head'></a-entity>
+
+    <a-entity id='target2' position='9 0 -.5' rotation='0 -90 0'></a-entity>
+    <a-entity id='portal2' position='0 -100 0' rotation='0 0 0' n-portal='targetEntity: #target2' n-skeleton-parent='part: head'></a-entity>
+
+    <a-entity id='buttons' position='0 -100 0'>
+      <a-box id='button' position='-2.54 9 -5.91' scale='.3 .1 .3' color='red'></a-box>
+      <a-box id='button2' position='-2.54 2 -8.2' scale='.2 .2 .2' color='red'></a-box>
+    </a-entity>
+  </a-scene>
+  <script>
+    var approved = false;
+
+    button.addEventListener('mouseup', function(){
+      if (approved) {
+        button.setAttribute('color', 'red');
+        button2.setAttribute('color', 'red');
+      } else {
+        button.setAttribute('color', 'green');
+        button2.setAttribute('color', 'green');
+      }
+      approved = !approved;
+      collide();
+    });
+
+    button2.addEventListener('mouseup', function(){
+      if (approved) {
+        button.setAttribute('color', 'red');
+        button2.setAttribute('color', 'red');
+      } else {
+        button.setAttribute('color', 'green');
+        button2.setAttribute('color', 'green');
+      }
+      approved = !approved;
+      collide();
+    });
+
+    round.object3D.addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({ jointCubeSize: 0.1, joints: [['Head', 'Center', 0]]}));
+    round.object3D.addEventListener('jointcollisionenter', function(event){collide();});
+    round.object3D.addEventListener('jointcollisionleave', function(event){collide();});
+
+    function collide() {
+      console.log('collide');
+      if (approved) {
+        portal1.setAttribute('position', '0 0 0');
+        setTimeout(function(){
+          portal1.setAttribute('position', '0 -100 0');
+        }, 1000);
+      } else {
+        portal2.setAttribute('position', '0 0 0');
+        setTimeout(function(){
+          portal2.setAttribute('position', '0 -100 0');
+        }, 1000);
+      }
+    }
+
+    altspace.getUser().then(function(user){
+      if (user.isModerator) {
+        buttons.setAttribute('position', '0 0 0');
+      }
+    });
+  </script>
+</body>
+</html>
