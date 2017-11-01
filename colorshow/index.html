@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang=en>
+    <head>
+        <meta charset="utf-8">
+        <title>ColorShow</title>
+
+        <script type="text/javascript" src="build/GlslCanvas.js"></script>
+		<script src="https://cdn.rawgit.com/mrdoob/three.js/r84/build/three.min.js"></script>
+		<!--<script src="https://cdn.rawgit.com/Ooblik/AltVRNC/master/dist/AltVRNC.min.js"></script>-->
+        <script type="text/javascript" src="https://cdn.rawgit.com/github/fetch/master/fetch.js"></script>
+		<script src="https://cdn.rawgit.com/norybiak/UltimateLoader/master/dist/UltimateLoader.min.js"></script>
+		<script src="https://sdk.altvr.com/libs/altspace.js/2.6.1/altspace.min.js"></script>
+
+        <style>
+            body {
+                background: rgba(0,0,0,0);
+            }
+
+            #glslCanvas {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+            }​
+
+            .blank {
+
+            }
+
+            #credits {
+                position: absolute; 
+                bottom: 10px; 
+                right: 15px; 
+                text-align: right;
+                background: rgba(0,0,0,0);
+                padding: 12px;
+                padding-top: 5px;
+                padding-bottom: 5px;
+                margin: 0px
+            }
+
+            .label {
+                color: white;
+                font-family: Helvetica, Arial, sans-serif;
+                text-decoration: none; 
+                line-height: 0.0;
+            }
+
+            #title {
+                font-size: 24px;
+                font-weight: 600;
+            }
+
+            #author {
+                font-size: 14px; 
+                font-style: italic;
+                font-weight: 100;
+            }
+        </style>
+
+    </head>
+    <body>
+        <canvas id="glslCanvas" data-fragment="
+			// Author: Patricio Gonzalez Vivo
+			#ifdef GL_ES
+			precision mediump float;
+			#endif
+			#define PI 3.1415926535
+			#define HALF_PI 1.57079632679
+			uniform vec2 u_resolution;
+			uniform float u_time;
+			uniform sampler2D u_texPodS02Base; // data/texPodS02Base.jpg
+			uniform vec2 u_texPodS02BaseResolution; 
+			uniform sampler2D u_texPodS02Glow; // data/texPodS02Glow.jpg
+			uniform vec2 u_texPodS02GlowResolution;
+			uniform vec4 u_primaryColor;
+			uniform vec4 u_highlightColor;
+			uniform float u_talk;
+
+			void main(){
+				vec2 st = gl_FragCoord.xy/u_resolution.xy;
+				st = st;
+				vec4 talk = vec4((1.0 - u_talk), (1.0 - u_talk), (1.0 - u_talk), 1.0);
+				vec4 color = (texture2D(u_texPodS02Glow, st) * (u_highlightColor * talk)) + (texture2D(u_texPodS02Base, st) * u_primaryColor);
+				gl_FragColor = color;
+			}" width="512px" height="512px">
+		</canvas>
+
+    <script>
+        var canvas = document.getElementById("glslCanvas");
+        var sandbox = new GlslCanvas(canvas);
+        var texCounter = 0;
+        canvas.style.width = '512px';
+        canvas.style.height = '512px';
+		sandbox.setUniform("u_primaryColor",0.25, 0.27, 0.39, 1.0); 
+		sandbox.setUniform("u_highlightColor",13.33 ,1.96 ,1.56, 1.0); 
+		sandbox.setUniform("u_talk",0.0);
+
+///START THREE.JS STUFF
+		
+		var sim = new altspace.utilities.Simulation();
+		sim.camera.position.z = 5;
+		var config = { baseRefUrl: "https://altvr-apps.firebaseio.com/", authorId: 'WACOMalt', appId: 'ColorShow' };
+		var sceneSync;
+		altspace.utilities.sync.connect(config).then(function(connection) {
+			sceneSync = new altspace.utilities.behaviors.SceneSync(connection.instance, {
+				instantiators: {'createBaseRedSlider': createBaseRedSlider,
+								'createBaseGreenSlider': createBaseGreenSlider,
+								'createBaseBlueSlider': createBaseBlueSlider,
+								'createGlowRedSlider': createGlowRedSlider,
+								'createGlowGreenSlider': createGlowGreenSlider,
+								'createGlowBlueSlider': createGlowBlueSlider,},
+				ready: ready
+			});
+			sim.scene.addBehavior(sceneSync);
+		});
+		var animationInc = 0;
+		var podsseries02;
+		var talking = 1;
+		var glowRedSlider;
+		var glowGreenSlider;
+		var glowBlueSlider;
+		var baseRedSlider;
+		var baseGreenSlider;
+		var baseBlueSlider;
+		
+		var userTex;
+		
+		altspace.getDocument().then(function (doc) { doc.reset(); });
+		if (altspace.getDocument) {
+			altspace.getDocument().then(function (doc) {
+				doc.position.set(0, 1.5, -2);
+				doc.scale.set(0.005, 0.005, 0.005);
+				doc.inputEnabled = false;
+				sim.scene.add(doc);
+				document.body.style.display = 'block';
+			});
+		} else {
+			document.body.style.display = 'block';
+		}
+		
+		var createGlowRedSlider = (function() {
+			///glowRed SLIDER
+					glowRedSlider = new THREE.Mesh(
+						new THREE.BoxGeometry(0.1, 0.1, 0.1),
+						new THREE.MeshBasicMaterial({ color: 'red' })
+					);
+					
+					glowRedSlider.addBehaviors(
+						new altspace.utilities.behaviors.Object3DSync({ position: true, rotation: false, scale: false }),
+						new altspace.utilities.behaviors.Drag({
+							y: {min: 1, max: 2},
+							z: {min: 0, max: 0}
+						})
+					);
+					
+					glowRedSlider.position.set(1.5,2,0);
+					sim.scene.add(glowRedSlider);
+					return glowRedSlider;
+		})
+		var createGlowGreenSlider = (function() {
+				///glowGreen SLIDER	
+					glowGreenSlider = new THREE.Mesh(
+						new THREE.BoxGeometry(0.1, 0.1, 0.1),
+						new THREE.MeshBasicMaterial({ color: 'green' })
+					);
+					
+					glowGreenSlider.addBehaviors(
+						new altspace.utilities.behaviors.Object3DSync({ position: true, rotation: false, scale: false }),
+						new altspace.utilities.behaviors.Drag({
+							y: {min: 1, max: 2},
+							z: {min: 0, max: 0}
+						})
+					);
+									
+					glowGreenSlider.position.set(1.75,2,0);
+					sim.scene.add(glowGreenSlider);
+					return glowGreenSlider;
+		})
+		var createGlowBlueSlider = (function() {
+				///glowBlue SLIDER	
+					glowBlueSlider = new THREE.Mesh(
+						new THREE.BoxGeometry(0.1, 0.1, 0.1),
+						new THREE.MeshBasicMaterial({ color: 'blue' })
+					);
+					
+					glowBlueSlider.addBehaviors(
+						new altspace.utilities.behaviors.Object3DSync({ position: true, rotation: false, scale: false }),
+						new altspace.utilities.behaviors.Drag({
+							y: {min: 1, max: 2},
+							z: {min: 0, max: 0}
+						})
+					);
+					
+					glowBlueSlider.position.set(2,2,0);
+					sim.scene.add(glowBlueSlider);
+					return glowBlueSlider;
+		})
+		var createBaseRedSlider = (function() {
+				///baseRed SLIDER
+					baseRedSlider = new THREE.Mesh(
+						new THREE.BoxGeometry(0.1, 0.1, 0.1),
+						new THREE.MeshBasicMaterial({ color: 'red' })
+					);
+					
+					baseRedSlider.addBehaviors(
+						new altspace.utilities.behaviors.Object3DSync({ position: true, rotation: false, scale: false }),
+						new altspace.utilities.behaviors.Drag({
+							y: {min: 1, max: 2},
+							z: {min: 0, max: 0}
+						})
+					);
+					
+					baseRedSlider.position.set(0.5,2,0);
+					sim.scene.add(baseRedSlider);
+					return baseRedSlider;
+		})
+		var createBaseGreenSlider = (function() {
+				///baseGreen SLIDER	
+					baseGreenSlider = new THREE.Mesh(
+						new THREE.BoxGeometry(0.1, 0.1, 0.1),
+						new THREE.MeshBasicMaterial({ color: 'green' })
+					);
+					
+					baseGreenSlider.addBehaviors(
+						new altspace.utilities.behaviors.Object3DSync({ position: true, rotation: false, scale: false }),
+						new altspace.utilities.behaviors.Drag({
+							y: {min: 1, max: 2},
+							z: {min: 0, max: 0}
+						})
+					);
+									
+					baseGreenSlider.position.set(0.75,2,0);
+					sim.scene.add(baseGreenSlider);
+					return baseGreenSlider;
+		})
+		var createBaseBlueSlider = (function() {
+				///baseBlue SLIDER	
+					baseBlueSlider = new THREE.Mesh(
+						new THREE.BoxGeometry(0.1, 0.1, 0.1),
+						new THREE.MeshBasicMaterial({ color: 'blue' })
+					);
+					
+					baseBlueSlider.addBehaviors(
+						new altspace.utilities.behaviors.Object3DSync({ position: true, rotation: false, scale: false }),
+						new altspace.utilities.behaviors.Drag({
+							y: {min: 1, max: 2},
+							z: {min: 0, max: 0}
+						})
+					);
+					
+					baseBlueSlider.position.set(1,2,0);
+					sim.scene.add(baseBlueSlider);
+					return baseBlueSlider;
+		})
+		
+		var setglow = (function(r, g, b){
+			if (r === undefined) {r = 255;}
+			if (g === undefined) {g = 255;}
+			if (b === undefined) {b = 255;}
+			sandbox.setUniform("u_highlightColor",(r/255), (g/255), (b/255), 1);
+			if (typeof glowRedSlider != "undefined" && typeof glowGreenSlider != "undefined" && typeof glowBlueSlider != "undefined") {
+				glowRedSlider.position.y = ((r/1020)+1);
+				glowGreenSlider.position.y = ((g/1020)+1);
+				glowBlueSlider.position.y = ((b/1020)+1);
+			}
+		})
+		
+		var setbase = (function(r, g, b){
+			if (r === undefined) {r = 255;}
+			if (g === undefined) {g = 255;}
+			if (b === undefined) {b = 255;}
+			sandbox.setUniform("u_primaryColor",(r/255), (g/255), (b/255), 1);
+			if (typeof baseRedSlider != "undefined" && typeof baseGreenSlider != "undefined" && typeof baseBlueSlider != "undefined") {
+				baseRedSlider.position.y = ((r/1020)+1);
+				baseGreenSlider.position.y = ((g/1020)+1);
+				baseBlueSlider.position.y = ((b/1020)+1);
+			}
+		})
+		
+		var getcolors = (function(){
+			if (typeof baseRedSlider != "undefined" && typeof baseGreenSlider != "undefined" && typeof baseBlueSlider != "undefined" && typeof glowRedSlider != "undefined"  && typeof glowGreenSlider != "undefined"  && typeof glowBlueSlider != "undefined") {
+				console.log(
+				'Primary color: \n' +
+				'R: ' + Math.round(((baseRedSlider.position.y-1)*1020)) + '\n' + 
+				'G: ' + Math.round(((baseGreenSlider.position.y-1)*1020)) + '\n' + 
+				'B: ' + Math.round(((baseBlueSlider.position.y-1)*1020)) + '\n\n' + 
+				'Highlight color: \n' +
+				'R: ' + Math.round(((glowRedSlider.position.y-1)*1020)) + '\n' + 
+				'G: ' + Math.round(((glowGreenSlider.position.y-1)*1020)) + '\n' + 
+				'B: ' + Math.round(((glowBlueSlider.position.y-1)*1020)) + '\n'			
+				);
+			}
+		})
+		
+		function ready(firstInstance) {
+			if (firstInstance) {
+				sceneSync.instantiate('createGlowRedSlider');
+				sceneSync.instantiate('createGlowGreenSlider');
+				sceneSync.instantiate('createGlowBlueSlider');
+				sceneSync.instantiate('createBaseRedSlider');
+				sceneSync.instantiate('createBaseGreenSlider');
+				sceneSync.instantiate('createBaseBlueSlider');
+			}
+		}
+		
+		var ColorShow = (function() {
+
+			///MODELS
+			
+			userTex = new THREE.Texture(canvas);
+			var userMat = new THREE.MeshBasicMaterial({color: 'grey', map: userTex, side: THREE.DoubleSide	})
+			var modelBaseUrl = 'data/';
+					
+			var  models =
+			[
+				{ name: 'podsseries02', type: '.obj', position: { x: 0, y: 1.5, z: 0}, offset: { x: 0, y: 0, z: 0 } }
+			];
+			
+			function onLoaded() {
+				for (var i = 0; i < models.length; i++)
+				{
+					var obj = models[i].object;
+						var name = models[i].name;
+						var spawnPosition = new THREE.Vector3();
+
+						spawnPosition.copy(models[i].position);
+						//spawnPosition.multiplyScalar(masterScale);
+						obj.position.copy(spawnPosition);//initial position
+						//obj.scale.set(masterScale, masterScale, masterScale);
+
+						//add the meshes to the scene
+						sim.scene.add(obj);
+						
+					if (name === 'podsseries02') {
+						obj.children[0].userData.altspace = {collider: {enabled: false}};
+						obj.position.set(0, 0, 0);
+						podsseries02 = obj;
+						podsseries02.scale.setScalar(1);
+						sim.scene.add(obj);
+						podsseries02.children[0].material.map = userTex;
+						podsseries02.children[0].material.color.setRGB(1,1,1); 
+						
+					}
+					
+				//TALK BUTTON
+				
+					var talkButton = new THREE.Mesh(
+						new THREE.BoxGeometry(0.1, 0.1, 0.1),
+						new THREE.MeshBasicMaterial({ color: 'violet' })
+					);
+					talkButton.addEventListener('cursordown', function () {
+						talking = !talking;
+					});
+					talkButton.position.set(1,0.75,0);
+					sim.scene.add(talkButton);
+					
+				}
+			}
+			
+			function start() {
+				var promises =
+				[
+					altspace.getEnclosure(),
+				];
+
+				//Stuff to run AFTER promises have been loaded
+				Promise.all(promises).then(function (array)
+				{
+				//Store enclosure to variables
+				enclosure = array.shift();
+				})
+				
+				// Build ultimateloader array
+				var objectUrls = new Array(models.length);
+				for (var i = 0; i < models.length; i++)
+				{
+					objectUrls[i] = modelBaseUrl + models[i].name + models[i].type;
+				}
+
+				// Use Kai's awesome UltimateLoader to load models
+				UltimateLoader.multiload(objectUrls, function(objects)
+				{
+					for (var i = 0; i < objects.length; i++)
+					{
+						models[i].object = objects[i];
+					}
+
+					onLoaded();
+				});
+			}
+			
+			animate();
+			
+			function animate() {
+
+				//Increment my time counter variable
+				animationInc++;
+				
+				//console.log(animationInc);
+				userTex.needsUpdate = true;
+
+				if (talking) {
+				sandbox.setUniform("u_talk",((Math.sin(animationInc/10)/2)+0.5));
+				} else {
+				sandbox.setUniform("u_talk",0);
+				}
+				
+				if (typeof glowRedSlider != "undefined" && typeof glowGreenSlider != "undefined" && typeof glowBlueSlider != "undefined") {
+					setglow(((glowRedSlider.position.y-1)*1020), ((glowGreenSlider.position.y-1)*1020), ((glowBlueSlider.position.y-1)*1020));
+				}
+				
+				if (typeof baseRedSlider != "undefined" && typeof baseGreenSlider != "undefined" && typeof baseBlueSlider != "undefined") {
+					setbase(((baseRedSlider.position.y-1)*1020), ((baseGreenSlider.position.y-1)*1020), ((baseBlueSlider.position.y-1)*1020));
+				}
+				
+				//This tells JS to rerun this loop once one animation frame has happened. This is responsible for keeping a consistent timing to the animation regardless of framerate
+				requestAnimationFrame(animate);
+			
+			}
+			
+			return { start: start };
+		}());
+		
+		if(altspace.inClient) {
+			altspace.getEnclosure().then(function(enclosure) {
+				enclosure.requestFullspace().then(function() {
+						ColorShow.start();
+				});
+			});
+		}
+
+    </script>
+
+</body>
+</html>
