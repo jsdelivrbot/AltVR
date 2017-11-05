@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Google Poly Scene Builder</title>
+  <script src="https://cdn.rawgit.com/mrdoob/three.js/r84/build/three.min.js"></script>
+  <script src="https://aframe.io/releases/0.3.0/aframe.js"></script>  
+  <script src="https://sdk.altvr.com/libs/altspace.js/2.6.1/altspace.min.js"></script>
+  <!-- <script src="https://dist.3d.io/3dio-js/1.x.x/3dio.min.js"></script> -->
+  <!-- <script src="https://cdn.rawgit.com/mrdoob/three.js/r84/examples/js/loaders/GLTFLoader.js"></script> -->
+  <!-- <script src="https://cdn.rawgit.com/norybiak/UltimateLoader/master/dist/UltimateLoader2.js"></script> -->
+  <script src="bake-vertex-light.js"></script>
+</head>
+<body>
+  <a-scene altspace='fullspace: true'>
+    <a-light type="point" position=".9 9 -.8" intensity="15">
+      <a-sphere radius='.2' color='yellow'></a-sphere>
+    </a-light> 
+    <!-- <a-entity gblock="https://vr.google.com/objects/dVG0XJrpRJC"></a-entity> -->
+
+    <a-entity id='house' position='0 2.5 0' obj-model='obj: url(models/house/model-triangulated.obj); mtl: url(models/house/materials.mtl)' bake-vertex-light></a-entity>
+    <a-entity id='crate' position='0 2.5 1' obj-model='obj: url(models/crate/model-triangulated.obj); mtl: url(models/crate/materials.mtl)' bake-vertex-light></a-entity>
+    <a-entity id='sammich' position='0 2.5 -1' obj-model='obj: url(models/sammich/model-triangulated.obj); mtl: url(models/sammich/materials.mtl)' bake-vertex-light></a-entity>
+
+    <!-- <a-entity id='rio' position='-2.53 1.95 -5.91' scale='.2 .2 .2' rotation='0 180 0' obj-model='obj: url(models/rio/model-triangulated.obj); mtl: url(models/rio/materials.mtl)' bake-vertex-light></a-entity> -->
+
+    <!-- <a-entity id='block1' position='0 2.5 -5' gblock="https://vr.google.com/objects/dVG0XJrpRJC"></a-entity> -->
+  </a-scene>
+  <script>
+    
+    // var loader = new THREE.GLTFLoader();
+
+    // loader.load('house/model.gltf', function(gltf){
+    //   console.log(gltf);
+    // });
+
+
+    var fragmentShader = {"text":"uniform vec3 u_color;\r\nuniform float u_metallic;\r\nuniform float u_roughness;\r\nuniform vec3 u_light0Pos;\r\nuniform vec3 u_light0Color;\r\nuniform vec3 u_light1Pos;\r\nuniform vec3 u_light1Color;\r\nuniform mat4 u_modelMatrix;\r\nuniform sampler2D u_reflectionCube;\r\nuniform sampler2D u_reflectionCubeBlur;","base64":"data:text/plain;base64,dW5pZm9ybSB2ZWMzIHVfY29sb3I7DQp1bmlmb3JtIGZsb2F0IHVfbWV0YWxsaWM7DQp1bmlmb3JtIGZsb2F0IHVfcm91Z2huZXNzOw0KdW5pZm9ybSB2ZWMzIHVfbGlnaHQwUG9zOw0KdW5pZm9ybSB2ZWMzIHVfbGlnaHQwQ29sb3I7DQp1bmlmb3JtIHZlYzMgdV9saWdodDFQb3M7DQp1bmlmb3JtIHZlYzMgdV9saWdodDFDb2xvcjsNCnVuaWZvcm0gbWF0NCB1X21vZGVsTWF0cml4Ow0KdW5pZm9ybSBzYW1wbGVyMkQgdV9yZWZsZWN0aW9uQ3ViZTsNCnVuaWZvcm0gc2FtcGxlcjJEIHVfcmVmbGVjdGlvbkN1YmVCbHVyOw=="};
+    var vertexShader = {"text":"varying vec3 v_normal;\r\nvarying vec3 v_position;\r\nvarying vec3 v_binormal;\r\nvarying vec3 v_tangent;\r\n","base64":"data:text/plain;base64,dmFyeWluZyB2ZWMzIHZfbm9ybWFsOw0KdmFyeWluZyB2ZWMzIHZfcG9zaXRpb247DQp2YXJ5aW5nIHZlYzMgdl9iaW5vcm1hbDsNCnZhcnlpbmcgdmVjMyB2X3RhbmdlbnQ7DQo="};
+
+    var dataRequest = (THREE.FileLoader ? new THREE.FileLoader() : new THREE.XHRLoader(/* DEPRECATED: r83 */));
+    dataRequest.setWithCredentials(true);
+    dataRequest.load('https://gblock.3d.io/api/get-gltf-url/?url=' + 'https://vr.google.com/objects/1uXmHq-ELhz', onLoaded, undefined, undefined);
+    function onLoaded(obj){
+      var result = JSON.parse(obj);
+      console.log(result);
+
+      if (result.objUrl) {
+        console.log(result.objUrl);
+        dataRequest.load(result.gltfUrl, gltfLoaded, undefined, undefined);
+        function gltfLoaded(gltf){
+          var json = JSON.parse(gltf);
+          Object.keys(json.shaders).forEach(function (key, i) {
+            // Replacing original shaders with placeholders
+            if (key.indexOf('fragment') > -1) json.shaders[key].uri = fragmentShader.base64;
+            else if (key.indexOf('vertex') > -1) json.shaders[key].uri = vertexShader.base64;
+          });
+          console.log(json);
+        }
+      } else {
+        console.log('No OBJ');
+        console.log(result.gltfUrl);
+      }
+    }
+
+  </script>
+</body>
+</html>

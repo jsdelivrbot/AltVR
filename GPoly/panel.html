@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Altspace Template</title>
+  <script src="https://cdn.rawgit.com/mrdoob/three.js/r84/build/three.min.js"></script>
+  <script src="https://sdk.altvr.com/libs/altspace.js/2.6.1/altspace.min.js"></script>
+</head>
+<body style='background-color: white;'>
+  <input id='search' value='car'><button id='goButton'>Go</button>
+  <div id='resultsContainer'></div>
+  <script>
+    var config = { baseRefUrl: "https://altvr-apps.firebaseio.com/", authorId: 'BenG', appId: 'GBlocks' };
+    altspace.utilities.sync.connect(config).then(function(connection) {
+      goButton.addEventListener('mouseup', function(){
+        resultsContainer.innerHTML = '';
+        console.log(search.value);
+        var dataRequest = (THREE.FileLoader ? new THREE.FileLoader() : new THREE.XHRLoader(/* DEPRECATED: r83 */));
+      dataRequest.setWithCredentials(true);
+      dataRequest.load('https://gblock.3d.io/api/search?limit=10&offset=1&query=' + search.value, onLoaded, undefined, undefined);
+      function onLoaded(obj){
+        var json = JSON.parse(obj);
+        addImages(json);
+        dataRequest.load('https://gblock.3d.io/api/search?limit=10&offset=11&query=' + search.value, onLoaded2, undefined, undefined);
+        function onLoaded2(obj){
+          var json = JSON.parse(obj);
+          addImages(json);
+          dataRequest.load('https://gblock.3d.io/api/search?limit=10&offset=21&query=' + search.value, onLoaded3, undefined, undefined);
+          function onLoaded3(obj){
+            var json = JSON.parse(obj);
+            addImages(json);
+          }
+        }
+      }
+      });
+      
+      function addImages(json){
+        Object.keys(json.items).forEach(function (key, i) {
+          console.log(json.items[key], i);
+          var image = document.createElement('img');
+          image.setAttribute('src', json.items[key].image);
+          image.setAttribute('href', json.items[key].url);
+          image.setAttribute('width', '256px');
+          
+          resultsContainer.appendChild(image);
+          image.addEventListener('mouseup', function(){
+            console.log(json.items[key].url);
+            //location.replace(json.items[key].url);
+            connection.instance.child('modelUrl').set(json.items[key].url);
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html>

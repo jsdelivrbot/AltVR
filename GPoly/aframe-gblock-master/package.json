@@ -1,0 +1,46 @@
+{
+  "name": "aframe-gblock",
+  "description": "Aframe component loading remixable google blocks models.",
+  "version": "1.0.0",
+  "homepage": "https://archilogic-com.github.io/aframe-gblock/",
+  "repository": "archilogic-com/aframe-gblock",
+  "scripts": {
+    "start": "node server/server.js",
+    "build": "rollup -c rollup.config.js"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "archilogic",
+    "email": "dev.rocks@3d.io",
+    "url": "https://3d.io"
+  },
+  "main": "dist/gblock.js",
+  "keywords": [
+    "aframe",
+    "3d",
+    "cardboard",
+    "components",
+    "oculus",
+    "vive",
+    "rift",
+    "vr",
+    "WebVR",
+    "WegGL",
+    "three",
+    "three.js",
+    "3D model",
+    "3d.io"
+  ],
+  "dependencies": {
+    "cors": "^2.8.4",
+    "express": "^4.15.5",
+    "googleapis": "^22.1.0",
+    "request": "^2.82.0"
+  },
+  "devDependencies": {
+    "lodash": "^4.17.4",
+    "rollup": "^0.49.3",
+    "rollup-plugin-commonjs": "^8.2.1",
+    "rollup-plugin-node-resolve": "^3.0.0"
+  }
+}

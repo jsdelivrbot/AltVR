@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+  <script src="https://dist.3d.io/3dio-js/1.x.x/3dio.min.js"></script>
+  <script src="https://sdk.altvr.com/libs/altspace.js/2.6.1/altspace.min.js"></script>
+</head>
+<body style='background: black;'>
+  <a-scene>
+  	<a-entity id='container' position='0 0 -2'>
+	    <a-entity id='model' gblock="https://vr.google.com/objects/dVG0XJrpRJC"></a-entity>
+		<a-animation to='0 360 0' repeat='indefinite' easing='linear' dur='20000'>
+	</a-animation>
+    
+  </a-scene>
+  <script>
+  	var config = { baseRefUrl: "https://altvr-apps.firebaseio.com/", authorId: 'BenG', appId: 'GBlocks' };
+	altspace.utilities.sync.connect(config).then(function(connection) {
+		connection.instance.child('modelUrl').on('value', function(data){
+			if (data.val() == null) {
+				//container.removeChild(model)
+				//model.setAttribute('gblock', '');
+			} else {
+				container.removeChild(model);
+				var el = document.createElement('a-entity');
+				el.setAttribute('id', 'model');
+				el.setAttribute('gblock', data.val());
+
+				container.appendChild(el);
+			}
+		});
+	});
+  </script>
+</body>
+</html>
