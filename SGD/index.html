@@ -10,7 +10,7 @@
   <a-scene altspace='fullspace: true'>
     <a-box position='-2.55 -1.45 -5.9' scale='2.7 2 2.7' opacity='.1'></a-box>
     <a-entity id='cage' position='-2.53 1.95 -5.91'>
-      <a-cylinder id='round' position='0 0 0' radius='1.95' height='3' open-ended='true' opacity='.1' n-mesh-collider='type: hologram; convex: true'></a-cylinder>
+      <a-cylinder id='round' position='0 0 0' radius='1.95' height='3' open-ended='true' material="src:url(beam.png); repeat: 1 2.5" color='#00ffee' opacity='.15' transparent='true' n-mesh-collider='type: hologram; convex: true'></a-cylinder>
       <a-obj-model id='obj' src='SGD.obj' position='0 -1.5 0' material='visible: false' n-mesh-collider='type: environment; convex: false'></a-obj-model>
     </a-entity>
 
@@ -24,25 +24,48 @@
       <a-box id='button' position='-2.54 9 -5.91' scale='.3 .1 .3' color='red'></a-box>
       <a-box id='button2' position='-2.54 2 -8.3' scale='.2 .2 .2' color='red'></a-box>
     </a-entity>
+
+    <a-plane id='logo' src='UKRifter.jpg' position='8.6 1.3 2.7' rotation='0 -90 0'></a-plane>
   </a-scene>
   <script>
     var approved = false;
+    var guests = [];
 
-    button.addEventListener('mouseup', function(){
-      buttonClick();
+    if (findGetParameter('guests')) {
+      guests = findGetParameter('guests').split(',');
+    }
+
+    altspace.getUser().then(function(user){
+      var dataRequest = (THREE.FileLoader ? new THREE.FileLoader() : new THREE.XHRLoader(/* DEPRECATED: r83 */));
+      dataRequest.setWithCredentials(true);
+      dataRequest.load('https://account.altvr.com/api/v1/users/' + user.userId, onLoaded, undefined, undefined);
+      function onLoaded(obj) {
+        var username = JSON.parse(obj).users[0].username;
+        if (user.userId == '582115151281389721' || user.userId == '528608258831679865' || guests.indexOf(username) != -1) {
+          buttons.setAttribute('position', '0 0 0');
+          button.addEventListener('mouseup', function(){
+            buttonClick();
+          });
+          button2.addEventListener('mouseup', function(){
+            buttonClick();
+          });
+        }
+      }
     });
 
-    button2.addEventListener('mouseup', function(){
-      buttonClick();
+    logo.addEventListener('mouseup', function(){
+      altspace.open('https://www.youtube.com/user/theukrifter');
     });
 
     function buttonClick() {
       if (approved) {
         button.setAttribute('color', 'red');
         button2.setAttribute('color', 'red');
+        round.setAttribute('side', 'front');
       } else {
         button.setAttribute('color', 'green');
         button2.setAttribute('color', 'green');
+        round.setAttribute('side', 'back');
       }
       approved = !approved;
       collide();
@@ -67,11 +90,27 @@
       }
     }
 
-    altspace.getUser().then(function(user){
-      if (/*user.isModerator || */user.userId == '582115151281389721' || user.userId == '528608258831679865' || user.userId == '460890660711432663') {
-        buttons.setAttribute('position', '0 0 0');
+    var speed = -.0015;
+    loop();
+    function loop(){
+      if (round.object3D.children[0].material.map) {
+        round.object3D.children[0].material.map.offset.y += speed;
       }
-    });
+      requestAnimationFrame(loop);
+    }
+
+    function findGetParameter(parameterName) {
+      var result = null,
+          tmp = [];
+      location.search
+      .substr(1)
+          .split("&")
+          .forEach(function (item) {
+          tmp = item.split("=");
+          if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+      });
+      return result;
+    }
   </script>
 </body>
 </html>
