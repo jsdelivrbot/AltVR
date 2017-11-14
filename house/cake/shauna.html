@@ -200,7 +200,7 @@
             } else if (this.data.object == 'cake') {
               this.syncSystem.instantiate('cakeWhole' + ' grab-object-' + ((hand === 'left') ? 'left' : 'right'), this.el.sceneEl, this.el, this.grabbedObject[hand]);
               this.syncSystem.instantiate('candle1' + ' grab-object-' + ((hand === 'left') ? 'left' : 'right'), this.el.sceneEl, this.el, this.grabbedObject[hand]);
-              this.syncSystem.instantiate('candle2' + ' grab-object-' + ((hand === 'left') ? 'left' : 'right'), this.el.sceneEl, this.el, this.grabbedObject[hand]);
+              this.syncSystem.instantiate('candletwo' + ' grab-object-' + ((hand === 'left') ? 'left' : 'right'), this.el.sceneEl, this.el, this.grabbedObject[hand]);
               this.syncSystem.instantiate('candle3' + ' grab-object-' + ((hand === 'left') ? 'left' : 'right'), this.el.sceneEl, this.el, this.grabbedObject[hand]);
               this.syncSystem.instantiate('candle4' + ' grab-object-' + ((hand === 'left') ? 'left' : 'right'), this.el.sceneEl, this.el, this.grabbedObject[hand]);
               this.syncSystem.instantiate('candle5' + ' grab-object-' + ((hand === 'left') ? 'left' : 'right'), this.el.sceneEl, this.el, this.grabbedObject[hand]);
@@ -423,7 +423,7 @@
       <a-mixin id='candle8' position='.1 -.21 -.01' rotation='315 0 -90' scale='.5 .5 .5' cached-model='obj: url(../avatars/malesmall.obj); texture: url(../ben.jpg)'></a-mixin> -->
 
       <a-mixin id='candle1' position='.1 -.3 .03' rotation='0 0 -90' scale='.5 .5 .5' cached-model='obj: url(../avatars/femalesmall.obj); texture: url(shauna/Shannon.jpg)'></a-mixin>
-      <a-mixin id='candle2' position='.1 -.39 -.01' rotation='45 0 -90' scale='.5 .5 .5' cached-model='obj: url(shauna/viv.obj); texture: url(shauna/VivianTexture.jpg)'></a-mixin>
+      <a-mixin id='candletwo' position='.1 -.39 -.01' rotation='45 0 -90' scale='.5 .5 .5' cached-model='obj: url(shauna/viv.obj); texture: url(shauna/VivianTexture.jpg)'></a-mixin>
       <a-mixin id='candle3' position='.1 -.43 -.1' rotation='90 0 -90' scale='.5 .5 .5' cached-model='obj: url(../avatars/femalesmall.obj); texture: url(shauna/Shannon.jpg)'></a-mixin>
       <a-mixin id='candle4' position='.1 -.39 -.19' rotation='135 0 -90' scale='.5 .5 .5' cached-model='obj: url(shauna/viv.obj); texture: url(shauna/VivianTexture.jpg)'></a-mixin>
       <a-mixin id='candle5' position='.1 -.3 -.23' rotation='180 0 -90' scale='.5 .5 .5' cached-model='obj: url(../avatars/femalesmall.obj); texture: url(shauna/Shannon.jpg)'></a-mixin>
@@ -469,7 +469,7 @@
         if (user.userId == '582115151281389721') {
 	      	//reset button
           buttons.setAttribute('position', '.1 1 0');
-          cakeSpawner.setAttribute('position', '9.75 1.5 5.2');
+          cakeSpawner.setAttribute('position', '9.75 1.5 -20');
           cakeSpawner2.setAttribute('position', '9.75 .85 2.75');
 
           resetButton.addEventListener('mouseup', function(){
