@@ -9,7 +9,7 @@
   <script src="https://sdk.altvr.com/libs/altspace.js/2.6.1/altspace.min.js"></script>
   <!-- <script src="https://cdn.rawgit.com/norybiak/UltimateLoader/v0.4.6/dist/UltimateLoader.min.js"></script> -->
   <script src="cached-model.js"></script>
-  <!-- <script src="UltimateLoader2.js"></script> -->
+  <script src="UltimateLoader2.js"></script>
   <script>
     // n-skeleton-parent only works with root meshes at the moment. Since most model loaders use a root
     // container object, we need to collapse the model so that n-skeleton-parent can access the mesh directly.
@@ -212,25 +212,20 @@
 
     //----------------Cached Avatar Loader-----------------------
 
-    AFRAME.registerComponent('model', {
+    AFRAME.registerComponent('book', {
       schema: {
-        sid: {
-          type: 'string'
-        },
-        colors: {
-          type: 'src'
-        }
+        type: 'string'
       },
       init: function() {
         var self = this;
-          
+          console.log(this);
         var models = {
-          'book':  'https://bengarfield.github.io/AltVR/house/books/book.obj'
+          'book':  'https://bengarfield.github.io/AltVR/books/book.obj'
         };
         
         var objects = {
-          model: {url: models[this.data.sid]},
-          tex: {url: this.data.colors}
+          model: {url: 'https://bengarfield.github.io/AltVR/books/book.obj'},
+          tex: {url: this.data + '.png'}
         };
 
         UltimateLoader.load(objects).then(function(result){
@@ -250,13 +245,14 @@
 
     <a-mixin id="rightpos" position='-.1 -.09 -.08' rotation='40 0 90'></a-mixin>
     <a-mixin id="leftpos" position='.1 -.09 -.08' rotation='40 0 -90'></a-mixin>
-    <a-mixin id='book1' cached-obj-model='obj: url(book.obj); mtl: url(afraid.mtl)'></a-mixin>
-    <a-mixin id='book2' cached-obj-model='obj: url(book.obj); mtl: url(haunting.mtl)'></a-mixin>
-    <a-mixin id='book3' cached-obj-model='obj: url(book.obj); mtl: url(lineage.mtl)'></a-mixin>
-    <a-mixin id='book4' cached-obj-model='obj: url(book.obj); mtl: url(gretel.mtl)'></a-mixin>
+
+    <a-mixin id='book1' book='elementals'></a-mixin>
+    <a-mixin id='book2' book='uncommon'></a-mixin>
+    <a-mixin id='book3' book='vault'></a-mixin>
+    <a-mixin id='book4' book='altered'></a-mixin>
 
     <!-- Highrise -->
-    <!-- <a-entity rotation='0 -66 0'>
+    <a-entity rotation='0 -66 0'>
       <a-entity position='3.05 1.185 -3.25'>
         <a-entity id='stack1' position='-.75 -.23 -.05'>
           <a-entity position='0 0 0' rotation='-90 85 0' mixin='book1'></a-entity>
@@ -306,10 +302,10 @@
           <a-entity position='0 .12 .12' rotation='-10 0 0' mixin="book4" grab-object="group: l; parts: left; mixin: book4 leftpos"></a-entity>
         </a-entity>
       </a-entity>
-    </a-entity> -->
+    </a-entity>
 
     <!-- Halloween -->
-    <a-entity rotation='0 72 0'>
+    <!-- <a-entity rotation='0 72 0'>
       <a-entity position='-13.45 1.2 6.4'>
         <a-entity rotation='0 0 0'>
         <a-entity id='stack1' position='0 -.23 -.05'>
@@ -361,7 +357,7 @@
         </a-entity>
       </a-entity>
       </a-entity>
-    </a-entity>
+    </a-entity> -->
 
   </a-scene>
 </body>
