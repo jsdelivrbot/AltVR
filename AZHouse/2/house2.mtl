@@ -1,5 +1,5 @@
 # Blender MTL File: 'house2.blend'
-# Material Count: 13
+# Material Count: 14
 
 newmtl brick
 Ns 96.078431
@@ -84,7 +84,29 @@ Ni 1.000000
 d 1.000000
 illum 2
 
+newmtl pinkVelvet
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd pinkVelvet.jpg
+
 newmtl redCarpet
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd redCarpet.jpg
+
+newmtl redCarpet_NONE
 Ns 96.078431
 Ka 1.000000 1.000000 1.000000
 Kd 1.000000 1.000000 1.000000
