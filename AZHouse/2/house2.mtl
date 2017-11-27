@@ -1,5 +1,5 @@
 # Blender MTL File: 'house2.blend'
-# Material Count: 14
+# Material Count: 15
 
 newmtl brick
 Ns 96.078431
@@ -22,6 +22,17 @@ Ni 1.000000
 d 1.000000
 illum 2
 map_Kd fountainMiddle.jpg
+
+newmtl granite
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd concrete.jpg
 
 newmtl marble
 Ns 96.078431
