@@ -1,5 +1,5 @@
 # Blender MTL File: 'house2.blend'
-# Material Count: 25
+# Material Count: 28
 
 newmtl brick
 Ns 96.078431
@@ -12,6 +12,39 @@ d 1.000000
 illum 2
 map_Kd brick.png
 
+newmtl brick_TextureAtlas
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd brick.png
+
+newmtl ceiling
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd ceiling.jpg
+
+newmtl ceilingBed
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd ceilingBed.jpg
+
 newmtl deck
 Ns 96.078431
 Ka 1.000000 1.000000 1.000000
@@ -22,7 +55,7 @@ Ni 1.000000
 d 1.000000
 illum 2
 
-newmtl fountainInner
+newmtl deckSurface
 Ns 96.078431
 Ka 1.000000 1.000000 1.000000
 Kd 1.000000 1.000000 1.000000
@@ -31,7 +64,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd redFountain.jpg
+map_Kd deckSurface.jpg
 
 newmtl granite
 Ns 96.078431
@@ -87,16 +120,6 @@ Ni 1.000000
 d 1.000000
 illum 2
 map_Kd marble.jpg
-
-newmtl mat20
-Ns 96.078431
-Ka 1.000000 1.000000 1.000000
-Kd 0.470000 0.330000 0.280000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.000000
-d 1.000000
-illum 2
 
 newmtl mat20.002
 Ns 96.078431
