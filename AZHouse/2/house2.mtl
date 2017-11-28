@@ -45,6 +45,17 @@ d 1.000000
 illum 2
 map_Kd ceilingBed.jpg
 
+newmtl ceilingStage
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd ceilingStage.jpg
+
 newmtl deck
 Ns 96.078431
 Ka 1.000000 1.000000 1.000000
@@ -75,7 +86,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd concrete.jpg
+map_Kd roofFlat.jpg
 
 newmtl grass
 Ns 96.078431
@@ -98,17 +109,6 @@ Ni 1.000000
 d 1.000000
 illum 2
 map_Kd hottub.jpg
-
-newmtl hottubWalls
-Ns 96.078431
-Ka 1.000000 1.000000 1.000000
-Kd 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.000000
-d 1.000000
-illum 2
-map_Kd hottubWalls.jpg
 
 newmtl marble
 Ns 96.078431
@@ -151,16 +151,6 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.500000
 d 0.400000
 illum 3
-
-newmtl mat7
-Ns 96.078431
-Ka 1.000000 1.000000 1.000000
-Kd 0.940000 0.380000 0.570000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.000000
-d 1.000000
-illum 2
 
 newmtl pPerloid
 Ns 96.078431
@@ -260,6 +250,17 @@ Ni 1.000000
 d 1.000000
 illum 2
 map_Kd roof.jpg
+
+newmtl stands
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd stands.jpg
 
 newmtl whiteBrick
 Ns 96.078431
