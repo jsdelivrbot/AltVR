@@ -95,7 +95,7 @@
       mesh.material.map = THREE.ImageUtils.loadTexture('textures/' + texture);
       mesh.material.map.wrapS = mesh.material.map.wrapT = THREE.RepeatWrapping;
       mesh.material.map.repeat.set(wrap, wrap);
-      mesh.material.lightMap = THREE.ImageUtils.loadTexture('lightmaps/256/' + lightmap);
+      mesh.material.lightMap = THREE.ImageUtils.loadTexture('lightmaps/512/' + lightmap);
       mesh.material.lightMapIntensity = i;
       mesh.material.color.set(new THREE.Color(1,1,1));
     }
