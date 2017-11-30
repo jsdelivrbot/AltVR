@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>House</title>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/84/three.js'></script>
+  <script src="https://cdn.rawgit.com/mrdoob/three.js/r85/examples/js/loaders/ColladaLoader.js"></script>
+  <script src='https://sdk.altvr.com/libs/altspace.js/2.6.1/altspace.min.js'></script>
+  <script src="https://cdn.rawgit.com/NGenesis/altspacevr-behaviors/v0.8.1/js/altspaceutil.min.js"></script>
+</head>
+<body>
+<script>
+  var sim = new altspace.utilities.Simulation();
+  sim.camera.position.set(0, 1.5, 5);
+  if(altspace.inClient){
+    altspace.getEnclosure().then(function(enc){
+      sim.scene.scale.setScalar(enc.pixelsPerMeter);
+    });
+  }
+  var model = null, lightmap = null;
+  // load model
+  var gltfLoader = new THREE.ColladaLoader();
+  gltfLoader.load('house.dae',
+    function(result){
+      console.log(result)
+      sim.scene.add(result.scene);
+      model = result.scene;
+      model.addBehaviors(
+        new altspaceutil.behaviors.NativeComponent('n-mesh-collider', { convex: false, type: 'environment' })
+      );
+      loadingDone();
+    },
+    undefined,
+    function(err){
+      console.error(err);
+    }
+  );
+  // load texture
+  // var txLoader = new THREE.TextureLoader();
+  // txLoader.load('lightmaps/grassLM.png', function(tex){
+  //   // gltf models need this field to be false
+  //   // GLTFLoader does it for the diffuse texture automatically
+  //   //tex.flipY = false;
+  //   lightmap = tex;
+  //   loadingDone();
+  // });
+  // model and texture loaded, start mapping
+  function loadingDone()
+  {
+    if( !model  ) return;
+    model.position.setY(5.5);
+    model.position.setZ(-30);
+    model.rotateX(-Math.PI/2);
+    model.scale.setScalar(50);
+    //var suzanne = model.getObjectByName('Suzanne');
+    //suzanne.children[0].material.lightMap = lightmap;
+    for (var i = 0; i < model.children.length; i++) {
+      //console.log(model.children[i]);
+      console.log(model.children[i].name);
+      model.children[i].children[0].material = model.children[i].children[0].material.clone();
+
+      switch (model.children[i].name) {
+        case 'grass':
+          applyTexttures(model.children[i].children[0], 'grass.jpg', 20, 'grassLM.png', 1);
+          break;
+        case 'walls':
+          applyTexttures(model.children[i].children[0], 'brick.png', 20, 'wallsLM.png', 1);
+          break;
+        case 'foundation':
+          applyTexttures(model.children[i].children[0], 'whiteBrick.jpg', 60, 'foundationLM.png', 1);
+          break;
+        case 'porch':
+          applyTexttures(model.children[i].children[0], 'marble.jpg', 8, 'porchLM.png', 1);
+          break;
+        case 'pillars':
+          applyTexttures(model.children[i].children[0], 'roofFlat.jpg', 2, 'pillarsLM.png', 1);
+          model.children[i].children[0].material.color.set(new THREE.Color(.5,.5,.5));
+          break;
+        case 'stairs':
+          applyTexttures(model.children[i].children[0], 'pinkVelvet.jpg', 5, 'stairsLM.png', 1);
+          break;
+        case 'redCarpet':
+          applyTexttures(model.children[i].children[0], 'redCarpet.jpg', 5, 'redCarpetLM.png', 1);
+          break;
+        case 'fountain':
+          applyTexttures(model.children[i].children[0], 'pinkVelvet.jpg', 5, 'fountainLM.png', 1);
+          break;
+        case 'fountainInner':
+          applyTexttures(model.children[i].children[0], 'brick.png', 5, 'fountainInnerLM.png', 1);
+          break;
+      }
+
+    }
+
+    function applyTexttures(mesh, texture, wrap, lightmap, i) {
+      mesh.material.map = THREE.ImageUtils.loadTexture('textures/' + texture);
+      mesh.material.map.wrapS = mesh.material.map.wrapT = THREE.RepeatWrapping;
+      mesh.material.map.repeat.set(wrap, wrap);
+      mesh.material.lightMap = THREE.ImageUtils.loadTexture('lightmaps/256/' + lightmap);
+      mesh.material.lightMapIntensity = i;
+      mesh.material.color.set(new THREE.Color(1,1,1));
+    }
+  }
+</script>
+</body>
+</html>
