@@ -1,43 +1,59 @@
 # Blender MTL File: 'objects.blend'
-# Material Count: 18
+# Material Count: 19
 
 newmtl None
 Ns 0
 Ka 0.000000 0.000000 0.000000
-Kd 0.8 0.8 0.8
+Kd 1.0 1.0 1.0
 Ks 0.8 0.8 0.8
 d 1
 illum 2
-map_Kd bar\marble.jpg
+map_Kd bar\gold.jpg
 
-newmtl None_barTable.jpg
+newmtl None_barTable.jpg.001
 Ns 0
 Ka 0.000000 0.000000 0.000000
-Kd 0.8 0.8 0.8
+Kd 1.0 1.0 1.0
 Ks 0.8 0.8 0.8
 d 1
 illum 2
-map_Kd bar/barTable.jpg
+map_Kd bar\barTable.jpg
+
+newmtl None_cushion.jpg
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 1.0 1.0 1.0
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd bar\cushion.jpg
 
 newmtl None_gold.jpg
 Ns 0
 Ka 0.000000 0.000000 0.000000
-Kd 0.8 0.8 0.8
+Kd 1.0 1.0 1.0
 Ks 0.8 0.8 0.8
 d 1
 illum 2
 map_Kd bar\silver.jpg
 
-newmtl cushion
-Ns 96.078431
-Ka 1.000000 1.000000 1.000000
-Kd 0.640000 0.640000 0.640000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.000000
-d 1.000000
+newmtl None_marble.jpg
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 1.0 1.0 1.0
+Ks 0.8 0.8 0.8
+d 1
 illum 2
-map_Kd bar\cushion.jpg
+map_Kd bar\marble.jpg
+
+newmtl None_stoolSides.jpg
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 1.0 1.0 1.0
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd bar\stoolSides.jpg
 
 newmtl mat11
 Ns 94.117647
@@ -52,7 +68,7 @@ illum 2
 newmtl mat12
 Ns 94.117647
 Ka 1.000000 1.000000 1.000000
-Kd 1.000000 0.920000 0.230000
+Kd 1.000000 1.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
@@ -133,17 +149,6 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-
-newmtl mat21_gold.jpg
-Ns 94.117647
-Ka 1.000000 1.000000 1.000000
-Kd 1.000000 1.000000 1.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.000000
-d 1.000000
-illum 2
-map_Kd bar\silver.jpg
 
 newmtl mat24
 Ns 300.000000
