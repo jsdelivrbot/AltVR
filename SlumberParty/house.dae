@@ -5,8 +5,8 @@
       <author>Blender User</author>
       <authoring_tool>Blender 2.79.0 commit date:2017-09-11, commit time:10:43, hash:5bd8ac9</authoring_tool>
     </contributor>
-    <created>2017-12-03T00:58:35</created>
-    <modified>2017-12-03T00:58:35</modified>
+    <created>2017-12-03T02:48:48</created>
+    <modified>2017-12-03T02:48:48</modified>
     <unit name="meter" meter="1"/>
     <up_axis>Z_UP</up_axis>
   </asset>
@@ -1633,7 +1633,7 @@
           </technique_common>
         </source>
         <source id="mesh1513493504_044-mesh-map-0">
-          <float_array id="mesh1513493504_044-mesh-map-0-array" count="12">0.2224779 0.8583294 0.2515351 0.9314727 0.2224779 0.9281472 0.2224779 0.8583294 0.2515351 0.8616549 0.2515351 0.9314727</float_array>
+          <float_array id="mesh1513493504_044-mesh-map-0-array" count="12">0 6.13577e-7 1 0.9999994 2.16528e-7 1 0 6.13577e-7 0.9999997 0 1 0.9999994</float_array>
           <technique_common>
             <accessor source="#mesh1513493504_044-mesh-map-0-array" count="6" stride="2">
               <param name="S" type="float"/>
@@ -1642,7 +1642,7 @@
           </technique_common>
         </source>
         <source id="mesh1513493504_044-mesh-map-1">
-          <float_array id="mesh1513493504_044-mesh-map-1-array" count="12">0.2224779 0.8583294 0.2515351 0.9314727 0.2224779 0.9281472 0.2224779 0.8583294 0.2515351 0.8616549 0.2515351 0.9314727</float_array>
+          <float_array id="mesh1513493504_044-mesh-map-1-array" count="12">0.9999994 0 5.96046e-7 1 0 1.78814e-7 0.9999994 0 1 0.9999998 5.96046e-7 1</float_array>
           <technique_common>
             <accessor source="#mesh1513493504_044-mesh-map-1-array" count="6" stride="2">
               <param name="S" type="float"/>
@@ -2272,10 +2272,7 @@
         <instance_geometry url="#mesh1513493504_044-mesh" name="barBanner">
           <bind_material>
             <technique_common>
-              <instance_material symbol="_-material" target="#_-material">
-                <bind_vertex_input semantic="Lightmap" input_semantic="TEXCOORD" input_set="0"/>
-                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="1"/>
-              </instance_material>
+              <instance_material symbol="_-material" target="#_-material"/>
             </technique_common>
           </bind_material>
         </instance_geometry>
