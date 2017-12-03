@@ -1,15 +1,5 @@
 # Blender MTL File: 'objects.blend'
-# Material Count: 23
-
-newmtl barBanner
-Ns 94.117647
-Ka 1.000000 1.000000 1.000000
-Kd 0.640000 0.640000 0.640000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.000000
-d 1.000000
-illum 2
+# Material Count: 28
 
 newmtl mat12
 Ns 94.117647
@@ -41,7 +31,29 @@ Ni 1.000000
 d 1.000000
 illum 2
 
+newmtl mat15_gold.jpg
+Ns 94.117647
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd bar\silver.jpg
+
 newmtl mat17
+Ns 94.117647
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd bar\silver.jpg
+
+newmtl mat17_NONE
 Ns 94.117647
 Ka 1.000000 1.000000 1.000000
 Kd 0.270000 0.350000 0.390000
@@ -80,7 +92,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd bed\whiteWood.jpg
+map_Kd bar\silver.jpg
 
 newmtl mat21_NONE
 Ns 94.117647
@@ -92,7 +104,7 @@ Ni 1.000000
 d 1.000000
 illum 2
 
-newmtl mat21_gold.jpg
+newmtl mat21_bookshelf.jpg
 Ns 94.117647
 Ka 1.000000 1.000000 1.000000
 Kd 1.000000 1.000000 1.000000
@@ -101,7 +113,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd bar\silver.jpg
+map_Kd bed\whiteWood.jpg
 
 newmtl mat21_shelves.jpg
 Ns 94.117647
@@ -124,6 +136,17 @@ Ni 1.000000
 d 1.000000
 illum 2
 
+newmtl mat22_gold.jpg
+Ns 94.117647
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd bar\silver.jpg
+
 newmtl mat23
 Ns 94.117647
 Ka 1.000000 1.000000 1.000000
@@ -133,6 +156,17 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
+
+newmtl mat23_gold.jpg
+Ns 94.117647
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd bar\silver.jpg
 
 newmtl mat24
 Ns 300.000000
@@ -167,6 +201,17 @@ illum 2
 newmtl mat7
 Ns 94.117647
 Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd bed\pinkWood.jpg
+
+newmtl mat7_NONE
+Ns 94.117647
+Ka 1.000000 1.000000 1.000000
 Kd 0.940000 0.380000 0.570000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
@@ -185,6 +230,17 @@ d 1.000000
 illum 2
 map_Kd bed\whiteWood.jpg
 
+newmtl mat7_pinkMetal.jpg
+Ns 94.117647
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd bed\pinkMetal.jpg
+
 newmtl mat7_rugPink.jpg
 Ns 94.117647
 Ka 1.000000 1.000000 1.000000
@@ -196,7 +252,7 @@ d 1.000000
 illum 2
 map_Kd bed\rugPink.jpg
 
-newmtl mat7_shelves.jpg
+newmtl mat7_stoolSides.png
 Ns 94.117647
 Ka 1.000000 1.000000 1.000000
 Kd 1.000000 1.000000 1.000000
@@ -205,7 +261,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Kd bed\pinkWood.jpg
+map_Kd bar\stoolSides.png
 
 newmtl mat8
 Ns 94.117647
