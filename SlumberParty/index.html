@@ -2,27 +2,153 @@
 <html>
 <head>
   <title>House</title>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/84/three.js'></script>
+  <script src="https://aframe.io/releases/0.3.0/aframe.js"></script>
+  <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/84/three.js'></script> -->
   <script src="https://cdn.rawgit.com/mrdoob/three.js/r85/examples/js/loaders/ColladaLoader.js"></script>
   <script src='https://sdk.altvr.com/libs/altspace.js/2.6.1/altspace.min.js'></script>
   <script src="https://cdn.rawgit.com/NGenesis/altspacevr-behaviors/v0.8.1/js/altspaceutil.min.js"></script>
+  <script src="https://bengarfield.github.io/AltVR/GPoly/bake-vertex-light.js"></script>
+  <script>
+    AFRAME.registerComponent('texture-scroll', {
+      schema: {
+        x: {
+          type: 'number',
+          default: 0
+        },
+        y: {
+          type: 'number',
+          default: 0
+        }
+      },
+      init: function() {
+        var self = this;
+        //console.log(this.el.id, this.data);
+      },
+      tick: function() {
+        if (this.el.object3D.children[0].material.map) {
+          this.el.object3D.children[0].material.map.offset.x += this.data.x;
+          this.el.object3D.children[0].material.map.offset.y += this.data.y;
+        }
+      }
+    });
+    
+    AFRAME.registerComponent('avatar', {
+      schema: {
+        sid: {
+          type: 'string'
+        },
+        colors: {
+          type: 'src'
+        }
+      },
+      init: function() {
+        var self = this;
+          
+        var models = {
+          's-series-m01':  'https://bengarfield.github.io/AltVR/house/avatars/malesmall.obj',
+          's-series-f01':  'https://bengarfield.github.io/AltVR/house/avatars/femalesmall.obj',
+          'pod-classic':  'https://bengarfield.github.io/AltVR/house/avatars/podclassic.obj',
+          'rubenoid-male':  'https://bengarfield.github.io/AltVR/house/avatars/rubemalesmall.obj',
+          'rubenoid-female':  'https://bengarfield.github.io/AltVR/house/viv.obj',
+          'picture-frame':  'https://bengarfield.github.io/AltVR/house/frame.obj',
+          'bruce': 'https://bengarfield.github.io/AltVR/house/avatars/bruce.obj'
+        };
+        
+        var objects = {
+          model: {url: models[this.data.sid]},
+          tex: {url: this.data.colors}
+        };
+        UltimateLoader.load(objects).then(function(result){
+          var mesh = result[0].children[0].clone();
+          mesh.material = mesh.material.clone();
+          mesh.material.map = result[1];
+          self.el.setObject3D('mesh', mesh);
+          self.el.emit('object3dset', {type: 'mesh'});
+        });
+      }
+    });
+  </script>
 </head>
 <body>
+  <a-scene altspace='fullspace: true'>
+    <!-- <a-entity id='auzrea' position='-14.5 8.75 -22.8' rotation='0 90 0' scale='3 3 3' avatar='sid: s-series-f01; colors: url(https://bengarfield.github.io/AltVR/house/avatars/new/Auzrea.jpg)'></a-entity> -->
+    
+    <a-entity position='-2.08 12.1 -50.25' scale='6 6 6' n-layout-browser='url: https://video-jukebox.firebaseapp.com/; isEnclosure: false'></a-entity>
+    
+    <!-- <a-entity position='0 1 0' scale='1 1 1' n-layout-browser='url: https://jsbin.com/kakamaq; isEnclosure: true'></a-entity> -->
+    
+    <!-- <a-light type="point" position="5.67 16.37 -22.22" intensity="50">
+      <a-sphere radius='.2' color='yellow'></a-sphere>
+    </a-light> -->
+    
+    <!-- <a-entity position='0 0 40' rotation='0 180 0' n-portal='targetEvent: 803827030956179669'></a-entity> -->
+    
+    <a-entity id='portalTarget' position='0 4.7 15' rotation='0 180 0'>
+      <a-box position='0 0 0' scale='5 .1 5' opacity='0' n-box-collider='type: environment'></a-box>
+    </a-entity>
+    <a-entity id='portal' position='0 -100 0' n-portal='targetEntity: #portalTarget' n-skeleton-parent='part: head'></a-entity>
+    <a-entity position='10 0 0' n-portal='targetEntity: #portalTarget'></a-entity>
+
+    
+    <!-- <a-sky radius='500' src='https://bengarfield.github.io/AltVR/AZHouse/sky.jpg'></a-sky> -->
+    
+    <!-- <a-entity position='0 0 0' scale='500 500 500'>
+      <a-plane position='0 0 -.5' rotation='0 0 0' src='https://bengarfield.github.io/AltVR/AZHouse/sky/small/front.jpg'></a-plane>
+      <a-plane position='-.5 0 0' rotation='0 90 0' src='https://bengarfield.github.io/AltVR/AZHouse/sky/small/right.jpg'></a-plane>
+      <a-plane position='0 0 .5' rotation='0 180 0' src='https://bengarfield.github.io/AltVR/AZHouse/sky/small/back.jpg'></a-plane>
+      <a-plane position='.5 0 0' rotation='0 270 0' src='https://bengarfield.github.io/AltVR/AZHouse/sky/small/left.jpg'></a-plane>
+      <a-plane position='0 .5 0' rotation='90 0 0' src='https://bengarfield.github.io/AltVR/AZHouse/sky/small/up.jpg'></a-plane>
+      <a-plane position='0 -.5 0' rotation='-90 0 0' src='https://bengarfield.github.io/AltVR/AZHouse/sky/small/down.jpg'></a-plane>
+    </a-entity> -->
+
+    
+    <a-entity id='house' position='-.25 10.3 -16.75' scale='50 50 50'>
+      <!-- <a-entity id='stuff' obj-model='obj: url(https://bengarfield.github.io/AltVR/AZHouse/2/stuff.obj); mtl: url(https://bengarfield.github.io/AltVR/AZHouse/2/stuff.mtl)' n-mesh-collider='type: environment; convex: false' bake-vertex-light></a-entity> -->
+      <!-- <a-entity id='bar' position='0 0 0' obj-model='obj: url(https://bengarfield.github.io/AltVR/AZHouse/2/bar.obj); mtl: url(https://bengarfield.github.io/AltVR/AZHouse/2/bar.mtl)' n-mesh-collider='type: environment; convex: false' bake-vertex-light></a-entity> -->
+      <!-- <a-entity id='bed' position='0 .001 0' obj-model='obj: url(https://bengarfield.github.io/AltVR/AZHouse/2/rug.obj); mtl: url(https://bengarfield.github.io/AltVR/AZHouse/2/rug.mtl)' n-mesh-collider='type: environment; convex: false' bake-vertex-lights></a-entity> -->
+      <!-- <a-entity id='bed' obj-model='obj: url(https://bengarfield.github.io/AltVR/AZHouse/2/bedroom.obj); mtl: url(https://bengarfield.github.io/AltVR/AZHouse/2/bedroom.mtl)' n-mesh-collider='type: environment; convex: false' bake-vertex-light></a-entity> -->
+    </a-entity>
+    
+    <a-entity id='offset' position='-1.3 -.15 -.9'>
+      <a-plane id='pool' position='0 4.5 -65.9' rotation='-90 0 0' scale='21.5 10.5 1' material='src:url(https://bengarfield.github.io/AltVR/AZHouse/waterPink.jpg); repeat: 1.5 0.5' opacity='.8' side='double' altspace-cursor-collider='enabled: false' texture-scroll='x: .0001; y: -.00003'></a-plane>
+
+      <a-plane id='hottub' position='-20.7 5.8 -66.1' rotation='-90 0 0' scale='6.5 6 1' material='src:url(https://bengarfield.github.io/AltVR/AZHouse/water.jpg); repeat: 0.99 0.99' opacity='.8' side='double' altspace-cursor-collider='enabled: false' texture-scroll='x: .0001; y: -.00003'></a-plane>
+      <a-entity id='steam' position='-20.7 3 -66.1' n-object='res:effects/steam'></a-entity>
+      
+      <a-entity id='smoke' position='-16.65 25 -28' n-object='res:effects/smoke'></a-entity>
+
+      <a-entity position='.37 3.9 3.56'>
+        <a-circle id='fountainbottom' position='-11.2 1.45 -7.4' rotation='-90 0 0' radius='4' material='src:url(https://bengarfield.github.io/AltVR/AZHouse/waterPink.jpg); repeat: 0.9 0.9' opacity='.8' texture-scroll='x: .0001; y: -.0001'></a-circle>
+        <a-plane id='fountaintop' position='-11.2 2.45 -7.5' rotation='-90 0 0' scale='3.1 3.1 1' material='src:url(https://bengarfield.github.io/AltVR/AZHouse/waterPink.jpg); repeat: 0.5 0.5' opacity='.8' texture-scroll='x: .0001; y: -.0001'></a-plane>
+        <a-circle id='fountain2bottom' position='11.8 1.45 -7.5' rotation='-90 0 0' radius='4' material='src:url(https://bengarfield.github.io/AltVR/AZHouse/water.jpg); repeat: 0.901 0.901' opacity='.8' texture-scroll='x: .0001; y: -.0001'></a-circle>
+        <a-plane id='fountain2top' position='11.8 2.45 -7.5' rotation='-90 0 0' scale='3.1 3.1 1' material='src:url(https://bengarfield.github.io/AltVR/AZHouse/water.jpg); repeat: 0.501 0.501' opacity='.8' texture-scroll='x: .0001; y: -.0001'></a-plane>
+      </a-entity>
+
+      <!-- secret room -->
+
+      <a-box id='button' position='-16.3 6.5 -25.9' scale='.1 .1 .1' color='blue'></a-box>
+      <a-entity id='roomPortalTarget' position='-16 15.5 -28.4' rotation='0 90 0'></a-entity>  
+    </a-entity>
+    
+    <a-entity id='roomPortal' position='0 -100 0' n-portal='targetEntity: #roomPortalTarget' n-skeleton-parent='part: head'></a-entity>
+  </a-scene>
 <script>
-  var sim = new altspace.utilities.Simulation();
-  sim.camera.position.set(0, 1.5, 5);
-  if(altspace.inClient){
-    altspace.getEnclosure().then(function(enc){
-      sim.scene.scale.setScalar(enc.pixelsPerMeter);
-    });
-  }
+  // var sim = new altspace.utilities.Simulation();
+  // sim.camera.position.set(0, 1.5, 5);
+  // if(altspace.inClient){
+  //   altspace.getEnclosure().then(function(enc){
+  //     sim.scene.scale.setScalar(enc.pixelsPerMeter);
+  //   });
+  // }
+  var scene = document.querySelector('a-scene').object3D;
+  console.log(scene);
   var model = null, lightmap = null;
   // load model
   var gltfLoader = new THREE.ColladaLoader();
   gltfLoader.load('house.dae',
     function(result){
       console.log(result)
-      sim.scene.add(result.scene);
+      house.object3D.add(result.scene);
       model = result.scene;
       model.addBehaviors(
         new altspaceutil.behaviors.NativeComponent('n-mesh-collider', { convex: false, type: 'environment' })
@@ -34,58 +160,143 @@
       console.error(err);
     }
   );
-  // load texture
-  // var txLoader = new THREE.TextureLoader();
-  // txLoader.load('lightmaps/grassLM.png', function(tex){
-  //   // gltf models need this field to be false
-  //   // GLTFLoader does it for the diffuse texture automatically
-  //   //tex.flipY = false;
-  //   lightmap = tex;
-  //   loadingDone();
-  // });
-  // model and texture loaded, start mapping
+
   function loadingDone()
   {
     if( !model  ) return;
-    model.position.setY(5.5);
-    model.position.setZ(-30);
+    
+    portal.setAttribute('position', '0 0 0');
+    setTimeout(function(){
+      portal.setAttribute('position', '0 -100 0');
+    }, 1000);
+
+    //model.position.setY(5.5);
+    //model.position.setZ(-30);
     model.rotateX(-Math.PI/2);
-    model.scale.setScalar(50);
+    //model.scale.setScalar(50);
     //var suzanne = model.getObjectByName('Suzanne');
     //suzanne.children[0].material.lightMap = lightmap;
     for (var i = 0; i < model.children.length; i++) {
       //console.log(model.children[i]);
-      console.log(model.children[i].name);
+      //console.log(model.children[i].name);
       model.children[i].children[0].material = model.children[i].children[0].material.clone();
 
       switch (model.children[i].name) {
-        case 'grass':
-          applyTexttures(model.children[i].children[0], 'grass.jpg', 20, 'grassLM.png', 1);
-          break;
         case 'walls':
-          applyTexttures(model.children[i].children[0], 'brick.png', 20, 'wallsLM.png', 1);
+          applyTexttures(model.children[i].children[0], 'brick.png', 20, 'combinedLight.png', 1);
           break;
         case 'foundation':
-          applyTexttures(model.children[i].children[0], 'whiteBrick.jpg', 60, 'foundationLM.png', 1);
+          applyTexttures(model.children[i].children[0], 'whiteBrick.jpg', 180, 'combinedLight.png', 1);
           break;
         case 'porch':
-          applyTexttures(model.children[i].children[0], 'marble.jpg', 8, 'porchLM.png', 1);
+          applyTexttures(model.children[i].children[0], 'marble.jpg', 40, 'combinedLight.png', 1);
           break;
         case 'pillars':
-          applyTexttures(model.children[i].children[0], 'roofFlat.jpg', 2, 'pillarsLM.png', 1);
+          applyTexttures(model.children[i].children[0], 'roofFlat.jpg', 20, 'combinedLight.png', 1);
           model.children[i].children[0].material.color.set(new THREE.Color(.5,.5,.5));
           break;
         case 'stairs':
-          applyTexttures(model.children[i].children[0], 'pinkVelvet.jpg', 5, 'stairsLM.png', 1);
+          applyTexttures(model.children[i].children[0], 'pinkVelvet.jpg', 50, 'combinedLight.png', 1);
           break;
         case 'redCarpet':
-          applyTexttures(model.children[i].children[0], 'redCarpet.jpg', 5, 'redcarpetLM.png', 1);
+          applyTexttures(model.children[i].children[0], 'redCarpet.jpg', 60, 'combinedLight.png', 1);
           break;
         case 'fountain':
-          applyTexttures(model.children[i].children[0], 'pinkVelvet.jpg', 5, 'fountainLM.png', 1);
+          applyTexttures(model.children[i].children[0], 'pinkVelvet.jpg', 50, 'combinedLight.png', 1);
           break;
         case 'fountainInner':
-          applyTexttures(model.children[i].children[0], 'brick.png', 5, 'fountainInnerLM.png', 1);
+          applyTexttures(model.children[i].children[0], 'brick.png', 25, 'combinedLight.png', 1);
+          break;
+        case 'woodFloor':
+          applyTexttures(model.children[i].children[0], 'woodFLoor.jpg', 20, 'combinedLight.png', 1.3);
+          break;
+        case 'hall':
+          applyTexttures(model.children[i].children[0], 'hallWalls.jpg', 50, 'combinedLight.png', 1);
+          break;
+        case 'stageRoomWalls':
+          applyTexttures(model.children[i].children[0], 'pinkPearloid.jpg', 30, 'combinedLight.png', 1);
+          break;
+        case 'stage':
+          applyTexttures(model.children[i].children[0], 'stands.jpg', 50, 'combinedLight.png', 1);
+          break;
+        case 'roofTiles':
+          applyTexttures(model.children[i].children[0], 'roof.jpg', 50, 'combinedLight.png', 1);
+          break;
+        case 'roofFlat':
+          applyTexttures(model.children[i].children[0], 'roofFlat.jpg', 50, 'combinedLight.png', 1);
+          model.children[i].children[0].material.color.set(new THREE.Color(.5,.5,.5));
+          break;
+        case 'roofBottom':
+          applyTexttures(model.children[i].children[0], 'whiteConcrete.jpg', 50, 'combinedLight.png', 1.1);
+          break;
+        case 'roofFront':
+          applyTexttures(model.children[i].children[0], 'glitter.jpg', 50, 'combinedLight.png', 1);
+          break;
+        case 'bedroomWalls':
+          applyTexttures(model.children[i].children[0], 'bedroom.jpg', 400, 'combinedLight.png', 1);
+          console.log(model.children[i].children[0]);
+          break;
+        case 'bedroomFloor':
+          applyTexttures(model.children[i].children[0], 'bedroomFloor.jpg', 100, 'combinedLight.png', 1);
+          break;
+        case 'bedroomCeiling':
+          applyTexttures(model.children[i].children[0], 'ceilingBed.jpg', 60, 'combinedLight.png', 1);
+          break;
+        case 'ceiling':
+          applyTexttures(model.children[i].children[0], 'ceiling.jpg', 60, 'combinedLight.png', 1);
+          break;
+        case 'barWalls':
+          applyTexttures(model.children[i].children[0], 'barWalls.jpg', 60, 'combinedLight.png', 1);
+          break;
+        case 'barBanner':
+          applyTexttures(model.children[i].children[0], 'barBanner.png', 1, 'combinedLight.png', 0);
+          break;
+        case 'deckTop':
+          applyTexttures(model.children[i].children[0], 'deckSurface.jpg', 60, 'combinedLight.png', 1);
+          break;
+        case 'deckLegs':
+          applyTexttures(model.children[i].children[0], 'deckLegs.png', 60, 'combinedLight.png', 1);
+          break;
+        case 'deckStairs':
+          applyTexttures(model.children[i].children[0], 'deckStairs.jpg', 60, 'combinedLight.png', 1);
+          break;
+        case 'deckStairsSides':
+          applyTexttures(model.children[i].children[0], 'deckLegs.png', 60, 'combinedLight.png', 1);
+          break;
+
+
+
+        case 'pool':
+          applyTexttures(model.children[i].children[0], 'hottub.jpg', 40, 'combinedLight.png', 1);
+          break;
+        case 'poolTiles':
+          applyTexttures(model.children[i].children[0], 'poolWalls.jpg', 60, 'combinedLight.png', 1);
+          break;
+        case 'hottubSteps':
+          applyTexttures(model.children[i].children[0], 'woodStairs.jpg', 60, 'combinedLight.png', 1);
+          break;
+
+        case 'secretRoomWalls':
+          applyTexttures(model.children[i].children[0], 'hottub.jpg', 40, 'combinedLight.png', 0);
+          break;
+        case 'secretRoomFloor':
+          applyTexttures(model.children[i].children[0], 'hottub.jpg', 40, 'combinedLight.png', 0);
+          break;
+        case 'secretRoomCeiling':
+          applyTexttures(model.children[i].children[0], 'hottub.jpg', 40, 'combinedLight.png', 0);
+          break;
+
+
+        case 'grass':
+          applyTexttures(model.children[i].children[0], 'grass.jpg', 60, 'lightGround.png', 1);
+          break;
+        case 'ground':
+          applyTexttures(model.children[i].children[0], 'groundTiles.jpg', 40, 'lightGround.png', 1);
+          break;
+        case 'windows':
+          console.log(model.children[i]);
+          model.children[i].children[0].material.transparent = true;
+          model.children[i].children[0].material.opacity = .1;
           break;
       }
 
@@ -95,11 +306,27 @@
       mesh.material.map = THREE.ImageUtils.loadTexture('textures/' + texture);
       mesh.material.map.wrapS = mesh.material.map.wrapT = THREE.RepeatWrapping;
       mesh.material.map.repeat.set(wrap, wrap);
-      mesh.material.lightMap = THREE.ImageUtils.loadTexture('lightmaps/512/' + lightmap);
+      mesh.material.lightMap = THREE.ImageUtils.loadTexture(lightmap);
       mesh.material.lightMapIntensity = i;
       mesh.material.color.set(new THREE.Color(1,1,1));
     }
   }
+
+  // house.addEventListener('model-loaded', function(){
+  //   console.log('Loaded');
+  //   portal.setAttribute('position', '0 0 0');
+  //   setTimeout(function(){
+  //     portal.setAttribute('position', '0 -100 0');
+  //   }, 1000);
+  // });
+  
+  button.addEventListener('mouseup', function(){
+    console.log('Room');
+    roomPortal.setAttribute('position', '0 0 0');
+    setTimeout(function(){
+      roomPortal.setAttribute('position', '0 -100 0');
+    }, 100);
+  });
 </script>
 </body>
 </html>
