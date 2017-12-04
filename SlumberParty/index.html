@@ -131,6 +131,8 @@
       </a-entity>
 
       <a-box id='button' position='-16.3 -100 -25.9' scale='.1 .1 .1' color='blue'></a-box>
+      <a-box id='collider' position='.8 15.2 -30' scale='7.5 1 .1' opacity='0' n-box-collider='type: environment'></a-box>
+      <a-box id='panel' position='3.8 16.4 -28.5' scale='.1 .5 1' color='#666'></a-box>
       <a-entity id='roomPortalTarget' position='-16 15.5 -28.4' rotation='0 90 0'></a-entity>  
     </a-entity>
     
@@ -478,10 +480,10 @@
     }
 
     function applyTexttures(mesh, texture, wrap, lightmap, i) {
-      mesh.material.map = THREE.ImageUtils.loadTexture('https://bengarfield.github.io/AltVR/SlumberParty/textures/' + texture);
+      mesh.material.map = THREE.ImageUtils.loadTexture('textures/' + texture);
       mesh.material.map.wrapS = mesh.material.map.wrapT = THREE.RepeatWrapping;
       mesh.material.map.repeat.set(wrap, wrap);
-      mesh.material.lightMap = THREE.ImageUtils.loadTexture('https://bengarfield.github.io/AltVR/SlumberParty/' + lightmap);
+      mesh.material.lightMap = THREE.ImageUtils.loadTexture(lightmap);
       mesh.material.lightMapIntensity = i;
       mesh.material.color.set(new THREE.Color(1,1,1));
     }
