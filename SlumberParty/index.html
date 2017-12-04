@@ -46,7 +46,7 @@
   </script>
 </head>
 <body>
-  <a-scene altspace='fullspace: true'>
+  <a-scene altspace='fullspace: true' stync-system='author: BenG; app: SlumberParty; refUrl: https://altvr-apps.firebaseio.com/'>
     
     <a-entity position='-2.08 12.1 -50.25' scale='6 6 6' n-layout-browser='url: https://video-jukebox.firebaseapp.com/; isEnclosure: false'></a-entity>
     
@@ -272,18 +272,29 @@
                 </a-entity>
             </a-entity>
         </a-entity>
+
+    <!-- badges -->
+
+    <a-mixin id='badge' geometry='primitive: circle; radius: .038' position='-.1 .35 -.15' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
+    <a-mixin id='ring' geometry='primitive: ring; radius-outer: .04; radius-inner: .038' material='color: black; side: double' position='-.1 .35 -.15' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
+    
+    <a-mixin id='blue' material='color: blue; side: double'></a-mixin>
+    <a-mixin id='pink' material='color: #e512c9; side: double'></a-mixin>
     
   </a-scene>
 <script>
-  // var sim = new altspace.utilities.Simulation();
-  // sim.camera.position.set(0, 1.5, 5);
-  // if(altspace.inClient){
-  //   altspace.getEnclosure().then(function(enc){
-  //     sim.scene.scale.setScalar(enc.pixelsPerMeter);
-  //   });
-  // }
+  var scene = document.querySelector('a-scene');
+  scene.addEventListener('connected', function() {
+    altspace.getUser().then(function(user){
+      if (user.userId == '706584809928917156' || user.userId == '671263600316253029' || user.userId == '635719319472308908' || user.userId == '672823420869673861') {
+        scene.systems['sync-system'].instantiate('badge pink', scene);
+      } else if (user.userId == '582115151281389721' || user.userId == '734434534321291312') {
+        scene.systems['sync-system'].instantiate('badge blue', scene);
+      }
+    });
+  });
   var scene = document.querySelector('a-scene').object3D;
-  console.log(scene);
+  //console.log(scene);
   var model = null, lightmap = null;
   // load model
   var gltfLoader = new THREE.ColladaLoader();
