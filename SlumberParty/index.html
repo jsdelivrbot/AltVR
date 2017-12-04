@@ -31,6 +31,23 @@
         }
       }
     });
+    
+    AFRAME.registerComponent('avatar', {
+      schema: {
+        type: 'src'
+      },
+      init: function() {
+        var self = this;
+        console.log(this.data);
+
+        this.el.addEventListener('model-loaded', function(){
+          console.log('loaded', self.data);
+          console.log(this);
+          console.log(self);
+          self.el.object3D.children[0].material.map = THREE.ImageUtils.loadTexture(self.data);
+        });
+      }
+    });
   </script>
 </head>
 <body>
@@ -75,13 +92,13 @@
     <a-asset id='f01' src='https://bengarfield.github.io/AltVR/house/avatars/femalesmall.obj'></a-asset>
     <a-asset id='m01' src='https://bengarfield.github.io/AltVR/house/avatars/malesmall.obj'></a-asset>
 
-    <a-entity id='auzrea' position='-4.7 8.85 -23.9' rotation='0 -90 0' scale='4 4 4' obj-model='obj: #f01'></a-entity>
-    <a-entity id='megan' position='-4.7 9.9 -24.4' rotation='0 -90 0' scale='3 3 3' obj-model='obj: #f01'></a-entity>
-    <a-entity id='tahla' position='-4.7 9.9 -23.9' rotation='0 -90 0' scale='3 3 3' obj-model='obj: #f01'></a-entity>
-    <a-entity id='ann' position='-4.7 9.9 -23.4' rotation='0 -90 0' scale='3 3 3' obj-model='obj: #f01'></a-entity>
-    <a-entity id='ben' position='-4.7 8 -24.4' rotation='0 -90 0' scale='3 3 3' obj-model='obj: #m01'></a-entity>
-    <a-entity id='miyk' position='-4.7 8 -23.9' rotation='0 -90 0' scale='3 3 3' obj-model='obj: #m01'></a-entity>
-    <a-entity id='erock' position='-4.7 8 -23.4' rotation='0 -90 0' scale='3 3 3' obj-model='obj: #m01'></a-entity>
+    <a-entity id='auzrea' position='-4.7 8.85 -23.9' rotation='0 -90 0' scale='4 4 4' obj-model='obj: #f01' avatar='url(https://bengarfield.github.io/AltVR/house/avatars/new/Auzrea.jpg)'></a-entity>
+    <a-entity id='megan' position='-4.7 9.9 -24.4' rotation='0 -90 0' scale='3 3 3' obj-model='obj: #f01' avatar='url(https://bengarfield.github.io/AltVR/house/avatars/new/Megan.jpg)'></a-entity>
+    <a-entity id='tahla' position='-4.7 9.9 -23.9' rotation='0 -90 0' scale='3 3 3' obj-model='obj: #f01' avatar='url(https://bengarfield.github.io/AltVR/house/avatars/new/Tahla.jpg)'></a-entity>
+    <a-entity id='ann' position='-4.7 9.9 -23.4' rotation='0 -90 0' scale='3 3 3' obj-model='obj: #f01' avatar='url(https://bengarfield.github.io/AltVR/house/avatars/new/Ann.jpg)'></a-entity>
+    <a-entity id='ben' position='-4.7 8 -24.4' rotation='0 -90 0' scale='3 3 3' obj-model='obj: #m01' avatar='url(https://bengarfield.github.io/AltVR/house/ben.jpg)'></a-entity>
+    <a-entity id='miyk' position='-4.7 8 -23.9' rotation='0 -90 0' scale='3 3 3' obj-model='obj: #m01' avatar='url(https://bengarfield.github.io/AltVR/house/avatars/new/Miyk.jpg)'></a-entity>
+    <a-entity id='erock' position='-4.7 8 -23.4' rotation='0 -90 0' scale='3 3 3' obj-model='obj: #m01' avatar='url(https://bengarfield.github.io/AltVR/house/avatars/new/Erock.jpg)'></a-entity>
 
     <!-- quotes -->
     <a-plane id='quote1' position='8 12.5 -26.77' rotation='0 0 0' scale='6 2.3 1' src='https://bengarfield.github.io/AltVR/AZHouse/2/images/quotes/1.png' transparent='true'></a-plane>
@@ -489,28 +506,6 @@
     setTimeout(function(){
       roomPortal.setAttribute('position', '0 -100 0');
     }, 100);
-  });
-
-  auzrea.addEventListener('model-loaded', function(){
-    auzrea.object3D.children[0].children[0].material.map = THREE.ImageUtils.loadTexture('https://bengarfield.github.io/AltVR/house/avatars/new/Auzrea.jpg');
-  });
-  megan.addEventListener('model-loaded', function(){
-    megan.object3D.children[0].children[0].material.map = THREE.ImageUtils.loadTexture('https://bengarfield.github.io/AltVR/house/avatars/new/Megan.jpg');
-  });
-  tahla.addEventListener('model-loaded', function(){
-    //tahla.object3D.children[0].children[0].material.map = THREE.ImageUtils.loadTexture('https://bengarfield.github.io/AltVR/house/avatars/new/Tahla.jpg');
-  });
-  ann.addEventListener('model-loaded', function(){
-    ann.object3D.children[0].children[0].material.map = THREE.ImageUtils.loadTexture('https://bengarfield.github.io/AltVR/house/avatars/new/Ann.jpg');
-  });
-  ben.addEventListener('model-loaded', function(){
-    ben.object3D.children[0].children[0].material.map = THREE.ImageUtils.loadTexture('https://bengarfield.github.io/AltVR/house/ben.jpg');
-  });
-  miyk.addEventListener('model-loaded', function(){
-    miyk.object3D.children[0].children[0].material.map = THREE.ImageUtils.loadTexture('https://bengarfield.github.io/AltVR/house/avatars/new/Miyk.jpg');
-  });
-  erock.addEventListener('model-loaded', function(){
-    erock.object3D.children[0].children[0].material.map = THREE.ImageUtils.loadTexture('https://bengarfield.github.io/AltVR/house/avatars/new/Erock.jpg');
   });
 </script>
 </body>
