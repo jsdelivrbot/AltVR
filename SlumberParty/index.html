@@ -34,36 +34,13 @@
     
     AFRAME.registerComponent('avatar', {
       schema: {
-        sid: {
-          type: 'string'
-        },
-        colors: {
-          type: 'src'
-        }
+        type: 'src'
       },
       init: function() {
         var self = this;
-          
-        var models = {
-          's-series-m01':  'https://bengarfield.github.io/AltVR/house/avatars/malesmall.obj',
-          's-series-f01':  'https://bengarfield.github.io/AltVR/house/avatars/femalesmall.obj',
-          'pod-classic':  'https://bengarfield.github.io/AltVR/house/avatars/podclassic.obj',
-          'rubenoid-male':  'https://bengarfield.github.io/AltVR/house/avatars/rubemalesmall.obj',
-          'rubenoid-female':  'https://bengarfield.github.io/AltVR/house/viv.obj',
-          'picture-frame':  'https://bengarfield.github.io/AltVR/house/frame.obj',
-          'bruce': 'https://bengarfield.github.io/AltVR/house/avatars/bruce.obj'
-        };
         
-        var objects = {
-          model: {url: models[this.data.sid]},
-          tex: {url: this.data.colors}
-        };
-        UltimateLoader.load(objects).then(function(result){
-          var mesh = result[0].children[0].clone();
-          mesh.material = mesh.material.clone();
-          mesh.material.map = result[1];
-          self.el.setObject3D('mesh', mesh);
-          self.el.emit('object3dset', {type: 'mesh'});
+        self.el.addEventListener('model-loaded', function(){
+          self.el.object3D.children[0].children[0].material.map = THREE.ImageUtils.loadTexture(self.data);
         });
       }
     });
@@ -111,23 +88,23 @@
     <a-asset id='f01' src='https://bengarfield.github.io/AltVR/house/avatars/femalesmall.obj'></a-asset>
     <a-asset id='m01' src='https://bengarfield.github.io/AltVR/house/avatars/malesmall.obj'></a-asset>
 
-    <a-entity id='auzrea' position='-4.7 8.85 -23.9' rotation='0 -90 0' scale='4 4 4' obj-model='obj: #f01'></a-entity>
-    <a-entity id='megan' position='-4.7 9.9 -24.4' rotation='0 -90 0' scale='3 3 3' obj-model='obj: #f01' ></a-entity>
-    <a-entity id='tahla' position='-4.7 9.9 -23.9' rotation='0 -90 0' scale='3 3 3' obj-model='obj: #f01' ></a-entity>
-    <a-entity id='ann' position='-4.7 9.9 -23.4' rotation='0 -90 0' scale='3 3 3' obj-model='obj: #f01' ></a-entity>
-    <a-entity id='ben' position='-4.7 8 -24.4' rotation='0 -90 0' scale='3 3 3' obj-model='obj: #m01' ></a-entity>
-    <a-entity id='miyk' position='-4.7 8 -23.9' rotation='0 -90 0' scale='3 3 3' obj-model='obj: #m01' ></a-entity>
-    <a-entity id='erock' position='-4.7 8 -23.4' rotation='0 -90 0' scale='3 3 3' obj-model='obj: #m01' ></a-entity>
+    <a-entity id='auzrea' position='-4.7 8.85 -23.9' rotation='0 -90 0' scale='4 4 4' obj-model='#f01' avatar='url(https://bengarfield.github.io/AltVR/house/avatars/new/Auzrea.jpg)'></a-entity>
+    <a-entity id='megan' position='-4.7 9.9 -24.4' rotation='0 -90 0' scale='3 3 3' obj-model='#f01' avatar='url(https://bengarfield.github.io/AltVR/house/avatars/new/Megan.jpg)'></a-entity>
+    <a-entity id='tahla' position='-4.7 9.9 -23.9' rotation='0 -90 0' scale='3 3 3' obj-model='#f01' avatar='url(https://bengarfield.github.io/AltVR/house/avatars/new/Tahla.jpg)'></a-entity>
+    <a-entity id='ann' position='-4.7 9.9 -23.4' rotation='0 -90 0' scale='3 3 3' obj-model='#f01' avatar='url(https://bengarfield.github.io/AltVR/house/avatars/new/Ann.jpg)'></a-entity>
+    <a-entity id='ben' position='-4.7 8 -24.4' rotation='0 -90 0' scale='3 3 3' obj-model='#m01' avatar='url(https://bengarfield.github.io/AltVR/house/ben.jpg)'></a-entity>
+    <a-entity id='miyk' position='-4.7 8 -23.9' rotation='0 -90 0' scale='3 3 3' obj-model='#m01' avatar='url(https://bengarfield.github.io/AltVR/house/avatars/new/Miyk.jpg)'></a-entity>
+    <a-entity id='erock' position='-4.7 8 -23.4' rotation='0 -90 0' scale='3 3 3' obj-model='#m01' avatar='url(https://bengarfield.github.io/AltVR/house/avatars/new/Erock.jpg)'></a-entity>
 
     <!-- quotes -->
     <a-plane id='quote1' position='8 12.5 -26.77' rotation='0 0 0' scale='6 2.3 1' src='https://bengarfield.github.io/AltVR/AZHouse/2/images/quotes/1.png' transparent='true'></a-plane>
     <a-plane id='quote2' position='-5.8 10.5 -18.29' rotation='0 180 0' scale='2.25 1.1 1' src='https://bengarfield.github.io/AltVR/AZHouse/2/images/quotes/2.png' transparent='true'></a-plane>
-    <a-plane id='quote3' position='-7.95 11.5 -48.4' rotation='0 45 0' scale='3 1.5 1' src='https://bengarfield.github.io/AltVR/AZHouse/2/images/quotes/3.png' transparent='true'></a-plane>
-    <a-plane id='quote4' position='3.78 11.5 -48.4' rotation='0 -45 0' scale='3 1.5 1' src='https://bengarfield.github.io/AltVR/AZHouse/2/images/quotes/4.png' transparent='true'></a-plane>
+    <a-plane id='quote3' position='-7.95 11.5 -48.4' rotation='0 45 0' scale='5 2 1' src='https://bengarfield.github.io/AltVR/AZHouse/2/images/quotes/3.png' transparent='true'></a-plane>
+    <a-plane id='quote4' position='3.78 11.5 -48.4' rotation='0 -45 0' scale='5 2 1' src='https://bengarfield.github.io/AltVR/AZHouse/2/images/quotes/4.png' transparent='true'></a-plane>
     <a-plane id='quote5' position='-9 11.5 -26.78' scale='3 1.3 1' src='https://bengarfield.github.io/AltVR/AZHouse/2/images/quotes/5.png' transparent='true'></a-plane>
     <a-plane id='quote6' position='-1.5 16.75 -42.75' scale='6 2.3 1' src='https://bengarfield.github.io/AltVR/AZHouse/2/images/quotes/6.png' transparent='true'></a-plane>
     <a-plane id='quote7' position='-3.08 10.5 -26.5' rotation='0 90 0' scale='5 1.9 1' src='https://bengarfield.github.io/AltVR/AZHouse/2/images/quotes/7.png' transparent='true'></a-plane>
-    <a-plane id='quote8' position='12.34 11.5 -44.84' rotation='0 -45 0' scale='3 1.5 1' src='https://bengarfield.github.io/AltVR/AZHouse/2/images/quotes/8.png' transparent='true'></a-plane>
+    <a-plane id='quote8' position='12.34 11.5 -44.84' rotation='0 -45 0' scale='4 1.7 1' src='https://bengarfield.github.io/AltVR/AZHouse/2/images/quotes/8.png' transparent='true'></a-plane>
     <a-plane id='quote9' position='1.91 10.5 -28' rotation='0 -90 0' scale='5 1.9 1' src='https://bengarfield.github.io/AltVR/AZHouse/2/images/quotes/9.png' transparent='true'></a-plane>
         
     <a-plane id='beck1' position='-4.1 10 -19.25' rotation='0 -90 0' scale='1 1.3 1' src='https://bengarfield.github.io/AltVR/AZHouse/2/bed/beckham/1.jpg'></a-plane>
