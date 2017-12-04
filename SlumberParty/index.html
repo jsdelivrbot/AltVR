@@ -42,6 +42,8 @@
 
         this.el.addEventListener('model-loaded', function(){
           console.log('loaded', self.data);
+          console.log(this);
+          console.log(self);
           self.el.object3D.children[0].children[0].material.map = THREE.ImageUtils.loadTexture(self.data);
         });
       }
