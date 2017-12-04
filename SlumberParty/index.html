@@ -148,7 +148,7 @@
 
       <!-- secret room -->
 
-      <a-box id='button' position='-16.3 6.5 -25.9' scale='.1 .1 .1' color='blue'></a-box>
+      <a-box id='button' position='-16.3 -100 -25.9' scale='.1 .1 .1' color='blue'></a-box>
       <a-entity id='roomPortalTarget' position='-16 15.5 -28.4' rotation='0 90 0'></a-entity>  
     </a-entity>
     
@@ -319,6 +319,12 @@
     }
   );
   
+  altspace.getUser().then(function(user){
+    if (user.isModerator) {
+      button.setAttribute('position', '-16.3 6.5 -25.9');
+    }
+  });
+
   var loaded = false;
 
   altspace.getThreeJSTrackingSkeleton().then(function(skeleton){
