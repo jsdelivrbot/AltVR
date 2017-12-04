@@ -65,7 +65,7 @@
     
     <!-- <a-sky radius='500' src='https://bengarfield.github.io/AltVR/AZHouse/sky.jpg'></a-sky> -->
     
-    <a-entity position='0 0 0' scale='500 500 500'>
+    <a-entity rotation='0 215 0' scale='500 500 500'>
       <a-plane position='0 0 -.5' rotation='0 0 0' src='https://bengarfield.github.io/AltVR/AZHouse/sky/smaller/front.jpg'></a-plane>
       <a-plane position='-.5 0 0' rotation='0 90 0' src='https://bengarfield.github.io/AltVR/AZHouse/sky/smaller/right.jpg'></a-plane>
       <a-plane position='0 0 .5' rotation='0 180 0' src='https://bengarfield.github.io/AltVR/AZHouse/sky/smaller/back.jpg'></a-plane>
@@ -455,10 +455,10 @@
           applyTexttures(model.children[i].children[0], 'deckSurface.jpg', 60, 'lightGround.png', 1);
           break;
         case 'grass':
-          applyTexttures(model.children[i].children[0], 'grass.jpg', 60, 'lightGround.png', 1);
+          applyTexttures(model.children[i].children[0], 'grass.jpg', 60, 'lightGround.png', 0.9);
           break;
         case 'ground':
-          applyTexttures(model.children[i].children[0], 'groundTiles.jpg', 40, 'lightGround.png', 1);
+          applyTexttures(model.children[i].children[0], 'groundTiles.jpg', 40, 'lightGround.png', 0.9);
           break;
         case 'windows':
           console.log(model.children[i]);
