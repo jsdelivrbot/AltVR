@@ -398,7 +398,7 @@
           break;
         case 'bedroomWalls':
           applyTexttures(model.children[i].children[0], 'bedroom.jpg', 400, 'combinedLight.png', 1);
-          console.log(model.children[i].children[0]);
+          model.children[i].children[0].material.map.repeat.set(550,400);
           break;
         case 'bedroomFloor':
           applyTexttures(model.children[i].children[0], 'bedroomFloor.jpg', 100, 'combinedLight.png', 1);
