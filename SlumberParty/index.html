@@ -131,6 +131,7 @@
       </a-entity>
 
       <a-box id='button' position='-16.3 -100 -25.9' scale='.1 .1 .1' color='blue'></a-box>
+      <a-box id='exitButton' position='3.8 16.5 -27.5' scale='.1 .1 .1' color='red'></a-box>
       <a-box id='collider' position='.8 15.2 -30' scale='7.5 1 .1' opacity='0' n-box-collider='type: environment'></a-box>
       <a-box id='panel' position='3.8 16.4 -28.5' scale='.1 .5 1' color='#666'></a-box>
       <a-entity id='roomPortalTarget' position='-16 15.5 -28.4' rotation='0 90 0'></a-entity>  
@@ -509,11 +510,15 @@
   // });
   
   button.addEventListener('mouseup', function(){
-    console.log('Room');
+    //console.log('Room');
     roomPortal.setAttribute('position', '0 0 0');
     setTimeout(function(){
       roomPortal.setAttribute('position', '0 -100 0');
     }, 100);
+  });
+
+  exitButton.addEventListener('mouseup', function(){
+    sendUp();
   });
 </script>
 </body>
