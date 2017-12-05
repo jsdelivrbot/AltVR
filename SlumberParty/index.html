@@ -133,7 +133,11 @@
       <a-box id='button' position='-16.3 -100 -25.9' scale='.1 .1 .1' color='blue'></a-box>
       <a-box id='exitButton' position='3.8 16.5 -27.5' scale='.1 .1 .1' color='red'></a-box>
       <a-box id='collider' position='.8 15.2 -30' scale='7.5 1 .1' opacity='0' n-box-collider='type: environment'></a-box>
-      <a-box id='panel' position='3.8 16.4 -28.5' scale='.1 .5 1' color='#666'></a-box>
+      <a-entity position='3.8 16.4 -28.5'>
+        <a-box id='panel' position='0 0 0' scale='.1 .5 1' color='#666'></a-box>
+
+        <a-box id='martiniButton' position='0 0 0' scale='.2 .1 .1' color='red'></a-box>
+      </a-entity>
       <a-entity id='roomPortalTarget' position='-16 15.5 -28.4' rotation='0 90 0'></a-entity>  
     </a-entity>
     
@@ -285,8 +289,13 @@
     <a-entity id='pillow1' position='-14.5 8.8 -23.3' rotation='-30 80 0' scale='.008 .008 .008' obj-model='obj: url(models/cushion.obj); mtl: url(models/cushion.mtl)' bake-vertex-light></a-entity>
     <a-entity id='pillow2' position='-14.5 8.8 -22.2' rotation='-25 95 0' scale='.008 .008 .008' obj-model='obj: url(models/cushion.obj); mtl: url(models/cushion.mtl)' bake-vertex-light></a-entity>
 
-    <a-entity id='martini1' position='-3.6 10.12 -44.4' scale='.5 .5 .5' obj-model='obj: url(models/martini_glass.obj); mtl: url(models/martini_glass.mtl)'></a-entity>
-    <a-entity id='martini2' position='-2.7 10.12 -45.1' scale='.5 .5 .5' obj-model='obj: url(models/martini_glass.obj); mtl: url(models/martini_glass.mtl)'></a-entity>
+    <a-entity id='martiniGlasses' position='0 -.4 0'>
+      <a-entity id='martini1' position='-3.6 10.12 -44.4' scale='.5 .5 .5' obj-model='obj: url(models/martini_glass.obj); mtl: url(models/martini_glass.mtl)'></a-entity>
+      <a-entity id='martini2' position='-2.7 10.12 -45.1' scale='.5 .5 .5' obj-model='obj: url(models/martini_glass.obj); mtl: url(models/martini_glass.mtl)'></a-entity>
+
+      <a-animation attribute='position' to='0 0 0' dur='5000' begin='raise'></a-animation>
+      <a-animation attribute='position' from='0 0 0' to='0 -.4 0' dur='5000' begin='lower'></a-animation>
+    </a-entity>
 
   </a-scene>
 <script>
@@ -297,6 +306,54 @@
         scene.systems['sync-system'].instantiate('badge pink', scene);
       } else if (user.userId == '582115151281389721' || user.userId == '734434534321291312') {
         scene.systems['sync-system'].instantiate('badge blue', scene);
+      }
+    });
+
+    var sync = scene.systems['sync-system'].connection;
+
+    sync.instance.child('martiniState').on('value', function(data){
+      if (data.val() != null) {
+        if (data.val() == 'raised') {
+          if (martiniState == undefined) {
+            martiniGlasses.setAttribute('position', '0 -.4 0');
+          } else {
+            martiniGlasses.emit('raise');
+          }
+          martiniButton.setAttribute('color', '#0f0');
+        } else if (martiniState != null) {
+          martiniGlasses.emit('lower');
+          martiniButton.setAttribute('color', 'red');
+        }
+        martiniState = data.val();
+      } else {
+        sync.instance.child('martiniState').set('lowered');
+      }
+    });
+
+    var martiniState = 'lowered';
+    altspace.getUser().then(function(user){
+      if (user.isModerator) {
+        button.setAttribute('position', '-16.3 6.5 -25.9');
+
+        button.addEventListener('mouseup', function(){
+          //console.log('Room');
+          roomPortal.setAttribute('position', '0 0 0');
+          setTimeout(function(){
+            roomPortal.setAttribute('position', '0 -100 0');
+          }, 100);
+        });
+
+        exitButton.addEventListener('mouseup', function(){
+          sendUp();
+        });
+
+        martiniButton.addEventListener('mouseup', function(){
+          if (martiniState == 'lowered') {
+            sync.instance.child('martiniState').set('raised');
+          } else {
+            sync.instance.child('martiniState').set('lowered');
+          }
+        });
       }
     });
   });
@@ -320,12 +377,7 @@
       console.error(err);
     }
   );
-  
-  altspace.getUser().then(function(user){
-    if (user.isModerator) {
-      button.setAttribute('position', '-16.3 6.5 -25.9');
-    }
-  });
+
 
   var loaded = false;
 
@@ -506,26 +558,6 @@
       mesh.material.color.set(new THREE.Color(1,1,1));
     }
   }
-
-  // house.addEventListener('model-loaded', function(){
-  //   console.log('Loaded');
-  //   portal.setAttribute('position', '0 0 0');
-  //   setTimeout(function(){
-  //     portal.setAttribute('position', '0 -100 0');
-  //   }, 1000);
-  // });
-  
-  button.addEventListener('mouseup', function(){
-    //console.log('Room');
-    roomPortal.setAttribute('position', '0 0 0');
-    setTimeout(function(){
-      roomPortal.setAttribute('position', '0 -100 0');
-    }, 100);
-  });
-
-  exitButton.addEventListener('mouseup', function(){
-    sendUp();
-  });
 </script>
 </body>
 </html>
