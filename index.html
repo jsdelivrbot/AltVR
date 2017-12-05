@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>House</title>
+  <script src="https://aframe.io/releases/0.3.0/aframe.js"></script>
+  <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/84/three.js'></script> -->
+  <script src="https://cdn.rawgit.com/mrdoob/three.js/r85/examples/js/loaders/ColladaLoader.js"></script>
+  <script src='https://sdk.altvr.com/libs/altspace.js/2.6.1/altspace.min.js'></script>
+  <script src="https://cdn.rawgit.com/NGenesis/altspacevr-behaviors/v0.8.1/js/altspaceutil.min.js"></script>
+  <script src="https://bengarfield.github.io/AltVR/GPoly/bake-vertex-light.js"></script>
+  <script>
+    AFRAME.registerComponent('texture-scroll', {
+      schema: {
+        x: {
+          type: 'number',
+          default: 0
+        },
+        y: {
+          type: 'number',
+          default: 0
+        }
+      },
+      init: function() {
+        var self = this;
+        //console.log(this.el.id, this.data);
+      },
+      tick: function() {
+        if (this.el.object3D.children[0].material.map) {
+          this.el.object3D.children[0].material.map.offset.x += this.data.x;
+          this.el.object3D.children[0].material.map.offset.y += this.data.y;
+        }
+      }
+    });
+    
+    AFRAME.registerComponent('avatar', {
+      schema: {
+        type: 'src'
+      },
+      init: function() {
+        var self = this;
+        this.el.addEventListener('model-loaded', function(){
+          self.el.object3D.children[0].children[0].material.map = THREE.ImageUtils.loadTexture(self.data);
+        });
+      }
+    });
+  </script>
+</head>
+<body>
+  <a-scene altspace='fullspace: true' sync-system='author: BenG; app: SlumberParty; refUrl: https://altvr-apps.firebaseio.com/'>
+    
+    <a-entity position='-2.08 12.1 -50.25' scale='6 6 6' n-layout-browser='https://docs.google.com/presentation/d/e/2PACX-1vSOmswWKBPflbXrysNIlrItF66YkCD9bhuhIEX1bDlMee1x2RPalcRob2LBMVvmgE2oW08a06cu84rA/pub?start=false&loop=false&delayms=60000&slide=id.p; isEnclosure: false'></a-entity>
+    <a-entity position='0 16.3 -27' rotation='0 180 0' scale='3 3 3' n-layout-browser='url: https://video-jukebox.firebaseapp.com/; isEnclosure: false'></a-entity>
+    <!-- <a-entity position='0 1 0' scale='1 1 1' n-layout-browser='url: https://jsbin.com/kakamaq; isEnclosure: true'></a-entity> -->
+    
+    <a-light type="point" position="-5.67 16.37 -22.22" intensity="50">
+      <!-- <a-sphere radius='.2' color='yellow'></a-sphere> -->
+    </a-light>
+        
+    <a-entity id='portalTarget' position='0 4.7 15' rotation='0 180 0'>
+      <a-box position='0 0 0' scale='5 .1 5' opacity='0' n-box-collider='type: environment'></a-box>
+    </a-entity>
+    <a-entity id='portal' position='0 -100 0' n-portal='targetEntity: #portalTarget' n-skeleton-parent='part: head'></a-entity>
+    <a-entity position='10 0 0' n-portal='targetEntity: #portalTarget'></a-entity>
+
+    
+    <!-- <a-sky radius='500' src='https://bengarfield.github.io/AltVR/AZHouse/sky.jpg'></a-sky> -->
+    
+    <a-entity rotation='0 215 0' scale='500 500 500'>
+      <a-plane position='0 0 -.5' rotation='0 0 0' src='https://bengarfield.github.io/AltVR/AZHouse/sky/smaller/front.jpg'></a-plane>
+      <a-plane position='-.5 0 0' rotation='0 90 0' src='https://bengarfield.github.io/AltVR/AZHouse/sky/smaller/right.jpg'></a-plane>
+      <a-plane position='0 0 .5' rotation='0 180 0' src='https://bengarfield.github.io/AltVR/AZHouse/sky/smaller/back.jpg'></a-plane>
+      <a-plane position='.5 0 0' rotation='0 270 0' src='https://bengarfield.github.io/AltVR/AZHouse/sky/smaller/left.jpg'></a-plane>
+      <a-plane position='0 .5 0' rotation='90 0 0' src='https://bengarfield.github.io/AltVR/AZHouse/sky/smaller/up.jpg'></a-plane>
+      <a-plane position='0 -.5 0' rotation='-90 0 0' src='https://bengarfield.github.io/AltVR/AZHouse/sky/smaller/down.jpg'></a-plane>
+    </a-entity>
+
+    
+    <a-entity id='house' position='-.25 10.3 -16.75' scale='50 50 50'>
+      <a-entity id='bar' position='0 0 0' obj-model='obj: url(https://bengarfield.github.io/AltVR/AZHouse/2/bar.obj); mtl: url(https://bengarfield.github.io/AltVR/AZHouse/2/bar.mtl)' n-mesh-collider='type: environment; convex: false' bake-vertex-light></a-entity>
+      <a-entity id='bed' obj-model='obj: url(https://bengarfield.github.io/AltVR/AZHouse/2/bedroom.obj); mtl: url(https://bengarfield.github.io/AltVR/AZHouse/2/bedroom.mtl)' n-mesh-collider='type: environment; convex: false' bake-vertex-light></a-entity>
+    </a-entity>
+    
+    <a-plane if='frontBanner' position='-.6 16 -5.27' scale='7 1.8 1' color='#888' src='https://bengarfield.github.io/AltVR/AZHouse/2/images/auzbanner2.jpg'></a-plane>
+    <!-- <a-plane id='banner' position='-1.5 16.75 -42.75' scale='7.6 3.5 1' src='https://bengarfield.github.io/AltVR/AZHouse/2/images/banner.jpg'></a-plane> -->
+    
+    <!-- dolls -->
+    <a-asset id='f01' src='https://bengarfield.github.io/AltVR/house/avatars/femalesmall.obj'></a-asset>
+    <a-asset id='m01' src='https://bengarfield.github.io/AltVR/house/avatars/malesmall.obj'></a-asset>
+
+    <a-entity id='auzrea' position='-4.9 8.85 -23.9' rotation='0 -90 0' scale='4 4 4' obj-model='obj: #f01' avatar='url(https://bengarfield.github.io/AltVR/house/avatars/new/Auzrea.jpg)'></a-entity>
+    <a-entity id='megan' position='-4.9 9.8 -24.4' rotation='0 -90 0' scale='3 3 3' obj-model='obj: #f01' avatar='url(https://bengarfield.github.io/AltVR/house/avatars/new/Megan.jpg)'></a-entity>
+    <a-entity id='tahla' position='-4.9 9.8 -23.9' rotation='0 -90 0' scale='3 3 3' obj-model='obj: #f01' avatar='url(https://bengarfield.github.io/AltVR/house/avatars/new/Tahla.jpg)'></a-entity>
+    <a-entity id='ann' position='-4.9 9.8 -23.4' rotation='0 -90 0' scale='3 3 3' obj-model='obj: #f01' avatar='url(https://bengarfield.github.io/AltVR/house/avatars/new/Ann.jpg)'></a-entity>
+    <a-entity id='ben' position='-4.9 7.9 -24.4' rotation='0 -90 0' scale='3 3 3' obj-model='obj: #m01' avatar='url(https://bengarfield.github.io/AltVR/house/ben.jpg)'></a-entity>
+    <a-entity id='miyk' position='-4.9 7.9 -23.9' rotation='0 -90 0' scale='3 3 3' obj-model='obj: #m01' avatar='url(https://bengarfield.github.io/AltVR/house/avatars/new/Miyk.jpg)'></a-entity>
+    <a-entity id='erock' position='-4.9 7.9 -23.4' rotation='0 -90 0' scale='3 3 3' obj-model='obj: #m01' avatar='url(https://bengarfield.github.io/AltVR/house/avatars/new/Erock.jpg)'></a-entity>
+
+    <!-- quotes -->
+    <a-plane id='quote1' position='8 12.5 -26.77' rotation='0 0 0' scale='6 2.3 1' src='https://bengarfield.github.io/AltVR/AZHouse/2/images/quotes/1.png' transparent='true'></a-plane>
+    <a-plane id='quote2' position='-5.8 10.5 -18.29' rotation='0 180 0' scale='2.25 1.1 1' src='https://bengarfield.github.io/AltVR/AZHouse/2/images/quotes/2.png' transparent='true'></a-plane>
+    <a-plane id='quote3' position='-7.95 11.5 -48.4' rotation='0 45 0' scale='5 2 1' src='https://bengarfield.github.io/AltVR/AZHouse/2/images/quotes/3.png' transparent='true'></a-plane>
+    <a-plane id='quote4' position='3.78 11.5 -48.4' rotation='0 -45 0' scale='5 2 1' src='https://bengarfield.github.io/AltVR/AZHouse/2/images/quotes/4.png' transparent='true'></a-plane>
+    <a-plane id='quote5' position='-9 11.5 -26.78' scale='3 1.3 1' src='https://bengarfield.github.io/AltVR/AZHouse/2/images/quotes/5.png' transparent='true'></a-plane>
+    <a-plane id='quote6' position='-1.5 16.75 -42.75' scale='6 2.3 1' src='https://bengarfield.github.io/AltVR/AZHouse/2/images/quotes/6.png' transparent='true'></a-plane>
+    <a-plane id='quote7' position='-3.08 10.5 -26.5' rotation='0 90 0' scale='5 1.9 1' src='https://bengarfield.github.io/AltVR/AZHouse/2/images/quotes/7.png' transparent='true'></a-plane>
+    <a-plane id='quote8' position='12.34 11.5 -44.84' rotation='0 -45 0' scale='4 1.7 1' src='https://bengarfield.github.io/AltVR/AZHouse/2/images/quotes/8.png' transparent='true'></a-plane>
+    <a-plane id='quote9' position='1.91 10.5 -28' rotation='0 -90 0' scale='5 1.9 1' src='https://bengarfield.github.io/AltVR/AZHouse/2/images/quotes/9.png' transparent='true'></a-plane>
+        
+    <a-plane id='beck1' position='-4.1 10 -19.25' rotation='0 -90 0' scale='1 1.3 1' src='https://bengarfield.github.io/AltVR/AZHouse/2/bed/beckham/1.jpg'></a-plane>
+    <a-plane id='beck2' position='-4.1 12.1 -24' rotation='0 -90 0' scale='2 1.5 1' src='https://bengarfield.github.io/AltVR/AZHouse/2/bed/beckham/2.jpg'></a-plane>
+    <a-plane id='beck3' position='-15.05 10.4 -25.8' rotation='0 90 0' scale='1.2 1 1' src='https://bengarfield.github.io/AltVR/AZHouse/2/bed/beckham/3.jpg'></a-plane>
+    <a-plane id='beck4' position='-15.05 10.4 -19.6' rotation='0 90 0' scale='1.3 1.8 1' src='https://bengarfield.github.io/AltVR/AZHouse/2/bed/beckham/4.jpg'></a-plane>
+    
+    <a-plane id='deskBanner' position='-2.2 9.36 -43.92' scale='1.9 1 1' src='https://bengarfield.github.io/AltVR/AZHouse/2/deskBanner.jpg'></a-plane>
+    
+    <a-plane id='photoFrame' position='-9.99 9.02 -26.185' rotation='-11 18 0' scale='.265 .38 1' src='https://bengarfield.github.io/AltVR/AZHouse/2/bed/pics/1.jpg'></a-plane>
+    
+    <a-entity id='offset' position='-1.3 -.15 -.9'>
+      <a-plane id='pool' position='0 4.5 -65.9' rotation='-90 0 0' scale='21.5 10.5 1' material='src:url(https://bengarfield.github.io/AltVR/AZHouse/waterPink.jpg); repeat: 1.5 0.5' opacity='.8' side='double' altspace-cursor-collider='enabled: false' texture-scroll='x: .0001; y: -.00003'></a-plane>
+
+      <a-plane id='hottub' position='-20.7 5.8 -66.1' rotation='-90 0 0' scale='6.5 6 1' material='src:url(https://bengarfield.github.io/AltVR/AZHouse/water.jpg); repeat: 0.99 0.99' opacity='.8' side='double' altspace-cursor-collider='enabled: false' texture-scroll='x: .0001; y: -.00003'></a-plane>
+      <a-entity id='steam' position='-20.7 3 -66.1' n-object='res:effects/steam'></a-entity>
+      
+      <a-entity id='smoke' position='-16.65 25 -28' n-object='res:effects/smoke'></a-entity>
+
+      <a-entity position='.37 3.9 3.56'>
+        <a-circle id='fountainbottom' position='-11.2 1.45 -7.4' rotation='-90 0 0' radius='4' material='src:url(https://bengarfield.github.io/AltVR/AZHouse/waterPink.jpg); repeat: 0.9 0.9' opacity='.8' texture-scroll='x: .0001; y: -.0001'></a-circle>
+        <a-plane id='fountaintop' position='-11.2 2.45 -7.5' rotation='-90 0 0' scale='3.1 3.1 1' material='src:url(https://bengarfield.github.io/AltVR/AZHouse/waterPink.jpg); repeat: 0.5 0.5' opacity='.8' texture-scroll='x: .0001; y: -.0001'></a-plane>
+        <a-circle id='fountain2bottom' position='11.8 1.45 -7.5' rotation='-90 0 0' radius='4' material='src:url(https://bengarfield.github.io/AltVR/AZHouse/water.jpg); repeat: 0.901 0.901' opacity='.8' texture-scroll='x: .0001; y: -.0001'></a-circle>
+        <a-plane id='fountain2top' position='11.8 2.45 -7.5' rotation='-90 0 0' scale='3.1 3.1 1' material='src:url(https://bengarfield.github.io/AltVR/AZHouse/water.jpg); repeat: 0.501 0.501' opacity='.8' texture-scroll='x: .0001; y: -.0001'></a-plane>
+      </a-entity>
+
+      <a-box id='button' position='-16.3 -100 -25.9' scale='.1 .1 .1' color='blue'></a-box>
+      <a-box id='exitButton' position='3.8 16.5 -27.5' scale='.1 .1 .1' color='red'></a-box>
+      <a-box id='collider' position='.8 15.2 -30' scale='7.5 1 .1' opacity='0' n-box-collider='type: environment'></a-box>
+      <a-entity position='3.8 16.4 -28.5'>
+        <a-box id='panel' position='0 0 0' scale='.1 .5 1' color='#666'></a-box>
+
+        <a-box id='martiniButton' position='0 0 -.1' scale='.2 .1 .1' color='red'></a-box>
+        <a-box id='auzreaMartiniButton' position='0 0 .1' scale='.2 .1 .1' color='red'></a-box>
+      </a-entity>
+      <a-entity id='roomPortalTarget' position='-16 15.5 -28.4' rotation='0 90 0'></a-entity>  
+    </a-entity>
+    
+    <a-entity id='roomPortal' position='0 -100 0' n-portal='targetEntity: #roomPortalTarget' n-skeleton-parent='part: head'></a-entity>
+    
+    <!-- moving head light -->
+    <img id='transparent_gradient' src='https://bengarfield.github.io/AltVR/AZHouse/2/transparent_gradient.png'/>
+    <a-entity id='spotlights' position="-12 14.75 -13" rotation="0 0 0">
+        <a-entity position="0.75 0 0" rotation="0 0 0">
+            <a-box position="0 0.05 0" rotation="0 0 0" color="#222222" opacity="1" width="0.5" height="0.1" depth="0.5" n-box-collider="type: environment"></a-box>
+            <a-entity position="0 0.1 0" rotation="0 0 0">
+                <a-box position="0.2 0.3 0" rotation="0 0 0" color="#333333" opacity="1" width="0.1" height="0.4" depth="0.1" n-box-collider="type: environment"></a-box>
+                <a-box position="0 0.05 0" rotation="0 0 0" color="#333333" opacity="1" width="0.5" height="0.1" depth="0.1" n-box-collider="type: environment"></a-box>
+                <a-box position="-0.2 0.3 0" rotation="0 0 0" color="#333333" opacity="1" width="0.1" height="0.4" depth="0.1" n-box-collider="type: environment"></a-box>
+                <a-entity position="0 0.4 0" rotation="0 0 0">
+                    <a-cylinder position="0 0 0" rotation="0 0 0" color="#444444" opacity="1" radius="0.15" height="0.5" n-mesh-collider="type: environment; convex: false" ></a-cylinder>
+                    <a-entity position="0 0.25 0" rotation="0 0 0">
+                        <a-cone position="0 10 0" rotation="0 0 0" color="#FFFFFF" opacity="0.25" radius-bottom="0.15" radius-top="1.5" height="20" open-ended="true" material="src: #transparent_gradient; repeat: 1 1; side: double"></a-cone>
+                    </a-entity>
+                    <a-animation attribute="rotation" direction="alternate" from='-67.5 0 0' to='67.5 0 0' dur='10000' easeInOut="sine" repeat='indefinite'></a-animation>
+                </a-entity>
+                <a-animation attribute="rotation" direction="alternate" from='0 -180 0' to='0 180 0' dur='15000' easeInOut="sine" repeat='indefinite'></a-animation>
+            </a-entity>
+        </a-entity>
+        <a-entity position="0.75 0 0.75" rotation="0 0 0">
+            <a-box position="0 0.05 0" rotation="0 0 0" color="#222222" opacity="1" width="0.5" height="0.1" depth="0.5" n-box-collider="type: environment"></a-box>
+            <a-entity position="0 0.1 0" rotation="0 0 0">
+                <a-box position="0.2 0.3 0" rotation="0 0 0" color="#333333" opacity="1" width="0.1" height="0.4" depth="0.1" n-box-collider="type: environment"></a-box>
+                <a-box position="0 0.05 0" rotation="0 0 0" color="#333333" opacity="1" width="0.5" height="0.1" depth="0.1" n-box-collider="type: environment"></a-box>
+                <a-box position="-0.2 0.3 0" rotation="0 0 0" color="#333333" opacity="1" width="0.1" height="0.4" depth="0.1" n-box-collider="type: environment"></a-box>
+                <a-entity position="0 0.4 0" rotation="0 0 0">
+                    <a-cylinder position="0 0 0" rotation="0 0 0" color="#444444" opacity="1" radius="0.15" height="0.5" n-mesh-collider="type: environment; convex: false" ></a-cylinder>
+                    <a-entity position="0 0.25 0" rotation="0 0 0">
+                        <a-cone position="0 10 0" rotation="0 0 0" color="#FF88FF" opacity="0.25" radius-bottom="0.15" radius-top="1.5" height="20" open-ended="true" material="src: #transparent_gradient; repeat: 1 1; side: double"></a-cone>
+                    </a-entity>
+                    <a-animation attribute="rotation" direction="alternate" from='-67.5 0 0' to='67.5 0 0' dur='10000' easeInOut="sine" repeat='indefinite'></a-animation>
+                </a-entity>
+                <a-animation attribute="rotation" direction="alternate" from='0 180 0' to='0 -180 0' dur='15000' easeInOut="sine" repeat='indefinite'></a-animation>
+            </a-entity>
+        </a-entity>
+        <a-entity position="0 0 0.75" rotation="0 0 0">
+            <a-box position="0 0.05 0" rotation="0 0 0" color="#222222" opacity="1" width="0.5" height="0.1" depth="0.5" n-box-collider="type: environment"></a-box>
+            <a-entity position="0 0.1 0" rotation="0 0 0">
+                <a-box position="0.2 0.3 0" rotation="0 0 0" color="#333333" opacity="1" width="0.1" height="0.4" depth="0.1" n-box-collider="type: environment"></a-box>
+                <a-box position="0 0.05 0" rotation="0 0 0" color="#333333" opacity="1" width="0.5" height="0.1" depth="0.1" n-box-collider="type: environment"></a-box>
+                <a-box position="-0.2 0.3 0" rotation="0 0 0" color="#333333" opacity="1" width="0.1" height="0.4" depth="0.1" n-box-collider="type: environment"></a-box>
+                <a-entity position="0 0.4 0" rotation="0 0 0">
+                    <a-cylinder position="0 0 0" rotation="0 0 0" color="#444444" opacity="1" radius="0.15" height="0.5" n-mesh-collider="type: environment; convex: false" ></a-cylinder>
+                    <a-entity position="0 0.25 0" rotation="0 0 0">
+                        <a-cone position="0 10 0" rotation="0 0 0" color="#FFFFFF" opacity="0.25" radius-bottom="0.15" radius-top="1.5" height="20" open-ended="true" material="src: #transparent_gradient; repeat: 1 1; side: double"></a-cone>
+                    </a-entity>
+                    <a-animation attribute="rotation" direction="alternate" from='67.5 0 0' to='-67.5 0 0' dur='10000' easeInOut="sine" repeat='indefinite'></a-animation>
+                </a-entity>
+                <a-animation attribute="rotation" direction="alternate" from='0 -180 0' to='0 180 0' dur='15000' easeInOut="sine" repeat='indefinite'></a-animation>
+            </a-entity>
+        </a-entity>
+        <a-entity position="0 0 0" rotation="0 0 0">
+            <a-box position="0 0.05 0" rotation="0 0 0" color="#222222" opacity="1" width="0.5" height="0.1" depth="0.5" n-box-collider="type: environment"></a-box>
+            <a-entity position="0 0.1 0" rotation="0 0 0">
+                <a-box position="0.2 0.3 0" rotation="0 0 0" color="#333333" opacity="1" width="0.1" height="0.4" depth="0.1" n-box-collider="type: environment"></a-box>
+                <a-box position="0 0.05 0" rotation="0 0 0" color="#333333" opacity="1" width="0.5" height="0.1" depth="0.1" n-box-collider="type: environment"></a-box>
+                <a-box position="-0.2 0.3 0" rotation="0 0 0" color="#333333" opacity="1" width="0.1" height="0.4" depth="0.1" n-box-collider="type: environment"></a-box>
+                <a-entity position="0 0.4 0" rotation="0 0 0">
+                    <a-cylinder position="0 0 0" rotation="0 0 0" color="#444444" opacity="1" radius="0.15" height="0.5" n-mesh-collider="type: environment; convex: false" ></a-cylinder>
+                    <a-entity position="0 0.25 0" rotation="0 0 0">
+                        <a-cone position="0 10 0" rotation="0 0 0" color="#FF88FF" opacity="0.25" radius-bottom="0.15" radius-top="1.5" height="20" open-ended="true" material="src: #transparent_gradient; repeat: 1 1; side: double"></a-cone>
+                    </a-entity>
+                    <a-animation attribute="rotation" direction="alternate" from='67.5 0 0' to='-67.5 0 0' dur='10000' easeInOut="sine" repeat='indefinite'></a-animation>
+                </a-entity>
+                <a-animation attribute="rotation" direction="alternate" from='0 180 0' to='0 -180 0' dur='15000' easeInOut="sine" repeat='indefinite'></a-animation>
+            </a-entity>
+        </a-entity>
+    </a-entity>
+    <a-entity id='spotlights' position="10.10 14.75 -13" rotation="0 0 0">
+            <a-entity position="0.75 0 0" rotation="0 0 0">
+                <a-box position="0 0.05 0" rotation="0 0 0" color="#222222" opacity="1" width="0.5" height="0.1" depth="0.5" n-box-collider="type: environment"></a-box>
+                <a-entity position="0 0.1 0" rotation="0 0 0">
+                    <a-box position="0.2 0.3 0" rotation="0 0 0" color="#333333" opacity="1" width="0.1" height="0.4" depth="0.1" n-box-collider="type: environment"></a-box>
+                    <a-box position="0 0.05 0" rotation="0 0 0" color="#333333" opacity="1" width="0.5" height="0.1" depth="0.1" n-box-collider="type: environment"></a-box>
+                    <a-box position="-0.2 0.3 0" rotation="0 0 0" color="#333333" opacity="1" width="0.1" height="0.4" depth="0.1" n-box-collider="type: environment"></a-box>
+                    <a-entity position="0 0.4 0" rotation="0 0 0">
+                        <a-cylinder position="0 0 0" rotation="0 0 0" color="#444444" opacity="1" radius="0.15" height="0.5" n-mesh-collider="type: environment; convex: false" ></a-cylinder>
+                        <a-entity position="0 0.25 0" rotation="0 0 0">
+                            <a-cone position="0 10 0" rotation="0 0 0" color="#FFFFFF" opacity="0.25" radius-bottom="0.15" radius-top="1.5" height="20" open-ended="true" material="src: #transparent_gradient; repeat: 1 1; side: double"></a-cone>
+                        </a-entity>
+                        <a-animation attribute="rotation" direction="alternate" from='-67.5 0 0' to='67.5 0 0' dur='10000' easeInOut="sine" repeat='indefinite'></a-animation>
+                    </a-entity>
+                    <a-animation attribute="rotation" direction="alternate" from='0 -180 0' to='0 180 0' dur='15000' easeInOut="sine" repeat='indefinite'></a-animation>
+                </a-entity>
+            </a-entity>
+            <a-entity position="0.75 0 0.75" rotation="0 0 0">
+                <a-box position="0 0.05 0" rotation="0 0 0" color="#222222" opacity="1" width="0.5" height="0.1" depth="0.5" n-box-collider="type: environment"></a-box>
+                <a-entity position="0 0.1 0" rotation="0 0 0">
+                    <a-box position="0.2 0.3 0" rotation="0 0 0" color="#333333" opacity="1" width="0.1" height="0.4" depth="0.1" n-box-collider="type: environment"></a-box>
+                    <a-box position="0 0.05 0" rotation="0 0 0" color="#333333" opacity="1" width="0.5" height="0.1" depth="0.1" n-box-collider="type: environment"></a-box>
+                    <a-box position="-0.2 0.3 0" rotation="0 0 0" color="#333333" opacity="1" width="0.1" height="0.4" depth="0.1" n-box-collider="type: environment"></a-box>
+                    <a-entity position="0 0.4 0" rotation="0 0 0">
+                        <a-cylinder position="0 0 0" rotation="0 0 0" color="#444444" opacity="1" radius="0.15" height="0.5" n-mesh-collider="type: environment; convex: false" ></a-cylinder>
+                        <a-entity position="0 0.25 0" rotation="0 0 0">
+                            <a-cone position="0 10 0" rotation="0 0 0" color="#FF88FF" opacity="0.25" radius-bottom="0.15" radius-top="1.5" height="20" open-ended="true" material="src: #transparent_gradient; repeat: 1 1; side: double"></a-cone>
+                        </a-entity>
+                        <a-animation attribute="rotation" direction="alternate" from='-67.5 0 0' to='67.5 0 0' dur='10000' easeInOut="sine" repeat='indefinite'></a-animation>
+                    </a-entity>
+                    <a-animation attribute="rotation" direction="alternate" from='0 180 0' to='0 -180 0' dur='15000' easeInOut="sine" repeat='indefinite'></a-animation>
+                </a-entity>
+            </a-entity>
+            <a-entity position="0 0 0.75" rotation="0 0 0">
+                <a-box position="0 0.05 0" rotation="0 0 0" color="#222222" opacity="1" width="0.5" height="0.1" depth="0.5" n-box-collider="type: environment"></a-box>
+                <a-entity position="0 0.1 0" rotation="0 0 0">
+                    <a-box position="0.2 0.3 0" rotation="0 0 0" color="#333333" opacity="1" width="0.1" height="0.4" depth="0.1" n-box-collider="type: environment"></a-box>
+                    <a-box position="0 0.05 0" rotation="0 0 0" color="#333333" opacity="1" width="0.5" height="0.1" depth="0.1" n-box-collider="type: environment"></a-box>
+                    <a-box position="-0.2 0.3 0" rotation="0 0 0" color="#333333" opacity="1" width="0.1" height="0.4" depth="0.1" n-box-collider="type: environment"></a-box>
+                    <a-entity position="0 0.4 0" rotation="0 0 0">
+                        <a-cylinder position="0 0 0" rotation="0 0 0" color="#444444" opacity="1" radius="0.15" height="0.5" n-mesh-collider="type: environment; convex: false" ></a-cylinder>
+                        <a-entity position="0 0.25 0" rotation="0 0 0">
+                            <a-cone position="0 10 0" rotation="0 0 0" color="#FFFFFF" opacity="0.25" radius-bottom="0.15" radius-top="1.5" height="20" open-ended="true" material="src: #transparent_gradient; repeat: 1 1; side: double"></a-cone>
+                        </a-entity>
+                        <a-animation attribute="rotation" direction="alternate" from='67.5 0 0' to='-67.5 0 0' dur='10000' easeInOut="sine" repeat='indefinite'></a-animation>
+                    </a-entity>
+                    <a-animation attribute="rotation" direction="alternate" from='0 -180 0' to='0 180 0' dur='15000' easeInOut="sine" repeat='indefinite'></a-animation>
+                </a-entity>
+            </a-entity>
+            <a-entity position="0 0 0" rotation="0 0 0">
+                <a-box position="0 0.05 0" rotation="0 0 0" color="#222222" opacity="1" width="0.5" height="0.1" depth="0.5" n-box-collider="type: environment"></a-box>
+                <a-entity position="0 0.1 0" rotation="0 0 0">
+                    <a-box position="0.2 0.3 0" rotation="0 0 0" color="#333333" opacity="1" width="0.1" height="0.4" depth="0.1" n-box-collider="type: environment"></a-box>
+                    <a-box position="0 0.05 0" rotation="0 0 0" color="#333333" opacity="1" width="0.5" height="0.1" depth="0.1" n-box-collider="type: environment"></a-box>
+                    <a-box position="-0.2 0.3 0" rotation="0 0 0" color="#333333" opacity="1" width="0.1" height="0.4" depth="0.1" n-box-collider="type: environment"></a-box>
+                    <a-entity position="0 0.4 0" rotation="0 0 0">
+                        <a-cylinder position="0 0 0" rotation="0 0 0" color="#444444" opacity="1" radius="0.15" height="0.5" n-mesh-collider="type: environment; convex: false" ></a-cylinder>
+                        <a-entity position="0 0.25 0" rotation="0 0 0">
+                            <a-cone position="0 10 0" rotation="0 0 0" color="#FF88FF" opacity="0.25" radius-bottom="0.15" radius-top="1.5" height="20" open-ended="true" material="src: #transparent_gradient; repeat: 1 1; side: double"></a-cone>
+                        </a-entity>
+                        <a-animation attribute="rotation" direction="alternate" from='67.5 0 0' to='-67.5 0 0' dur='10000' easeInOut="sine" repeat='indefinite'></a-animation>
+                    </a-entity>
+                    <a-animation attribute="rotation" direction="alternate" from='0 180 0' to='0 -180 0' dur='15000' easeInOut="sine" repeat='indefinite'></a-animation>
+                </a-entity>
+            </a-entity>
+        </a-entity>
+
+    <!-- badges -->
+
+    <a-mixin id='badge' geometry='primitive: circle; radius: .038' position='-.1 .35 -.15' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
+    <a-mixin id='ring' geometry='primitive: ring; radius-outer: .04; radius-inner: .038' material='color: black; side: double' position='-.1 .35 -.15' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
+    
+    <a-mixin id='blue' material='color: blue; side: double'></a-mixin>
+    <a-mixin id='pink' material='color: #e512c9; side: double'></a-mixin>
+
+    <a-entity id='pillow1' position='-14.5 8.8 -23.3' rotation='-30 80 0' scale='.008 .008 .008' obj-model='obj: url(models/cushion.obj); mtl: url(models/cushion.mtl)' bake-vertex-light></a-entity>
+    <a-entity id='pillow2' position='-14.5 8.8 -22.2' rotation='-25 95 0' scale='.008 .008 .008' obj-model='obj: url(models/cushion.obj); mtl: url(models/cushion.mtl)' bake-vertex-light></a-entity>
+
+    <a-entity id='martiniGlasses' position='0 -.4 0'>
+      <a-entity id='martini1' position='-3.6 10.12 -44.4' scale='.5 .5 .5' obj-model='obj: url(models/martini_glass.obj); mtl: url(models/martini_glass.mtl)'></a-entity>
+      <a-entity id='martini2' position='-1.5 10.12 -45' scale='.5 .5 .5' obj-model='obj: url(models/martini_glass.obj); mtl: url(models/martini_glass.mtl)'></a-entity>
+      <a-entity id='martini3' position='-.9 10.12 -44.5' scale='.5 .5 .5' obj-model='obj: url(models/martini_glass.obj); mtl: url(models/martini_glass.mtl)'></a-entity>
+
+      <a-animation attribute='position' to='0 0 0' dur='5000' begin='raise'></a-animation>
+      <a-animation attribute='position' from='0 0 0' to='0 -.4 0' dur='5000' begin='lower'></a-animation>
+    </a-entity>
+
+    <a-entity id='AuzreaGlass' position='0 -.53 0'>
+      <a-entity id='martini1' position='-2.7 10.2 -45.1' scale='.7 .7 .7' obj-model='obj: url(models/martini_glass.obj); mtl: url(models/martini_glass.mtl)'></a-entity>
+
+      <a-animation attribute='position' to='0 0 0' dur='5000' begin='raise'></a-animation>
+      <a-animation attribute='position' from='0 0 0' to='0 -.53 0' dur='5000' begin='lower'></a-animation>
+    </a-entity>
+
+  </a-scene>
+<script>
+  var scene = document.querySelector('a-scene');
+  scene.addEventListener('connected', function() {
+    altspace.getUser().then(function(user){
+      if (user.userId == '706584809928917156' || user.userId == '671263600316253029' || user.userId == '635719319472308908' || user.userId == '672823420869673861') {
+        scene.systems['sync-system'].instantiate('badge pink', scene);
+      } else if (user.userId == '582115151281389721' || user.userId == '734434534321291312') {
+        scene.systems['sync-system'].instantiate('badge blue', scene);
+      }
+    });
+
+    var sync = scene.systems['sync-system'].connection;
+
+    sync.instance.child('martiniState').on('value', function(data){
+      if (data.val() != null) {
+        if (data.val() == 'raised') {
+          if (martiniState == undefined) {
+            martiniGlasses.setAttribute('position', '0 -.4 0');
+          } else {
+            martiniGlasses.emit('raise');
+          }
+          martiniButton.setAttribute('color', '#0f0');
+        } else if (martiniState != null) {
+          martiniGlasses.emit('lower');
+          martiniButton.setAttribute('color', 'red');
+        }
+        martiniState = data.val();
+      } else {
+        sync.instance.child('martiniState').set('lowered');
+      }
+    });
+
+    sync.instance.child('auzreaMartiniState').on('value', function(data){
+      if (data.val() != null) {
+        if (data.val() == 'raised') {
+          if (auzreaMartiniState == undefined) {
+            AuzreaGlass.setAttribute('position', '0 -.53 0');
+          } else {
+            AuzreaGlass.emit('raise');
+          }
+          auzreaMartiniButton.setAttribute('color', '#0f0');
+        } else if (auzreaMartiniState != null) {
+          AuzreaGlass.emit('lower');
+          auzreaMartiniButton.setAttribute('color', 'red');
+        }
+        auzreaMartiniState = data.val();
+      } else {
+        sync.instance.child('auzreaMartiniState').set('lowered');
+      }
+    });
+
+    var martiniState = 'lowered';
+    var auzreaMartiniState = 'lowered';
+    altspace.getUser().then(function(user){
+      if (user.isModerator) {
+        button.setAttribute('position', '-16.3 6.5 -25.9');
+
+        button.addEventListener('mouseup', function(){
+          //console.log('Room');
+          roomPortal.setAttribute('position', '0 0 0');
+          setTimeout(function(){
+            roomPortal.setAttribute('position', '0 -100 0');
+          }, 100);
+        });
+
+        exitButton.addEventListener('mouseup', function(){
+          sendUp();
+        });
+
+        martiniButton.addEventListener('mouseup', function(){
+          if (martiniState == 'lowered') {
+            sync.instance.child('martiniState').set('raised');
+          } else {
+            sync.instance.child('martiniState').set('lowered');
+          }
+        });
+
+        auzreaMartiniButton.addEventListener('mouseup', function(){
+          if (auzreaMartiniState == 'lowered') {
+            sync.instance.child('auzreaMartiniState').set('raised');
+          } else {
+            sync.instance.child('auzreaMartiniState').set('lowered');
+          }
+        });
+      }
+    });
+  });
+  //var scene = document.querySelector('a-scene').object3D;
+  //console.log(scene);
+  var model = null, lightmap = null;
+  // load model
+  var gltfLoader = new THREE.ColladaLoader();
+  gltfLoader.load('https://bengarfield.github.io/AltVR/SlumberParty/house.dae',
+    function(result){
+      console.log(result)
+      house.object3D.add(result.scene);
+      model = result.scene;
+      model.addBehaviors(
+        new altspaceutil.behaviors.NativeComponent('n-mesh-collider', { convex: false, type: 'environment' })
+      );
+      loadingDone();
+    },
+    undefined,
+    function(err){
+      console.error(err);
+    }
+  );
+
+
+  var loaded = false;
+
+  altspace.getThreeJSTrackingSkeleton().then(function(skeleton){
+    console.log(skeleton);
+    var head = skeleton.getJoint('Head');
+    setInterval(function(){
+      if (loaded && head.position.y < 5 && ((head.position.x < -12.6 || head.position.x > 10.2) || (head.position.z < -71.1 || head.position.z > -61.5))) {
+        sendUp();
+      }
+    },1000);
+  });
+  
+  function sendUp(){
+    portal.setAttribute('position', '0 0 0');
+    setTimeout(function(){
+      portal.setAttribute('position', '0 -100 0');
+    }, 1000);
+  }
+
+  function loadingDone()
+  {
+    if( !model  ) return;
+    
+    console.log('Loaded');
+    sendUp();
+    loaded = true;
+
+    //model.position.setY(5.5);
+    //model.position.setZ(-30);
+    model.rotateX(-Math.PI/2);
+    //model.scale.setScalar(50);
+    //var suzanne = model.getObjectByName('Suzanne');
+    //suzanne.children[0].material.lightMap = lightmap;
+    for (var i = 0; i < model.children.length; i++) {
+      //console.log(model.children[i]);
+      //console.log(model.children[i].name);
+      model.children[i].children[0].material = model.children[i].children[0].material.clone();
+
+      switch (model.children[i].name) {
+        case 'walls':
+          applyTexttures(model.children[i].children[0], 'brick.png', 20, 'combinedLight.png', 1);
+          break;
+        case 'foundation':
+          applyTexttures(model.children[i].children[0], 'whiteBrick.jpg', 180, 'combinedLight.png', 1);
+          break;
+        case 'porch':
+          applyTexttures(model.children[i].children[0], 'marble.jpg', 40, 'combinedLight.png', 1);
+          break;
+        case 'pillars':
+          applyTexttures(model.children[i].children[0], 'roofFlat.jpg', 20, 'combinedLight.png', 1);
+          model.children[i].children[0].material.color.set(new THREE.Color(.5,.5,.5));
+          break;
+        case 'stairs':
+          applyTexttures(model.children[i].children[0], 'pinkVelvet.jpg', 50, 'combinedLight.png', 1);
+          break;
+        case 'redCarpet':
+          applyTexttures(model.children[i].children[0], 'redCarpet.jpg', 60, 'combinedLight.png', 1);
+          break;
+        case 'fountain':
+          applyTexttures(model.children[i].children[0], 'pinkVelvet.jpg', 50, 'combinedLight.png', 1);
+          break;
+        case 'fountainInner':
+          applyTexttures(model.children[i].children[0], 'brick.png', 25, 'combinedLight.png', 1);
+          break;
+        case 'woodFloor':
+          applyTexttures(model.children[i].children[0], 'woodFloor.jpg', 20, 'combinedLight.png', 1.1);
+          break;
+        case 'hall':
+          applyTexttures(model.children[i].children[0], 'hallWalls.jpg', 50, 'combinedLight.png', 1);
+          break;
+        case 'stageRoomWalls':
+          applyTexttures(model.children[i].children[0], 'pinkPearloid.jpg', 30, 'combinedLight.png', 1);
+          break;
+        case 'stage':
+          applyTexttures(model.children[i].children[0], 'stands.jpg', 50, 'combinedLight.png', 1);
+          break;
+        case 'roofTiles':
+          applyTexttures(model.children[i].children[0], 'roof.jpg', 50, 'combinedLight.png', 1);
+          break;
+        case 'roofFlat':
+          applyTexttures(model.children[i].children[0], 'roofFlat.jpg', 50, 'combinedLight.png', 1);
+          model.children[i].children[0].material.color.set(new THREE.Color(.5,.5,.5));
+          break;
+        case 'roofBottom':
+          applyTexttures(model.children[i].children[0], 'whiteConcrete.jpg', 50, 'combinedLight.png', 1);
+          break;
+        case 'roofFront':
+          applyTexttures(model.children[i].children[0], 'glitter.jpg', 50, 'combinedLight.png', 1);
+          break;
+        case 'bedroomWalls':
+          applyTexttures(model.children[i].children[0], 'bedroom.jpg', 400, 'combinedLight.png', 1);
+          model.children[i].children[0].material.map.repeat.set(550,400);
+          break;
+        case 'bedroomFloor':
+          applyTexttures(model.children[i].children[0], 'bedroomFloor.jpg', 100, 'combinedLight.png', 1);
+          break;
+        case 'bedroomCeiling':
+          applyTexttures(model.children[i].children[0], 'ceilingBed.jpg', 60, 'combinedLight.png', 1);
+          break;
+        case 'ceiling':
+          applyTexttures(model.children[i].children[0], 'ceiling.jpg', 60, 'combinedLight.png', 1);
+          break;
+        case 'barWalls':
+          applyTexttures(model.children[i].children[0], 'barWalls.jpg', 60, 'combinedLight.png', 1);
+          break;
+        case 'barBanner':
+          applyTexttures(model.children[i].children[0], 'barBanner.jpg', 1, 'combinedLight.png', 0);
+          break;
+        
+        case 'deckLegs':
+          applyTexttures(model.children[i].children[0], 'deckLegs.png', 60, 'combinedLight.png', 1);
+          break;
+        case 'deckStairs':
+          applyTexttures(model.children[i].children[0], 'deckStairs.jpg', 60, 'combinedLight.png', 1);
+          break;
+        case 'deckStairsSides':
+          applyTexttures(model.children[i].children[0], 'deckLegs.png', 60, 'combinedLight.png', 1);
+          break;
+          
+        case 'desk':
+          applyTexttures(model.children[i].children[0], 'desk.jpg', 60, 'combinedLight.png', 1);
+          break;
+
+
+        case 'pool':
+          applyTexttures(model.children[i].children[0], 'hottub.jpg', 40, 'combinedLight.png', 1);
+          break;
+        case 'poolTiles':
+          applyTexttures(model.children[i].children[0], 'poolWalls.jpg', 60, 'combinedLight.png', 1);
+          break;
+        case 'hottubSteps':
+          applyTexttures(model.children[i].children[0], 'woodStairs.jpg', 60, 'combinedLight.png', 1);
+          break;
+
+        case 'secretRoomWalls':
+          applyTexttures(model.children[i].children[0], 'secretWalls.jpg', 40, 'combinedLight.png', 0);
+          break;
+        case 'secretRooFloor':
+          applyTexttures(model.children[i].children[0], 'secretFloor.jpg', 40, 'combinedLight.png', 0);
+          break;
+        case 'secretRoomCeiling':
+          applyTexttures(model.children[i].children[0], 'ceiling.jpg', 40, 'combinedLight.png', 0);
+          break;
+
+        case 'deckTop':
+          applyTexttures(model.children[i].children[0], 'deckSurface.jpg', 60, 'lightGround.png', 1);
+          break;
+        case 'grass':
+          applyTexttures(model.children[i].children[0], 'grass.jpg', 60, 'lightGround.png', 0.9);
+          break;
+        case 'ground':
+          applyTexttures(model.children[i].children[0], 'groundTiles.jpg', 40, 'lightGround.png', 0.9);
+          break;
+        case 'windows':
+          console.log(model.children[i]);
+          model.children[i].children[0].material.transparent = true;
+          model.children[i].children[0].material.opacity = .1;
+          break;
+        case 'wall':
+          console.log('wall', model.children[i]);
+          model.children[i].children[0].material.transparent = true;
+          model.children[i].children[0].material.opacity = 0;
+          break;
+          
+        default:
+          break;
+      }
+
+    }
+
+    function applyTexttures(mesh, texture, wrap, lightmap, i) {
+      mesh.material.map = THREE.ImageUtils.loadTexture('textures/' + texture);
+      mesh.material.map.wrapS = mesh.material.map.wrapT = THREE.RepeatWrapping;
+      mesh.material.map.repeat.set(wrap, wrap);
+      mesh.material.lightMap = THREE.ImageUtils.loadTexture(lightmap);
+      mesh.material.lightMapIntensity = i;
+      mesh.material.color.set(new THREE.Color(1,1,1));
+    }
+  }
+</script>
+</body>
+</html>
