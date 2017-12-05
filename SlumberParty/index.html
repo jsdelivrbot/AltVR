@@ -136,7 +136,8 @@
       <a-entity position='3.8 16.4 -28.5'>
         <a-box id='panel' position='0 0 0' scale='.1 .5 1' color='#666'></a-box>
 
-        <a-box id='martiniButton' position='0 0 0' scale='.2 .1 .1' color='red'></a-box>
+        <a-box id='martiniButton' position='0 0 -.1' scale='.2 .1 .1' color='red'></a-box>
+        <a-box id='auzreaMartiniButton' position='0 0 .1' scale='.2 .1 .1' color='red'></a-box>
       </a-entity>
       <a-entity id='roomPortalTarget' position='-16 15.5 -28.4' rotation='0 90 0'></a-entity>  
     </a-entity>
@@ -291,10 +292,18 @@
 
     <a-entity id='martiniGlasses' position='0 -.4 0'>
       <a-entity id='martini1' position='-3.6 10.12 -44.4' scale='.5 .5 .5' obj-model='obj: url(models/martini_glass.obj); mtl: url(models/martini_glass.mtl)'></a-entity>
-      <a-entity id='martini2' position='-2.7 10.12 -45.1' scale='.5 .5 .5' obj-model='obj: url(models/martini_glass.obj); mtl: url(models/martini_glass.mtl)'></a-entity>
+      <a-entity id='martini2' position='-1.5 10.12 -45' scale='.5 .5 .5' obj-model='obj: url(models/martini_glass.obj); mtl: url(models/martini_glass.mtl)'></a-entity>
+      <a-entity id='martini3' position='-.9 10.12 -44.5' scale='.5 .5 .5' obj-model='obj: url(models/martini_glass.obj); mtl: url(models/martini_glass.mtl)'></a-entity>
 
       <a-animation attribute='position' to='0 0 0' dur='5000' begin='raise'></a-animation>
       <a-animation attribute='position' from='0 0 0' to='0 -.4 0' dur='5000' begin='lower'></a-animation>
+    </a-entity>
+
+    <a-entity id='AuzreaGlass' position='0 -.53 0'>
+      <a-entity id='martini1' position='-2.7 10.2 -45.1' scale='.7 .7 .7' obj-model='obj: url(models/martini_glass.obj); mtl: url(models/martini_glass.mtl)'></a-entity>
+
+      <a-animation attribute='position' to='0 0 0' dur='5000' begin='raise'></a-animation>
+      <a-animation attribute='position' from='0 0 0' to='0 -.53 0' dur='5000' begin='lower'></a-animation>
     </a-entity>
 
   </a-scene>
@@ -330,7 +339,27 @@
       }
     });
 
+    sync.instance.child('auzreaMartiniState').on('value', function(data){
+      if (data.val() != null) {
+        if (data.val() == 'raised') {
+          if (auzreaMartiniState == undefined) {
+            AuzreaGlass.setAttribute('position', '0 -.53 0');
+          } else {
+            AuzreaGlass.emit('raise');
+          }
+          auzreaMartiniButton.setAttribute('color', '#0f0');
+        } else if (auzreaMartiniState != null) {
+          AuzreaGlass.emit('lower');
+          auzreaMartiniButton.setAttribute('color', 'red');
+        }
+        auzreaMartiniState = data.val();
+      } else {
+        sync.instance.child('auzreaMartiniState').set('lowered');
+      }
+    });
+
     var martiniState = 'lowered';
+    var auzreaMartiniState = 'lowered';
     altspace.getUser().then(function(user){
       if (user.isModerator) {
         button.setAttribute('position', '-16.3 6.5 -25.9');
@@ -352,6 +381,14 @@
             sync.instance.child('martiniState').set('raised');
           } else {
             sync.instance.child('martiniState').set('lowered');
+          }
+        });
+
+        auzreaMartiniButton.addEventListener('mouseup', function(){
+          if (auzreaMartiniState == 'lowered') {
+            sync.instance.child('auzreaMartiniState').set('raised');
+          } else {
+            sync.instance.child('auzreaMartiniState').set('lowered');
           }
         });
       }
