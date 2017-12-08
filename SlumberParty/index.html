@@ -445,7 +445,7 @@
     console.log(skeleton);
     var head = skeleton.getJoint('Head');
     setInterval(function(){
-      if (loaded && head.position.y < 5 && ((head.position.x < -12.6 || head.position.x > 10.2) || (head.position.z < -71.1 || head.position.z > -61.5))) {
+      if (loaded && head.position.y < 5 && ((head.position.x < -12.6 || head.position.x > 10.2) || (head.position.z < -71.4 || head.position.z > -61.5))) {
         sendUp();
       }
     },1000);
