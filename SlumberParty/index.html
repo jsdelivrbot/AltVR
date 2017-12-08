@@ -578,11 +578,6 @@
           break;
         case 'secretRoomFloor':
           applyTexttures(model.children[i].children[0], 'secretFloor.jpg', 40, 'combinedLight.png', 0);
-          altspace.getUser().then(function(user) {
-            if (!user.isModerator) {
-              model.children[i].removeAllBehaviors();
-            }
-          });
           break;
         case 'secretRoomCeiling':
           applyTexttures(model.children[i].children[0], 'ceiling.jpg', 40, 'combinedLight.png', 0);
@@ -613,6 +608,12 @@
       }
 
     }
+
+    altspace.getUser().then(function(user) {
+      if (!user.isModerator) {
+        house.object3D.children[2].getObjectByName('secretRoomFloor').children[0].removeAllBehaviors();
+      }
+    });
 
     function applyTexttures(mesh, texture, wrap, lightmap, i) {
       mesh.material.map = THREE.ImageUtils.loadTexture('textures/' + texture);
