@@ -576,8 +576,13 @@
         case 'secretRoomWalls':
           applyTexttures(model.children[i].children[0], 'secretWalls.jpg', 40, 'combinedLight.png', 0);
           break;
-        case 'secretRooFloor':
+        case 'secretRoomFloor':
           applyTexttures(model.children[i].children[0], 'secretFloor.jpg', 40, 'combinedLight.png', 0);
+          altspace.getUser().then(function(){
+            is (!user.isModerator) {
+              model.children[i].children[0].removeAllBehaviors();
+            }
+          });
           break;
         case 'secretRoomCeiling':
           applyTexttures(model.children[i].children[0], 'ceiling.jpg', 40, 'combinedLight.png', 0);
