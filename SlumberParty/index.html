@@ -578,9 +578,9 @@
           break;
         case 'secretRoomFloor':
           applyTexttures(model.children[i].children[0], 'secretFloor.jpg', 40, 'combinedLight.png', 0);
-          altspace.getUser().then(function(user){
+          altspace.getUser().then(function(user) {
             if (!user.isModerator) {
-              model.children[i].children[0].removeAllBehaviors();
+              model.children[i].removeAllBehaviors();
             }
           });
           break;
