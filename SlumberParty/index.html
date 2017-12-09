@@ -135,7 +135,12 @@
       </a-entity>
 
       <a-box id='button' position='-16.3 -100 -25.9' scale='.1 .1 .1' color='blue'></a-box>
-      <a-box id='exitButton' position='3.8 16.5 -27.5' scale='.1 .1 .1' color='red'></a-box>
+
+      <a-plane position='0.7 14.9 -28.15' scale='29 4.45 1' rotation='90 0 0' color='black'></a-plane>
+
+      <a-entity id='exitText' position='-2.77 17 -26.65' rotation='0 90 0' n-text='fontSize: 2; text: Exit'></a-entity>
+      <a-box id='exitButton' position='-2.77 16.8 -26.66' scale='.03 .1 .2' color='red'></a-box>
+
       <a-box id='collider' position='.8 15.2 -30' scale='7.5 1 .1' opacity='0' n-box-collider='type: environment'></a-box>
 
       <a-entity position='3.8 16.4 -28.5' rotation='0 -90 0'>
@@ -166,7 +171,7 @@
                 <a-entity position="0 0.4 0" rotation="0 0 0">
                     <a-cylinder position="0 0 0" rotation="0 0 0" color="#444444" opacity="1" radius="0.15" height="0.5" n-mesh-collider="type: environment; convex: false" ></a-cylinder>
                     <a-entity position="0 0.25 0" rotation="0 0 0">
-                        <a-cone position="0 10 0" rotation="0 0 0" color="#FFFFFF" opacity="0.25" radius-bottom="0.15" radius-top="1.5" height="20" open-ended="true" material="src: #transparent_gradient; repeat: 1 1; side: double"></a-cone>
+                        <a-cone position="0 10 0" rotation="0 0 0" color="#FFFFFF" opacity="0.25" radius-bottom="0.15" radius-top="1.5" height="20" open-ended="true" material="src: #transparent_gradient; repeat: 1 1; side: double" altspace-cursor-collider='enabled: false'></a-cone>
                     </a-entity>
                     <a-animation attribute="rotation" direction="alternate" from='-67.5 0 0' to='67.5 0 0' dur='10000' easeInOut="sine" repeat='indefinite'></a-animation>
                 </a-entity>
@@ -182,7 +187,7 @@
                 <a-entity position="0 0.4 0" rotation="0 0 0">
                     <a-cylinder position="0 0 0" rotation="0 0 0" color="#444444" opacity="1" radius="0.15" height="0.5" n-mesh-collider="type: environment; convex: false" ></a-cylinder>
                     <a-entity position="0 0.25 0" rotation="0 0 0">
-                        <a-cone position="0 10 0" rotation="0 0 0" color="#FF88FF" opacity="0.25" radius-bottom="0.15" radius-top="1.5" height="20" open-ended="true" material="src: #transparent_gradient; repeat: 1 1; side: double"></a-cone>
+                        <a-cone position="0 10 0" rotation="0 0 0" color="#FF88FF" opacity="0.25" radius-bottom="0.15" radius-top="1.5" height="20" open-ended="true" material="src: #transparent_gradient; repeat: 1 1; side: double" altspace-cursor-collider='enabled: false'></a-cone>
                     </a-entity>
                     <a-animation attribute="rotation" direction="alternate" from='-67.5 0 0' to='67.5 0 0' dur='10000' easeInOut="sine" repeat='indefinite'></a-animation>
                 </a-entity>
@@ -198,7 +203,7 @@
                 <a-entity position="0 0.4 0" rotation="0 0 0">
                     <a-cylinder position="0 0 0" rotation="0 0 0" color="#444444" opacity="1" radius="0.15" height="0.5" n-mesh-collider="type: environment; convex: false" ></a-cylinder>
                     <a-entity position="0 0.25 0" rotation="0 0 0">
-                        <a-cone position="0 10 0" rotation="0 0 0" color="#FFFFFF" opacity="0.25" radius-bottom="0.15" radius-top="1.5" height="20" open-ended="true" material="src: #transparent_gradient; repeat: 1 1; side: double"></a-cone>
+                        <a-cone position="0 10 0" rotation="0 0 0" color="#FFFFFF" opacity="0.25" radius-bottom="0.15" radius-top="1.5" height="20" open-ended="true" material="src: #transparent_gradient; repeat: 1 1; side: double" altspace-cursor-collider='enabled: false'></a-cone>
                     </a-entity>
                     <a-animation attribute="rotation" direction="alternate" from='67.5 0 0' to='-67.5 0 0' dur='10000' easeInOut="sine" repeat='indefinite'></a-animation>
                 </a-entity>
@@ -214,7 +219,7 @@
                 <a-entity position="0 0.4 0" rotation="0 0 0">
                     <a-cylinder position="0 0 0" rotation="0 0 0" color="#444444" opacity="1" radius="0.15" height="0.5" n-mesh-collider="type: environment; convex: false" ></a-cylinder>
                     <a-entity position="0 0.25 0" rotation="0 0 0">
-                        <a-cone position="0 10 0" rotation="0 0 0" color="#FF88FF" opacity="0.25" radius-bottom="0.15" radius-top="1.5" height="20" open-ended="true" material="src: #transparent_gradient; repeat: 1 1; side: double"></a-cone>
+                        <a-cone position="0 10 0" rotation="0 0 0" color="#FF88FF" opacity="0.25" radius-bottom="0.15" radius-top="1.5" height="20" open-ended="true" material="src: #transparent_gradient; repeat: 1 1; side: double" altspace-cursor-collider='enabled: false'></a-cone>
                     </a-entity>
                     <a-animation attribute="rotation" direction="alternate" from='67.5 0 0' to='-67.5 0 0' dur='10000' easeInOut="sine" repeat='indefinite'></a-animation>
                 </a-entity>
@@ -232,7 +237,7 @@
                     <a-entity position="0 0.4 0" rotation="0 0 0">
                         <a-cylinder position="0 0 0" rotation="0 0 0" color="#444444" opacity="1" radius="0.15" height="0.5" n-mesh-collider="type: environment; convex: false" ></a-cylinder>
                         <a-entity position="0 0.25 0" rotation="0 0 0">
-                            <a-cone position="0 10 0" rotation="0 0 0" color="#FFFFFF" opacity="0.25" radius-bottom="0.15" radius-top="1.5" height="20" open-ended="true" material="src: #transparent_gradient; repeat: 1 1; side: double"></a-cone>
+                            <a-cone position="0 10 0" rotation="0 0 0" color="#FFFFFF" opacity="0.25" radius-bottom="0.15" radius-top="1.5" height="20" open-ended="true" material="src: #transparent_gradient; repeat: 1 1; side: double" altspace-cursor-collider='enabled: false'></a-cone>
                         </a-entity>
                         <a-animation attribute="rotation" direction="alternate" from='-67.5 0 0' to='67.5 0 0' dur='10000' easeInOut="sine" repeat='indefinite'></a-animation>
                     </a-entity>
@@ -248,7 +253,7 @@
                     <a-entity position="0 0.4 0" rotation="0 0 0">
                         <a-cylinder position="0 0 0" rotation="0 0 0" color="#444444" opacity="1" radius="0.15" height="0.5" n-mesh-collider="type: environment; convex: false" ></a-cylinder>
                         <a-entity position="0 0.25 0" rotation="0 0 0">
-                            <a-cone position="0 10 0" rotation="0 0 0" color="#FF88FF" opacity="0.25" radius-bottom="0.15" radius-top="1.5" height="20" open-ended="true" material="src: #transparent_gradient; repeat: 1 1; side: double"></a-cone>
+                            <a-cone position="0 10 0" rotation="0 0 0" color="#FF88FF" opacity="0.25" radius-bottom="0.15" radius-top="1.5" height="20" open-ended="true" material="src: #transparent_gradient; repeat: 1 1; side: double" altspace-cursor-collider='enabled: false'></a-cone>
                         </a-entity>
                         <a-animation attribute="rotation" direction="alternate" from='-67.5 0 0' to='67.5 0 0' dur='10000' easeInOut="sine" repeat='indefinite'></a-animation>
                     </a-entity>
@@ -264,7 +269,7 @@
                     <a-entity position="0 0.4 0" rotation="0 0 0">
                         <a-cylinder position="0 0 0" rotation="0 0 0" color="#444444" opacity="1" radius="0.15" height="0.5" n-mesh-collider="type: environment; convex: false" ></a-cylinder>
                         <a-entity position="0 0.25 0" rotation="0 0 0">
-                            <a-cone position="0 10 0" rotation="0 0 0" color="#FFFFFF" opacity="0.25" radius-bottom="0.15" radius-top="1.5" height="20" open-ended="true" material="src: #transparent_gradient; repeat: 1 1; side: double"></a-cone>
+                            <a-cone position="0 10 0" rotation="0 0 0" color="#FFFFFF" opacity="0.25" radius-bottom="0.15" radius-top="1.5" height="20" open-ended="true" material="src: #transparent_gradient; repeat: 1 1; side: double" altspace-cursor-collider='enabled: false'></a-cone>
                         </a-entity>
                         <a-animation attribute="rotation" direction="alternate" from='67.5 0 0' to='-67.5 0 0' dur='10000' easeInOut="sine" repeat='indefinite'></a-animation>
                     </a-entity>
@@ -280,7 +285,7 @@
                     <a-entity position="0 0.4 0" rotation="0 0 0">
                         <a-cylinder position="0 0 0" rotation="0 0 0" color="#444444" opacity="1" radius="0.15" height="0.5" n-mesh-collider="type: environment; convex: false" ></a-cylinder>
                         <a-entity position="0 0.25 0" rotation="0 0 0">
-                            <a-cone position="0 10 0" rotation="0 0 0" color="#FF88FF" opacity="0.25" radius-bottom="0.15" radius-top="1.5" height="20" open-ended="true" material="src: #transparent_gradient; repeat: 1 1; side: double"></a-cone>
+                            <a-cone position="0 10 0" rotation="0 0 0" color="#FF88FF" opacity="0.25" radius-bottom="0.15" radius-top="1.5" height="20" open-ended="true" material="src: #transparent_gradient; repeat: 1 1; side: double" altspace-cursor-collider='enabled: false'></a-cone>
                         </a-entity>
                         <a-animation attribute="rotation" direction="alternate" from='67.5 0 0' to='-67.5 0 0' dur='10000' easeInOut="sine" repeat='indefinite'></a-animation>
                     </a-entity>
