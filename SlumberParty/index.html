@@ -134,7 +134,8 @@
         <a-plane id='fountain2top' position='11.8 2.45 -7.5' rotation='-90 0 0' scale='3.1 3.1 1' material='src:url(https://bengarfield.github.io/AltVR/AZHouse/water.jpg); repeat: 0.501 0.501' opacity='.8' texture-scroll='x: .0001; y: -.0001'></a-plane>
       </a-entity>
 
-      <a-box id='button' position='-16.3 -100 -25.9' scale='.1 .1 .1' color='blue'></a-box>
+      <a-box id='roomButton' position='-16.3 -100 -25.9' scale='.15 .15 .1' color='blue'></a-box>
+      <a-box id='roomButton2' position='-16.3 -100 -25.9' scale='.15 .15 .1' color='blue'></a-box>
 
       <a-plane position='0.7 14.9 -28.15' scale='29 4.45 1' rotation='90 0 0' color='black'></a-plane>
 
@@ -146,11 +147,15 @@
       <a-entity position='3.8 16.4 -28.5' rotation='0 -90 0'>
         <a-box id='panel' position='0 0 0' scale='1 .5 .1' color='#666'></a-box>
 
-        <a-box id='martiniButton' position='-.1 0 .06' scale='.1 .1 .1' color='red'></a-box>
-        <a-box id='auzreaMartiniButton' position='.1 0 .06' scale='.1 .1 .1' color='red'></a-box>
 
-        <!-- <a-box id='martiniButton' position='-.1 0 .06' scale='.1 .1 .1' color='red' n-text="fontSize: 3;text: Martinis; verticalAlign: top; height: 2"></a-box>
-        <a-box id='auzreaMartiniButton' position='.1 0 .06' scale='.1 .1 .1' color='red' n-text="fontSize: 3;text: Auzrea\nMartini; verticalAlign: top; height: 2.5"></a-box> -->
+        <a-entity position='-.3 .1 .055'>
+          <a-entity position='0 .09 0' scale='.1 .1 .1' n-text='fontSize: 4; text: Martinis'></a-entity>
+          <a-plane scale='.3 .1 1' src='images/deskPanel.png' transparent='true'></a-plane>
+          <a-cylinder id='martiniButton1' position='-.1 -.024 0' radius='.01' height='.03' rotation='90 0 0' color='red' segments-radial='12' segments-height='1'></a-cylinder>
+          <a-cylinder id='martiniButton2' position='-.04 .02 0' radius='.013' height='.03' rotation='90 0 0' color='red' segments-radial='12' segments-height='1'></a-cylinder>
+          <a-cylinder id='martiniButton3' position='.04 .02 0' radius='.01' height='.03' rotation='90 0 0' color='red' segments-radial='12' segments-height='1'></a-cylinder>
+          <a-cylinder id='martiniButton4' position='.1 -.024 0' radius='.01' height='.03' rotation='90 0 0' color='red' segments-radial='12' segments-height='1'></a-cylinder>
+        </a-entity>
       </a-entity>
 
 
@@ -315,20 +320,28 @@
     <a-entity id='stagePillow3' position='1.76 8.78 -49.86' rotation='-30 -25 0' scale='.008 .008 .008' obj-model='obj: url(models/cushion.obj); mtl: url(models/cushion.mtl)' bake-vertex-light></a-entity>
     <a-entity id='stagePillow4' position='5.59 8.78 -46.1' rotation='-30 -55 0' scale='.008 .008 .008' obj-model='obj: url(models/cushion.obj); mtl: url(models/cushion.mtl)' bake-vertex-light></a-entity>
 
-    <a-entity id='martiniGlasses' position='0 -.4 0'>
+    <a-entity id='martiniGlass1' position='0 -.4 0'>
       <a-entity id='martini1' position='-3.6 10.12 -44.4' scale='.5 .5 .5' obj-model='obj: url(models/martini_glass.obj); mtl: url(models/martini_glass.mtl)'></a-entity>
-      <a-entity id='martini2' position='-1.5 10.12 -45' scale='.5 .5 .5' obj-model='obj: url(models/martini_glass.obj); mtl: url(models/martini_glass.mtl)'></a-entity>
-      <a-entity id='martini3' position='-.9 10.12 -44.5' scale='.5 .5 .5' obj-model='obj: url(models/martini_glass.obj); mtl: url(models/martini_glass.mtl)'></a-entity>
-
       <a-animation attribute='position' from='0 -.4 0' to='0 0 0' dur='5000' begin='raise'></a-animation>
       <a-animation attribute='position' from='0 0 0' to='0 -.4 0' dur='5000' begin='lower'></a-animation>
     </a-entity>
 
-    <a-entity id='AuzreaGlass' position='0 -.53 0'>
-      <a-entity id='martini1' position='-2.7 10.2 -45.1' scale='.7 .7 .7' obj-model='obj: url(models/martini_glass.obj); mtl: url(models/martini_glass.mtl)'></a-entity>
-
+    <a-entity id='martiniGlass2' position='0 -.53 0'>
+      <a-entity id='martiniBig' position='-2.7 10.2 -45.1' scale='.7 .7 .7' obj-model='obj: url(models/martini_glass.obj); mtl: url(models/martini_glass.mtl)'></a-entity>
       <a-animation attribute='position' from='0 -.53 0' to='0 0 0' dur='5000' begin='raise'></a-animation>
       <a-animation attribute='position' from='0 0 0' to='0 -.53 0' dur='5000' begin='lower'></a-animation>
+    </a-entity>
+    
+    <a-entity id='martiniGlass3' position='0 -.4 0'>
+      <a-entity id='martini3' position='-1.5 10.12 -45' scale='.5 .5 .5' obj-model='obj: url(models/martini_glass.obj); mtl: url(models/martini_glass.mtl)'></a-entity>
+      <a-animation attribute='position' from='0 -.4 0' to='0 0 0' dur='5000' begin='raise'></a-animation>
+      <a-animation attribute='position' from='0 0 0' to='0 -.4 0' dur='5000' begin='lower'></a-animation>
+    </a-entity>
+
+    <a-entity id='martiniGlass4' position='0 -.4 0'>
+      <a-entity id='martini4' position='-.9 10.12 -44.5' scale='.5 .5 .5' obj-model='obj: url(models/martini_glass.obj); mtl: url(models/martini_glass.mtl)'></a-entity>
+      <a-animation attribute='position' from='0 -.4 0' to='0 0 0' dur='5000' begin='raise'></a-animation>
+      <a-animation attribute='position' from='0 0 0' to='0 -.4 0' dur='5000' begin='lower'></a-animation>
     </a-entity>
 
   </a-scene>
@@ -353,51 +366,99 @@
 
     var sync = scene.systems['sync-system'].connection;
 
-    sync.instance.child('martiniState').on('value', function(data){
+    sync.instance.child('martini1State').on('value', function(data){
       if (data.val() != null) {
         if (data.val() == 'raised') {
-          if (martiniState == undefined) {
-            martiniGlasses.setAttribute('position', '0 -.4 0');
+          if (martini1State == undefined) {
+            martiniGlass1.setAttribute('position', '0 -.4 0');
           } else {
-            martiniGlasses.emit('raise');
+            martiniGlass1.emit('raise');
           }
-          martiniButton.setAttribute('color', '#0f0');
-        } else if (martiniState != null) {
-          martiniGlasses.emit('lower');
-          martiniButton.setAttribute('color', 'red');
+          martiniButton1.setAttribute('color', '#0f0');
+        } else if (martini1State != null) {
+          martiniGlass1.emit('lower');
+          martiniButton1.setAttribute('color', 'red');
         }
-        martiniState = data.val();
+        martini1State = data.val();
       } else {
-        sync.instance.child('martiniState').set('lowered');
+        sync.instance.child('martini1State').set('lowered');
       }
     });
 
-    sync.instance.child('auzreaMartiniState').on('value', function(data){
+    sync.instance.child('martini2State').on('value', function(data){
       if (data.val() != null) {
         if (data.val() == 'raised') {
-          if (auzreaMartiniState == undefined) {
-            AuzreaGlass.setAttribute('position', '0 -.53 0');
+          if (martini2State == undefined) {
+            martiniGlass2.setAttribute('position', '0 -.53 0');
           } else {
-            AuzreaGlass.emit('raise');
+            martiniGlass2.emit('raise');
           }
-          auzreaMartiniButton.setAttribute('color', '#0f0');
-        } else if (auzreaMartiniState != null) {
-          AuzreaGlass.emit('lower');
-          auzreaMartiniButton.setAttribute('color', 'red');
+          martiniButton2.setAttribute('color', '#0f0');
+        } else if (martini1State != null) {
+          martiniGlass2.emit('lower');
+          martiniButton2.setAttribute('color', 'red');
         }
-        auzreaMartiniState = data.val();
+        martini2State = data.val();
       } else {
-        sync.instance.child('auzreaMartiniState').set('lowered');
+        sync.instance.child('martini2State').set('lowered');
       }
     });
 
-    var martiniState = 'lowered';
-    var auzreaMartiniState = 'lowered';
+    sync.instance.child('martini3State').on('value', function(data){
+      if (data.val() != null) {
+        if (data.val() == 'raised') {
+          if (martini3State == undefined) {
+            martiniGlass3.setAttribute('position', '0 -.4 0');
+          } else {
+            martiniGlass3.emit('raise');
+          }
+          martiniButton3.setAttribute('color', '#0f0');
+        } else if (martini3State != null) {
+          martiniGlass3.emit('lower');
+          martiniButton3.setAttribute('color', 'red');
+        }
+        martini3State = data.val();
+      } else {
+        sync.instance.child('martini3State').set('lowered');
+      }
+    });
+
+    sync.instance.child('martini4State').on('value', function(data){
+      if (data.val() != null) {
+        if (data.val() == 'raised') {
+          if (martini4State == undefined) {
+            martiniGlass4.setAttribute('position', '0 -.4 0');
+          } else {
+            martiniGlass4.emit('raise');
+          }
+          martiniButton4.setAttribute('color', '#0f0');
+        } else if (martini4State != null) {
+          martiniGlass4.emit('lower');
+          martiniButton4.setAttribute('color', 'red');
+        }
+        martini4State = data.val();
+      } else {
+        sync.instance.child('martini4State').set('lowered');
+      }
+    });
+
+    var martini1State = 'lowered';
+    var martini2State = 'lowered';
+    var martini3State = 'lowered';
+    var martini4State = 'lowered';
     altspace.getUser().then(function(user){
       if (user.isModerator) {
-        button.setAttribute('position', '-16.3 6.5 -25.9');
+        roomButton.setAttribute('position', '-16.3 6.5 -25.9');
+        roomButton.addEventListener('mouseup', function(){
+          //console.log('Room');
+          roomPortal.setAttribute('position', '0 0 0');
+          setTimeout(function(){
+            roomPortal.setAttribute('position', '0 -100 0');
+          }, 100);
+        });
 
-        button.addEventListener('mouseup', function(){
+        roomButton2.setAttribute('position', '-16.3 9.5 -30.35');
+        roomButton2.addEventListener('mouseup', function(){
           //console.log('Room');
           roomPortal.setAttribute('position', '0 0 0');
           setTimeout(function(){
@@ -409,19 +470,32 @@
           sendUp();
         });
 
-        martiniButton.addEventListener('mouseup', function(){
-          if (martiniState == 'lowered') {
-            sync.instance.child('martiniState').set('raised');
+        martiniButton1.addEventListener('mouseup', function(){
+          if (martini1State == 'lowered') {
+            sync.instance.child('martini1State').set('raised');
           } else {
-            sync.instance.child('martiniState').set('lowered');
+            sync.instance.child('martini1State').set('lowered');
           }
         });
-
-        auzreaMartiniButton.addEventListener('mouseup', function(){
-          if (auzreaMartiniState == 'lowered') {
-            sync.instance.child('auzreaMartiniState').set('raised');
+        martiniButton2.addEventListener('mouseup', function(){
+          if (martini2State == 'lowered') {
+            sync.instance.child('martini2State').set('raised');
           } else {
-            sync.instance.child('auzreaMartiniState').set('lowered');
+            sync.instance.child('martini2State').set('lowered');
+          }
+        });
+        martiniButton3.addEventListener('mouseup', function(){
+          if (martini3State == 'lowered') {
+            sync.instance.child('martini3State').set('raised');
+          } else {
+            sync.instance.child('martini3State').set('lowered');
+          }
+        });
+        martiniButton4.addEventListener('mouseup', function(){
+          if (martini4State == 'lowered') {
+            sync.instance.child('martini4State').set('raised');
+          } else {
+            sync.instance.child('martini4State').set('lowered');
           }
         });
       }
