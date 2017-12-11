@@ -78,7 +78,7 @@
     <a-entity id='house' position='-.25 10.3 -16.75' scale='50 50 50'>
       <a-entity id='bar' position='0 0 0' obj-model='obj: url(https://bengarfield.github.io/AltVR/AZHouse/2/bar.obj); mtl: url(https://bengarfield.github.io/AltVR/AZHouse/2/bar.mtl)' n-mesh-collider='type: environment; convex: false' bake-vertex-light></a-entity>
       <a-entity id='bed' obj-model='obj: url(https://bengarfield.github.io/AltVR/AZHouse/2/bedroom.obj); mtl: url(https://bengarfield.github.io/AltVR/AZHouse/2/bedroom.mtl)' n-mesh-collider='type: environment; convex: false' bake-vertex-light></a-entity>
-      <a-entity id='fence' obj-model='obj: url(fence.obj); mtl: url(fence.mtl)' n-mesh-collider='type: environment; convex: false' bake-vertex-light></a-entity>
+      <!-- <a-entity id='fence' obj-model='obj: url(fence.obj); mtl: url(fence.mtl)' n-mesh-collider='type: environment; convex: false' bake-vertex-light></a-entity> -->
     </a-entity>
     
     <a-plane if='frontBanner' position='-.6 16 -5.27' scale='7 1.8 1' color='#888' src='https://bengarfield.github.io/AltVR/AZHouse/2/images/auzbanner2.jpg'></a-plane>
@@ -508,7 +508,7 @@
   var model = null, lightmap = null;
   // load model
   var gltfLoader = new THREE.ColladaLoader();
-  gltfLoader.load('https://bengarfield.github.io/AltVR/SlumberParty/house.dae',
+  gltfLoader.load('house.dae',
     function(result){
       console.log(result)
       house.object3D.add(result.scene);
@@ -678,12 +678,16 @@
         case 'ground':
           applyTexttures(model.children[i].children[0], 'groundTiles.jpg', 40, 'lightGround.png', 0.9);
           break;
+        case 'wall':
+          applyTexttures(model.children[i].children[0], 'hedge.jpg', 60, 'lightGround.png', 0.95);
+          break;
+
         case 'windows':
           console.log(model.children[i]);
           model.children[i].children[0].material.transparent = true;
           model.children[i].children[0].material.opacity = .1;
           break;
-        case 'wall':
+        case 'walle':
           console.log('wall', model.children[i]);
           model.children[i].children[0].material.transparent = true;
           model.children[i].children[0].material.opacity = 0;
