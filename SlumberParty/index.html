@@ -550,6 +550,11 @@
       }
     });
   });
+
+  pillow1.addEventListener('model-loaded', function(){
+    pillow1.object3D.children[0].children[0].material.map = THREE.ImageUtils.loadTexture('models/pillow.jpg');
+  });
+  
   //var scene = document.querySelector('a-scene').object3D;
   //console.log(scene);
   var model = null, lightmap = null;
