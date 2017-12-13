@@ -554,7 +554,7 @@
   pillow1.addEventListener('model-loaded', function(){
     pillow1.object3D.children[0].children[0].material.map = THREE.ImageUtils.loadTexture('models/pillow.jpg');
   });
-  
+
   //var scene = document.querySelector('a-scene').object3D;
   //console.log(scene);
   var model = null, lightmap = null;
@@ -759,7 +759,7 @@
     });
 
     function applyTexttures(mesh, texture, wrap, lightmap, i) {
-      mesh.material.map = THREE.ImageUtils.loadTexture('textures/' + texture);
+      mesh.material.map = THREE.ImageUtils.loadTexture('textures/256/' + texture);
       mesh.material.map.wrapS = mesh.material.map.wrapT = THREE.RepeatWrapping;
       mesh.material.map.repeat.set(wrap, wrap);
       mesh.material.lightMap = THREE.ImageUtils.loadTexture(lightmap);
