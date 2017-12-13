@@ -39,8 +39,9 @@
       },
       init: function() {
         var self = this;
+        console.log(self);
         this.el.addEventListener('model-loaded', function(){
-          self.el.object3D.children[0].children[0].material = self.el.object3D.children[0].children[0].material.clone();
+          self.el.object3D.children[0].children[0].material = new THREE.MeshBasicMaterial();
           self.el.object3D.children[0].children[0].material.map = THREE.ImageUtils.loadTexture(self.data);
         });
       }
