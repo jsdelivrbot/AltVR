@@ -9,6 +9,7 @@
   <script src="https://cdn.rawgit.com/NGenesis/altspacevr-behaviors/v0.8.1/js/altspaceutil.min.js"></script>
   <script src="https://bengarfield.github.io/AltVR/GPoly/bake-vertex-light.js"></script>
   <script src="cached-model.js"></script>
+  <script src="UltimateLoader2.js"></script>
   <script>
     AFRAME.registerComponent('texture-scroll', {
       schema: {
@@ -33,16 +34,51 @@
       }
     });
     
+    // AFRAME.registerComponent('avatar', {
+    //   schema: {
+    //     type: 'src'
+    //   },
+    //   init: function() {
+    //     var self = this;
+    //     this.el.addEventListener('model-loaded', function(){
+    //       self.el.object3D.children[0].children[0].material = self.el.object3D.children[0].children[0].material.clone();
+    //       self.el.object3D.children[0].children[0].material.map = THREE.ImageUtils.loadTexture(self.data);
+    //     });
+    //   }
+    // });
+
     AFRAME.registerComponent('avatar', {
       schema: {
-        type: 'src'
+        sid: {
+          type: 'string'
+        },
+        colors: {
+          type: 'src'
+        }
       },
       init: function() {
         var self = this;
-        this.el.addEventListener('model-loaded', function(){
-          self.el.object3D.children[0].children[0] = self.el.object3D.children[0].children[0].clone();
-          self.el.object3D.children[0].children[0].material = self.el.object3D.children[0].children[0].material.clone();
-          self.el.object3D.children[0].children[0].material.map = THREE.ImageUtils.loadTexture(self.data);
+          
+        var models = {
+          's-series-m01':  'https://bengarfield.github.io/AltVR/house/avatars/malesmall.obj',
+          's-series-f01':  'https://bengarfield.github.io/AltVR/house/avatars/femalesmall.obj',
+          'pod-classic':  'https://bengarfield.github.io/AltVR/house/avatars/podclassic.obj',
+          'rubenoid-male':  'https://bengarfield.github.io/AltVR/house/avatars/rubemalesmall.obj',
+          'rubenoid-female':  'https://bengarfield.github.io/AltVR/house/viv.obj',
+          'picture-frame':  'https://bengarfield.github.io/AltVR/house/frame.obj',
+          'bruce': 'https://bengarfield.github.io/AltVR/house/avatars/bruce.obj'
+        };
+        
+        var objects = {
+          model: {url: models[this.data.sid]},
+          tex: {url: this.data.colors}
+        };
+        UltimateLoader.load(objects).then(function(result){
+          var mesh = result[0].children[0].clone();
+          mesh.material = mesh.material.clone();
+          mesh.material.map = result[1];
+          self.el.setObject3D('mesh', mesh);
+          self.el.emit('object3dset', {type: 'mesh'});
         });
       }
     });
@@ -91,13 +127,13 @@
     <a-asset id='f01' src='https://bengarfield.github.io/AltVR/house/avatars/femalesmall.obj'></a-asset>
     <a-asset id='m01' src='https://bengarfield.github.io/AltVR/house/avatars/malesmall.obj'></a-asset>
 
-    <a-entity id='auzrea' position='-4.9 8.85 -23.9' rotation='0 -90 0' scale='4 4 4' cached-obj-model='obj: #f01' avatar='url(https://bengarfield.github.io/AltVR/house/avatars/new/Auzrea.jpg)'></a-entity>
-    <a-entity id='megan' position='-4.9 9.8 -24.4' rotation='0 -90 0' scale='3 3 3' cached-obj-model='obj: #f01' avatar='url(https://bengarfield.github.io/AltVR/house/avatars/new/Megan.jpg)'></a-entity>
-    <a-entity id='tahla' position='-4.9 9.8 -23.9' rotation='0 -90 0' scale='3 3 3' cached-obj-model='obj: #f01' avatar='url(https://bengarfield.github.io/AltVR/house/avatars/new/Tahla.jpg)'></a-entity>
-    <a-entity id='ann' position='-4.9 9.8 -23.4' rotation='0 -90 0' scale='3 3 3' cached-obj-model='obj: #f01' avatar='url(https://bengarfield.github.io/AltVR/house/avatars/new/Ann.jpg)'></a-entity>
-    <a-entity id='ben' position='-4.9 7.9 -24.4' rotation='0 -90 0' scale='3 3 3' cached-obj-model='obj: #m01' avatar='url(https://bengarfield.github.io/AltVR/house/ben.jpg)'></a-entity>
-    <a-entity id='miyk' position='-4.9 7.9 -23.9' rotation='0 -90 0' scale='3 3 3' cached-obj-model='obj: #m01' avatar='url(https://bengarfield.github.io/AltVR/house/avatars/new/Miyk.jpg)'></a-entity>
-    <a-entity id='erock' position='-4.9 7.9 -23.4' rotation='0 -90 0' scale='3 3 3' cached-obj-model='obj: #m01' avatar='url(https://bengarfield.github.io/AltVR/house/avatars/new/Erock.jpg)'></a-entity>
+    <a-entity id='auzrea' position='-4.9 8.85 -23.9' rotation='0 -90 0' scale='4 4 4' avatar='type: s-series-f01; colors: url(https://bengarfield.github.io/AltVR/house/avatars/new/Auzrea.jpg)'></a-entity>
+    <a-entity id='megan' position='-4.9 9.8 -24.4' rotation='0 -90 0' scale='3 3 3' avatar='type: s-series-f01; colors: url(https://bengarfield.github.io/AltVR/house/avatars/new/Megan.jpg)'></a-entity>
+    <a-entity id='tahla' position='-4.9 9.8 -23.9' rotation='0 -90 0' scale='3 3 3' avatar='type: s-series-f01; colors: url(https://bengarfield.github.io/AltVR/house/avatars/new/Tahla.jpg)'></a-entity>
+    <a-entity id='ann' position='-4.9 9.8 -23.4' rotation='0 -90 0' scale='3 3 3' avatar='type: s-series-f01; colors: url(https://bengarfield.github.io/AltVR/house/avatars/new/Ann.jpg)'></a-entity>
+    <a-entity id='ben' position='-4.9 7.9 -24.4' rotation='0 -90 0' scale='3 3 3' avatar='type: s-series-m01; colors: url(https://bengarfield.github.io/AltVR/house/ben.jpg)'></a-entity>
+    <a-entity id='miyk' position='-4.9 7.9 -23.9' rotation='0 -90 0' scale='3 3 3' avatar='type: s-series-m01; colors: url(https://bengarfield.github.io/AltVR/house/avatars/new/Miyk.jpg)'></a-entity>
+    <a-entity id='erock' position='-4.9 7.9 -23.4' rotation='0 -90 0' scale='3 3 3' avatar='type: s-series-m01; colors: url(https://bengarfield.github.io/AltVR/house/avatars/new/Erock.jpg)'></a-entity>
 
     <!-- quotes -->
     <a-plane id='quote1' position='8 12.5 -26.77' rotation='0 0 0' scale='6 2.3 1' src='https://bengarfield.github.io/AltVR/AZHouse/2/images/quotes/1.png' transparent='true'></a-plane>
