@@ -60,12 +60,12 @@
         var self = this;
           
         var models = {
-          's-series-m01':  'https://bengarfield.github.io/AltVR/house/avatars/malesmall.obj',
-          's-series-f01':  'https://bengarfield.github.io/AltVR/house/avatars/femalesmall.obj',
-          'pod-classic':  'https://bengarfield.github.io/AltVR/house/avatars/podclassic.obj',
-          'rubenoid-male':  'https://bengarfield.github.io/AltVR/house/avatars/rubemalesmall.obj',
-          'rubenoid-female':  'https://bengarfield.github.io/AltVR/house/viv.obj',
-          'picture-frame':  'https://bengarfield.github.io/AltVR/house/frame.obj',
+          's-series-m01': 'https://bengarfield.github.io/AltVR/house/avatars/malesmall.obj',
+          's-series-f01': 'https://bengarfield.github.io/AltVR/house/avatars/femalesmall.obj',
+          'pod-classic': 'https://bengarfield.github.io/AltVR/house/avatars/podclassic.obj',
+          'rubenoid-male': 'https://bengarfield.github.io/AltVR/house/avatars/rubemalesmall.obj',
+          'rubenoid-female': 'https://bengarfield.github.io/AltVR/house/viv.obj',
+          'picture-frame': 'https://bengarfield.github.io/AltVR/house/frame.obj',
           'bruce': 'https://bengarfield.github.io/AltVR/house/avatars/bruce.obj'
         };
         
@@ -74,6 +74,7 @@
           tex: {url: this.data.colors}
         };
         UltimateLoader.load(objects).then(function(result){
+          console.log('Avatar:', result);
           var mesh = result[0].children[0].clone();
           mesh.material = mesh.material.clone();
           mesh.material.map = result[1];
