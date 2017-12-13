@@ -73,6 +73,7 @@
           model: {url: models[this.data.sid]},
           tex: {url: this.data.colors}
         };
+        console.log('Avatar:', objects);
         UltimateLoader.load(objects).then(function(result){
           console.log('Avatar:', result);
           var mesh = result[0].children[0].clone();
