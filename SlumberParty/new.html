@@ -652,7 +652,7 @@
           
         case 'desk':
           //applyTexttures(model.children[i].children[0], 'desk.jpg', 60, 'combinedLight.png', 1);
-          model.remove(model.children[i]);
+          model.children[i].position.y = -100;
           break;
 
 
@@ -686,7 +686,7 @@
           applyTexttures(model.children[i].children[0], 'groundTiles.jpg', 40, 'lightGround.png', 0.9);
           break;
         case 'wall':
-          applyTexttures(model.children[i - 1].children[0], 'hedge.jpg', 60, 'lightGround.png', 0.95);
+          applyTexttures(model.children[i].children[0], 'hedge.jpg', 60, 'lightGround.png', 0.95);
           break;
 
         case 'windows':
