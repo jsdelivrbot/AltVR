@@ -9,7 +9,7 @@
   <script src="https://cdn.rawgit.com/NGenesis/altspacevr-behaviors/v0.8.1/js/altspaceutil.min.js"></script>
   <script src="https://bengarfield.github.io/AltVR/GPoly/bake-vertex-light.js"></script>
   <script src="cached-model.js"></script>
-  <script src="UltimateLoader2.js"></script>
+  <!-- <script src="UltimateLoader2.js"></script> -->
   <script>
     AFRAME.registerComponent('texture-scroll', {
       schema: {
@@ -33,19 +33,6 @@
         }
       }
     });
-    
-    // AFRAME.registerComponent('avatar', {
-    //   schema: {
-    //     type: 'src'
-    //   },
-    //   init: function() {
-    //     var self = this;
-    //     this.el.addEventListener('model-loaded', function(){
-    //       self.el.object3D.children[0].children[0].material = self.el.object3D.children[0].children[0].material.clone();
-    //       self.el.object3D.children[0].children[0].material.map = THREE.ImageUtils.loadTexture(self.data);
-    //     });
-    //   }
-    // });
 
     AFRAME.registerComponent('avatar', {
       schema: {
@@ -61,21 +48,14 @@
           
         var models = {
           's-series-m01': 'https://bengarfield.github.io/AltVR/house/avatars/malesmall.obj',
-          's-series-f01': 'https://bengarfield.github.io/AltVR/house/avatars/femalesmall.obj',
-          'pod-classic': 'https://bengarfield.github.io/AltVR/house/avatars/podclassic.obj',
-          'rubenoid-male': 'https://bengarfield.github.io/AltVR/house/avatars/rubemalesmall.obj',
-          'rubenoid-female': 'https://bengarfield.github.io/AltVR/house/viv.obj',
-          'picture-frame': 'https://bengarfield.github.io/AltVR/house/frame.obj',
-          'bruce': 'https://bengarfield.github.io/AltVR/house/avatars/bruce.obj'
+          's-series-f01': 'https://bengarfield.github.io/AltVR/house/avatars/femalesmall.obj'
         };
         
         var objects = {
           model: {url: models[this.data.sid]},
           tex: {url: this.data.colors}
         };
-        console.log('Avatar:', objects);
         UltimateLoader.load(objects).then(function(result){
-          console.log('Avatar:', result);
           var mesh = result[0].children[0].clone();
           mesh.material = mesh.material.clone();
           mesh.material.map = result[1];
@@ -116,10 +96,10 @@
     </a-entity>
 
     
-    <a-entity id='house' position='-.25 10.3 -16.75' scale='50 50 50'>
-      <a-entity id='bar' position='0 0 0' obj-model='obj: url(https://bengarfield.github.io/AltVR/AZHouse/2/bar.obj); mtl: url(https://bengarfield.github.io/AltVR/AZHouse/2/bar.mtl)' n-mesh-collider='type: environment; convex: false' bake-vertex-light></a-entity>
-      <!-- <a-entity id='bed' obj-model='obj: url(https://bengarfield.github.io/AltVR/AZHouse/2/bedroom.obj); mtl: url(https://bengarfield.github.io/AltVR/AZHouse/2/bedroom.mtl)' n-mesh-collider='type: environment; convex: false' bake-vertex-light></a-entity> -->
-      <!-- <a-entity id='fence' obj-model='obj: url(fence.obj); mtl: url(fence.mtl)' n-mesh-collider='type: environment; convex: false' bake-vertex-light></a-entity> -->
+    <a-entity id='container' position='-.25 10.3 -16.75' scale='50 50 50'>
+      <a-entity id='house'></a-entity>
+      <a-entity id='bar' position='0 0 0' obj-model='obj: url(bar.obj); mtl: url(bar.mtl)' altspace-cursor-collider='enabled: false' bake-vertex-light></a-entity>
+      <a-entity id='bed' obj-model='obj: url(bed.obj); mtl: url(bed.mtl)' n-mesh-collider='type: environment; convex: false' bake-vertex-light></a-entity>
     </a-entity>
     
     <a-plane if='frontBanner' position='-.6 16 -5.27' scale='7 1.8 1' color='#888' src='https://bengarfield.github.io/AltVR/AZHouse/2/images/auzbanner2.jpg'></a-plane>
@@ -617,122 +597,122 @@
 
       switch (model.children[i].name) {
         case 'walls':
-          applyTexttures(model.children[i].children[0], 'brick.png', 20, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'brick.png', 20, 'combinedLight.png', 1);
           break;
         case 'foundation':
-          applyTexttures(model.children[i].children[0], 'whiteBrick.jpg', 180, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'whiteBrick.jpg', 180, 'combinedLight.png', 1);
           break;
         case 'porch':
-          applyTexttures(model.children[i].children[0], 'marble.jpg', 40, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'marble.jpg', 40, 'combinedLight.png', 1);
           break;
         case 'pillars':
-          applyTexttures(model.children[i].children[0], 'roofFlat.jpg', 20, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'roofFlat.jpg', 20, 'combinedLight.png', 1);
           model.children[i].children[0].material.color.set(new THREE.Color(.5,.5,.5));
           break;
         case 'stairs':
-          applyTexttures(model.children[i].children[0], 'pinkVelvet.jpg', 50, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'pinkVelvet.jpg', 50, 'combinedLight.png', 1);
           break;
         case 'redCarpet':
-          applyTexttures(model.children[i].children[0], 'redCarpet.jpg', 60, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'redCarpet.jpg', 60, 'combinedLight.png', 1);
           break;
         case 'fountain':
-          applyTexttures(model.children[i].children[0], 'pinkVelvet.jpg', 50, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'pinkVelvet.jpg', 50, 'combinedLight.png', 1);
           break;
         case 'fountainInner':
-          applyTexttures(model.children[i].children[0], 'brick.png', 25, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'brick.png', 25, 'combinedLight.png', 1);
           break;
         case 'woodFloor':
-          applyTexttures(model.children[i].children[0], 'woodFloor.jpg', 20, 'combinedLight.png', 1.1);
+          applyTextures(model.children[i].children[0], 'woodFloor.jpg', 20, 'combinedLight.png', 1.1);
           break;
         case 'hall':
-          applyTexttures(model.children[i].children[0], 'hallWalls.jpg', 50, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'hallWalls.jpg', 50, 'combinedLight.png', 1);
           break;
         case 'stageRoomWalls':
-          applyTexttures(model.children[i].children[0], 'pinkPearloid.jpg', 30, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'pinkPearloid.jpg', 30, 'combinedLight.png', 1);
           break;
         case 'stage':
-          applyTexttures(model.children[i].children[0], 'stands.jpg', 50, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'stands.jpg', 50, 'combinedLight.png', 1);
           break;
         case 'roofTiles':
-          applyTexttures(model.children[i].children[0], 'roof.jpg', 50, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'roof.jpg', 50, 'combinedLight.png', 1);
           break;
         case 'roofFlat':
-          applyTexttures(model.children[i].children[0], 'roofFlat.jpg', 50, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'roofFlat.jpg', 50, 'combinedLight.png', 1);
           model.children[i].children[0].material.color.set(new THREE.Color(.5,.5,.5));
           break;
         case 'roofBottom':
-          applyTexttures(model.children[i].children[0], 'whiteConcrete.jpg', 50, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'whiteConcrete.jpg', 50, 'combinedLight.png', 1);
           break;
         case 'roofFront':
-          applyTexttures(model.children[i].children[0], 'glitter.jpg', 50, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'glitter.jpg', 50, 'combinedLight.png', 1);
           break;
         case 'bedroomWalls':
-          applyTexttures(model.children[i].children[0], 'bedroom.jpg', 400, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'bedroom.jpg', 400, 'combinedLight.png', 1);
           model.children[i].children[0].material.map.repeat.set(550,400);
           break;
         case 'bedroomFloor':
-          applyTexttures(model.children[i].children[0], 'bedroomFloor.jpg', 100, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'bedroomFloor.jpg', 100, 'combinedLight.png', 1);
           break;
         case 'bedroomCeiling':
-          applyTexttures(model.children[i].children[0], 'ceilingBed.jpg', 60, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'ceilingBed.jpg', 60, 'combinedLight.png', 1);
           break;
         case 'ceiling':
-          applyTexttures(model.children[i].children[0], 'ceiling.jpg', 60, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'ceiling.jpg', 60, 'combinedLight.png', 1);
           break;
         case 'barWalls':
-          applyTexttures(model.children[i].children[0], 'barWalls.jpg', 60, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'barWalls.jpg', 60, 'combinedLight.png', 1);
           break;
         case 'barBanner':
-          applyTexttures(model.children[i].children[0], 'barBanner.jpg', 1, 'combinedLight.png', 0);
+          applyTextures(model.children[i].children[0], 'barBanner.jpg', 1, 'combinedLight.png', 0);
           break;
         
         case 'deckLegs':
-          applyTexttures(model.children[i].children[0], 'deckLegs.png', 60, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'deckLegs.png', 60, 'combinedLight.png', 1);
           break;
         case 'deckStairs':
-          applyTexttures(model.children[i].children[0], 'deckStairs.jpg', 60, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'deckStairs.jpg', 60, 'combinedLight.png', 1);
           break;
         case 'deckStairsSides':
-          applyTexttures(model.children[i].children[0], 'deckLegs.png', 60, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'deckLegs.png', 60, 'combinedLight.png', 1);
           break;
           
         case 'desk':
-          applyTexttures(model.children[i].children[0], 'desk.jpg', 60, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'desk.jpg', 60, 'combinedLight.png', 1);
           //model.children[i].position.y = -100;
           break;
 
 
         case 'pool':
-          applyTexttures(model.children[i].children[0], 'hottub.jpg', 40, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'hottub.jpg', 40, 'combinedLight.png', 1);
           break;
         case 'poolTiles':
-          applyTexttures(model.children[i].children[0], 'poolWalls.jpg', 60, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'poolWalls.jpg', 60, 'combinedLight.png', 1);
           break;
         case 'hottubSteps':
-          applyTexttures(model.children[i].children[0], 'woodStairs.jpg', 60, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'woodStairs.jpg', 60, 'combinedLight.png', 1);
           break;
 
         case 'secretRoomWalls':
-          applyTexttures(model.children[i].children[0], 'secretWalls.jpg', 40, 'combinedLight.png', 0);
+          applyTextures(model.children[i].children[0], 'secretWalls.jpg', 40, 'combinedLight.png', 0);
           break;
         case 'secretRoomFloor':
-          applyTexttures(model.children[i].children[0], 'secretFloor.jpg', 40, 'combinedLight.png', 0);
+          applyTextures(model.children[i].children[0], 'secretFloor.jpg', 40, 'combinedLight.png', 0);
           break;
         case 'secretRoomCeiling':
-          applyTexttures(model.children[i].children[0], 'ceiling.jpg', 40, 'combinedLight.png', 0);
+          applyTextures(model.children[i].children[0], 'ceiling.jpg', 40, 'combinedLight.png', 0);
           break;
 
         case 'deckTop':
-          applyTexttures(model.children[i].children[0], 'deckSurface.jpg', 60, 'lightGround.png', 1);
+          applyTextures(model.children[i].children[0], 'deckSurface.jpg', 60, 'lightGround.png', 1);
           break;
         case 'grass':
-          applyTexttures(model.children[i].children[0], 'grass.jpg', 60, 'lightGround.png', 0.9);
+          applyTextures(model.children[i].children[0], 'grass.jpg', 60, 'lightGround.png', 0.9);
           break;
         case 'ground':
-          applyTexttures(model.children[i].children[0], 'groundTiles.jpg', 40, 'lightGround.png', 0.9);
+          applyTextures(model.children[i].children[0], 'groundTiles.jpg', 40, 'lightGround.png', 0.9);
           break;
         case 'wall':
-          applyTexttures(model.children[i].children[0], 'hedge.jpg', 60, 'lightGround.png', 0.95);
+          applyTextures(model.children[i].children[0], 'hedge.jpg', 60, 'lightGround.png', 0.95);
           break;
 
         case 'windows':
@@ -749,16 +729,16 @@
         default:
           break;
       }
-
     }
 
     altspace.getUser().then(function(user) {
       if (!user.isModerator) {
-        house.object3D.children[2].getObjectByName('secretRoomFloor').children[0].removeAllBehaviors();
+        console.log('1');
+        model.getObjectByName('secretRoomFloor').children[0].removeAllBehaviors();
       }
     });
 
-    function applyTexttures(mesh, texture, wrap, lightmap, i) {
+    function applyTextures(mesh, texture, wrap, lightmap, i) {
       mesh.material.map = THREE.ImageUtils.loadTexture('textures/256/' + texture);
       mesh.material.map.wrapS = mesh.material.map.wrapT = THREE.RepeatWrapping;
       mesh.material.map.repeat.set(wrap, wrap);
@@ -767,6 +747,50 @@
       mesh.material.color.set(new THREE.Color(1,1,1));
     }
   }
+
+  bar.addEventListener('model-loaded', function(){
+    for (var i = 0; i < this.object3D.children[0].children.length; i++) {
+      //console.log(model.children[i]);
+      var mesh = this.object3D.children[0].children[i];
+      //console.log(mesh.name);
+
+      if (mesh.name != 'stoolTops' && mesh.name != 'stoolSides' && mesh.name != 'stoolLegs' && mesh.name != 'stoolBases') {
+        mesh.addBehaviors(
+          new altspaceutil.behaviors.NativeComponent('n-mesh-collider', { convex: false, type: 'environment' })
+        );
+      }
+    }
+  });
+
+  var url = 'https://bengarfield.github.io/AltVR/house/avatars/new/';
+  var objLoader = new THREE.OBJLoader();
+  objLoader.load('https://bengarfield.github.io/AltVR/house/avatars/malesmall.obj', function(result){
+    console.log(result);
+    ben.object3D.add(result.clone());
+    result.children[0].material = result.children[0].material.clone();
+    miyk.object3D.add(result.clone());
+    result.children[0].material = result.children[0].material.clone();
+    erock.object3D.add(result.clone());
+
+    ben.object3D.children[0].children[0].material.map = THREE.ImageUtils.loadTexture('https://bengarfield.github.io/AltVR/house/ben.jpg');
+    miyk.object3D.children[0].children[0].material.map = THREE.ImageUtils.loadTexture(url + 'Miyk.jpg');
+    erock.object3D.children[0].children[0].material.map = THREE.ImageUtils.loadTexture(url + 'Erock.jpg');
+  });
+  objLoader.load('https://bengarfield.github.io/AltVR/house/avatars/femalesmall.obj', function(result){
+    console.log(result);
+    auzrea.object3D.add(result.clone());
+    result.children[0].material = result.children[0].material.clone();
+    megan.object3D.add(result.clone());
+    result.children[0].material = result.children[0].material.clone();
+    tahla.object3D.add(result.clone());
+    result.children[0].material = result.children[0].material.clone();
+    ann.object3D.add(result.clone());
+
+    auzrea.object3D.children[0].children[0].material.map = THREE.ImageUtils.loadTexture(url + 'Auzrea.jpg');
+    megan.object3D.children[0].children[0].material.map = THREE.ImageUtils.loadTexture(url + 'Megan.jpg');
+    tahla.object3D.children[0].children[0].material.map = THREE.ImageUtils.loadTexture(url + 'Tahla.jpg');
+    ann.object3D.children[0].children[0].material.map = THREE.ImageUtils.loadTexture(url + 'Ann.jpg');
+  });
 </script>
 </body>
 </html>
