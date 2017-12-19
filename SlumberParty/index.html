@@ -137,7 +137,7 @@
     <a-plane id='pic2' position='-12.43 10.61 -26.71' scale='1.2 .7 1' src='images/groupShot.jpg'></a-plane>
     <a-plane id='altLogo' position='-8.95 9.45 -25.98' scale='.4 .6 1' src='images/altLogo.jpg'></a-plane>
     
-    <!-- <a-plane id='deskBanner' position='-2.2 9.36 -43.92' scale='1.9 1 1' src='https://bengarfield.github.io/AltVR/AZHouse/2/deskBanner.jpg'></a-plane> -->
+    <a-plane id='deskBanner' position='0.6 9.3 -44.5' rotation='0 -17 0' scale='1.4 0.9 1' transparent='true' src='images/deskBanner.png'></a-plane>
     
     <a-plane id='photoFrame' position='-9.99 9.02 -26.185' rotation='-11 18 0' scale='.265 .38 1' src='https://bengarfield.github.io/AltVR/AZHouse/2/bed/pics/1.jpg'></a-plane>
     
@@ -350,25 +350,25 @@
     <a-entity id='stagePillow4' position='5.59 8.78 -46.1' rotation='-30 -55 0' scale='.008 .008 .008' cached-obj-model='obj: url(models/cushion.obj); mtl: url(models/cushion.mtl)' bake-vertex-light></a-entity>
 
     <a-entity id='martiniGlass1' position='0 -.4 0'>
-      <a-entity id='martini1' position='-3.7 9.63 -45.22' scale='.5 .5 .5' cached-obj-model='obj: url(models/martini_glass.obj); mtl: url(models/martini_glass.mtl)'></a-entity>
+      <a-entity id='martini1' position='-3.95 9.76 -45.2' scale='.5 .5 .5' cached-obj-model='obj: url(models/martini_glass.obj); mtl: url(models/martini_glass.mtl)'></a-entity>
       <a-animation attribute='position' from='0 -.4 0' to='0 0 0' dur='5000' begin='raise'></a-animation>
       <a-animation attribute='position' from='0 0 0' to='0 -.4 0' dur='5000' begin='lower'></a-animation>
     </a-entity>
 
     <a-entity id='martiniGlass2' position='0 -.4 0'>
-      <a-entity id='martini2' position='-3.54 9.63 -45.5' scale='.5 .5 .5' cached-obj-model='obj: url(models/martini_glass.obj); mtl: url(models/martini_glass.mtl)'></a-entity>
+      <a-entity id='martini2' position='-3.75 9.76 -45.5' scale='.5 .5 .5' cached-obj-model='obj: url(models/martini_glass.obj); mtl: url(models/martini_glass.mtl)'></a-entity>
       <a-animation attribute='position' from='0 -.4 0' to='0 0 0' dur='5000' begin='raise'></a-animation>
       <a-animation attribute='position' from='0 0 0' to='0 -.4 0' dur='5000' begin='lower'></a-animation>
     </a-entity>
     
     <a-entity id='martiniGlass3' position='0 -.53 0'>
-      <a-entity id='martini3' position='-.015 10.08 -45.55' scale='.7 .7 .7' cached-obj-model='obj: url(models/martini_glass.obj); mtl: url(models/martini_glass.mtl)'></a-entity>
+      <a-entity id='martini3' position='0.2 10.08 -45.6' scale='.7 .7 .7' cached-obj-model='obj: url(models/martini_glass.obj); mtl: url(models/martini_glass.mtl)'></a-entity>
       <a-animation attribute='position' from='0 -.53 0' to='0 0 0' dur='5000' begin='raise'></a-animation>
       <a-animation attribute='position' from='0 0 0' to='0 -.53 0' dur='5000' begin='lower'></a-animation>
     </a-entity>
 
     <a-entity id='martiniGlass4' position='0 -.4 0'>
-      <a-entity id='martini4' position='0.7 10.01 -45.35' scale='.5 .5 .5' cached-obj-model='obj: url(models/martini_glass.obj); mtl: url(models/martini_glass.mtl)'></a-entity>
+      <a-entity id='martini4' position='1.15 10.01 -45.3' scale='.5 .5 .5' cached-obj-model='obj: url(models/martini_glass.obj); mtl: url(models/martini_glass.mtl)'></a-entity>
       <a-animation attribute='position' from='0 -.4 0' to='0 0 0' dur='5000' begin='raise'></a-animation>
       <a-animation attribute='position' from='0 0 0' to='0 -.4 0' dur='5000' begin='lower'></a-animation>
     </a-entity>
@@ -630,8 +630,25 @@
         case 'stageRoomWalls':
           applyTextures(model.children[i].children[0], 'pinkPearloid.jpg', 30, 'combinedLightNew.png', 1);
           break;
-        case 'stage':
+        case 'stands':
           applyTextures(model.children[i].children[0], 'stands.jpg', 50, 'combinedLightNew.png', 1);
+          break;
+        case 'stage':
+          //applyTextures(model.children[i].children[0], 'stands.jpg', 50, 'combinedLightNew.png', 1);
+          var mesh = model.children[i].children[0]
+          mesh.material.map = THREE.ImageUtils.loadTexture('textures/256/' + 'stands.jpg');
+          mesh.material.map.wrapS = mesh.material.map.wrapT = THREE.RepeatWrapping;
+          mesh.material.map.repeat.set(50, 50);
+          mesh.material.lightMap = THREE.ImageUtils.loadTexture('combinedLightNew.png');
+          mesh.material.lightMapIntensity = 1;
+          mesh.material.color.set(new THREE.Color(1,1,1));
+          break;
+        case 'stageCollision':
+        model.children[i].children[0].material.transparent = true;
+          model.children[i].children[0].material.opacity = 0;
+          model.children[i].children[0].addBehaviors(
+            new altspaceutil.behaviors.NativeComponent('n-mesh-collider', { convex: false, type: 'environment' })
+          );
           break;
         case 'roofTiles':
           applyTextures(model.children[i].children[0], 'roof.jpg', 50, 'combinedLightNew.png', 1);
