@@ -719,6 +719,9 @@
           console.log(model.children[i]);
           model.children[i].children[0].material.transparent = true;
           model.children[i].children[0].material.opacity = .1;
+          model.children[i].children[0].addBehaviors(
+            new altspaceutil.behaviors.NativeComponent('n-mesh-collider', { convex: false, type: 'environment' })
+          );
           break;
         case 'walle':
           console.log('wall', model.children[i]);
