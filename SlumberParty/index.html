@@ -70,7 +70,7 @@
   <a-scene altspace='fullspace: true' sync-system='author: BenG; app: SlumberParty; refUrl: https://altvr-apps.firebaseio.com/'>
     
     <a-entity position='-2.08 12.1 -50.25' scale='6 6 6' n-layout-browser='url: https://docs.google.com/presentation/d/e/2PACX-1vSOmswWKBPflbXrysNIlrItF66YkCD9bhuhIEX1bDlMee1x2RPalcRob2LBMVvmgE2oW08a06cu84rA/pub?start=false&loop=false&delayms=3000&slide=id.p; isEnclosure: false'></a-entity>
-    <a-entity position='-.8 17.75 -29.2' rotation='90 0 0' scale='3 3 3' n-layout-browser='url: https://video-jukebox.firebaseapp.com/; isEnclosure: false'></a-entity>
+    <a-entity position='-.8 17.75 -29.2' rotation='90 0 0' scale='3 3 3' n-layout-browser='url: https://video-jukebox.firebaseapp.com/?altspace-sync-instance=slumberparty; isEnclosure: false'></a-entity>
     <!-- <a-entity position='0 1 0' scale='1 1 1' n-layout-browser='url: https://jsbin.com/kakamaq; isEnclosure: true'></a-entity> -->
     
     <a-light type="point" position="-5.67 16.37 -22.22" intensity="50">
@@ -137,7 +137,7 @@
     <a-plane id='pic2' position='-12.43 10.61 -26.71' scale='1.2 .7 1' src='images/groupShot.jpg'></a-plane>
     <a-plane id='altLogo' position='-8.95 9.45 -25.98' scale='.4 .6 1' src='images/altLogo.jpg'></a-plane>
     
-    <a-plane id='deskBanner' position='-2.2 9.36 -43.92' scale='1.9 1 1' src='https://bengarfield.github.io/AltVR/AZHouse/2/deskBanner.jpg'></a-plane>
+    <!-- <a-plane id='deskBanner' position='-2.2 9.36 -43.92' scale='1.9 1 1' src='https://bengarfield.github.io/AltVR/AZHouse/2/deskBanner.jpg'></a-plane> -->
     
     <a-plane id='photoFrame' position='-9.99 9.02 -26.185' rotation='-11 18 0' scale='.265 .38 1' src='https://bengarfield.github.io/AltVR/AZHouse/2/bed/pics/1.jpg'></a-plane>
     
@@ -175,8 +175,8 @@
           <a-entity position='0 .09 0' scale='.1 .1 .1' n-text='fontSize: 4; text: Martinis'></a-entity>
           <a-plane scale='.3 .1 1' src='images/deskPanel.png' transparent='true'></a-plane>
           <a-cylinder id='martiniButton1' position='-.1 -.024 0' radius='.01' height='.03' rotation='90 0 0' color='red' segments-radial='12' segments-height='1'></a-cylinder>
-          <a-cylinder id='martiniButton2' position='-.04 .02 0' radius='.013' height='.03' rotation='90 0 0' color='red' segments-radial='12' segments-height='1'></a-cylinder>
-          <a-cylinder id='martiniButton3' position='.04 .02 0' radius='.01' height='.03' rotation='90 0 0' color='red' segments-radial='12' segments-height='1'></a-cylinder>
+          <a-cylinder id='martiniButton2' position='-.04 .02 0' radius='.01' height='.03' rotation='90 0 0' color='red' segments-radial='12' segments-height='1'></a-cylinder>
+          <a-cylinder id='martiniButton3' position='.04 .02 0' radius='.015' height='.03' rotation='90 0 0' color='red' segments-radial='12' segments-height='1'></a-cylinder>
           <a-cylinder id='martiniButton4' position='.1 -.024 0' radius='.01' height='.03' rotation='90 0 0' color='red' segments-radial='12' segments-height='1'></a-cylinder>
         </a-entity>
       </a-entity>
@@ -350,25 +350,25 @@
     <a-entity id='stagePillow4' position='5.59 8.78 -46.1' rotation='-30 -55 0' scale='.008 .008 .008' cached-obj-model='obj: url(models/cushion.obj); mtl: url(models/cushion.mtl)' bake-vertex-light></a-entity>
 
     <a-entity id='martiniGlass1' position='0 -.4 0'>
-      <a-entity id='martini1' position='-3.6 10.12 -44.4' scale='.5 .5 .5' cached-obj-model='obj: url(models/martini_glass.obj); mtl: url(models/martini_glass.mtl)'></a-entity>
+      <a-entity id='martini1' position='-3.7 9.63 -45.22' scale='.5 .5 .5' cached-obj-model='obj: url(models/martini_glass.obj); mtl: url(models/martini_glass.mtl)'></a-entity>
       <a-animation attribute='position' from='0 -.4 0' to='0 0 0' dur='5000' begin='raise'></a-animation>
       <a-animation attribute='position' from='0 0 0' to='0 -.4 0' dur='5000' begin='lower'></a-animation>
     </a-entity>
 
-    <a-entity id='martiniGlass2' position='0 -.53 0'>
-      <a-entity id='martiniBig' position='-2.7 10.2 -45.1' scale='.7 .7 .7' cached-obj-model='obj: url(models/martini_glass.obj); mtl: url(models/martini_glass.mtl)'></a-entity>
+    <a-entity id='martiniGlass2' position='0 -.4 0'>
+      <a-entity id='martini2' position='-3.54 9.63 -45.5' scale='.5 .5 .5' cached-obj-model='obj: url(models/martini_glass.obj); mtl: url(models/martini_glass.mtl)'></a-entity>
+      <a-animation attribute='position' from='0 -.4 0' to='0 0 0' dur='5000' begin='raise'></a-animation>
+      <a-animation attribute='position' from='0 0 0' to='0 -.4 0' dur='5000' begin='lower'></a-animation>
+    </a-entity>
+    
+    <a-entity id='martiniGlass3' position='0 -.53 0'>
+      <a-entity id='martini3' position='-.015 10.08 -45.6' scale='.7 .7 .7' cached-obj-model='obj: url(models/martini_glass.obj); mtl: url(models/martini_glass.mtl)'></a-entity>
       <a-animation attribute='position' from='0 -.53 0' to='0 0 0' dur='5000' begin='raise'></a-animation>
       <a-animation attribute='position' from='0 0 0' to='0 -.53 0' dur='5000' begin='lower'></a-animation>
     </a-entity>
-    
-    <a-entity id='martiniGlass3' position='0 -.4 0'>
-      <a-entity id='martini3' position='-1.5 10.12 -45' scale='.5 .5 .5' cached-obj-model='obj: url(models/martini_glass.obj); mtl: url(models/martini_glass.mtl)'></a-entity>
-      <a-animation attribute='position' from='0 -.4 0' to='0 0 0' dur='5000' begin='raise'></a-animation>
-      <a-animation attribute='position' from='0 0 0' to='0 -.4 0' dur='5000' begin='lower'></a-animation>
-    </a-entity>
 
     <a-entity id='martiniGlass4' position='0 -.4 0'>
-      <a-entity id='martini4' position='-.9 10.12 -44.5' scale='.5 .5 .5' cached-obj-model='obj: url(models/martini_glass.obj); mtl: url(models/martini_glass.mtl)'></a-entity>
+      <a-entity id='martini4' position='0.7 10.01 -45.35' scale='.5 .5 .5' cached-obj-model='obj: url(models/martini_glass.obj); mtl: url(models/martini_glass.mtl)'></a-entity>
       <a-animation attribute='position' from='0 -.4 0' to='0 0 0' dur='5000' begin='raise'></a-animation>
       <a-animation attribute='position' from='0 0 0' to='0 -.4 0' dur='5000' begin='lower'></a-animation>
     </a-entity>
@@ -418,7 +418,7 @@
       if (data.val() != null) {
         if (data.val() == 'raised') {
           if (martini2State == undefined) {
-            martiniGlass2.setAttribute('position', '0 -.53 0');
+            martiniGlass2.setAttribute('position', '0 -.4 0');
           } else {
             martiniGlass2.emit('raise');
           }
@@ -437,7 +437,7 @@
       if (data.val() != null) {
         if (data.val() == 'raised') {
           if (martini3State == undefined) {
-            martiniGlass3.setAttribute('position', '0 -.4 0');
+            martiniGlass3.setAttribute('position', '0 -.53 0');
           } else {
             martiniGlass3.emit('raise');
           }
@@ -540,14 +540,14 @@
   var model = null, lightmap = null;
   // load model
   var gltfLoader = new THREE.ColladaLoader();
-  gltfLoader.load('house.dae',
+  gltfLoader.load('house2.dae',
     function(result){
       console.log(result)
       house.object3D.add(result.scene);
       model = result.scene;
-      model.addBehaviors(
-        new altspaceutil.behaviors.NativeComponent('n-mesh-collider', { convex: false, type: 'environment' })
-      );
+      // model.addBehaviors(
+      //   new altspaceutil.behaviors.NativeComponent('n-mesh-collider', { convex: false, type: 'environment' })
+      // );
       loadingDone();
     },
     undefined,
@@ -597,109 +597,109 @@
 
       switch (model.children[i].name) {
         case 'walls':
-          applyTextures(model.children[i].children[0], 'brick.png', 20, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'brick.png', 20, 'combinedLightNew.png', 1);
           break;
         case 'foundation':
-          applyTextures(model.children[i].children[0], 'whiteBrick.jpg', 180, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'whiteBrick.jpg', 180, 'combinedLightNew.png', 1);
           break;
         case 'porch':
-          applyTextures(model.children[i].children[0], 'marble.jpg', 40, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'marble.jpg', 40, 'combinedLightNew.png', 1);
           break;
         case 'pillars':
-          applyTextures(model.children[i].children[0], 'roofFlat.jpg', 20, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'roofFlat.jpg', 20, 'combinedLightNew.png', 1);
           model.children[i].children[0].material.color.set(new THREE.Color(.5,.5,.5));
           break;
         case 'stairs':
-          applyTextures(model.children[i].children[0], 'pinkVelvet.jpg', 50, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'pinkVelvet.jpg', 50, 'combinedLightNew.png', 1);
           break;
         case 'redCarpet':
-          applyTextures(model.children[i].children[0], 'redCarpet.jpg', 60, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'redCarpet.jpg', 60, 'combinedLightNew.png', 1);
           break;
         case 'fountain':
-          applyTextures(model.children[i].children[0], 'pinkVelvet.jpg', 50, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'pinkVelvet.jpg', 50, 'combinedLightNew.png', 1);
           break;
         case 'fountainInner':
-          applyTextures(model.children[i].children[0], 'brick.png', 25, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'brick.png', 25, 'combinedLightNew.png', 1);
           break;
         case 'woodFloor':
-          applyTextures(model.children[i].children[0], 'woodFloor.jpg', 20, 'combinedLight.png', 1.1);
+          applyTextures(model.children[i].children[0], 'woodFloor.jpg', 20, 'combinedLightNew.png', 1.1);
           break;
         case 'hall':
-          applyTextures(model.children[i].children[0], 'hallWalls.jpg', 50, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'hallWalls.jpg', 50, 'combinedLightNew.png', 1);
           break;
         case 'stageRoomWalls':
-          applyTextures(model.children[i].children[0], 'pinkPearloid.jpg', 30, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'pinkPearloid.jpg', 30, 'combinedLightNew.png', 1);
           break;
         case 'stage':
-          applyTextures(model.children[i].children[0], 'stands.jpg', 50, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'stands.jpg', 50, 'combinedLightNew.png', 1);
           break;
         case 'roofTiles':
-          applyTextures(model.children[i].children[0], 'roof.jpg', 50, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'roof.jpg', 50, 'combinedLightNew.png', 1);
           break;
         case 'roofFlat':
-          applyTextures(model.children[i].children[0], 'roofFlat.jpg', 50, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'roofFlat.jpg', 50, 'combinedLightNew.png', 1);
           model.children[i].children[0].material.color.set(new THREE.Color(.5,.5,.5));
           break;
         case 'roofBottom':
-          applyTextures(model.children[i].children[0], 'whiteConcrete.jpg', 50, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'whiteConcrete.jpg', 50, 'combinedLightNew.png', 1);
           break;
         case 'roofFront':
-          applyTextures(model.children[i].children[0], 'glitter.jpg', 50, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'glitter.jpg', 50, 'combinedLightNew.png', 1);
           break;
         case 'bedroomWalls':
-          applyTextures(model.children[i].children[0], 'bedroom.jpg', 400, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'bedroom.jpg', 400, '.png', 1);
           model.children[i].children[0].material.map.repeat.set(550,400);
           break;
         case 'bedroomFloor':
-          applyTextures(model.children[i].children[0], 'bedroomFloor.jpg', 100, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'bedroomFloor.jpg', 100, 'combinedLightNew.png', 1);
           break;
         case 'bedroomCeiling':
-          applyTextures(model.children[i].children[0], 'ceilingBed.jpg', 60, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'ceilingBed.jpg', 60, 'combinedLightNew.png', 1);
           break;
         case 'ceiling':
-          applyTextures(model.children[i].children[0], 'ceiling.jpg', 60, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'ceiling.jpg', 60, 'combinedLightNew.png', 1);
           break;
         case 'barWalls':
-          applyTextures(model.children[i].children[0], 'barWalls.jpg', 60, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'barWalls.jpg', 60, 'combinedLightNew.png', 1);
           break;
         case 'barBanner':
-          applyTextures(model.children[i].children[0], 'barBanner.jpg', 1, 'combinedLight.png', 0);
+          applyTextures(model.children[i].children[0], 'barBanner.jpg', 1, 'combinedLightNew.png', 0);
           break;
         
         case 'deckLegs':
-          applyTextures(model.children[i].children[0], 'deckLegs.png', 60, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'deckLegs.png', 60, 'combinedLightNew.png', 1);
           break;
         case 'deckStairs':
-          applyTextures(model.children[i].children[0], 'deckStairs.jpg', 60, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'deckStairs.jpg', 60, 'combinedLightNew.png', 1);
           break;
         case 'deckStairsSides':
-          applyTextures(model.children[i].children[0], 'deckLegs.png', 60, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'deckLegs.png', 60, 'combinedLightNew.png', 1);
           break;
           
         case 'desk':
-          applyTextures(model.children[i].children[0], 'desk.jpg', 60, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'desk.jpg', 60, 'combinedLightNew.png', 1);
           //model.children[i].position.y = -100;
           break;
 
 
         case 'pool':
-          applyTextures(model.children[i].children[0], 'hottub.jpg', 40, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'hottub.jpg', 40, 'combinedLightNew.png', 1);
           break;
         case 'poolTiles':
-          applyTextures(model.children[i].children[0], 'poolWalls.jpg', 60, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'poolWalls.jpg', 60, 'combinedLightNew.png', 1);
           break;
         case 'hottubSteps':
-          applyTextures(model.children[i].children[0], 'woodStairs.jpg', 60, 'combinedLight.png', 1);
+          applyTextures(model.children[i].children[0], 'woodStairs.jpg', 60, 'combinedLightNew.png', 1);
           break;
 
         case 'secretRoomWalls':
-          applyTextures(model.children[i].children[0], 'secretWalls.jpg', 40, 'combinedLight.png', 0);
+          applyTextures(model.children[i].children[0], 'secretWalls.jpg', 40, 'combinedLightNew.png', 0);
           break;
         case 'secretRoomFloor':
-          applyTextures(model.children[i].children[0], 'secretFloor.jpg', 40, 'combinedLight.png', 0);
+          applyTextures(model.children[i].children[0], 'secretFloor.jpg', 40, 'combinedLightNew.png', 0);
           break;
         case 'secretRoomCeiling':
-          applyTextures(model.children[i].children[0], 'ceiling.jpg', 40, 'combinedLight.png', 0);
+          applyTextures(model.children[i].children[0], 'ceiling.jpg', 40, 'combinedLightNew.png', 0);
           break;
 
         case 'deckTop':
@@ -725,6 +725,25 @@
           model.children[i].children[0].material.transparent = true;
           model.children[i].children[0].material.opacity = 0;
           break;
+
+        case 'chair1':
+          model.children[i].children[0].material.map = THREE.ImageUtils.loadTexture('textures/stage/chair.jpg');
+          break;
+        case 'chair2':
+          model.children[i].children[0].material.map = THREE.ImageUtils.loadTexture('textures/stage/chair.jpg');
+          break;
+         case 'desk2':
+           model.children[i].children[0].material.map = THREE.ImageUtils.loadTexture('textures/stage/desk.jpg');
+           model.children[i].children[0].addBehaviors(
+             new altspaceutil.behaviors.NativeComponent('n-mesh-collider', { convex: false, type: 'environment' })
+           );
+           break;
+        case 'coffeeTable':
+          model.children[i].children[0].material.map = THREE.ImageUtils.loadTexture('textures/stage/table.png');
+          model.children[i].children[0].addBehaviors(
+            new altspaceutil.behaviors.NativeComponent('n-mesh-collider', { convex: false, type: 'environment' })
+          );
+          break;
           
         default:
           break;
@@ -745,6 +764,9 @@
       mesh.material.lightMap = THREE.ImageUtils.loadTexture(lightmap);
       mesh.material.lightMapIntensity = i;
       mesh.material.color.set(new THREE.Color(1,1,1));
+      mesh.addBehaviors(
+         new altspaceutil.behaviors.NativeComponent('n-mesh-collider', { convex: false, type: 'environment' })
+       );
     }
   }
 
