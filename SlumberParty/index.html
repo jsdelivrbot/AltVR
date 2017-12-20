@@ -636,12 +636,14 @@
         case 'stage':
           //applyTextures(model.children[i].children[0], 'stands.jpg', 50, 'combinedLightNew.png', 1);
           var mesh = model.children[i].children[0]
+          mesh.removeAllBehaviors();
           mesh.material.map = THREE.ImageUtils.loadTexture('textures/256/' + 'stands.jpg');
           mesh.material.map.wrapS = mesh.material.map.wrapT = THREE.RepeatWrapping;
           mesh.material.map.repeat.set(50, 50);
           mesh.material.lightMap = THREE.ImageUtils.loadTexture('combinedLightNew.png');
           mesh.material.lightMapIntensity = 1;
           mesh.material.color.set(new THREE.Color(1,1,1));
+          model.children[i].children[0].userData.altspace = {collider: {enabled: false}};
           break;
         case 'stageCollision':
         model.children[i].children[0].material.transparent = true;
@@ -748,9 +750,12 @@
 
         case 'chair1':
           model.children[i].children[0].material.map = THREE.ImageUtils.loadTexture('textures/stage/chair.jpg');
+          model.children[i].children[0].userData.altspace = {collider: {enabled: false}};
           break;
         case 'chair2':
+          model.children[i].children[0].removeAllBehaviors();
           model.children[i].children[0].material.map = THREE.ImageUtils.loadTexture('textures/stage/chair.jpg');
+          model.children[i].children[0].userData.altspace = {collider: {enabled: false}};
           break;
          case 'desk2':
            model.children[i].children[0].material.map = THREE.ImageUtils.loadTexture('textures/stage/desk.jpg');
