@@ -683,7 +683,19 @@
           applyTextures(model.children[i].children[0], 'barWalls.jpg', 60, 'combinedLightNew.png', 1);
           break;
         case 'barBanner':
-          applyTextures(model.children[i].children[0], 'barBanner.jpg', 1, 'combinedLightNew.png', 0);
+          //applyTextures(model.children[i].children[0], 'barBanner.jpg', 1, 'combinedLightNew.png', 0);
+          var mesh = model.children[i].children[0];
+          //mesh.material.map = THREE.ImageUtils.loadTexture('http://localhost:8002/cake/engagement/banner.jpg');
+          mesh.material.map = THREE.ImageUtils.loadTexture('https://bengarfield.github.io/AltVR/house/cake/engagement/banner.jpg');
+          mesh.material.map.wrapS = mesh.material.map.wrapT = THREE.RepeatWrapping;
+          mesh.material.map.repeat.set(1, 1);
+          mesh.material.lightMap = THREE.ImageUtils.loadTexture('combinedLightNew.png');
+          mesh.material.lightMapIntensity = 0;
+          mesh.material.color.set(new THREE.Color(1,1,1));
+          mesh.addBehaviors(
+            new altspaceutil.behaviors.NativeComponent('n-mesh-collider', { convex: false, type: 'environment' })
+          );
+
           break;
         
         case 'deckLegs':
