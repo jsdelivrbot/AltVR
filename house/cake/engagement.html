@@ -297,7 +297,7 @@
     <a-mixin id='leftHandCake' position='-.04 -.22 -.04' rotation='-115 0 -90' scale='.1 .1 .1'></a-mixin>
 
     <a-entity position='9.75 -.025 2.25' rotation='0 90 0'>
-    <a-entity id='cake' position='0 -100 0' rotation='0 90 0' scale='.1 .1 .1'>
+    <a-entity id='cake' position='0 -100 0' rotation='0 180 0' scale='.1 .1 .1'>
       <a-entity cached-model='obj: url(cake.obj); texture: url(engagement/cake.png)'></a-entity>
       <a-cylinder position='0 -.1 0' radius='2.4' height='.1' color='#666'></a-cylinder>
       <a-entity id='candles' position='0 1 0'>
@@ -469,7 +469,7 @@
         if (user.userId == '582115151281389721') {
 	      	//reset button
           buttons.setAttribute('position', '.1 1 0');
-          cakeSpawner.setAttribute('position', '9.75 1.5 -20');
+          cakeSpawner.setAttribute('position', '12 8.7 -23');
           cakeSpawner2.setAttribute('position', '9.75 .85 2.75');
 
           resetButton.addEventListener('mouseup', function(){
@@ -502,11 +502,11 @@
       scene.systems['sync-system'].connection.instance.child('cakeState').on('value', function(data){
         if (data.val() != null) {
           if (data.val() == 'placed') {
-            cake.setAttribute('position', '0 1.03 0');
+            cake.setAttribute('position', '24.83 9.16 -2.04');
             cakeSlices.setAttribute('position', '0 -100 0');
           } else if (data.val() == 'cut') {
             cake.setAttribute('position', '0 -100 0');
-            cakeSlices.setAttribute('position', '0 1.03 0');
+            cakeSlices.setAttribute('position', '24.83 9.16 -2.04');
           }
         } else {
           cake.setAttribute('position', '0 -100 0');
