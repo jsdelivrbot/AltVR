@@ -602,29 +602,29 @@
 
       switch (model.children[i].name) {
         case 'walls':
-          applyTextures(model.children[i].children[0], 'brick.png', 20, 'combinedLightNew.png', 1);
+          applyTextures(model.children[i].children[0], 'brick.png', 20, 'combinedLightNew.png', 1.05);
           break;
         case 'foundation':
-          applyTextures(model.children[i].children[0], 'whiteBrick.jpg', 180, 'combinedLightNew.png', 1);
+          applyTextures(model.children[i].children[0], 'whiteBrick.jpg', 180, 'combinedLightNew.png', 1.05);
           break;
         case 'porch':
-          applyTextures(model.children[i].children[0], 'marble.jpg', 40, 'combinedLightNew.png', 1);
+          applyTextures(model.children[i].children[0], 'marble.jpg', 40, 'combinedLightNew.png', 1.05);
           break;
         case 'pillars':
-          applyTextures(model.children[i].children[0], 'roofFlat.jpg', 20, 'combinedLightNew.png', 1);
+          applyTextures(model.children[i].children[0], 'roofFlat.jpg', 20, 'combinedLightNew.png', 1.05);
           model.children[i].children[0].material.color.set(new THREE.Color(.5,.5,.5));
           break;
         case 'stairs':
-          applyTextures(model.children[i].children[0], 'pinkVelvet.jpg', 50, 'combinedLightNew.png', 1);
+          applyTextures(model.children[i].children[0], 'pinkVelvet.jpg', 50, 'combinedLightNew.png', 1.05);
           break;
         case 'redCarpet':
-          applyTextures(model.children[i].children[0], 'redCarpet.jpg', 60, 'combinedLightNew.png', 1);
+          applyTextures(model.children[i].children[0], 'redCarpet.jpg', 60, 'combinedLightNew.png', 1.05);
           break;
         case 'fountain':
-          applyTextures(model.children[i].children[0], 'pinkVelvet.jpg', 50, 'combinedLightNew.png', 1);
+          applyTextures(model.children[i].children[0], 'pinkVelvet.jpg', 50, 'combinedLightNew.png', 1.05);
           break;
         case 'fountainInner':
-          applyTextures(model.children[i].children[0], 'brick.png', 25, 'combinedLightNew.png', 1);
+          applyTextures(model.children[i].children[0], 'brick.png', 25, 'combinedLightNew.png', 1.05);
           break;
         case 'woodFloor':
           applyTextures(model.children[i].children[0], 'woodFloor.jpg', 20, 'combinedLightNew.png', 1.1);
@@ -658,17 +658,17 @@
           );
           break;
         case 'roofTiles':
-          applyTextures(model.children[i].children[0], 'roof.jpg', 50, 'combinedLightNew.png', 1);
+          applyTextures(model.children[i].children[0], 'roof.jpg', 50, 'combinedLightNew.png', 1.05);
           break;
         case 'roofFlat':
-          applyTextures(model.children[i].children[0], 'roofFlat.jpg', 50, 'combinedLightNew.png', 1);
+          applyTextures(model.children[i].children[0], 'roofFlat.jpg', 50, 'combinedLightNew.png', 1.05);
           model.children[i].children[0].material.color.set(new THREE.Color(.5,.5,.5));
           break;
         case 'roofBottom':
-          applyTextures(model.children[i].children[0], 'whiteConcrete.jpg', 50, 'combinedLightNew.png', 1);
+          applyTextures(model.children[i].children[0], 'whiteConcrete.jpg', 50, 'combinedLightNew.png', 1.05);
           break;
         case 'roofFront':
-          applyTextures(model.children[i].children[0], 'glitter.jpg', 50, 'combinedLightNew.png', 1);
+          applyTextures(model.children[i].children[0], 'glitter.jpg', 50, 'combinedLightNew.png', 1.05);
           break;
         case 'bedroomWalls':
           applyTextures(model.children[i].children[0], 'bedroom.jpg', 400, '.png', 1);
@@ -691,13 +691,13 @@
           break;
         
         case 'deckLegs':
-          applyTextures(model.children[i].children[0], 'deckLegs.png', 60, 'combinedLightNew.png', 1);
+          applyTextures(model.children[i].children[0], 'deckLegs.png', 60, 'combinedLightNew.png', 1.05);
           break;
         case 'deckStairs':
-          applyTextures(model.children[i].children[0], 'deckStairs.jpg', 60, 'combinedLightNew.png', 1);
+          applyTextures(model.children[i].children[0], 'deckStairs.jpg', 60, 'combinedLightNew.png', 1.05);
           break;
         case 'deckStairsSides':
-          applyTextures(model.children[i].children[0], 'deckLegs.png', 60, 'combinedLightNew.png', 1);
+          applyTextures(model.children[i].children[0], 'deckLegs.png', 60, 'combinedLightNew.png', 1.05);
           break;
           
         case 'desk':
@@ -727,7 +727,7 @@
           break;
 
         case 'deckTop':
-          applyTextures(model.children[i].children[0], 'deckSurface.jpg', 60, 'lightGround.png', 1);
+          applyTextures(model.children[i].children[0], 'deckSurface.jpg', 60, 'lightGround.png', 1.05);
           break;
         case 'grass':
           applyTextures(model.children[i].children[0], 'grass.jpg', 60, 'lightGround.png', 1);
@@ -742,7 +742,7 @@
         case 'windows':
           console.log(model.children[i]);
           model.children[i].children[0].material.transparent = true;
-          model.children[i].children[0].material.opacity = .1;
+          model.children[i].children[0].material.opacity = .03;
           model.children[i].children[0].addBehaviors(
             new altspaceutil.behaviors.NativeComponent('n-mesh-collider', { convex: false, type: 'environment' })
           );
