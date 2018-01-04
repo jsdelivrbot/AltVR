@@ -156,9 +156,15 @@
 
       <a-entity position='.37 3.9 3.56'>
         <a-circle id='fountainbottom' position='-11.2 1.45 -7.4' rotation='-90 0 0' radius='4' material='src:url(https://bengarfield.github.io/AltVR/AZHouse/waterPink.jpg); repeat: 0.9 0.9' opacity='.8' texture-scroll='x: .0001; y: -.0001'></a-circle>
-        <a-plane id='fountaintop' position='-11.2 2.45 -7.5' rotation='-90 0 0' scale='3.1 3.1 1' material='src:url(https://bengarfield.github.io/AltVR/AZHouse/waterPink.jpg); repeat: 0.5 0.5' opacity='.8' texture-scroll='x: .0001; y: -.0001'></a-plane>
+        <a-plane id='fountaintop' position='-11.2 2.45 -7.5' rotation='-90 0 0' scale='3.1 3.1 1' material='src:url(https://bengarfield.github.io/AltVR/AZHouse/waterPink.jpg); repeat: 0.5 0.5' opacity='.8' texture-scroll='x: .0001; y: -.0001'>
+          <a-entity n-sound='src: url(sounds/water.ogg); loop: true; maxDistance: 0.6; minDistance: 0.2 rolloff: cosine; volume: 0.9; autoplay: true'></a-entity>
+          <a-entity n-sound='src: url(sounds/water.mp3); loop: true; maxDistance: 0.6; minDistance: 0.2 rolloff: cosine; volume: 0.9; autoplay: true'></a-entity>
+        </a-plane>
         <a-circle id='fountain2bottom' position='11.8 1.45 -7.5' rotation='-90 0 0' radius='4' material='src:url(https://bengarfield.github.io/AltVR/AZHouse/water.jpg); repeat: 0.901 0.901' opacity='.8' texture-scroll='x: .0001; y: -.0001'></a-circle>
-        <a-plane id='fountain2top' position='11.8 2.45 -7.5' rotation='-90 0 0' scale='3.1 3.1 1' material='src:url(https://bengarfield.github.io/AltVR/AZHouse/water.jpg); repeat: 0.501 0.501' opacity='.8' texture-scroll='x: .0001; y: -.0001'></a-plane>
+        <a-plane id='fountain2top' position='11.8 2.45 -7.5' rotation='-90 0 0' scale='3.1 3.1 1' material='src:url(https://bengarfield.github.io/AltVR/AZHouse/water.jpg); repeat: 0.501 0.501' opacity='.8' texture-scroll='x: .0001; y: -.0001'>
+          <a-entity n-sound='src: url(sounds/water.ogg); loop: true; maxDistance: 0.6; minDistance: 0.2 rolloff: cosine; volume: 0.9; autoplay: true'></a-entity>
+          <a-entity n-sound='src: url(sounds/water.mp3); loop: true; maxDistance: 0.6; minDistance: 0.2 rolloff: cosine; volume: 0.9; autoplay: true'></a-entity>
+        </a-plane>
       </a-entity>
 
       <a-box id='roomButton' position='-16.3 -100 -25.9' scale='.15 .15 .1' color='blue'></a-box>
