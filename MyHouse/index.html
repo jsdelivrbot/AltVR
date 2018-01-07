@@ -6,7 +6,7 @@
   <script src='https://sdk.altvr.com/libs/altspace.js/2.6.1/altspace.min.js'></script>
 </head>
 <body>
-	<a-scene altspace='fullspace: true'>
+	<a-scene altspace='fullspace: true' sync-system='author: BenG; app: Home; instance: home; refUrl: https://altvr-apps.firebaseio.com/'>
 		<a-mixin id='color1' material='color: #800'></a-mixin>
 		<a-mixin id='walls' material='color: #410' n-box-collider='type: environment'></a-mixin>
 
@@ -50,6 +50,12 @@
 		</a-entity>
 	</a-scene>
 <script>
+	var scene = document.querySelector('a-scene');
+	var sync;
+	scene.addEventListener('connected', function() {
+		sync = scene.systems['sync-system'].connection;
+	
+
 	noEntry.object3D.addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({ jointCubeSize: 0.001, joints: [['Head', 'Center', 0]]}));
 	noEntry.object3D.addEventListener('jointcollisionenter', function(){
 		console.log('nope');
@@ -65,14 +71,35 @@
 		noEntry.setAttribute('position', '0 -1000 0');
 	});
 
+	var doorState = 'closed'
 	btn1.addEventListener('mouseup', function(){
-		open();
+		//open();
+		sync.instance.child('doorState').set('opened');
+		setTimeout(function(){
+      sync.instance.child('doorState').set('closed');
+    }, 6000);
+	});
+
+	sync.instance.child('doorState').on('value', function(data){
+		console.log(data.val());
+		if (doorState == 'closed' && data.val() == 'opened') {
+			doorState = 'opened'
+			door.emit('open');
+			entry.setAttribute('position', '-1.5 1 -7.55');
+		}
+		if (doorState == 'opened' && data.val() == 'closed') {
+			doorState = 'closed';
+			door.emit('close');
+			setTimeout(function(){
+	      entry.setAttribute('position', '-1.5 -1 -7.55');
+	    }, 3000);
+		}
 	});
 
 	btn2.addEventListener('mouseup', function(){
 		noEntry.setAttribute('position', '0 1.5 -10');
 	});
-
+	});
 	function open() {
 		door.emit('open');
 		entry.setAttribute('position', '-1.5 1 -7.55');
