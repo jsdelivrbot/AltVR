@@ -53,7 +53,7 @@
 		</a-entity>
 	</a-scene>
 <script>
-	bell.setAttribute('n-sound', {src: /Mobile/i.test(navigator.userAgent) ? 'dingdong.mp3' : 'dingdong.ogg', volume: .5, spatialBlend: 1});
+	bell.setAttribute('n-sound', {src: /Mobile/i.test(navigator.userAgent) ? 'dingdong.mp3' : 'dingdong.ogg', volume: .25, spatialBlend: 1});
 	var scene = document.querySelector('a-scene');
 	var sync;
 	scene.addEventListener('connected', function() {
@@ -110,10 +110,17 @@
 			}
 		});
 
+		var canRing = true;
 		btn2.addEventListener('mousedown', function(){
 			//noEntry.setAttribute('position', '0 1.5 -10');
-			bell.components.sync.takeOwnership();
-      bell.components['n-sound'].playSound();
+			if (canRing) {
+				bell.components.sync.takeOwnership();
+	      bell.components['n-sound'].playSound();
+	      canRing = false;
+	      setTimeout(function(){
+		      canRing = true;
+		    }, 10000);
+	    }
 		});
 	});
 	function open() {
