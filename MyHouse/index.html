@@ -17,7 +17,7 @@
 				<a-animation to='0 90 0' dur='3000' begin='open'></a-animation>
 				<a-animation to='0 0 0' dur='3000' begin='close'></a-animation>
 			</a-entity>
-			<a-box id='entry' position='-1.5 -1 -7.55' scale='1 2 .1' color='#0f0' opacity='.05' altspace-cursor-collider='enabled: false'></a-box>
+			<!-- <a-box id='entry' position='-1.5 -1 -7.55' scale='1 2 .1' color='#0f0' opacity='0' altspace-cursor-collider='enabled: false'></a-box> -->
 
 			<a-box id='window' position='1 1.5 -7.55' scale='1.5 1 .1' color='#fff' opacity='0.01' n-box-collider='type: environment'></a-box>
 
@@ -58,23 +58,29 @@
 	var sync;
 	scene.addEventListener('connected', function() {
 		sync = scene.systems['sync-system'].connection;
-	
+		
+		var granted = false;
 		noEntry.object3D.addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({ jointCubeSize: 0.001, joints: [['Head', 'Center', 0]]}));
 		noEntry.object3D.addEventListener('jointcollisionenter', function(){
-			console.log('nope');
-			portal1.setAttribute('position', '0 0 0');
-	    setTimeout(function(){
-	      portal1.setAttribute('position', '0 -100 0');
-	    }, 1000);
+			if (doorState == 'closed') {
+				console.log('nope');
+				portal1.setAttribute('position', '0 0 0');
+		    setTimeout(function(){
+		      portal1.setAttribute('position', '0 -100 0');
+		    }, 1000);
+		  } else {
+		  	console.log('access granted');
+				granted = true;
+				noEntry.setAttribute('position', '0 -1000 0');
+		  }
 		});
 
-		var granted = false;
-		entry.object3D.addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({ jointCubeSize: 0.001, joints: [['Head', 'Center', 0]]}));
-		entry.object3D.addEventListener('jointcollisionenter', function(){
-			console.log('access granted');
-			granted = true;
-			noEntry.setAttribute('position', '0 -1000 0');
-		});
+		// entry.object3D.addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({ jointCubeSize: 0.001, joints: [['Head', 'Center', 0]]}));
+		// entry.object3D.addEventListener('jointcollisionenter', function(){
+		// 	console.log('access granted');
+		// 	granted = true;
+		// 	noEntry.setAttribute('position', '0 -1000 0');
+		// });
 
 		altspace.getUser().then(function(user){
 			if (user.userId == '582115151281389721') {
@@ -99,13 +105,15 @@
 			if (doorState == 'closed' && data.val() == 'opened') {
 				doorState = 'opened'
 				door.emit('open');
-				entry.setAttribute('position', '-1.5 1 -7.55');
+				//entry.setAttribute('position', '-1.5 1 -7.55');
+				noEntry.setAttribute('color', 'green');
 			}
 			if (doorState == 'opened' && data.val() == 'closed') {
 				doorState = 'closed';
 				door.emit('close');
 				setTimeout(function(){
-		      entry.setAttribute('position', '-1.5 -1 -7.55');
+		      //entry.setAttribute('position', '-1.5 -1 -7.55');
+		      noEntry.setAttribute('color', 'red');
 		    }, 3000);
 			}
 		});
@@ -125,12 +133,12 @@
 	});
 	function open() {
 		door.emit('open');
-		entry.setAttribute('position', '-1.5 1 -7.55');
+		//entry.setAttribute('position', '-1.5 1 -7.55');
 		setTimeout(function(){
       door.emit('close');
     }, 6000);
     setTimeout(function(){
-      entry.setAttribute('position', '-1.5 -1 -7.55');
+      //entry.setAttribute('position', '-1.5 -1 -7.55');
     }, 9000);
 	}
 </script>
