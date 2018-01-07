@@ -82,14 +82,21 @@
 		// 	noEntry.setAttribute('position', '0 -1000 0');
 		// });
 
+		var doorState = 'closed'
 		altspace.getUser().then(function(user){
 			if (user.userId == '582115151281389721') {
 				granted = true;
 				noEntry.setAttribute('position', '0 -1000 0');
+
+				door.object3D.addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({ jointCubeSize: 0.001, joints: [['Hand', 'Right', 0]]}));
+				door.object3D.addEventListener('jointcollisionenter', function(){
+					if (doorState == 'closed') {
+						sync.instance.child('doorState').set('opened');
+					}
+				});
 			}
 		});
 
-		var doorState = 'closed'
 		btn1.addEventListener('mouseup', function(){
 			//open();
 			if (doorState == 'closed' && granted) {
