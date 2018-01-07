@@ -10,7 +10,7 @@
 		<a-mixin id='color1' material='color: #800'></a-mixin>
 		<a-mixin id='walls' material='color: #410' n-box-collider='type: environment'></a-mixin>
 
-		<a-entity scale='1.2 1.2 1.2'>
+		<a-entity scale='1.2 1.2 1.2' position='0 0 0'>
 			<a-box id='noEntry' position='0 1.5 -10' scale='5.8 2.8 4.8' color='#f00' opacity='.05' altspace-cursor-collider='enabled: false'></a-box>
 			<a-entity id='door' position='-2 1 -7.55'>
 				<a-box position='0.5 0 0' scale='1 2 .1' color='#007' n-box-collider='type: environment'></a-box>	
@@ -40,8 +40,11 @@
 			<a-entity id='portal1' position='0 -100 0' n-portal='targetEntity: #target' n-skeleton-parent='part: head'></a-entity>
 
 
-			<a-box id='btn1' position='-.8 1.3 -7.55' scale='.08 .08 .15' color='green'></a-box>
-			<a-box id='btn2' position='-.8 1.15 -7.5' scale='.08 .08 .05' color='red'></a-box>
+			<!-- <a-box id='btn1' position='-.8 1.3 -7.55' scale='.08 .08 .15' color='green'></a-box> -->
+			<a-box id='btn1' position='-.8 1.3 -7.6' scale='.08 .08 .05' color='green'></a-box>
+			<a-box id='btn2' position='-.8 1.3 -7.5' scale='.07 .07 .05' color='red' n-box-collider='type: hologram'>
+				<a-entity id='bell' sync sync-n-sound></a-entity>
+			</a-box>
 
 
 
@@ -50,55 +53,68 @@
 		</a-entity>
 	</a-scene>
 <script>
+	bell.setAttribute('n-sound', {src: /Mobile/i.test(navigator.userAgent) ? 'dingdong.mp3' : 'dingdong.ogg', volume: .5, spatialBlend: 1});
 	var scene = document.querySelector('a-scene');
 	var sync;
 	scene.addEventListener('connected', function() {
 		sync = scene.systems['sync-system'].connection;
 	
+		noEntry.object3D.addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({ jointCubeSize: 0.001, joints: [['Head', 'Center', 0]]}));
+		noEntry.object3D.addEventListener('jointcollisionenter', function(){
+			console.log('nope');
+			portal1.setAttribute('position', '0 0 0');
+	    setTimeout(function(){
+	      portal1.setAttribute('position', '0 -100 0');
+	    }, 1000);
+		});
 
-	noEntry.object3D.addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({ jointCubeSize: 0.001, joints: [['Head', 'Center', 0]]}));
-	noEntry.object3D.addEventListener('jointcollisionenter', function(){
-		console.log('nope');
-		portal1.setAttribute('position', '0 0 0');
-    setTimeout(function(){
-      portal1.setAttribute('position', '0 -100 0');
-    }, 1000);
-	});
+		var granted = false;
+		entry.object3D.addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({ jointCubeSize: 0.001, joints: [['Head', 'Center', 0]]}));
+		entry.object3D.addEventListener('jointcollisionenter', function(){
+			console.log('access granted');
+			granted = true;
+			noEntry.setAttribute('position', '0 -1000 0');
+		});
 
-	entry.object3D.addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({ jointCubeSize: 0.001, joints: [['Head', 'Center', 0]]}));
-	entry.object3D.addEventListener('jointcollisionenter', function(){
-		console.log('access granted');
-		noEntry.setAttribute('position', '0 -1000 0');
-	});
+		altspace.getUser().then(function(user){
+			if (user.userId == '582115151281389721') {
+				granted = true;
+				noEntry.setAttribute('position', '0 -1000 0');
+			}
+		});
 
-	var doorState = 'closed'
-	btn1.addEventListener('mouseup', function(){
-		//open();
-		sync.instance.child('doorState').set('opened');
-		setTimeout(function(){
-      sync.instance.child('doorState').set('closed');
-    }, 6000);
-	});
+		var doorState = 'closed'
+		btn1.addEventListener('mouseup', function(){
+			//open();
+			if (doorState == 'closed' && granted) {
+				sync.instance.child('doorState').set('opened');
+				setTimeout(function(){
+		      sync.instance.child('doorState').set('closed');
+		    }, 6000);
+			}
+		});
 
-	sync.instance.child('doorState').on('value', function(data){
-		console.log(data.val());
-		if (doorState == 'closed' && data.val() == 'opened') {
-			doorState = 'opened'
-			door.emit('open');
-			entry.setAttribute('position', '-1.5 1 -7.55');
-		}
-		if (doorState == 'opened' && data.val() == 'closed') {
-			doorState = 'closed';
-			door.emit('close');
-			setTimeout(function(){
-	      entry.setAttribute('position', '-1.5 -1 -7.55');
-	    }, 3000);
-		}
-	});
+		sync.instance.child('doorState').on('value', function(data){
+			console.log(data.val());
+			if (doorState == 'closed' && data.val() == 'opened') {
+				doorState = 'opened'
+				door.emit('open');
+				entry.setAttribute('position', '-1.5 1 -7.55');
+			}
+			if (doorState == 'opened' && data.val() == 'closed') {
+				doorState = 'closed';
+				door.emit('close');
+				setTimeout(function(){
+		      entry.setAttribute('position', '-1.5 -1 -7.55');
+		    }, 3000);
+			}
+		});
 
-	btn2.addEventListener('mouseup', function(){
-		noEntry.setAttribute('position', '0 1.5 -10');
-	});
+		btn2.addEventListener('mousedown', function(){
+			//noEntry.setAttribute('position', '0 1.5 -10');
+			bell.components.sync.takeOwnership();
+      bell.components['n-sound'].playSound();
+		});
 	});
 	function open() {
 		door.emit('open');
