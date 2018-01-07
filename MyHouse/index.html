@@ -11,12 +11,14 @@
 		<a-mixin id='walls' material='color: #410' n-box-collider='type: environment'></a-mixin>
 
 		<a-entity scale='1.2 1.2 1.2'>
-			<a-box id='noEntry' position='0 1.5 -10' scale='5.8 2.8 4.8' color='#f00' opacity='.05'></a-box>
-			<a-entity position='-2 1 -7.55'>
-				<a-box id='door' position='0.5 0 0' scale='1 2 .1' color='#007' n-box-collider='type: environment'></a-box>
-				<a-box id='entry' position='0 0 -.5' scale='.1 2 1' color='#0f0' opacity='.05'></a-box>
-				<a-animation to='0 -90 0' dur='3000' direction='alternate' repeat='indefinite' delay='2000'>
+			<a-box id='noEntry' position='0 1.5 -10' scale='5.8 2.8 4.8' color='#f00' opacity='.05' altspace-cursor-collider='enabled: false'></a-box>
+			<a-entity id='door' position='-2 1 -7.55'>
+				<a-box position='0.5 0 0' scale='1 2 .1' color='#007' n-box-collider='type: environment'></a-box>	
+				<a-animation to='0 -90 0' dur='3000' begin='open'></a-animation>
+				<a-animation to='0 0 0' dur='3000' begin='close'></a-animation>
 			</a-entity>
+			<a-box id='entry' position='-1.5 -1 -7.55' scale='1 2 .1' color='#0f0' opacity='.05' altspace-cursor-collider='enabled: false'></a-box>
+
 			<a-box id='window' position='1 1.5 -7.55' scale='1.5 1 .1' color='#fff' opacity='0.01' n-box-collider='type: environment'></a-box>
 
 
@@ -38,8 +40,8 @@
 			<a-entity id='portal1' position='0 -100 0' n-portal='targetEntity: #target' n-skeleton-parent='part: head'></a-entity>
 
 
-
-
+			<a-box id='btn1' position='-.8 1.3 -7.55' scale='.08 .08 .15' color='green'></a-box>
+			<a-box id='btn2' position='-.8 1.15 -7.5' scale='.08 .08 .05' color='red'></a-box>
 
 
 
@@ -50,7 +52,7 @@
 <script>
 	noEntry.object3D.addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({ jointCubeSize: 0.001, joints: [['Head', 'Center', 0]]}));
 	noEntry.object3D.addEventListener('jointcollisionenter', function(){
-		console.log('entered');
+		console.log('nope');
 		portal1.setAttribute('position', '0 0 0');
     setTimeout(function(){
       portal1.setAttribute('position', '0 -100 0');
@@ -59,9 +61,28 @@
 
 	entry.object3D.addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({ jointCubeSize: 0.001, joints: [['Head', 'Center', 0]]}));
 	entry.object3D.addEventListener('jointcollisionenter', function(){
-		console.log('acces granted');
+		console.log('access granted');
 		noEntry.setAttribute('position', '0 -1000 0');
 	});
+
+	btn1.addEventListener('mouseup', function(){
+		open();
+	});
+
+	btn2.addEventListener('mouseup', function(){
+		noEntry.setAttribute('position', '0 1.5 -10');
+	});
+
+	function open() {
+		door.emit('open');
+		entry.setAttribute('position', '-1.5 1 -7.55');
+		setTimeout(function(){
+      door.emit('close');
+    }, 6000);
+    setTimeout(function(){
+      entry.setAttribute('position', '-1.5 -1 -7.55');
+    }, 9000);
+	}
 </script>
 </body>
 </html>
