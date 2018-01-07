@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>House</title>
+  <script src="https://aframe.io/releases/0.3.0/aframe.js"></script>
+  <script src='https://sdk.altvr.com/libs/altspace.js/2.6.1/altspace.min.js'></script>
+</head>
+<body>
+	<a-scene altspace='fullspace: true'>
+		<a-mixin id='color1' material='color: #800'></a-mixin>
+		<a-mixin id='walls' material='color: #410' n-box-collider='type: environment'></a-mixin>
+
+		<a-entity scale='1.2 1.2 1.2'>
+			<a-box id='noEntry' position='0 1.5 -10' scale='5.8 2.8 4.8' color='#f00' opacity='.05'></a-box>
+			<a-entity position='-2 1 -7.55'>
+				<a-box id='door' position='0.5 0 0' scale='1 2 .1' color='#007' n-box-collider='type: environment'></a-box>
+				<a-box id='entry' position='0 0 -.5' scale='.1 2 1' color='#0f0' opacity='.05'></a-box>
+				<a-animation to='0 -90 0' dur='3000' direction='alternate' repeat='indefinite' delay='2000'>
+			</a-entity>
+			<a-box id='window' position='1 1.5 -7.55' scale='1.5 1 .1' color='#fff' opacity='0.01' n-box-collider='type: environment'></a-box>
+
+
+			<!-- front wall -->
+			<a-box position='-2.5 1.5 -7.55' scale='1 3 .1' mixin='walls'></a-box>
+			<a-box position='-1.5 2.5 -7.55' scale='1 1 .1' mixin='walls'></a-box>
+			<a-box position='-.375 1.5 -7.55' scale='1.25 3 .1' mixin='walls'></a-box>
+			<a-box position='2.375 1.5 -7.55' scale='1.25 3 .1' mixin='walls'></a-box>
+			<a-box position='1 2.5 -7.55' scale='1.5 1 .1' mixin='walls'></a-box>
+			<a-box position='1 0.5 -7.55' scale='1.5 1 .1' mixin='walls'></a-box>
+
+			<a-box position='0 1.5 -12.45' scale='6 3 .1' mixin='walls'></a-box>
+			<a-box position='2.95 1.5 -10' scale='.1 3 5' mixin='walls'></a-box>
+			<a-box position='-2.95 1.5 -10' scale='.1 3 5' mixin='walls'></a-box>
+			<a-box position='0 2.95 -10' scale='6 .1 5' mixin='walls'></a-box>
+
+
+			<a-entity id='target' position='0 0 0' rotation='0 180 0'></a-entity>
+			<a-entity id='portal1' position='0 -100 0' n-portal='targetEntity: #target' n-skeleton-parent='part: head'></a-entity>
+
+
+
+
+
+
+
+
+
+		</a-entity>
+	</a-scene>
+<script>
+	noEntry.object3D.addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({ jointCubeSize: 0.001, joints: [['Head', 'Center', 0]]}));
+	noEntry.object3D.addEventListener('jointcollisionenter', function(){
+		console.log('entered');
+		portal1.setAttribute('position', '0 0 0');
+    setTimeout(function(){
+      portal1.setAttribute('position', '0 -100 0');
+    }, 1000);
+	});
+
+	entry.object3D.addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({ jointCubeSize: 0.001, joints: [['Head', 'Center', 0]]}));
+	entry.object3D.addEventListener('jointcollisionenter', function(){
+		console.log('acces granted');
+		noEntry.setAttribute('position', '0 -1000 0');
+	});
+</script>
+</body>
+</html>
