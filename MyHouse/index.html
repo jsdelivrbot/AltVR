@@ -92,6 +92,9 @@
 				door.object3D.addEventListener('jointcollisionenter', function(){
 					if (doorState == 'closed') {
 						sync.instance.child('doorState').set('opened');
+						setTimeout(function(){
+				      sync.instance.child('doorState').set('closed');
+				    }, 6000);
 					}
 				});
 			}
