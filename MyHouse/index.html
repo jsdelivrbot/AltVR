@@ -41,7 +41,7 @@
 
 
 			<!-- <a-box id='btn1' position='-.8 1.3 -7.55' scale='.08 .08 .15' color='green'></a-box> -->
-			<a-box id='btn1' position='-.8 1.3 -7.6125' scale='.08 .08 .025' color='green'></a-box>
+			<a-box id='btn1' position='-.8 1.3 -7.6125' scale='.08 .08 .025' color='green' n-box-collider='type: hologram'></a-box>
 			<a-box id='btn2' position='-.8 1.3 -7.4875' scale='.07 .07 .025' color='red' n-box-collider='type: hologram'>
 				<a-entity id='bell' sync sync-n-sound></a-entity>
 			</a-box>
@@ -96,7 +96,6 @@
 		});
 
 		btn1.addEventListener('mouseup', function(){
-			//open();
 			if (doorState == 'closed' && granted) {
 				sync.instance.child('doorState').set('opened');
 				setTimeout(function(){
