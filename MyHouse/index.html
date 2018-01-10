@@ -11,12 +11,13 @@
 		<a-mixin id='walls' material='color: #410' n-box-collider='type: environment'></a-mixin>
 
 		<a-entity scale='1.2 1.2 1.2' position='0 0 0'>
-			<a-box id='noEntry' position='0 1.5 -10' scale='5.8 2.8 4.8' color='#f00' opacity='0' altspace-cursor-collider='enabled: false'></a-box>
+			<a-box id='noEntry' position='0 1.5 -10' scale='5.9 2.9 4.9' opacity='0' altspace-cursor-collider='enabled: false'></a-box>
 			<a-entity id='door' position='-2 1 -7.55'>
 				<a-box position='0.5 0 0' scale='1 2 .1' color='#007' n-box-collider='type: environment'></a-box>
 				<a-animation to='0 90 0' dur='3000' begin='open'></a-animation>
 				<a-animation to='0 0 0' dur='3000' begin='close'></a-animation>
 			</a-entity>
+			<a-box id='keySpawn' position='-1.5 -100 -6.5' scale='2 2 2' opacity='0' altspace-cursor-collider='enabled: false'></a-box>
 			<!-- <a-box id='entry' position='-1.5 -1 -7.55' scale='1 2 .1' color='#0f0' opacity='0' altspace-cursor-collider='enabled: false'></a-box> -->
 
 			<a-box id='window' position='1 1.5 -7.55' scale='1.5 1 .1' color='#fff' opacity='0.01' n-box-collider='type: environment'></a-box>
@@ -52,6 +53,31 @@
 				<a-entity position='0 1.5 0.027' scale='.6 .6 .6' n-text='text: Under\nConstruction; fontSize: 2'></a-entity>
 			</a-entity>
 
+			<!-- key -->
+
+				<a-mixin id='key1' position='-.07 -.025 -.07' scale='.003 .08 .003' rotation='0 0 90' geometry='primitive: cylinder; segments-height: 1; segments-radial: 10' n-skeleton-parent='part:hand; side: right'></a-mixin>
+				<a-mixin id='key2' position='-.02 -.025 -.07' rotation='90 0 0' geometry='primitive: torus; radius: .01; radius-tubular: .0015; segments-radial: 6; segments-tubular: 16' n-skeleton-parent='part:hand; side: right'></a-mixin>
+				<a-mixin id='key3' position='-.105 -.025 -.078' scale='.004 .002 .013' geometry='primitive: box' n-skeleton-parent='part:hand; side: right'></a-mixin>
+				<a-mixin id='key4' position='-.1 -.025 -.075' scale='.004 .002 .01' geometry='primitive: box' n-skeleton-parent='part:hand; side: right'></a-mixin>
+				<a-mixin id='key5' position='-.095 -.025 -.078' scale='.004 .002 .013' geometry='primitive: box' n-skeleton-parent='part:hand; side: right'></a-mixin>
+
+				<a-mixin id='gold' material='color: #786c14'></a-mixin>
+				<a-mixon id='synced' sync sync-n-skeleton-parent></a-mixon>
+
+				<!-- <a-entity mixin='key1 gold'></a-entity>
+				<a-entity mixin='key2 gold'></a-entity>
+				<a-entity mixin='key3 gold'></a-entity>
+				<a-entity mixin='key4 gold'></a-entity>
+				<a-entity mixin='key5 gold'></a-entity> -->
+
+			<!-- <a-entity position='0 1.5 0' rotation='-90 0 0'>
+				<a-cylinder position='-.07 -.025 -.07' scale='.003 .08 .003' rotation='0 0 90' color='#786c14'></a-cylinder>
+				<a-torus position='-.02 -.025 -.07' rotation='90 0 0' radius='.01' radius-tubular='.0015' color='#786c14'></a-torus>
+				<a-box position='-.105 -.025 -.078' scale='.004 .002 .013' color='#786c14'></a-box>
+				<a-box position='-.1 -.025 -.075' scale='.004 .002 .01' color='#786c14'></a-box>
+				<a-box position='-.095 -.025 -.078' scale='.004 .002 .013' color='#786c14'></a-box>
+			</a-entity> -->
+
 		</a-entity>
 	</a-scene>
 <script>
@@ -62,7 +88,7 @@
 		sync = scene.systems['sync-system'].connection;
 		
 		var granted = false;
-		noEntry.object3D.addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({ jointCubeSize: 0.001, joints: [['Head', 'Center', 0]]}));
+		noEntry.object3D.addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({ jointCubeSize: 0.01, joints: [['Head', 'Center', 0]]}));
 		noEntry.object3D.addEventListener('jointcollisionenter', function(){
 			if (doorState == 'closed') {
 				console.log('nope');
@@ -82,10 +108,30 @@
 			if (user.userId == '582115151281389721') {
 				granted = true;
 				noEntry.setAttribute('position', '0 -1000 0');
+				keySpawn.setAttribute('position', '-1.5 1 -6.5');
 
-				door.object3D.addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({ jointCubeSize: 0.001, joints: [['Hand', 'Right', 0]]}));
+				var hasKey = false;
+				keySpawn.object3D.addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({ jointCubeSize: 0.01, joints: [['Head', 'Center', 0]]}));
+				keySpawn.object3D.addEventListener('jointcollisionenter', function(){
+					hasKey = true;
+					scene.systems['sync-system'].instantiate('key1 gold synced', scene, scene, 'keyPart1');
+					scene.systems['sync-system'].instantiate('key2 gold synced', scene, scene, 'keyPart2');
+					scene.systems['sync-system'].instantiate('key3 gold synced', scene, scene, 'keyPart3');
+					scene.systems['sync-system'].instantiate('key4 gold synced', scene, scene, 'keyPart4');
+					scene.systems['sync-system'].instantiate('key5 gold synced', scene, scene, 'keyPart5');
+				});
+				keySpawn.object3D.addEventListener('jointcollisionleave', function(){
+					hasKey = false;
+					scene.systems['sync-system'].removeLast('keyPart1');
+					scene.systems['sync-system'].removeLast('keyPart2');
+					scene.systems['sync-system'].removeLast('keyPart3');
+					scene.systems['sync-system'].removeLast('keyPart4');
+					scene.systems['sync-system'].removeLast('keyPart5');
+				});
+
+				door.object3D.addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({ jointCubeSize: 0.1, joints: [['Hand', 'Right', 0]]}));
 				door.object3D.addEventListener('jointcollisionenter', function(){
-					if (doorState == 'closed') {
+					if (doorState == 'closed' && hasKey) {
 						sync.instance.child('doorState').set('opened');
 						setTimeout(function(){
 				      sync.instance.child('doorState').set('closed');
