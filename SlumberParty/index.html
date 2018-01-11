@@ -190,6 +190,11 @@
           <a-cylinder id='martiniButton3' position='.04 .02 0' radius='.015' height='.03' rotation='90 0 0' color='red' segments-radial='12' segments-height='1'></a-cylinder>
           <a-cylinder id='martiniButton4' position='.1 -.024 0' radius='.01' height='.03' rotation='90 0 0' color='red' segments-radial='12' segments-height='1'></a-cylinder>
         </a-entity>
+
+        <a-entity position='0 .1 .055'>
+          <a-entity position='0 .09 0' scale='.1 .1 .1' n-text='fontSize: 4; text: Mic'></a-entity>
+          <a-box id='micButton' position='0 0 0' scale='.05 .05 .025' color='red'></a-box>
+        </a-entity>
       </a-entity>
 
 
@@ -384,6 +389,18 @@
       <a-animation attribute='position' from='0 0 0' to='0 -.4 0' dur='5000' begin='lower'></a-animation>
     </a-entity>
 
+    <a-entity id='mic' position='0 -1.7 0'>
+      <a-entity position='-2 9.4 -42'>
+        <a-cylinder position='0 0 0' scale='.01 2 .01' material='src: url(textures/mic.jpg); repeat: 1 10' segments-height='1' segments-radial='16'></a-cylinder>
+        <a-entity position='0 1 0' rotation='-80 0 0'>
+          <a-cone position='0 0 0' height='.2' radius-top='.03' radius-bottom='.02' src='textures/desk.jpg' segments-height='1' segments-radial='16'></a-cone>
+          <a-sphere position='0 .1 0' scale='.04 .04 .04' material='src: url(textures/mic2.jpg); repeat: 1 0.5'></a-sphere>
+        </a-entity>
+      </a-entity>
+      <a-animation attribute='position' from='0 -1.7 0' to='0 0 0' dur='5000' begin='raise'></a-animation>
+      <a-animation attribute='position' from='0 0 0' to='0 -1.7 0' dur='5000' begin='lower'></a-animation>
+    </a-entity>
+
   </a-scene>
 <script>
   var scene = document.querySelector('a-scene');
@@ -409,14 +426,18 @@
     sync.instance.child('martini1State').on('value', function(data){
       if (data.val() != null) {
         if (data.val() == 'raised') {
-          if (martini1State == undefined) {
-            martiniGlass1.setAttribute('position', '0 -.4 0');
+          if (martini1State == 'raised') {
+            martiniGlass1.setAttribute('position', '0 0 0');
           } else {
             martiniGlass1.emit('raise');
           }
           martiniButton1.setAttribute('color', '#0f0');
-        } else if (martini1State != null) {
-          martiniGlass1.emit('lower');
+        } else {
+          if (martini1State == 'lowered') {
+            martiniGlass1.setAttribute('position', '0 -.4 0');
+          } else {
+            martiniGlass1.emit('lower');
+          }
           martiniButton1.setAttribute('color', 'red');
         }
         martini1State = data.val();
@@ -428,14 +449,18 @@
     sync.instance.child('martini2State').on('value', function(data){
       if (data.val() != null) {
         if (data.val() == 'raised') {
-          if (martini2State == undefined) {
-            martiniGlass2.setAttribute('position', '0 -.4 0');
+          if (martini2State == 'raised') {
+            martiniGlass2.setAttribute('position', '0 0 0');
           } else {
             martiniGlass2.emit('raise');
           }
           martiniButton2.setAttribute('color', '#0f0');
-        } else if (martini1State != null) {
-          martiniGlass2.emit('lower');
+        } else {
+          if (martini2State == 'lowered') {
+            martiniGlass2.setAttribute('position', '0 -.4 0');
+          } else {
+            martiniGlass2.emit('lower');
+          }
           martiniButton2.setAttribute('color', 'red');
         }
         martini2State = data.val();
@@ -447,14 +472,18 @@
     sync.instance.child('martini3State').on('value', function(data){
       if (data.val() != null) {
         if (data.val() == 'raised') {
-          if (martini3State == undefined) {
-            martiniGlass3.setAttribute('position', '0 -.53 0');
+          if (martini3State == 'raised') {
+            martiniGlass3.setAttribute('position', '0 0 0');
           } else {
             martiniGlass3.emit('raise');
           }
           martiniButton3.setAttribute('color', '#0f0');
-        } else if (martini3State != null) {
-          martiniGlass3.emit('lower');
+        } else {
+          if (martini3State == 'lowered') {
+            martiniGlass3.setAttribute('position', '0 -.53 0');
+          } else {
+            martiniGlass3.emit('lower');
+          }
           martiniButton3.setAttribute('color', 'red');
         }
         martini3State = data.val();
@@ -466,14 +495,18 @@
     sync.instance.child('martini4State').on('value', function(data){
       if (data.val() != null) {
         if (data.val() == 'raised') {
-          if (martini4State == undefined) {
-            martiniGlass4.setAttribute('position', '0 -.4 0');
+          if (martini4State == 'raised') {
+            martiniGlass4.setAttribute('position', '0 0 0');
           } else {
             martiniGlass4.emit('raise');
           }
           martiniButton4.setAttribute('color', '#0f0');
-        } else if (martini4State != null) {
-          martiniGlass4.emit('lower');
+        } else {
+          if (martini4State == 'lowered') {
+            martiniGlass4.setAttribute('position', '0 -.4 0');
+          } else {
+            martiniGlass4.emit('lower');
+          }
           martiniButton4.setAttribute('color', 'red');
         }
         martini4State = data.val();
@@ -482,10 +515,34 @@
       }
     });
 
+    sync.instance.child('micState').on('value', function(data){
+      if (data.val() != null) {
+        if (data.val() == 'raised') {
+          if (micState == 'raised') {
+            mic.setAttribute('position', '0 0 0');
+          } else {
+            mic.emit('raise');
+          }
+          micButton.setAttribute('color', '#0f0');
+        } else {
+          if (micState == 'lowered') {
+            mic.setAttribute('position', '0 -1.7 0');
+          } else {
+            mic.emit('lower');
+          }
+          micButton.setAttribute('color', 'red');
+        }
+        micState = data.val();
+      } else {
+        sync.instance.child('micState').set('lowered');
+      }
+    });
+
     var martini1State = 'lowered';
     var martini2State = 'lowered';
     var martini3State = 'lowered';
     var martini4State = 'lowered';
+    var micState = 'lowered';
     altspace.getUser().then(function(user){
       if (user.isModerator) {
         roomButton.setAttribute('position', '-16.3 6.5 -25.9');
@@ -536,6 +593,14 @@
             sync.instance.child('martini4State').set('raised');
           } else {
             sync.instance.child('martini4State').set('lowered');
+          }
+        });
+
+        micButton.addEventListener('mouseup', function(){
+          if (micState == 'lowered') {
+            sync.instance.child('micState').set('raised');
+          } else {
+            sync.instance.child('micState').set('lowered');
           }
         });
       }
