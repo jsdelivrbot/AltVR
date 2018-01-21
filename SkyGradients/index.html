@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Skys</title>
+  <script src="https://aframe.io/releases/0.3.0/aframe.js"></script>
+  <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/three.js/84/three.js'></script> -->
+  <script src='https://sdk.altvr.com/libs/altspace.js/2.6.1/altspace.min.js'></script>
+</head>
+<body>
+  <a-scene altspace='fullspace: true'>
+    <a-sphere position='0 2 0' radius='.5' src='1.png' side='back'></a-sphere>
+    <a-sphere position='0 2 1.5' radius='.5' src='2.png' side='back'></a-sphere>
+    <a-sphere position='0 2 3' radius='.5' src='3.png' side='back'></a-sphere>
+
+    <a-sky id='sky' radius='500' src='1.png'></a-sky>
+  </a-scene>
+  <script>
+    var spheres = document.querySelectorAll('a-sphere');
+
+    for (var i = 0; i < spheres.length; i++) {
+      console.log(spheres[i].getAttribute('src'));
+
+      spheres[i].addEventListener('mouseup', function(e){
+        //console.log(e.target.getAttribute('src'));
+        sky.setAttribute('src', e.target.getAttribute('src'));
+      });
+    }
+  </script>
+</body>
+</html>
