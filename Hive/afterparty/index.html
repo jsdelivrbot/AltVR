@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Hive After Party</title>
+  <script src="https://aframe.io/releases/0.3.0/aframe.js"></script>
+  <script src="https://sdk.altvr.com/libs/altspace.js/2.6.0/altspace.min.js"></script>
+  <script src="cached-model.js"></script>
+  <script src="UltimateLoader2.js"></script>
+  <script>
+    // n-skeleton-parent only works with root meshes at the moment. Since most model loaders use a root
+    // container object, we need to collapse the model so that n-skeleton-parent can access the mesh directly.
+    AFRAME.registerComponent('collapse-model', {
+        init: function () {
+            this.el.addEventListener('model-loaded', function () {
+                this.el.object3DMap.mesh.updateMatrixWorld();
+                var mesh;
+                this.el.object3DMap.mesh.traverse(function (obj) {
+                    if (!mesh && obj instanceof THREE.Mesh) {
+                        mesh = obj;
+                    }
+                }.bind(this))
+                if (mesh) {
+                    mesh.scale.copy(mesh.getWorldScale());
+                    this.el.setObject3D('mesh', mesh);
+                    // setObject3D emits this event in a-frame 0.4.0
+                    this.el.emit('object3dset', {
+                        type: 'mesh'
+                    });
+                }
+            }.bind(this));
+        }
+    });
+    //-----------------------GRAB OBJECTS------------------
+    AFRAME.registerComponent('grab-object', {
+      dependencies: ['grab-object-system'],
+      schema: {
+        mixin: {
+          type: 'array'
+        },
+        parts: {
+          type: 'array',
+          default: ['left', 'right']
+        },
+        group: {
+          type: 'string',
+          default: 'default'
+        },
+        spawner: {
+          type: 'boolean',
+          default: 'true'
+        }
+      },
+      init: function() {
+        this.isHandInRange = { 'left': false, 'right': false };
+        this.isTriggerPressed = { 'left': false, 'right': false };
+        this.gamepad = { 'left': null, 'right': null };
+        this.grabbedObject = { 'left': null, 'right': null };
+        this.grabSystem = this.el.sceneEl.systems['grab-object-system'];
+        this.syncSystem = this.el.sceneEl.systems['sync-system'];
+        this.syncSetup = false;
+        this.el.object3D.addEventListener('jointcollisionenter', (function(event) {
+          if(event.detail.joints && event.detail.joints[0]) {
+            if(/Left/.test(event.detail.joints[0].name)) this.isHandInRange['left'] = true;
+            else if(/Right/.test(event.detail.joints[0].name)) this.isHandInRange['right'] = true;
+          }
+        }).bind(this));
+        this.el.object3D.addEventListener('jointcollisionleave', (function(event) {
+          if(event.detail.joints && event.detail.joints[0]) {
+            if(/Left/.test(event.detail.joints[0].name)) this.isHandInRange['left'] = false;
+            else if(/Right/.test(event.detail.joints[0].name)) this.isHandInRange['right'] = false;
+          }
+        }).bind(this));
+        this.el.object3D.addBehaviors(
+          new altspace.utilities.behaviors.JointCollisionEvents({
+            jointCubeSize: 0.1,
+            joints: [
+              ['Hand', 'Left', 0],
+              ['Thumb', 'Left', 3],
+              ['Index', 'Left', 3],
+              ['Middle', 'Left', 3],
+              ['Ring', 'Left', 3],
+              ['Pinky', 'Left', 3]
+            ]
+          }),
+          new altspace.utilities.behaviors.JointCollisionEvents({
+            jointCubeSize: 0.1,
+            joints: [
+              ['Hand', 'Right', 0],
+              ['Thumb', 'Right', 3],
+              ['Index', 'Right', 3],
+              ['Middle', 'Right', 3],
+              ['Ring', 'Right', 3],
+              ['Pinky', 'Right', 3]
+            ]
+          })
+        );
+      },
+      tick: function(time, deltaTime) {
+        var gamepads = altspace.getGamepads();
+        for(var gamepad of gamepads) {
+          if(gamepad.connected && !this.gamepad[gamepad.hand]) this.gamepad[gamepad.hand] = gamepad;
+        }
+        for(var part of this.data.parts) this.updateHandObject(part);
+        if (!this.data.spawner && !this.syncSetup && this.syncSystem.connection != undefined) {
+          this.syncSetup = true;
+          var pos = this.el.parentEl.object3D.position;
+          var y = pos.y;
+          this.syncSystem.connection.instance.child('grabObjects').child(this.el.getAttribute('mixin')).on('value', function(data){
+            if (data.val()) {
+              pos.y = -1000;
+            } else {
+              pos.y = y;
+            }
+          });
+        }
+      },
+      updateHandObject: function(hand) {
+        var isPrevTriggerPressed = this.isTriggerPressed[hand];
+        this.isTriggerPressed[hand] = (this.gamepad[hand] && this.gamepad[hand].connected && this.gamepad[hand].buttons[1].pressed);
+        if(this.grabbedObject[hand]) {
+          if(!this.isTriggerPressed[hand] && this.el.object3D === this.grabSystem.getGrabbedObject(this.data.group)) {
+            this.grabSystem.updateGrabbedObject(this.data.group, null);
+            this.syncSystem.removeLast(this.grabbedObject[hand]);
+            this.grabbedObject[hand] = null;
+            
+            if (!this.data.spawner) {
+              this.syncSystem.connection.instance.child('grabObjects').child(this.el.getAttribute('mixin')).set(false);
+            }
+          }
+        } else {
+          //Check to see if people are allowed to grab said object based off of what the object's group and their player class is
+          var grabAllowed = true;
+          switch(this.data.group) {
+            /*case 'meleeWeapon':
+            case 'heavyShield': {
+              if(playerClass !== 'berserker') grabAllowed = false;
+              break;
+            }
+            case 'rangedWeapon':
+            case 'knife': {
+              if(playerClass !== 'assassin') grabAllowed = false;
+              break;
+            }
+            case 'staff':
+            case 'wand': {
+              if(playerClass !== 'spellcaster') grabAllowed =false;
+              break;
+            }*/
+            default: {
+              //Leave empty
+              break;
+            }
+          }
+          if(this.isHandInRange[hand] && !this.grabSystem.getGrabbedObject(this.data.group) && (this.isTriggerPressed[hand] && !isPrevTriggerPressed && grabAllowed)) {
+            this.grabbedObject[hand] = 'go-' + THREE.Math.generateUUID();
+            this.grabSystem.updateGrabbedObject(this.data.group, this.el.object3D);
+            this.syncSystem.instantiate(this.data.mixin.join(' ') + ' grab-object-' + ((hand === 'left') ? 'left' : 'right'), this.el.sceneEl, this.el, this.grabbedObject[hand]);
+            
+            if (!this.data.spawner) {
+              this.syncSystem.connection.instance.child('grabObjects').child(this.el.getAttribute('mixin')).set(true);
+            }
+          }
+        }
+      }
+    });
+    //------------------------GRAB OBJECTS SYSTEM--------------
+    AFRAME.registerSystem('grab-object-system', {
+      init: function() {
+        this.grabGroups = {};
+        var mixin = document.createElement('a-mixin');
+        mixin.setAttribute('id', 'grab-object-left');
+        mixin.setAttribute('n-skeleton-parent', 'part: hand; side: left; index: 0');
+        mixin.setAttribute('sync', '');
+        mixin.setAttribute('sync-n-skeleton-parent', '');
+        this.sceneEl.appendChild(mixin);
+        var mixin = document.createElement('a-mixin');
+        mixin.setAttribute('id', 'grab-object-right');
+        mixin.setAttribute('n-skeleton-parent', 'part: hand; side: right; index: 0');
+        mixin.setAttribute('sync', '');
+        mixin.setAttribute('sync-n-skeleton-parent', '');
+        this.sceneEl.appendChild(mixin);
+      },
+      getGrabbedObject: function(groupName) {
+        return this.grabGroups[groupName];
+      },
+      updateGrabbedObject: function(groupName, object) {
+        if(!object) delete this.grabGroups[groupName];
+        else this.grabGroups[groupName] = object;
+      }
+    });
+
+    //----------------Cached Avatar Loader-----------------------
+
+    AFRAME.registerComponent('avatar', {
+      schema: {
+        sid: {
+          type: 'string'
+        },
+        colors: {
+          type: 'src'
+        }
+      },
+      init: function() {
+        var self = this;
+          
+        var models = {
+          's-series-m01':  'https://bengarfield.github.io/AltVR/house/avatars/malesmall.obj',
+          's-series-f01':  'https://bengarfield.github.io/AltVR/house/avatars/femalesmall.obj',
+          'pod-classic':  'https://bengarfield.github.io/AltVR/house/avatars/podclassic.obj',
+          'rubenoid-male':  'https://bengarfield.github.io/AltVR/house/avatars/rubemalesmall.obj',
+          'rubenoid-female':  'https://bengarfield.github.io/AltVR/house/viv.obj',
+          'picture-frame':  'https://bengarfield.github.io/AltVR/house/frame.obj',
+          'bruce': 'https://bengarfield.github.io/AltVR/house/avatars/bruce.obj',
+          'vivian': 'viv.obj'
+        };
+        
+        var objects = {
+          model: {url: models[this.data.sid]},
+          tex: {url: this.data.colors}
+        };
+
+        UltimateLoader.load(objects).then(function(result){
+          var mesh = result[0].children[0].clone();
+
+          mesh.material = mesh.material.clone();
+          mesh.material.map = result[1];
+          self.el.setObject3D('mesh', mesh);
+          self.el.emit('object3dset', {type: 'mesh'});
+        });
+      }
+    });
+  </script>
+</head>
+<body>
+  <a-scene altspace='fullspace: true' sync-system='author: BenG; app: Hive; refUrl: https://altvr-apps.firebaseio.com/' grab-object-system>
+
+    <img id='badgehex' src='https://bengarfield.github.io/AltVR/Hive/beebadge.png'>
+    <a-mixin id='hexBadge' geometry='primitive: plane' material='src: #badgehex; transparent: true' position='-.1 .35 -.15' rotation='0 180 0' scale='.1 .1 .1' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
+
+    <a-entity one-per-user="mixin: hexBadge"></a-entity>
+    
+    <a-plane position='1.9 7.25 31.65' scale='8.32 4.68 1' rotation='0 180 0' src='hive.jpg'></a-plane>
+    
+    <a-entity rotation='0 24 0'>
+      <a-entity position='3.25 .95 1.93'>
+        <a-entity position='1.6 1.1 1' rotation='0 -90 0' scale='.2 .2 .2' n-text='width: 15; text: Grab your favorite and post a selfie!
+ 
+#TheHiveVR
+@AltspaceVR
+@VRchazen'></a-entity>
+        <a-mixin id='rightav' position='.03 -.03 -.08' rotation='90 0 90'></a-mixin>
+        <a-mixin id='leftav' position='-.03 -.03 -.08' rotation='90 0 -90'></a-mixin>
+        
+        <a-entity position='0 .01 0' rotation='0 -90 0'>
+          <a-mixin id="doll1" avatar='sid: vivian; colors: url(VivianTexture.jpg)' collapse-model></a-mixin>
+          <a-entity mixin="doll1" grab-object="group: r; parts: right; mixin: doll1 rightav"></a-entity>
+          <a-entity mixin="doll1" grab-object="group: l; parts: left; mixin: doll1 leftav"></a-entity>
+        </a-entity>
+
+        <a-entity position='0 .01 .17' rotation='0 -90 0'>
+          <a-mixin id="doll2" avatar='sid: s-series-m01; colors: url(https://bengarfield.github.io/AltVR/house/ben.jpg)' collapse-model></a-mixin>
+          <a-entity mixin="doll2" grab-object="group: r; parts: right; mixin: doll2 rightav"></a-entity>
+          <a-entity mixin="doll2" grab-object="group: l; parts: left; mixin: doll2 leftav"></a-entity>
+        </a-entity>
+
+        <a-entity position='0 .01 .34' rotation='0 -90 0'>
+          <a-mixin id="doll3" avatar='sid: s-series-f01; colors: url(https://bengarfield.github.io/AltVR/house/avatars/new/Shannon.jpg)' collapse-model></a-mixin>
+          <a-entity mixin="doll3" grab-object="group: r; parts: right; mixin: doll3 rightav"></a-entity>
+          <a-entity mixin="doll3" grab-object="group: l; parts: left; mixin: doll3 leftav"></a-entity>
+        </a-entity>
+        
+        <a-entity position='0 .01 .51' rotation='0 -90 0'>
+          <a-mixin id="doll4" avatar='sid: s-series-f01; colors: url(https://bengarfield.github.io/AltVR/house/avatars/new/Tahla.jpg)' collapse-model></a-mixin>
+          <a-entity mixin="doll4" grab-object="group: r; parts: right; mixin: doll4 rightav"></a-entity>
+          <a-entity mixin="doll4" grab-object="group: l; parts: left; mixin: doll4 leftav"></a-entity>
+        </a-entity>
+        
+        <a-entity position='0 .01 .68' rotation='0 -90 0'>
+          <a-mixin id="doll5" avatar='sid: s-series-f01; colors: url(https://bengarfield.github.io/AltVR/house/avatars/new/Megan.jpg)' collapse-model></a-mixin>
+          <a-entity mixin="doll5" grab-object="group: r; parts: right; mixin: doll5 rightav"></a-entity>
+          <a-entity mixin="doll5" grab-object="group: l; parts: left; mixin: doll5 leftav"></a-entity>
+        </a-entity>
+        
+        <a-entity position='0 .01 .85' rotation='0 -90 0'>
+          <a-mixin id="doll6" avatar='sid: rubenoid-female; colors: url(https://bengarfield.github.io/AltVR/house/avatars/new/Meeka.jpg)' collapse-model></a-mixin>
+          <a-entity mixin="doll6" grab-object="group: r; parts: right; mixin: doll6 rightav"></a-entity>
+          <a-entity mixin="doll6" grab-object="group: l; parts: left; mixin: doll6 leftav"></a-entity>
+        </a-entity>
+        
+        <a-entity position='0 .01 1.02' rotation='0 -90 0'>
+          <a-mixin id="doll7" avatar='sid: pod-classic; colors: url(https://bengarfield.github.io/AltVR/house/avatars/new/Matt.jpg)' collapse-model></a-mixin>
+          <a-entity mixin="doll7" grab-object="group: r; parts: right; mixin: doll7 rightav"></a-entity>
+          <a-entity mixin="doll7" grab-object="group: l; parts: left; mixin: doll7 leftav"></a-entity>
+        </a-entity>
+
+        <a-entity position='0 .01 1.19' rotation='0 -90 0'>
+          <a-mixin id="doll8" avatar='sid: pod-classic; colors: url(https://bengarfield.github.io/AltVR/house/avatars/new/Chris2.jpg)' collapse-model></a-mixin>
+          <a-entity mixin="doll8" grab-object="group: r; parts: right; mixin: doll8 rightav"></a-entity>
+          <a-entity mixin="doll8" grab-object="group: l; parts: left; mixin: doll8 leftav"></a-entity>
+        </a-entity>
+
+        <a-entity position='0 .01 1.36' rotation='0 -90 0'>
+          <a-mixin id="doll9" avatar='sid: s-series-m01; colors: url(https://bengarfield.github.io/AltVR/house/avatars/new/Miyk.jpg)' collapse-model></a-mixin>
+          <a-entity mixin="doll9" grab-object="group: r; parts: right; mixin: doll9 rightav"></a-entity>
+          <a-entity mixin="doll9" grab-object="group: l; parts: left; mixin: doll9 leftav"></a-entity>
+        </a-entity>
+
+        <a-entity position='0 .01 1.53' rotation='0 -90 0'>
+          <a-mixin id="doll10" avatar='sid: s-series-m01; colors: url(https://bengarfield.github.io/AltVR/house/avatars/new/Vince.jpg)' collapse-model></a-mixin>
+          <a-entity mixin="doll10" grab-object="group: r; parts: right; mixin: doll10 rightav"></a-entity>
+          <a-entity mixin="doll10" grab-object="group: l; parts: left; mixin: doll10 leftav"></a-entity>
+        </a-entity>
+
+        <a-entity position='0 .01 1.7' rotation='0 -90 0'>
+          <a-mixin id="doll11" avatar='sid: s-series-m01; colors: url(https://bengarfield.github.io/AltVR/house/avatars/new/Paul.jpg)' collapse-model></a-mixin>
+          <a-entity mixin="doll11" grab-object="group: r; parts: right; mixin: doll11 rightav"></a-entity>
+          <a-entity mixin="doll11" grab-object="group: l; parts: left; mixin: doll11 leftav"></a-entity>
+        </a-entity>
+        
+        <a-entity position='0 .01 1.87' rotation='0 -90 0'>
+          <a-mixin id="doll12" avatar='sid: s-series-m01; colors: url(https://bengarfield.github.io/AltVR/house/avatars/new/Shawn.jpg)' collapse-model></a-mixin>
+          <a-entity mixin="doll12" grab-object="group: r; parts: right; mixin: doll12 rightav"></a-entity>
+          <a-entity mixin="doll12" grab-object="group: l; parts: left; mixin: doll12 leftav"></a-entity>
+        </a-entity>
+
+        <a-entity position='0 .01 2.04' rotation='0 -90 0'>
+          <a-mixin id="doll13" avatar='sid: s-series-m01; colors: url(https://bengarfield.github.io/AltVR/house/avatars/new/JustJohn.jpg)' collapse-model></a-mixin>
+          <a-entity mixin="doll13" grab-object="group: r; parts: right; mixin: doll13 rightav"></a-entity>
+          <a-entity mixin="doll13" grab-object="group: l; parts: left; mixin: doll13 leftav"></a-entity>
+        </a-entity>
+        
+        <a-entity position='0 .01 2.21' rotation='0 -90 0'>
+          <a-mixin id="doll14" avatar='sid: s-series-m01; colors: url(https://bengarfield.github.io/AltVR/house/avatars/new/Sloan.jpg)' collapse-model></a-mixin>
+          <a-entity mixin="doll14" grab-object="group: r; parts: right; mixin: doll14 rightav"></a-entity>
+          <a-entity mixin="doll14" grab-object="group: l; parts: left; mixin: doll14 leftav"></a-entity>
+        </a-entity>
+
+        <a-entity position='-.08 0 0' rotation='-90 -90 0' scale='.03 .03 .03' n-text='text: Vivian'></a-entity>
+        <a-entity position='-.08 0 .17' rotation='-90 -90 0' scale='.03 .03 .03' n-text='text: Ben'></a-entity>
+        <a-entity position='-.08 0 .34' rotation='-90 -90 0' scale='.03 .03 .03' n-text='text: Shannon'></a-entity>
+        <a-entity position='-.08 0 .51' rotation='-90 -90 0' scale='.03 .03 .03' n-text='text: Tahla'></a-entity>
+        <a-entity position='-.08 0 .68' rotation='-90 -90 0' scale='.03 .03 .03' n-text='text: Megan'></a-entity>
+        <a-entity position='-.08 0 .85' rotation='-90 -90 0' scale='.03 .03 .03' n-text='text: Meeka'></a-entity>
+        <a-entity position='-.08 0 1.02' rotation='-90 -90 0' scale='.03 .03 .03' n-text='text: Matt'></a-entity>
+        <a-entity position='-.08 0 1.19' rotation='-90 -90 0' scale='.03 .03 .03' n-text='text: Chris'></a-entity>
+        <a-entity position='-.08 0 1.36' rotation='-90 -90 0' scale='.03 .03 .03' n-text='text: Miyk'></a-entity>
+        <a-entity position='-.08 0 1.53' rotation='-90 -90 0' scale='.03 .03 .03' n-text='text: Vince'></a-entity>
+        <a-entity position='-.08 0 1.7' rotation='-90 -90 0' scale='.03 .03 .03' n-text='text: Paul'></a-entity>
+        <a-entity position='-.08 0 1.87' rotation='-90 -90 0' scale='.02 .02 .02' n-text='text: SadGamerDad'></a-entity>
+        <a-entity position='-.08 0 2.04' rotation='-90 -90 0' scale='.03 .03 .03' n-text='text: JustJohn'></a-entity>
+        <a-entity position='-.08 0 2.21' rotation='-90 -90 0' scale='.03 .03 .03' n-text='text: Sloan'></a-entity>
+        
+      </a-entity>
+    </a-entity>
+  </a-scene>
+  <script>
+  </script>
+</body>
+</html>
