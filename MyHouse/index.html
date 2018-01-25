@@ -55,11 +55,11 @@
 
 			<!-- key -->
 
-				<a-mixin id='key1' position='-.07 -.025 -.07' scale='.003 .08 .003' rotation='0 0 90' geometry='primitive: cylinder; segments-height: 1; segments-radial: 10' n-skeleton-parent='part:hand; side: right'></a-mixin>
-				<a-mixin id='key2' position='-.02 -.025 -.07' rotation='90 0 0' geometry='primitive: torus; radius: .01; radius-tubular: .0015; segments-radial: 6; segments-tubular: 16' n-skeleton-parent='part:hand; side: right'></a-mixin>
-				<a-mixin id='key3' position='-.105 -.025 -.078' scale='.004 .002 .013' geometry='primitive: box' n-skeleton-parent='part:hand; side: right'></a-mixin>
-				<a-mixin id='key4' position='-.1 -.025 -.075' scale='.004 .002 .01' geometry='primitive: box' n-skeleton-parent='part:hand; side: right'></a-mixin>
-				<a-mixin id='key5' position='-.095 -.025 -.078' scale='.004 .002 .013' geometry='primitive: box' n-skeleton-parent='part:hand; side: right'></a-mixin>
+				<a-mixin id='key1' position='-.07 -.025 -.07' scale='.003 .08 .003' rotation='0 0 90' geometry='primitive: cylinder; segments-height: 1; segments-radial: 10' n-skeleton-parent='part:hand; side: right' sync sync-n-skeleton-parent></a-mixin>
+				<a-mixin id='key2' position='-.02 -.025 -.07' rotation='90 0 0' geometry='primitive: torus; radius: .01; radius-tubular: .0015; segments-radial: 6; segments-tubular: 16' n-skeleton-parent='part:hand; side: right' sync sync-n-skeleton-parent></a-mixin>
+				<a-mixin id='key3' position='-.105 -.025 -.078' scale='.004 .002 .013' geometry='primitive: box' n-skeleton-parent='part:hand; side: right' sync sync-n-skeleton-parent></a-mixin>
+				<a-mixin id='key4' position='-.1 -.025 -.075' scale='.004 .002 .01' geometry='primitive: box' n-skeleton-parent='part:hand; side: right' sync sync-n-skeleton-parent></a-mixin>
+				<a-mixin id='key5' position='-.095 -.025 -.078' scale='.004 .002 .013' geometry='primitive: box' n-skeleton-parent='part:hand; side: right' sync sync-n-skeleton-parent></a-mixin>
 
 				<a-mixin id='gold' material='color: #786c14'></a-mixin>
 				<a-mixon id='synced' sync sync-n-skeleton-parent></a-mixon>
@@ -114,11 +114,11 @@
 				keySpawn.object3D.addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({ jointCubeSize: 0.01, joints: [['Head', 'Center', 0]]}));
 				keySpawn.object3D.addEventListener('jointcollisionenter', function(){
 					hasKey = true;
-					scene.systems['sync-system'].instantiate('key1 gold synced', scene, scene, 'keyPart1');
-					scene.systems['sync-system'].instantiate('key2 gold synced', scene, scene, 'keyPart2');
-					scene.systems['sync-system'].instantiate('key3 gold synced', scene, scene, 'keyPart3');
-					scene.systems['sync-system'].instantiate('key4 gold synced', scene, scene, 'keyPart4');
-					scene.systems['sync-system'].instantiate('key5 gold synced', scene, scene, 'keyPart5');
+					scene.systems['sync-system'].instantiate('key1 gold', scene, scene, 'keyPart1');
+					scene.systems['sync-system'].instantiate('key2 gold', scene, scene, 'keyPart2');
+					scene.systems['sync-system'].instantiate('key3 gold', scene, scene, 'keyPart3');
+					scene.systems['sync-system'].instantiate('key4 gold', scene, scene, 'keyPart4');
+					scene.systems['sync-system'].instantiate('key5 gold', scene, scene, 'keyPart5');
 				});
 				keySpawn.object3D.addEventListener('jointcollisionleave', function(){
 					hasKey = false;
