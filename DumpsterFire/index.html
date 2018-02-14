@@ -8,12 +8,17 @@
 </head>
 <body>
   <a-scene altspace='fullspace: true'>
-    <a-entity id='wall' position='0 0 0'>
+    <!-- <a-box></a-box> -->
+    <a-entity position='4 0 -54' rotation='0 180 0'>
       <a-entity id='model' position='0 0 0' scale='7 7 7' obj-model='obj: url(Alley.obj); mtl: url(Alley.mtl)' n-mesh-collider='type: environment; convex: false'></a-entity>
     </a-entity>
+    <a-entity id='lateJoinSurprise'></a-entity>
   </a-scene>
   <script>
     
+
+    //Honk
+    //lateJoinSurprise.setAttribute('n-sound', {src: /Mobile/i.test(navigator.userAgent) ? 'sounds/honk.mp3' : 'sounds/honk.ogg', volume: '2', spatialBlend: '0'});
   </script>
 </body>
 </html>
