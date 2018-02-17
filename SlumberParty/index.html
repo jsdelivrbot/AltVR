@@ -700,8 +700,14 @@
   altspace.getThreeJSTrackingSkeleton().then(function(skeleton){
     console.log(skeleton);
     var head = skeleton.getJoint('Head');
+    var isMod = false;
+    altspace.getUser().then(function(user) {
+      if (user.isModerator) {
+        isMod = true;
+      }
+    });
     setInterval(function(){
-      if (loaded && head.position.y < 5 && ((head.position.x < -13 || head.position.x > 10.5) || (head.position.z < -72 || head.position.z > -61.5))) {
+      if (!isMod && loaded && head.position.y < 5 && ((head.position.x < -13 || head.position.x > 10.5) || (head.position.z < -72 || head.position.z > -61.5))) {
         sendUp();
       }
     },1000);
