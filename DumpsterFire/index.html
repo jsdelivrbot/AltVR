@@ -20,7 +20,6 @@
       console.log(obj);
       for (var i = 0; i < obj.children.length; i++) {
         obj.children[i].material = obj.children[i].material.clone();
-        console.log(i);
         switch (obj.children[i].name) {
           case 'road1':
             applyTextures(obj.children[i], 'road.jpg', 35, 50, 0.42, 0, 'LightMap.jpg', 1);
@@ -38,7 +37,6 @@
             applyTextures(obj.children[i], 'road.jpg', 35, 50, 0.67, 0, 'LightMap.jpg', 1);
             console.log('road4', obj.children[i]);
             break;
-
           case 'road5':
             applyTextures(obj.children[i], 'road.jpg', 35, 50, 0.48, 0, 'LightMap.jpg', 1);
             console.log('road5', obj.children[i]);
@@ -55,6 +53,12 @@
             applyTextures(obj.children[i], 'road.jpg', 35, 50, 0.67, 0, 'LightMap.jpg', 1);
             console.log('road8', obj.children[i]);
             break;
+
+          case 'sidewalk':
+            applyTextures(obj.children[i], 'sidewalk.jpg', 80, 80, 0, 0, 'LightMap.jpg', 1);
+            console.log('sidewalk', obj.children[i]);
+            break;
+
           default:
             obj.children[i].material.lightMap = THREE.ImageUtils.loadTexture('LightMap.jpg');
             break;
