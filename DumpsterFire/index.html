@@ -51,6 +51,14 @@
             break;
           case 'alley':
             applyTextures(obj.children[i], 'alley.jpg', 80, 80, 0, 0, 'LightMap.jpg', 1);
+            obj.children[i].material.color.set(new THREE.Color(.8,.8,.8));
+            break;
+
+          case 'streetlights':
+            applyTextures(obj.children[i], 'streetlights.png', 80, 80, 0, 0, 'LightMap.jpg', 1);
+            break;
+          case 'lights':
+            //applyTextures(obj.children[i], 'streetlights.png', 80, 80, 0, 0, 'LightMap.jpg', 1);
             break;
 
           default:
@@ -71,7 +79,7 @@
            //new altspaceutil.behaviors.NativeComponent('n-mesh-collider', { convex: false, type: 'environment' })
         //);
 
-        console.log(mesh.name, mesh.material.map);
+        console.log(mesh.name, mesh.material);
       }
     });
 
