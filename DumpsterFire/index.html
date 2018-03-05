@@ -23,40 +23,34 @@
         switch (obj.children[i].name) {
           case 'road1':
             applyTextures(obj.children[i], 'road.jpg', 35, 50, 0.42, 0, 'LightMap.jpg', 1);
-            console.log('road1', obj.children[i]);
             break;
           case 'road2':
             applyTextures(obj.children[i], 'road.jpg', 35, 50, 0.55, 0, 'LightMap.jpg', 1);
-            console.log('road2', obj.children[i]);
             break;
           case 'road3':
             applyTextures(obj.children[i], 'road.jpg', 35, 50, 0.76, 0, 'LightMap.jpg', 1);
-            console.log('road3', obj.children[i]);
             break;
           case 'road4':
             applyTextures(obj.children[i], 'road.jpg', 35, 50, 0.67, 0, 'LightMap.jpg', 1);
-            console.log('road4', obj.children[i]);
             break;
           case 'road5':
             applyTextures(obj.children[i], 'road.jpg', 35, 50, 0.48, 0, 'LightMap.jpg', 1);
-            console.log('road5', obj.children[i]);
             break;
           case 'road6':
             applyTextures(obj.children[i], 'road.jpg', 35, 50, 0.59, 0, 'LightMap.jpg', 1);
-            console.log('road6', obj.children[i]);
             break;
           case 'road7':
             applyTextures(obj.children[i], 'road.jpg', 35, 50, 0.76, 0, 'LightMap.jpg', 1);
-            console.log('road7', obj.children[i]);
             break;
           case 'road8':
             applyTextures(obj.children[i], 'road.jpg', 35, 50, 0.67, 0, 'LightMap.jpg', 1);
-            console.log('road8', obj.children[i]);
             break;
 
           case 'sidewalk':
             applyTextures(obj.children[i], 'sidewalk.jpg', 80, 80, 0, 0, 'LightMap.jpg', 1);
-            console.log('sidewalk', obj.children[i]);
+            break;
+          case 'alley':
+            applyTextures(obj.children[i], 'alley.jpg', 80, 80, 0, 0, 'LightMap.jpg', 1);
             break;
 
           default:
@@ -76,6 +70,8 @@
         //mesh.addBehaviors(
            //new altspaceutil.behaviors.NativeComponent('n-mesh-collider', { convex: false, type: 'environment' })
         //);
+
+        console.log(mesh.name, mesh.material.map);
       }
     });
 
