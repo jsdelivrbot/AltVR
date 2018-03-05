@@ -11,6 +11,19 @@
     <!-- <a-box></a-box> -->
     <a-entity position='4 0 -54' rotation='0 180 0'>
       <a-entity id='model' position='0 0 0' scale='7 7 7' obj-model='obj: url(Alley.obj)' n-mesh-collider='type: environment; convex: false'></a-entity>
+      
+      <!-- <a-plane position='11.5 10 3' rotation='0 -90 0' scale='16 9 1'></a-plane> -->
+      <a-entity position='11.5 10 3' rotation='0 -90 0' scale='12 12 12' n-layout-browser='url: about:blank'></a-entity>
+
+      <a-entity id='target' position='-16 10 2' rotation='0 90 0'></a-entity>
+      <a-entity position='-19 .1 2' rotation='0 -90 0' n-portal='targetEntity: #target'></a-entity>
+
+      <a-box position='-13.8 10 2' scale='8.3 .1 10' color='#666' n-box-collider='type: environment'></a-box>
+
+      <a-entity id='roofTarget' position='-13.5 20 7'></a-entity>
+      <a-entity position='-13.5 10 6.8' rotation='0 180 0' n-portal='targetEntity: #roofTarget'></a-entity>
+
+      <a-entity position='-15.5 16.8 -7.7' rotation='0 0 0' n-portal='targetEntity: #target'></a-entity>
     </a-entity>
   </a-scene>
   <script>
@@ -59,6 +72,7 @@
             break;
           case 'lights':
             //applyTextures(obj.children[i], 'streetlights.png', 80, 80, 0, 0, 'LightMap.jpg', 1);
+            obj.children[i].material.color.set(new THREE.Color(.9,.9,.9));
             break;
 
           default:
