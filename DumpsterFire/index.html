@@ -21,15 +21,22 @@
       <a-entity position='11.5 10 3' rotation='0 -90 0' scale='12 12 12' n-layout-browser='url: about:blank'></a-entity>
 
       <a-entity id='target' position='-16 10 2' rotation='0 90 0'></a-entity>
-      <a-entity position='-19 .1 2' rotation='0 -90 0' n-portal='targetEntity: #target'></a-entity>
+      <!-- <a-entity position='-19 .1 2' rotation='0 -90 0' n-portal='targetEntity: #target'></a-entity> -->
 
       <a-box position='-13.8 10 2' scale='8.3 .1 10' color='#666' n-box-collider='type: environment'></a-box>
 
       <a-entity id='roofTarget' position='-13.5 20 7'></a-entity>
-      <a-entity position='-13.5 10 6.8' rotation='0 180 0' n-portal='targetEntity: #roofTarget'></a-entity>
+      <!-- <a-entity position='-13.5 10 6.8' rotation='0 180 0' n-portal='targetEntity: #roofTarget'></a-entity> -->
 
-      <a-entity position='-15.5 16.8 -7.7' rotation='0 0 0' n-portal='targetEntity: #target'></a-entity>
+      <!-- <a-entity position='-15.5 16.8 -7.7' rotation='0 0 0' n-portal='targetEntity: #target'></a-entity> -->
+
+      <a-box id='button1' position='-18 1.5 2' scale='.05 .1 .1' color='blue'></a-box>
+      <a-box id='button2' position='-13.5 11.5 6.8' scale='.1 .1 .05' color='red'></a-box>
+      <a-box id='button3' position='-15.5 18.3 -8.2' scale='.1 .1 .05' color='blue'></a-box>
     </a-entity>
+
+    <a-entity id='roomPortal' position='0 -100 0' n-portal='targetEntity: #target' n-skeleton-parent='part: head'></a-entity>
+    <a-entity id='roofPortal' position='0 -100 0' n-portal='targetEntity: #roofTarget' n-skeleton-parent='part: head'></a-entity>
   </a-scene>
   <script>
 
@@ -81,7 +88,7 @@
             break;
 
           default:
-            obj.children[i].material.lightMap = THREE.ImageUtils.loadTexture('LightMap.jpg');
+            obj.children[i].material.map = THREE.ImageUtils.loadTexture('LightMap.jpg');
             break;
         }
       }
@@ -101,6 +108,29 @@
         console.log(mesh.name, mesh.material);
       }
     });
+
+    button1.addEventListener('mouseup', function(){
+      toControlRoom();
+    });
+    button2.addEventListener('mouseup', function(){
+      toRoof();
+    });
+    button3.addEventListener('mouseup', function(){
+      toControlRoom();
+    });
+
+    function toControlRoom(){
+      roomPortal.setAttribute('position', '0 0 0');
+      setTimeout(function(){
+        roomPortal.setAttribute('position', '0 -100 0');
+      }, 1000);
+    }
+    function toRoof(){
+      roofPortal.setAttribute('position', '0 0 0');
+      setTimeout(function(){
+        roofPortal.setAttribute('position', '0 -100 0');
+      }, 1000);
+    }
 
   </script>
 </body>
