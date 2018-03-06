@@ -70,6 +70,10 @@
           case 'road8':
             applyTextures(obj.children[i], 'road.jpg', 35, 50, 0.67, 0, 'LightMap.jpg', 1);
             break;
+          case 'roads':
+            applyTextures(obj.children[i], 'alley.jpg', 80, 80, 0.5, 0.5, 'LightMap.jpg', 1);
+            obj.children[i].material.color.set(new THREE.Color(.5,.5,.5));
+            break;
 
           case 'sidewalk':
             applyTextures(obj.children[i], 'sidewalk.jpg', 80, 80, 0, 0, 'LightMap.jpg', 1);
@@ -85,6 +89,16 @@
           case 'lights':
             //applyTextures(obj.children[i], 'streetlights.png', 80, 80, 0, 0, 'LightMap.jpg', 1);
             obj.children[i].material.color.set(new THREE.Color(.9,.9,.9));
+            break;
+          case 'trafficPoles':
+            applyTextures(obj.children[i], 'pole.jpg', 80, 80, 0, 0, 'LightMap.jpg', 1);
+            break;
+          case 'pedLights':
+            applyTextures(obj.children[i], 'streetlights.png', 80, 80, 0, 0, 'LightMap.jpg', 1);
+            break;
+
+          case 'roofs':
+            applyTextures(obj.children[i], 'roof.png', 80, 80, 0, 0, 'LightMap.jpg', 1);
             break;
 
           default:
