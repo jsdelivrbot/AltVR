@@ -33,6 +33,182 @@
       <a-box id='button1' position='-18 1.5 2' scale='.05 .1 .1' color='blue'></a-box>
       <a-box id='button2' position='-13.5 11.5 6.8' scale='.1 .1 .05' color='red'></a-box>
       <a-box id='button3' position='-15.5 18.3 -8.2' scale='.1 .1 .05' color='blue'></a-box>
+
+      <a-mixin id='crossingStripe' scale='2.8 .65 1' material='color: #bbb' altspace-cursor-collider='enabled: false'></a-mixin>
+
+      <a-entity rotation='0 0 0'>
+        <a-entity id='road1' position='0 .13 -48.235' rotation='-90 0 0'>
+          <a-plane position='-.6 0 0' scale='48 .1 1' material='src:url(line2.png); repeat: 25 1' transparent='true' color='#bbb' altspace-cursor-collider='enabled: false'></a-plane>
+        </a-entity>
+
+        <a-entity id='road2' position='0 .13 -40.84' rotation='-90 0 0'>
+          <a-plane position='-.6 0 0' scale='48 .1 1' material='src:url(line2.png); repeat: 25 1' transparent='true' color='#bbb' altspace-cursor-collider='enabled: false'></a-plane>
+        </a-entity>
+
+        <a-entity id='cross1' position='0 .13 -48.55' rotation='-90 0 0'>
+          <a-plane position='26 2.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='26 1.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='26 .5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='26 -.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='26 -1.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='26 -2.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='26 -3.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='26 -4.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='26 -5.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='26 -6.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='26 -7.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='26 -8.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='26 -9.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='26 -10.5 0' mixin='crossingStripe'></a-plane>
+
+          <a-plane position='-26 2.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-26 1.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-26 .5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-26 -.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-26 -1.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-26 -2.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-26 -3.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-26 -4.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-26 -5.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-26 -6.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-26 -7.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-26 -8.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-26 -9.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-26 -10.5 0' mixin='crossingStripe'></a-plane>
+        </a-entity>
+      </a-entity>
+
+      <a-entity rotation='0 90 0' position='9.6 0 0'>
+        <a-entity id='road1' position='0 .13 -48.235' rotation='-90 0 0'>
+          <a-plane position='-.6 0 0' scale='68 .1 1' material='src:url(line2.png); repeat: 25 1' transparent='true' color='#bbb' altspace-cursor-collider='enabled: false'></a-plane>
+        </a-entity>
+
+        <a-entity id='road2' position='0 .13 -40.84' rotation='-90 0 0'>
+          <a-plane position='-.6 0 0' scale='68 .1 1' material='src:url(line2.png); repeat: 25 1' transparent='true' color='#bbb' altspace-cursor-collider='enabled: false'></a-plane>
+        </a-entity>
+
+        <a-entity id='cross1' position='0 .13 -48.55' rotation='-90 0 0'>
+          <a-plane position='35.5 2.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='35.5 1.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='35.5 .5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='35.5 -.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='35.5 -1.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='35.5 -2.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='35.5 -3.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='35.5 -4.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='35.5 -5.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='35.5 -6.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='35.5 -7.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='35.5 -8.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='35.5 -9.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='35.5 -10.5 0' mixin='crossingStripe'></a-plane>
+
+          <a-plane position='-35.5 2.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-35.5 1.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-35.5 .5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-35.5 -.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-35.5 -1.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-35.5 -2.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-35.5 -3.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-35.5 -4.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-35.5 -5.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-35.5 -6.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-35.5 -7.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-35.5 -8.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-35.5 -9.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-35.5 -10.5 0' mixin='crossingStripe'></a-plane>
+        </a-entity>
+      </a-entity>
+
+      <a-entity rotation='0 180 0' position='0 0 -.1'>
+        <a-entity id='road1' position='0 .13 -48.235' rotation='-90 0 0'>
+          <a-plane position='-.6 0 0' scale='48 .1 1' material='src:url(line2.png); repeat: 25 1' transparent='true' color='#bbb' altspace-cursor-collider='enabled: false'></a-plane>
+        </a-entity>
+
+        <a-entity id='road2' position='0 .13 -40.84' rotation='-90 0 0'>
+          <a-plane position='-.6 0 0' scale='48 .1 1' material='src:url(line2.png); repeat: 25 1' transparent='true' color='#bbb' altspace-cursor-collider='enabled: false'></a-plane>
+        </a-entity>
+
+        <a-entity id='cross1' position='0 .13 -48.55' rotation='-90 0 0'>
+          <a-plane position='26 2.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='26 1.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='26 .5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='26 -.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='26 -1.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='26 -2.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='26 -3.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='26 -4.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='26 -5.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='26 -6.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='26 -7.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='26 -8.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='26 -9.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='26 -10.5 0' mixin='crossingStripe'></a-plane>
+
+          <a-plane position='-26 2.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-26 1.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-26 .5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-26 -.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-26 -1.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-26 -2.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-26 -3.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-26 -4.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-26 -5.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-26 -6.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-26 -7.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-26 -8.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-26 -9.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-26 -10.5 0' mixin='crossingStripe'></a-plane>
+        </a-entity>
+      </a-entity>
+
+      <a-entity rotation='0 270 0' position='-9.6 0 0'>
+        <a-entity id='road1' position='0 .13 -48.235' rotation='-90 0 0'>
+          <a-plane position='-.6 0 0' scale='68 .1 1' material='src:url(line2.png); repeat: 25 1' transparent='true' color='#bbb' altspace-cursor-collider='enabled: false'></a-plane>
+        </a-entity>
+
+        <a-entity id='road2' position='0 .13 -40.84' rotation='-90 0 0'>
+          <a-plane position='-.6 0 0' scale='68 .1 1' material='src:url(line2.png); repeat: 25 1' transparent='true' color='#bbb' altspace-cursor-collider='enabled: false'></a-plane>
+        </a-entity>
+
+        <a-entity id='cross1' position='0 .13 -48.55' rotation='-90 0 0'>
+          <a-plane position='35.5 2.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='35.5 1.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='35.5 .5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='35.5 -.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='35.5 -1.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='35.5 -2.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='35.5 -3.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='35.5 -4.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='35.5 -5.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='35.5 -6.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='35.5 -7.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='35.5 -8.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='35.5 -9.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='35.5 -10.5 0' mixin='crossingStripe'></a-plane>
+
+          <a-plane position='-35.5 2.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-35.5 1.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-35.5 .5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-35.5 -.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-35.5 -1.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-35.5 -2.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-35.5 -3.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-35.5 -4.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-35.5 -5.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-35.5 -6.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-35.5 -7.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-35.5 -8.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-35.5 -9.5 0' mixin='crossingStripe'></a-plane>
+          <a-plane position='-35.5 -10.5 0' mixin='crossingStripe'></a-plane>
+        </a-entity>
+      </a-entity>
+
+      <!-- <a-plane id='road' position='0 .125 -48.235' rotation='-90 0 0' scale='56 6.5 1' opacity='.1'></a-plane> -->
+      <!-- <a-plane id='road' position='0 .125 -40.84' rotation='-90 0 0' scale='1 6.5 1' opacity='.2'></a-plane> -->
+
+      <!-- <a-plane position='0 .13 -48.235' rotation='-90 0 0' scale='50 .1 1' material='src:url(line2.png); repeat: 25 1' transparent='true' color='#bbb' altspace-cursor-collider='enabled: false'></a-plane> -->
+      <!-- <a-plane position='0 .13 -40.84' rotation='-90 0 0' scale='50 .1 1' material='src:url(line2.png); repeat: 25 1' transparent='true' color='#bbb' altspace-cursor-collider='enabled: false'></a-plane> -->
     </a-entity>
 
     <a-entity id='roomPortal' position='0 -100 0' n-portal='targetEntity: #target' n-skeleton-parent='part: head'></a-entity>
@@ -80,7 +256,7 @@
             break;
           case 'alley':
             applyTextures(obj.children[i], 'alley.jpg', 80, 80, 0, 0, 'LightMap.jpg', 1);
-            obj.children[i].material.color.set(new THREE.Color(.8,.8,.8));
+            obj.children[i].material.color.set(new THREE.Color(.5,.5,.5));
             break;
 
           case 'streetlights':
@@ -95,6 +271,13 @@
             break;
           case 'pedLights':
             applyTextures(obj.children[i], 'streetlights.png', 80, 80, 0, 0, 'LightMap.jpg', 1);
+            break;
+
+          case 'stop':
+            applyTextures(obj.children[i], 'stop.jpg', 1, 1, 0, 0, '', 1);
+            break;
+          case 'go':
+            applyTextures(obj.children[i], 'go.jpg', 1, 1, 0, 0, '', 1);
             break;
 
           case 'roofs':
