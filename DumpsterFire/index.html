@@ -35,6 +35,7 @@
       <a-box id='button3' position='-15.5 18.3 -8.2' scale='.1 .1 .05' color='blue'></a-box>
 
       <a-plane id='building1Door' position='-16.4 1.8 -33.93' rotation='0 180 0.5' scale='2.3 3 1' src='door.png' transparent='true' altspace-cursor-collider='enabled: false'></a-plane>
+      <a-plane id='building2Door' position='-16.4 1.8 -33.93' scale='2.3 3 1' src='door.png' transparent='true' altspace-cursor-collider='enabled: false'></a-plane>
 
       <a-mixin id='dottedStripe' material='src:url(line2.png); repeat: 25 1; transparent: true; opacity: .1' altspace-cursor-collider='enabled: false'></a-mixin>
       <a-mixin id='crossingStripe' scale='2.8 .65 1' material='color: #fff; opacity: .1' altspace-cursor-collider='enabled: false'></a-mixin>
@@ -307,9 +308,12 @@
           case 'building2wall1':
             applyTextures(obj.children[i], 'wall1r.jpg', 21, 21, 0, 0, 'LightMap.jpg', 1);
             break;
-          //case 'building2wall2':
-            //applyTextures(obj.children[i], 'wall1l.jpg', 21, 21, .025, -.045, 'LightMap.jpg', 1);
-            //break;
+          case 'building2wall2':
+            applyTextures(obj.children[i], 'wall1u.jpg', 21, 21, .035, .05, 'LightMap.jpg', 1);
+            break;
+          case 'building2wall2bottom':
+            applyTextures(obj.children[i], 'store1.jpg', 35, 43, .08, -.255, 'LightMap.jpg', 1);
+            break;
           case 'building2wall3':
             applyTextures(obj.children[i], 'wall1r.jpg', 21, 21, -.09, 0, 'LightMap.jpg', 1);
             break;
