@@ -34,6 +34,8 @@
       <a-box id='button2' position='-13.5 11.5 6.8' scale='.1 .1 .05' color='red'></a-box>
       <a-box id='button3' position='-15.5 18.3 -8.2' scale='.1 .1 .05' color='blue'></a-box>
 
+      <a-plane id='building1Door' position='-16.4 1.8 -33.93' rotation='0 180 0.5' scale='2.3 3 1' src='door.png' transparent='true' altspace-cursor-collider='enabled: false'></a-plane>
+
       <a-mixin id='dottedStripe' material='src:url(line2.png); repeat: 25 1; transparent: true; opacity: .1' altspace-cursor-collider='enabled: false'></a-mixin>
       <a-mixin id='crossingStripe' scale='2.8 .65 1' material='color: #fff; opacity: .1' altspace-cursor-collider='enabled: false'></a-mixin>
 
@@ -253,17 +255,17 @@
             break;
 
           case 'streetlights':
-            applyTextures(obj.children[i], 'streetlights.png', 80, 80, 0, 0, 'LightMap.jpg', 1);
+            applyTextures(obj.children[i], 'streetlights.jpg', 80, 80, 0, 0, 'LightMap.jpg', 1);
             break;
           case 'lights':
-            //applyTextures(obj.children[i], 'streetlights.png', 80, 80, 0, 0, 'LightMap.jpg', 1);
+            //applyTextures(obj.children[i], 'streetlights.jpg', 80, 80, 0, 0, 'LightMap.jpg', 1);
             obj.children[i].material.color.set(new THREE.Color(.9,.9,.9));
             break;
           case 'trafficPoles':
             applyTextures(obj.children[i], 'pole.jpg', 80, 80, 0, 0, 'LightMap.jpg', 1);
             break;
           case 'pedLights':
-            applyTextures(obj.children[i], 'streetlights.png', 80, 80, 0, 0, 'LightMap.jpg', 1);
+            applyTextures(obj.children[i], 'streetlights.jpg', 80, 80, 0, 0, 'LightMap.jpg', 1);
             break;
 
           case 'stop':
@@ -275,6 +277,19 @@
 
           case 'roofs':
             applyTextures(obj.children[i], 'roof.jpg', 80, 80, 0, 0, 'LightMap.jpg', 1);
+            break;
+
+          case 'buiding1wall1':
+            applyTextures(obj.children[i], 'wall1u.jpg', 21, 21, .265, -.03, 'LightMap.jpg', 1);
+            break;
+          case 'buiding1wall2':
+            applyTextures(obj.children[i], 'wall1u.jpg', 21, 21, .025, -.045, 'LightMap.jpg', 1);
+            break;
+          case 'buiding1wall3':
+            applyTextures(obj.children[i], 'wall1.jpg', 21, 21, -.005, -.02, 'LightMap.jpg', 1);
+            break;
+          case 'buiding1wall4':
+            applyTextures(obj.children[i], 'wall1.jpg', 21, 21, -.01, .035, 'LightMap.jpg', 1);
             break;
 
           default:
