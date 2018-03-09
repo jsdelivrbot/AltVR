@@ -348,6 +348,12 @@
           case 'building3wall6':
             applyTextures(obj.children[i], 'wall2u.jpg', 10, 10, .13, .085, 'LightMap.jpg', 1);
             break;
+          case 'building3wall7':
+            applyTextures(obj.children[i], 'wall2l.jpg', 10, 10, .03, .14, 'LightMap.jpg', 1);
+            break;
+          case 'building3wall7.1':
+            applyTextures(obj.children[i], 'wall2l.jpg', 10, 10, .013, .338, 'LightMap.jpg', 1);
+            break;
 
           default:
             obj.children[i].material.map = THREE.ImageUtils.loadTexture('LightMap.jpg');
