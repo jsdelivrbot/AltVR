@@ -30,7 +30,7 @@
 
       <!-- <a-entity position='-15.5 16.8 -7.7' rotation='0 0 0' n-portal='targetEntity: #target'></a-entity> -->
 
-      <a-box id='button1' position='-18 1.5 2' scale='.05 .1 .1' color='blue'></a-box>
+      <a-box id='button1' position='-18 2 2.9' scale='.05 .1 .1' color='blue'></a-box>
       <a-box id='button2' position='-13.5 11.5 6.8' scale='.1 .1 .05' color='red'></a-box>
       <a-box id='button3' position='-15.5 18.3 -8.2' scale='.1 .1 .05' color='blue'></a-box>
 
@@ -328,6 +328,25 @@
             break;
           case 'building2ledge':
             applyTextures(obj.children[i], 'ledge.jpg', 100, 100, 0, 0, 'LightMap.jpg', 1);
+            break;
+
+          case 'building3wall1':
+            applyTextures(obj.children[i], 'wall2l.jpg', 10, 10, -.03, .15, 'LightMap.jpg', 1);
+            break;
+          case 'building3wall2':
+            applyTextures(obj.children[i], 'wall2.jpg', 10, 10, .275, .02, 'LightMap.jpg', 1);
+            break;
+          case 'building3wall3':
+            applyTextures(obj.children[i], 'wall2u.jpg', 10, 10, .235, .045, 'LightMap.jpg', 1);
+            break;
+          case 'building3wall4':
+            applyTextures(obj.children[i], 'wall2u.jpg', 10, 10, .01, -.035, 'LightMap.jpg', 1);
+            break;
+          case 'building3wall5':
+            applyTextures(obj.children[i], 'wall2u.jpg', 10, 10, .005, .085, 'LightMap.jpg', 1);
+            break;
+          case 'building3wall6':
+            applyTextures(obj.children[i], 'wall2u.jpg', 10, 10, .13, .085, 'LightMap.jpg', 1);
             break;
 
           default:
