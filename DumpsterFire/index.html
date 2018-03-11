@@ -395,6 +395,39 @@
             applyTextures(obj.children[i], 'billBack.jpg', 100, 100, 0, 0, 'LightMap.jpg', 1);
             break;
 
+          case 'building5wall1':
+            applyTextures(obj.children[i], 'wall4.jpg', 12, 10, 0, .02, 'LightMap.jpg', 1);
+            break;
+          case 'building5wall2':
+            applyTextures(obj.children[i], 'wall4.jpg', 12, 10, 0, -.03, 'LightMap.jpg', 1);
+            break;
+          case 'building5wall3':
+            applyTextures(obj.children[i], 'wall4.jpg', 12, 10, 0, -.035, 'LightMap.jpg', 1);
+            break;
+          case 'building5wall4':
+            applyTextures(obj.children[i], 'wall4.jpg', 12, 10, 0, .0055, 'LightMap.jpg', 1);
+            break;
+          case 'building5ledge':
+            applyTextures(obj.children[i], 'ledge.jpg', 100, 100, 0, 0, 'LightMap.jpg', 1);
+            obj.children[i].material.color.set(new THREE.Color(.9,.9,.9));
+            break;
+          case 'building5box':
+            applyTextures(obj.children[i], 'antennaLight.jpg', 100, 100, 0, 0, 'LightMap.jpg', 1);
+            break;
+          case 'building5boxTop':
+            applyTextures(obj.children[i], 'roofBoxTop.jpg', 110, 90, .55, .47, 'LightMap.jpg', 1);
+            break;
+          case 'roofHouseWalls3':
+            applyTextures(obj.children[i], 'roofWall3.jpg', 100, 100, 0, 0, 'LightMap.jpg', 1);
+            break;
+          case 'roofHouseRoof3':
+            applyTextures(obj.children[i], 'roofRoof3.jpg', 100, 100, 0, 0, 'LightMap.jpg', 1);
+            break;
+
+          case 'billboard':
+            applyTextures(obj.children[i], 'poster.jpg', 1, 1, 0, 0, '', 1);
+            break;
+
           default:
             obj.children[i].material.map = THREE.ImageUtils.loadTexture('LightMap.jpg');
             break;
