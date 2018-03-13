@@ -12,9 +12,10 @@
     <a-entity position='4 0 -54' rotation='0 180 0'>
       <a-entity id='model' position='0 0 0' scale='7 7 7' obj-model='obj: url(Alley.obj)' n-mesh-collider='type: environment; convex: false'></a-entity>
 
-      <a-entity position='0 0 -60' scale='1 1 1' rotation='0 0 0'>
-        <a-entity obj-model='obj: url(fence.obj); mtl: url(fence.mtl)'></a-entity>
-        <a-plane position='0 1.09 0' scale='8.5 1.9 1' material='src:url(fence.png); repeat: 10 2.5; transparent: true; side: double'></a-plane>
+      <a-entity position='-4.8 .05 -8.25' scale='1.1 1.1 1.1' rotation='0 0 0'>
+        <a-entity obj-model='obj: url(fence.obj); mtl: url(fence.mtl)' n-mesh-collider='type: environment; convex: false'></a-entity>
+        <a-plane position='0 1.09 0' scale='8.5 1.9 1' material='src:url(fence.png); repeat: 10 2.5; transparent: true; side: double' altspace-cursor-collider='enabled: false'></a-plane>
+        <a-plane position='4.265 1.09 -2.13' scale='4.25 1.9 1' rotation='0 90 0' material='src:url(fence.png); repeat: 5 2.5; transparent: true; side: double' altspace-cursor-collider='enabled: false'></a-plane>
       </a-entity>
       
       <!-- <a-plane position='11.5 10 3' rotation='0 -90 0' scale='16 9 1'></a-plane> -->
@@ -429,7 +430,7 @@
             break;
 
           default:
-            obj.children[i].material.map = THREE.ImageUtils.loadTexture('LightMap.jpg');
+            obj.children[i].material.lightMap = THREE.ImageUtils.loadTexture('LightMap.jpg');
             break;
         }
       }
