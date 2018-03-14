@@ -431,6 +431,10 @@
             applyTextures(obj.children[i], 'poster.jpg', 1, 1, 0, 0, '', 1);
             break;
 
+          case 'ledges':
+            applyTextures(obj.children[i], 'ledge.jpg', 100, 100, 0, 0, 'LightMap.jpg', 1);
+            break;
+
           case 'wall':
             applyTextures(obj.children[i], 'outerWall.jpg', 50, 50, 0, 0, '', 1);
             obj.children[i].material.color.set(new THREE.Color(.8,.8,.8));
