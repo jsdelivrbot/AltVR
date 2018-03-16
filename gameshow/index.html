@@ -1,0 +1,409 @@
+<html>
+<head>
+	<title>OpenTDB Test</title>
+	<script src="https://aframe.io/releases/0.7.0/aframe.js"></script>
+	<script src="https://sdk.altvr.com/libs/altspace.js/2.8.2/altspace.min.js"></script>
+</head>
+<body>
+	<a-scene altspace='verticalAlign: bottom' sync-system='author: BenG; app: quiz; refUrl: https://altvr-apps.firebaseio.com/'>
+
+		<a-entity id='screen' position='0 1.5 0' scale='.1 .1 .1'>
+			<a-plane scale='16 9 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
+
+			<a-plane position='-3.7 -1.8 .1' scale='6.8 1 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
+			<a-plane position='3.7 -1.8 .1' scale='6.8 1 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
+			<a-plane position='-3.7 -3.3 .1' scale='6.8 1 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
+			<a-plane position='3.7 -3.3 .1' scale='6.8 1 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
+
+			<a-plane id='aB' position='-3.7 -1.8 .05' scale='7 1.2 1' color='white' n-mesh-collider='type: hologram; convex: false'></a-plane>
+			<a-plane id='bB' position='3.7 -1.8 .05' scale='7 1.2 1' color='white' n-mesh-collider='type: hologram; convex: false'></a-plane>
+			<a-plane id='cB' position='-3.7 -3.3 .05' scale='7  1.2 1' color='white' n-mesh-collider='type: hologram; convex: false'></a-plane>
+			<a-plane id='dB' position='3.7 -3.3 .05' scale='7 1.2 1' color='white' n-mesh-collider='type: hologram; convex: false'></a-plane>
+
+			<a-entity id='questionT' position='0 3 .1' n-text='width: 14; fontSize: 7; verticalAlign: top; text: ?'></a-entity>
+
+			<a-entity id='aT' position='-3.7 -1.8 .15' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: A: '></a-entity>
+			<a-entity id='bT' position='3.7 -1.8 .15' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: B: '></a-entity>
+			<a-entity id='cT' position='-3.7 -3.3 .15' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: C: '></a-entity>
+			<a-entity id='dT' position='3.7 -3.3 .15' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: D: '></a-entity>
+
+			<a-plane id='timer' position='0 4 .15' scale='14 .25 1'>
+				<a-animation attribute='scale' from='14 .25 1' to='0 .25 1' dur='10000' easing='linear' begin='start'></a-animation>
+				<a-animation attribute='position' from='0 4 .15' to='7 4 .15' dur='10000' easing='linear' begin='start'></a-animation>
+			</a-plane>
+		</a-entity>
+
+		<a-entity position='1.8 1.5 0' rotation='0 -20 0'>
+			<a-plane scale='1 2 1' color='black'></a-plane>
+			<a-entity position='0 .9 .01' n-text='fontSize: 1; width: 0.8; text: Leaderboard'></a-entity>
+			<a-entity id='p1Name' position='0 .7 .01' n-text='fontSize: 1; horizontalAlign: left; width: 0.8; text: Player 1'></a-entity>
+			<a-entity id='p1Score' position='0 .7 .01' n-text='fontSize: 1; horizontalAlign: right; width: 0.8; text: 0'></a-entity>
+
+			<a-entity id='p2Name' position='0 .55 .01' n-text='fontSize: 1; horizontalAlign: left; width: 0.8; text: Player 2'></a-entity>
+			<a-entity id='p2Score' position='0 .55 .01' n-text='fontSize: 1; horizontalAlign: right; width: 0.8; text: 0'></a-entity>
+
+			<a-entity id='p3Name' position='0 .4 .01' n-text='fontSize: 1; horizontalAlign: left; width: 0.8; text: Player 3'></a-entity>
+			<a-entity id='p3Score' position='0 .4 .01' n-text='fontSize: 1; horizontalAlign: right; width: 0.8; text: 0'></a-entity>
+
+			<a-entity id='p4Name' position='0 .25 .01' n-text='fontSize: 1; horizontalAlign: left; width: 0.8; text: Player 4'></a-entity>
+			<a-entity id='p4Score' position='0 .25 .01' n-text='fontSize: 1; horizontalAlign: right; width: 0.8; text: 0'></a-entity>
+			
+			<a-entity id='p5Name' position='0 .1 .01' n-text='fontSize: 1; horizontalAlign: left; width: 0.8; text: Player 5'></a-entity>
+			<a-entity id='p5Score' position='0 .1 .01' n-text='fontSize: 1; horizontalAlign: right; width: 0.8; text: 0'></a-entity>
+
+			<a-plane position='0 .025 .01' scale='.9 .01 1'></a-plane>
+
+			<a-entity id='p6Name' position='0 -.05 .01' n-text='fontSize: 1; horizontalAlign: left; width: 0.8; text: Player 6'></a-entity>
+			<a-entity id='p6Score' position='0 -.05 .01' n-text='fontSize: 1; horizontalAlign: right; width: 0.8; text: 0'></a-entity>
+
+			<a-entity id='p7Name' position='0 -.2 .01' n-text='fontSize: 1; horizontalAlign: left; width: 0.8; text: Player 7'></a-entity>
+			<a-entity id='p7Score' position='0 -.2 .01' n-text='fontSize: 1; horizontalAlign: right; width: 0.8; text: 0'></a-entity>
+
+			<a-entity id='p8Name' position='0 -.35 .01' n-text='fontSize: 1; horizontalAlign: left; width: 0.8; text: Player 8'></a-entity>
+			<a-entity id='p8Score' position='0 -.35 .01' n-text='fontSize: 1; horizontalAlign: right; width: 0.8; text: 0'></a-entity>
+
+			<a-entity id='p9Name' position='0 -.5 .01' n-text='fontSize: 1; horizontalAlign: left; width: 0.8; text: Player 9'></a-entity>
+			<a-entity id='p9Score' position='0 -.5 .01' n-text='fontSize: 1; horizontalAlign: right; width: 0.8; text: 0'></a-entity>
+
+			<a-entity id='p10Name' position='0 -.65 .01' n-text='fontSize: 1; horizontalAlign: left; width: 0.8; text: Player 10'></a-entity>
+			<a-entity id='p10Score' position='0 -.65 .01' n-text='fontSize: 1; horizontalAlign: right; width: 0.8; text: 0'></a-entity>
+		</a-entity>
+
+		<a-box id='get' position='-.25 .75 0' scale='.2 .2 .2' color='red' n-box-collider='type: hologram'></a-box>
+		<a-box id='next' position='.25 .75 0' scale='.2 .2 .2' color='blue' n-box-collider='type: hologram'></a-box>
+
+		<a-entity id='scoreText2' position='1.5 -1.5 0' n-text='fontSize: 5; text: 0'></a-entity>
+
+
+	</a-scene>
+<script>
+	var scores = [];
+	var responseTimes = [];
+	var scene = document.querySelector('a-scene');
+  scene.addEventListener('connected', function() {
+  	var sync = scene.systems['sync-system'].connection;
+
+
+  	altspace.getUser().then(function(user){
+  		var id = user.displayName + user.userId;
+			sync.instance.child('selectionPlayers').child(id).once('value', function(data){
+				if (data.val() == null) {
+					user.score = 0;
+					user.inGame = true;
+					sync.instance.child('selectionPlayers').child(id).set(user);
+				} else {
+					score = data.val().score;
+					inGame = data.val().inGame;
+				}
+			});
+
+			/*sync.instance.child('selectionPlayers').once('value', function(data){
+				if (data.val() != null) {
+					for (var i = 0; i < Object.keys(data.val()).length; i++) {
+						var u = data.val()[Object.keys(data.val())[i]]
+						console.log(u.userId);
+						console.log(u.userId == user.userId);
+					}
+				}
+			});*/
+
+			sync.instance.child('selectionPlayers').on('child_added', function(data){
+				//console.log(data.val());
+
+				scores.push(data.val());
+				sortScores();
+				updateScoreboard();
+			});
+		
+			sync.instance.child('selectionPlayers').on('child_changed', function(data){
+				//console.log('sync', data.val());
+				for (var i = 0; i < scores.length; i++) {
+					if (scores[i].userId == data.val().userId) {
+						scores[i].score = data.val().score;
+						sortScores();
+						updateScoreboard();
+					}
+				}
+			});
+
+			sync.instance.child('questions').on('value', function(data){
+				if (data.val() != null) {
+					questions = data.val();
+					//console.log('Questions', questions);
+
+					clicked = true;
+			  	get.setAttribute('color', '#866');
+			  	questionT.setAttribute('n-text', 'text', 'Questions Loaded');
+				}
+			});
+
+			sync.instance.child('current').on('value', function(data){
+				if (data.val() != null) {
+					current = data.val();
+					if (current != -1) {
+						nextQ(current);
+					}
+				} else {
+					sync.instance.child('current').set(-1);
+				}
+			});
+
+			sync.instance.child('apiKey').on('value', function(data){
+				if (data.val() != null) {
+					apiKey = data.val();
+				} else {
+					sync.instance.child('apiKey').set(apiKey);
+				}
+			});
+		
+
+			var answer;
+			var questions;
+			var current;
+			var selected;
+			var score = 0;
+			var inGame = true;
+			responseTimes = [];
+
+			var apiKey = '8cdf4169de6e0273f54ea123f49c95930b76e275db1191667b9f41e83386c026';
+
+			function getQs() {
+				current = -1;
+				var dataRequest = (THREE.FileLoader ? new THREE.FileLoader() : new THREE.XHRLoader(/* DEPRECATED: r83 */));
+			  dataRequest.load('https://opentdb.com/api.php?amount=5&type=multiple&difficulty=easy&encode=base64&token=' + apiKey + '&' + Math.random().toString(), onLoaded, undefined, undefined);
+			  dataRequest.load('https://opentdb.com/api.php?amount=5&type=multiple&difficulty=medium&encode=base64&token=' + apiKey + '&' + Math.random().toString(), onLoaded, undefined, undefined);
+			  dataRequest.load('https://opentdb.com/api.php?amount=5&type=multiple&difficulty=hard&encode=base64&token=' + apiKey + '&' + Math.random().toString(), onLoaded, undefined, undefined);
+
+			  var easyQs;
+			  var mediumQs;
+			  var hardQs;
+
+			  function onLoaded(obj) {
+			    var data = JSON.parse(obj);
+
+			    console.log('Response code: ' + data['response_code']);
+			    if (data['response_code'] == 0) {
+			    	decode(data);
+				    if (data.results[0].difficulty == 'easy') {
+				    	easyQs = data.results;
+				    } else if (data.results[0].difficulty == 'medium') {
+				    	mediumQs = data.results;
+				    } else if (data.results[0].difficulty == 'hard') {
+				    	hardQs = data.results;
+				    }
+				    addQuestions();
+			    } else {
+			    	questionT.setAttribute('n-text', 'text', 'Reset API Key');
+			    }
+
+			    function addQuestions() {
+			    	if (easyQs && mediumQs && hardQs) {
+			    		questions = easyQs.concat(mediumQs, hardQs);
+			    		sortAnswers(questions);
+			    		console.log(questions);
+			    		questionT.setAttribute('n-text', 'text', 'Questions Loaded');
+
+			    		sync.instance.child('questions').set(questions);
+			    	}
+			    }
+			  }
+			}
+
+		  function decode(data) {
+		  	for (var i = 0; i < data.results.length; i++) {
+		  		data.results[i].category = atob(data.results[i].category);
+		  		data.results[i].difficulty = atob(data.results[i].difficulty);
+		  		data.results[i].question = atob(data.results[i].question);
+		  		data.results[i].correct_answer = atob(data.results[i].correct_answer);
+		  		for (var x = 0; x < 3; x++) {
+						data.results[i].incorrect_answers[x] = atob(data.results[i].incorrect_answers[x]);
+		  		}
+		  	}
+		  	return data;
+		  }
+
+		  function sortAnswers(list) {
+		  	for (var i = 0; i < list.length; i++) {
+		  		//console.log()
+		  		var c = Math.floor(Math.random() * 4);
+			    var answers = list[i].incorrect_answers
+			    shuffleArray(answers);
+
+			    answers.splice(c, 0, list[i].correct_answer);
+
+			    if (c == 0) {
+			    	list[i].correct_answer = 'a';
+			    } else if (c == 1) {
+			    	list[i].correct_answer = 'b';
+			    } else if (c == 2) {
+			    	list[i].correct_answer = 'c';
+			    } else if (c == 3) {
+			    	list[i].correct_answer = 'd';
+			    }
+
+		  	}
+		  }
+
+		  function nextQ(c) {
+		  	current = c;
+
+	  		timer.object3D.scale.x = 14;
+		  	timer.object3D.position.x = 0;
+		  	timeAnim1.start();
+		  	timeAnim2.start();
+
+		  	console.log(current + 1);
+
+		  	if (inGame) {
+			  	aB.setAttribute('color', 'white');
+					bB.setAttribute('color', 'white');
+					cB.setAttribute('color', 'white');
+					dB.setAttribute('color', 'white');
+				} else {
+					aB.setAttribute('color', '#777');
+					bB.setAttribute('color', '#777');
+					cB.setAttribute('color', '#777');
+					dB.setAttribute('color', '#777');
+				}
+
+		  	console.log(questions[current].category);
+		    console.log(questions[current].difficulty);
+		    console.log(questions[current].question);
+
+		    questionT.setAttribute('n-text', 'text', (current + 1) +  ': ' + questions[current].question);
+
+		    var answers = questions[current].incorrect_answers
+		    
+		    aT.setAttribute('n-text', 'text', 'A: ' + answers[0]);
+		    bT.setAttribute('n-text', 'text', 'B: ' + answers[1]);
+		    cT.setAttribute('n-text', 'text', 'C: ' + answers[2]);
+		    dT.setAttribute('n-text', 'text', 'D: ' + answers[3]);
+
+		    answer = questions[current].correct_answer;
+		  }
+
+		  aB.addEventListener('mouseup', function(){
+		  	select('a');
+		  });
+		  bB.addEventListener('mouseup', function(){
+		  	select('b');
+		  });
+		  cB.addEventListener('mouseup', function(){
+		  	select('c');
+		  });
+		  dB.addEventListener('mouseup', function(){
+		  	select('d');
+		  });
+
+		  function select(a) {
+		  	if (!selected && inGame) {
+		  		if (a == 'a') {
+				  	aB.setAttribute('color', '#0af');
+				  } else if (a == 'b') {
+				  	bB.setAttribute('color', '#0af');
+				  } else if (a == 'c') {
+				  	cB.setAttribute('color', '#0af');
+				  } else if (a == 'd') {
+				  	dB.setAttribute('color', '#0af');
+				  }
+
+				  var time = TWEEN.getAll()[1]._object.x / TWEEN.getAll()[1]._valuesEnd.x * 10
+					responseTimes.push(time);
+					console.log('Time: ' + time);
+
+					selected = a;
+				}
+		  }
+
+		  function checkAnswer(a) {
+		  	if (a != null) {
+			  	document.querySelector('#' + a + 'B').setAttribute('color', 'red');
+			  	if (a == answer){
+			  		score += 1;
+			  		//scoreText.setAttribute('n-text', 'text', score);
+			  		sync.instance.child('selectionPlayers').child(user.displayName + user.userId).child('score').set(score);
+			  	}
+			  }
+		  	document.querySelector('#' + answer + 'B').setAttribute('color', 'green');
+		  	selected = null
+
+		  	if (inGame && (a == null || a != answer)) {
+		  		inGame = false;
+		  		console.log("You're out");
+		  		sync.instance.child('selectionPlayers').child(id).child('inGame').set(false);
+		  		
+		  		var sum = 0;
+		  		for (var i = 0; i < responseTimes.length - 1; i++) {
+		  			sum += responseTimes[i];
+		  		}
+		  		console.log('Average time to answer: ' + sum / (responseTimes.length - 1));
+		  	}
+		  }
+
+		  if (user.isModerator) {
+			  var clicked = false;
+			  get.addEventListener('mouseup', function(){
+			  	if (!clicked) {
+				  	getQs();
+				  	clicked = true;
+				  	get.setAttribute('color', '#866');
+				  }
+			  });
+
+			  next.addEventListener('mouseup', function(){
+			  	if (current < 14) {
+				  	//nextQ();
+				  	sync.instance.child('current').set(current + 1);
+				  }
+				  if (current == 14) {
+				  	next.setAttribute('color', '#668');
+				  }
+			  });
+			}
+
+		  var timeAnim1 = new TWEEN.Tween(timer.object3D.scale).to({x: .00001}, 10000);
+		  var timeAnim2 = new TWEEN.Tween(timer.object3D.position).to({x: 7}, 10000).onComplete(function(){checkAnswer(selected);});
+
+	  });
+  });
+
+	function sortByKey(array, key) {
+    return array.sort(function(a, b) {
+      var x = a[key]; var y = b[key];
+      return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    });
+	}
+
+	function sortScores() {
+		sortByKey(scores, 'score');
+		scores.reverse();
+	}
+
+	function updateScoreboard() {
+		clearScoreboard();
+		for (var i = 0; i < scores.length; i++) {
+			document.querySelector('#p' + (i + 1) + 'Name').setAttribute('n-text', 'text', scores[i].displayName);
+			document.querySelector('#p' + (i + 1) + 'Score').setAttribute('n-text', 'text', scores[i].score);
+		}
+	}
+
+	function clearScoreboard() {
+		for (var i = 1; i < 11; i++) {
+			document.querySelector('#p' + i + 'Name').setAttribute('n-text', 'text', '');
+			document.querySelector('#p' + i + 'Score').setAttribute('n-text', 'text', '');
+		}
+	}
+
+	function shuffleArray(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+    }
+    return array;
+  }
+
+</script>		
+</body>
+</html>
