@@ -10,7 +10,7 @@
 
 		<a-entity id='screen' position='0 1.5 0' scale='.2 .2 .2'>
 			<a-plane scale='16 9 1' color='black' side='double' altspace-cursor-collider='enabled: false' n-mesh-collider='type: environment; convex: false'></a-plane>
-			<a-entity position='0 -3.5 -.15' rotation='0 180 0' n-text='fontSize: 7; text: v0.07'></a-entity>
+			<a-entity position='0 -3.5 -.15' rotation='0 180 0' n-text='fontSize: 7; text: v0.08'></a-entity>
 
 			<a-plane position='-3.7 -1.8 .1' scale='6.8 1 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
 			<a-plane position='3.7 -1.8 .1' scale='6.8 1 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
@@ -201,9 +201,9 @@
 			function getQs() {
 				current = -1;
 				var dataRequest = (THREE.FileLoader ? new THREE.FileLoader() : new THREE.XHRLoader(/* DEPRECATED: r83 */));
-			  dataRequest.load('https://opentdb.com/api.php?amount=5&type=multiple&difficulty=easy&encode=base64&token=' + apiKey + '&' + Math.random().toString(), onLoaded, undefined, undefined);
-			  dataRequest.load('https://opentdb.com/api.php?amount=5&type=multiple&difficulty=medium&encode=base64&token=' + apiKey + '&' + Math.random().toString(), onLoaded, undefined, undefined);
-			  dataRequest.load('https://opentdb.com/api.php?amount=5&type=multiple&difficulty=hard&encode=base64&token=' + apiKey + '&' + Math.random().toString(), onLoaded, undefined, undefined);
+			  dataRequest.load('https://opentdb.com/api.php?amount=5&type=multiple&difficulty=easy&encode=url3986&token=' + apiKey + '&' + Math.random().toString(), onLoaded, undefined, undefined);
+			  dataRequest.load('https://opentdb.com/api.php?amount=5&type=multiple&difficulty=medium&encode=url3986&token=' + apiKey + '&' + Math.random().toString(), onLoaded, undefined, undefined);
+			  dataRequest.load('https://opentdb.com/api.php?amount=5&type=multiple&difficulty=hard&encode=url3986&token=' + apiKey + '&' + Math.random().toString(), onLoaded, undefined, undefined);
 
 			  var easyQs;
 			  var mediumQs;
@@ -242,12 +242,12 @@
 
 		  function decode(data) {
 		  	for (var i = 0; i < data.results.length; i++) {
-		  		data.results[i].category = atob(data.results[i].category);
-		  		data.results[i].difficulty = atob(data.results[i].difficulty);
-		  		data.results[i].question = atob(data.results[i].question);
-		  		data.results[i].correct_answer = atob(data.results[i].correct_answer);
+		  		data.results[i].category = decodeURIComponent(data.results[i].category);
+		  		data.results[i].difficulty = decodeURIComponent(data.results[i].difficulty);
+		  		data.results[i].question = decodeURIComponent(data.results[i].question);
+		  		data.results[i].correct_answer = decodeURIComponent(data.results[i].correct_answer);
 		  		for (var x = 0; x < 3; x++) {
-						data.results[i].incorrect_answers[x] = atob(data.results[i].incorrect_answers[x]);
+						data.results[i].incorrect_answers[x] = decodeURIComponent(data.results[i].incorrect_answers[x]);
 		  		}
 		  	}
 		  	return data;
@@ -304,11 +304,18 @@
 		    questionT.setAttribute('n-text', 'text', (current + 1) +  ': ' + questions[current].question);
 
 		    var answers = questions[current].incorrect_answers
+
+		    var sizes = getSizes(answers);
 		    
 		    aT.setAttribute('n-text', 'text', 'A: ' + answers[0]);
 		    bT.setAttribute('n-text', 'text', 'B: ' + answers[1]);
 		    cT.setAttribute('n-text', 'text', 'C: ' + answers[2]);
 		    dT.setAttribute('n-text', 'text', 'D: ' + answers[3]);
+
+		    aT.setAttribute('n-text', 'fontSize', sizes[0]);
+		    bT.setAttribute('n-text', 'fontSize', sizes[1]);
+		    cT.setAttribute('n-text', 'fontSize', sizes[2]);
+		    dT.setAttribute('n-text', 'fontSize', sizes[3]);
 
 		    answer = questions[current].correct_answer;
 		  }
@@ -345,6 +352,20 @@
 
 					selected = a;
 				}
+		  }
+
+		  function getSizes(arr) {
+		  	var result = [5,5,5,5];
+
+		  	for ( var i = 0; i < 4; i++) {
+			  	if (arr[i].length > 50) {
+			  		result[i] = 3;
+			  	} else if (arr[0].length > 30) {
+			  		result[i] = 4;
+		  		}
+		  	}
+
+		  	return result;
 		  }
 
 		  function checkAnswer(a) {
