@@ -10,7 +10,7 @@
 
 		<a-entity id='screen' position='0 1.5 0' scale='.2 .2 .2'>
 			<a-plane scale='16 9 1' color='black' side='double' altspace-cursor-collider='enabled: false' n-mesh-collider='type: environment; convex: false'></a-plane>
-			<a-entity position='0 -3.5 -.15' rotation='0 180 0' n-text='fontSize: 7; text: v0.06'></a-entity>
+			<a-entity position='0 -3.5 -.15' rotation='0 180 0' n-text='fontSize: 7; text: v0.07'></a-entity>
 
 			<a-plane position='-3.7 -1.8 .1' scale='6.8 1 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
 			<a-plane position='3.7 -1.8 .1' scale='6.8 1 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
@@ -36,8 +36,9 @@
 		</a-entity>
 
 		<a-entity position='2.3 1.5 0' rotation='0 -20 0'>
+			<a-entity id='remainingText' position='0 1.1 0' scale='1.1 1.1 1.1' n-text='fontSize: 1; width: 1.2; text: Players Remaining: 10'></a-entity>
 			<a-plane scale='1 2 1' color='black' side='double'></a-plane>
-			<a-entity position='0 .9 .01' n-text='fontSize: 1; width: 0.8; text: Leaderboard'></a-entity>
+			<a-entity position='0 .9 .01' n-text='fontSize: 1; width: 0.8; text: Scoreboard'></a-entity>
 			<a-entity id='p1Name' position='0 .7 .01' n-text='fontSize: 1; horizontalAlign: left; width: 0.8; text: Player 1'></a-entity>
 			<a-entity id='p1Score' position='0 .7 .01' n-text='fontSize: 1; horizontalAlign: right; width: 0.8; text: 0'></a-entity>
 
@@ -121,7 +122,7 @@
 				//console.log('sync', data.val());
 				for (var i = 0; i < scores.length; i++) {
 					if (scores[i].userId == data.val().userId) {
-						scores[i].score = data.val().score;
+						scores[i] = data.val();
 						sortScores();
 						updateScoreboard();
 					}
@@ -359,9 +360,9 @@
 		  	selected = null
 
 		  	if (inGame && (a == null || a != answer)) {
-		  		//inGame = false;
-		  		//console.log("You're out");
-		  		//sync.instance.child('selectionPlayers').child(id).child('inGame').set(false);
+		  		inGame = false;
+		  		console.log("You're out");
+		  		sync.instance.child('selectionPlayers').child(id).child('inGame').set(false);
 		  	}
 		  }
 
@@ -411,10 +412,18 @@
 
 	function updateScoreboard() {
 		clearScoreboard();
+		var r = 0;
 		for (var i = 0; i < scores.length; i++) {
-			document.querySelector('#p' + (i + 1) + 'Name').setAttribute('n-text', 'text', scores[i].displayName);
-			document.querySelector('#p' + (i + 1) + 'Score').setAttribute('n-text', 'text', Math.floor(scores[i].score));
+			var color = '#fff';
+			if (scores[i].inGame) {
+				r++;
+			} else {
+				color = '#333'
+			}
+			document.querySelector('#p' + (i + 1) + 'Name').setAttribute('n-text', 'text', '<color=' + color + '>' + scores[i].displayName);
+			document.querySelector('#p' + (i + 1) + 'Score').setAttribute('n-text', 'text', '<color=' + color + '>' + Math.floor(scores[i].score));
 		}
+		remainingText.setAttribute('n-text', 'text', 'Players Remaining: ' + r);
 	}
 
 	function clearScoreboard() {
