@@ -10,7 +10,7 @@
 
 		<a-entity id='screen' position='0 1.5 0' scale='.2 .2 .2'>
 			<a-plane scale='16 9 1' color='black' side='double' altspace-cursor-collider='enabled: false' n-mesh-collider='type: environment; convex: false'></a-plane>
-			<a-entity position='0 -3.5 -.15' rotation='0 180 0' n-text='fontSize: 7; text: v0.08'></a-entity>
+			<a-entity position='0 -3.5 -.15' rotation='0 180 0' n-text='fontSize: 7; text: v0.081'></a-entity>
 
 			<a-plane position='-3.7 -1.8 .1' scale='6.8 1 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
 			<a-plane position='3.7 -1.8 .1' scale='6.8 1 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
@@ -360,7 +360,7 @@
 		  	for ( var i = 0; i < 4; i++) {
 			  	if (arr[i].length > 50) {
 			  		result[i] = 3;
-			  	} else if (arr[0].length > 30) {
+			  	} else if (arr[i].length > 30) {
 			  		result[i] = 4;
 		  		}
 		  	}
