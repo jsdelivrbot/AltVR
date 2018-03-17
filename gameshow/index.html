@@ -1,6 +1,7 @@
+<!DOCTYPE html>
 <html>
 <head>
-	<title>OpenTDB Test</title>
+	<title>GameShow Test</title>
 	<script src="https://aframe.io/releases/0.7.0/aframe.js"></script>
 	<script src="https://sdk.altvr.com/libs/altspace.js/2.8.2/altspace.min.js"></script>
 </head>
@@ -8,7 +9,8 @@
 	<a-scene altspace='verticalAlign: bottom' sync-system='author: BenG; app: quiz; refUrl: https://altvr-apps.firebaseio.com/'>
 
 		<a-entity id='screen' position='0 1.5 0' scale='.1 .1 .1'>
-			<a-plane scale='16 9 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
+			<a-plane scale='16 9 1' color='black' side='double' altspace-cursor-collider='enabled: false'></a-plane>
+			<a-entity position='0 -3.5 -.15' rotation='0 180 0' n-text='fontSize: 7; text: v0.02'></a-entity>
 
 			<a-plane position='-3.7 -1.8 .1' scale='6.8 1 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
 			<a-plane position='3.7 -1.8 .1' scale='6.8 1 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
@@ -34,7 +36,7 @@
 		</a-entity>
 
 		<a-entity position='1.8 1.5 0' rotation='0 -20 0'>
-			<a-plane scale='1 2 1' color='black'></a-plane>
+			<a-plane scale='1 2 1' color='black' side='double'></a-plane>
 			<a-entity position='0 .9 .01' n-text='fontSize: 1; width: 0.8; text: Leaderboard'></a-entity>
 			<a-entity id='p1Name' position='0 .7 .01' n-text='fontSize: 1; horizontalAlign: left; width: 0.8; text: Player 1'></a-entity>
 			<a-entity id='p1Score' position='0 .7 .01' n-text='fontSize: 1; horizontalAlign: right; width: 0.8; text: 0'></a-entity>
@@ -86,7 +88,7 @@
 
   	altspace.getUser().then(function(user){
   		var id = user.displayName + user.userId;
-			sync.instance.child('selectionPlayers').child(id).once('value', function(data){
+			sync.instance.child('selectionPlayers').child(id).on('value', function(data){
 				if (data.val() == null) {
 					user.score = 0;
 					user.inGame = true;
@@ -129,10 +131,9 @@
 			sync.instance.child('questions').on('value', function(data){
 				if (data.val() != null) {
 					questions = data.val();
-					//console.log('Questions', questions);
 
 					clicked = true;
-			  	get.setAttribute('color', '#866');
+			  	//get.setAttribute('color', '#866');
 			  	questionT.setAttribute('n-text', 'text', 'Questions Loaded');
 				}
 			});
@@ -142,6 +143,8 @@
 					current = data.val();
 					if (current != -1) {
 						nextQ(current);
+					} else {
+						reset();
 					}
 				} else {
 					sync.instance.child('current').set(-1);
@@ -152,9 +155,36 @@
 				if (data.val() != null) {
 					apiKey = data.val();
 				} else {
-					sync.instance.child('apiKey').set(apiKey);
+					var dataRequest = (THREE.FileLoader ? new THREE.FileLoader() : new THREE.XHRLoader(/* DEPRECATED: r83 */));
+					dataRequest.load('https://opentdb.com/api_token.php?command=request', onLoaded, undefined, undefined);
+					function onLoaded(obj) {
+				    var data = JSON.parse(obj);
+				    console.log(data);
+				    if (data['response_code'] == 0) {
+				    	sync.instance.child('apiKey').set(data.token);
+				    }
+				  }
 				}
 			});
+
+			function reset() {
+				aB.setAttribute('color', 'white');
+				bB.setAttribute('color', 'white');
+				cB.setAttribute('color', 'white');
+				dB.setAttribute('color', 'white');
+
+				aT.setAttribute('n-text', 'text', 'A:');
+		    bT.setAttribute('n-text', 'text', 'B:');
+		    cT.setAttribute('n-text', 'text', 'C:');
+		    dT.setAttribute('n-text', 'text', 'D:');
+
+		    questionT.setAttribute('n-text', 'text', '?');
+
+		    user.score = 0;
+		    user.inGame = true;
+		    sync.instance.child('selectionPlayers').child(id).set(user);
+		    responseTimes = [];
+			}
 		
 
 			var answer;
@@ -165,7 +195,7 @@
 			var inGame = true;
 			responseTimes = [];
 
-			var apiKey = '8cdf4169de6e0273f54ea123f49c95930b76e275db1191667b9f41e83386c026';
+			var apiKey = '';
 
 			function getQs() {
 				current = -1;
@@ -310,6 +340,7 @@
 				  var time = TWEEN.getAll()[1]._object.x / TWEEN.getAll()[1]._valuesEnd.x * 10
 					responseTimes.push(time);
 					console.log('Time: ' + time);
+					console.log('Average: ' + getAverage(responseTimes));
 
 					selected = a;
 				}
@@ -321,7 +352,7 @@
 			  	if (a == answer){
 			  		score += 1;
 			  		//scoreText.setAttribute('n-text', 'text', score);
-			  		sync.instance.child('selectionPlayers').child(user.displayName + user.userId).child('score').set(score);
+			  		sync.instance.child('selectionPlayers').child(user.displayName + user.userId).child('score').set(Math.floor(score) + (getAverage(responseTimes) / 10));
 			  	}
 			  }
 		  	document.querySelector('#' + answer + 'B').setAttribute('color', 'green');
@@ -331,23 +362,14 @@
 		  		inGame = false;
 		  		console.log("You're out");
 		  		sync.instance.child('selectionPlayers').child(id).child('inGame').set(false);
-		  		
-		  		var sum = 0;
-		  		for (var i = 0; i < responseTimes.length - 1; i++) {
-		  			sum += responseTimes[i];
-		  		}
-		  		console.log('Average time to answer: ' + sum / (responseTimes.length - 1));
 		  	}
 		  }
 
 		  if (user.isModerator) {
 			  var clicked = false;
 			  get.addEventListener('mouseup', function(){
-			  	if (!clicked) {
-				  	getQs();
-				  	clicked = true;
-				  	get.setAttribute('color', '#866');
-				  }
+			  	sync.instance.child('current').set(-1);
+			  	getQs();
 			  });
 
 			  next.addEventListener('mouseup', function(){
@@ -367,6 +389,14 @@
 	  });
   });
 
+	function getAverage(arr) {
+		var sum = 0;
+		for (var i = 0; i < arr.length; i++) {
+			sum += arr[i];
+		}
+		return sum / (responseTimes.length);
+	}
+
 	function sortByKey(array, key) {
     return array.sort(function(a, b) {
       var x = a[key]; var y = b[key];
@@ -383,7 +413,7 @@
 		clearScoreboard();
 		for (var i = 0; i < scores.length; i++) {
 			document.querySelector('#p' + (i + 1) + 'Name').setAttribute('n-text', 'text', scores[i].displayName);
-			document.querySelector('#p' + (i + 1) + 'Score').setAttribute('n-text', 'text', scores[i].score);
+			document.querySelector('#p' + (i + 1) + 'Score').setAttribute('n-text', 'text', Math.floor(scores[i].score));
 		}
 	}
 
