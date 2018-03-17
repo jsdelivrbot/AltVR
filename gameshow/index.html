@@ -8,9 +8,9 @@
 <body>
 	<a-scene altspace='verticalAlign: bottom' sync-system='author: BenG; app: quiz; refUrl: https://altvr-apps.firebaseio.com/'>
 
-		<a-entity id='screen' position='0 1.5 0' scale='.1 .1 .1'>
+		<a-entity id='screen' position='0 1.5 0' scale='.2 .2 .2'>
 			<a-plane scale='16 9 1' color='black' side='double' altspace-cursor-collider='enabled: false' n-mesh-collider='type: environment; convex: false'></a-plane>
-			<a-entity position='0 -3.5 -.15' rotation='0 180 0' n-text='fontSize: 7; text: v0.04'></a-entity>
+			<a-entity position='0 -3.5 -.15' rotation='0 180 0' n-text='fontSize: 7; text: v0.05'></a-entity>
 
 			<a-plane position='-3.7 -1.8 .1' scale='6.8 1 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
 			<a-plane position='3.7 -1.8 .1' scale='6.8 1 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
@@ -35,7 +35,7 @@
 			</a-plane>
 		</a-entity>
 
-		<a-entity position='1.8 1.5 0' rotation='0 -20 0'>
+		<a-entity position='2.3 1.5 0' rotation='0 -20 0'>
 			<a-plane scale='1 2 1' color='black' side='double'></a-plane>
 			<a-entity position='0 .9 .01' n-text='fontSize: 1; width: 0.8; text: Leaderboard'></a-entity>
 			<a-entity id='p1Name' position='0 .7 .01' n-text='fontSize: 1; horizontalAlign: left; width: 0.8; text: Player 1'></a-entity>
@@ -71,8 +71,8 @@
 			<a-entity id='p10Score' position='0 -.65 .01' n-text='fontSize: 1; horizontalAlign: right; width: 0.8; text: 0'></a-entity>
 		</a-entity>
 
-		<a-box id='get' position='-.25 .75 0' scale='.2 .2 .2' color='red' n-box-collider='type: hologram'></a-box>
-		<a-box id='next' position='.25 .75 0' scale='.2 .2 .2' color='blue' n-box-collider='type: hologram'></a-box>
+		<a-box id='get' position='-.25 .4 0' scale='.2 .2 .2' color='red' n-box-collider='type: hologram'></a-box>
+		<a-box id='next' position='.25 .4 0' scale='.2 .2 .2' color='blue' n-box-collider='type: hologram'></a-box>
 
 		<a-entity id='scoreText2' position='1.5 -1.5 0' n-text='fontSize: 5; text: 0'></a-entity>
 
