@@ -10,7 +10,7 @@
 
 		<a-entity id='screen' position='0 1.5 0' scale='.2 .2 .2'>
 			<a-plane scale='16 9 1' color='black' side='double' altspace-cursor-collider='enabled: false' n-mesh-collider='type: environment; convex: false'></a-plane>
-			<a-entity position='0 -3.5 -.15' rotation='0 180 0' n-text='fontSize: 7; text: v0.05'></a-entity>
+			<a-entity position='0 -3.5 -.15' rotation='0 180 0' n-text='fontSize: 7; text: v0.06'></a-entity>
 
 			<a-plane position='-3.7 -1.8 .1' scale='6.8 1 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
 			<a-plane position='3.7 -1.8 .1' scale='6.8 1 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
@@ -359,9 +359,9 @@
 		  	selected = null
 
 		  	if (inGame && (a == null || a != answer)) {
-		  		inGame = false;
-		  		console.log("You're out");
-		  		sync.instance.child('selectionPlayers').child(id).child('inGame').set(false);
+		  		//inGame = false;
+		  		//console.log("You're out");
+		  		//sync.instance.child('selectionPlayers').child(id).child('inGame').set(false);
 		  	}
 		  }
 
