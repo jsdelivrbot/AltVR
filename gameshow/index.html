@@ -10,7 +10,7 @@
 
 		<a-entity id='screen' position='0 1.5 0' scale='.1 .1 .1'>
 			<a-plane scale='16 9 1' color='black' side='double' altspace-cursor-collider='enabled: false'></a-plane>
-			<a-entity position='0 -3.5 -.15' rotation='0 180 0' n-text='fontSize: 7; text: v0.02'></a-entity>
+			<a-entity position='0 -3.5 -.15' rotation='0 180 0' n-text='fontSize: 7; text: v0.03'></a-entity>
 
 			<a-plane position='-3.7 -1.8 .1' scale='6.8 1 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
 			<a-plane position='3.7 -1.8 .1' scale='6.8 1 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
@@ -352,7 +352,7 @@
 			  	if (a == answer){
 			  		score += 1;
 			  		//scoreText.setAttribute('n-text', 'text', score);
-			  		sync.instance.child('selectionPlayers').child(user.displayName + user.userId).child('score').set(Math.floor(score) + (getAverage(responseTimes) / 10));
+			  		sync.instance.child('selectionPlayers').child(user.displayName + user.userId).child('score').set(Math.floor(score) + (1 - (getAverage(responseTimes) / 10)));
 			  	}
 			  }
 		  	document.querySelector('#' + answer + 'B').setAttribute('color', 'green');
