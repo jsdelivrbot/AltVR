@@ -333,6 +333,53 @@
         //}
       });
 
+      p1Buzzer.object3D.children[0].addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({
+        joints: [['Index','Right',3],['Index','Left',3]],
+        jointCubeSize: .1
+      }));
+      p2Buzzer.object3D.children[0].addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({
+        joints: [['Index','Right',3],['Index','Left',3]],
+        jointCubeSize: .1
+      }));
+      p3Buzzer.object3D.children[0].addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({
+        joints: [['Index','Right',3],['Index','Left',3]],
+        jointCubeSize: .1
+      }));
+      p4Buzzer.object3D.children[0].addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({
+        joints: [['Index','Right',3],['Index','Left',3]],
+        jointCubeSize: .1
+      }));
+      p5Buzzer.object3D.children[0].addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({
+        joints: [['Index','Right',3],['Index','Left',3]],
+        jointCubeSize: .1
+      }));
+
+      p1Buzzer.object3D.children[0].addEventListener('jointcollisionenter', function(e){
+        //if (user.displayName == p1name) {
+          sync.instance.child('click').push('1');
+        //}
+      });
+      p2Buzzer.object3D.children[0].addEventListener('jointcollisionenter', function(e){
+        //if (user.displayName == p1name) {
+          sync.instance.child('click').push('1');
+        //}
+      });
+      p3Buzzer.object3D.children[0].addEventListener('jointcollisionenter', function(e){
+        //if (user.displayName == p1name) {
+          sync.instance.child('click').push('1');
+        //}
+      });
+      p4Buzzer.object3D.children[0].addEventListener('jointcollisionenter', function(e){
+        //if (user.displayName == p1name) {
+          sync.instance.child('click').push('1');
+        //}
+      });
+      p5Buzzer.object3D.children[0].addEventListener('jointcollisionenter', function(e){
+        //if (user.displayName == p1name) {
+          sync.instance.child('click').push('1');
+        //}
+      });
+
 			function reset() {
 				aB.setAttribute('color', 'white');
 				bB.setAttribute('color', 'white');
