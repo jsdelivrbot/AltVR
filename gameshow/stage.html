@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>GameShow Test</title>
+	<script src="https://aframe.io/releases/0.7.0/aframe.js"></script>
+	<script src="https://sdk.altvr.com/libs/altspace.js/2.8.2/altspace.min.js"></script>
+</head>
+<body>
+	<a-scene altspace='fullspace: true' sync-system='author: BenG; app: quizStage; refUrl: https://altvr-apps.firebaseio.com/'>
+		<a-plane position='0 0 0' scale='20 20 0' rotation='-90 0 0' material='visible: false' n-mesh-collider='type: environment; convex: false'></a-plane>
+
+		<a-entity id='screen' position='0 4.5 -4' scale='.5 .5 .5'>
+			<a-plane scale='16 9 1' color='black' side='double' altspace-cursor-collider='enabled: false' altspace-cursor-collider='enabled: false'></a-plane>
+			<a-entity position='0 -3.5 -.15' rotation='0 180 0' n-text='fontSize: 7; text: v0.081'></a-entity>
+
+			<a-plane position='-3.7 -1.5 .1' scale='6.8 1.3 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
+			<a-plane position='3.7 -1.5 .1' scale='6.8 1.3 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
+			<a-plane position='-3.7 -3.2 .1' scale='6.8 1.3 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
+			<a-plane position='3.7 -3.2 .1' scale='6.8 1.3 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
+
+			<a-plane id='aBScreen' position='-3.7 -1.5 .05' scale='7 1.5 1' color='white' altspace-cursor-collider='enabled: false'></a-plane>
+			<a-plane id='bBScreen' position='3.7 -1.5 .05' scale='7 1.5 1' color='white' altspace-cursor-collider='enabled: false'></a-plane>
+			<a-plane id='cBScreen' position='-3.7 -3.2 .05' scale='7  1.5 1' color='white' altspace-cursor-collider='enabled: false'></a-plane>
+			<a-plane id='dBScreen' position='3.7 -3.2 .05' scale='7 1.5 1' color='white' altspace-cursor-collider='enabled: false'></a-plane>
+
+			<a-entity id='questionTScreen' position='0 3 .1' n-text='width: 14; fontSize: 7; verticalAlign: top; text: ?'></a-entity>
+
+			<a-entity id='aTScreen' position='-3.7 -1.5 .15' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: A: '></a-entity>
+			<a-entity id='bTScreen' position='3.7 -1.5 .15' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: B: '></a-entity>
+			<a-entity id='cTScreen' position='-3.7 -3.2 .15' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: C: '></a-entity>
+			<a-entity id='dTScreen' position='3.7 -3.2 .15' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: D: '></a-entity>
+		</a-entity>
+
+
+		<a-entity id='hostPodium' position='2.3 0 -1.2' rotation='0 105 0'>
+			<a-box position='0 .6 0' scale='.5 1.2 .5' color='#666'></a-box>
+			<a-box position='0 1.2 0' scale='.6 .6 .2' rotation='-70 0 0' color='#555'></a-box>
+
+			<a-box id='hostJoin' position='0 1 .25' scale='.05 .05 .05' color='green' n-box-collider='type: hologram'></a-box>
+
+			<a-entity position='0 1.34 -.09' rotation='-70 0 0' scale='.03 .03 .03'>
+				<a-plane scale='16 9 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
+
+				<a-plane position='-3.7 -1.5 .1' scale='6.8 1.3 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
+				<a-plane position='3.7 -1.5 .1' scale='6.8 1.3 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
+				<a-plane position='-3.7 -3.2 .1' scale='6.8 1.3 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
+				<a-plane position='3.7 -3.2 .1' scale='6.8 1.3 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
+
+				<a-plane id='aB' position='-3.7 -1.5 .05' scale='7 1.5 1' color='white' n-mesh-collider='type: hologram; convex: false'></a-plane>
+				<a-plane id='bB' position='3.7 -1.5 .05' scale='7 1.5 1' color='white' n-mesh-collider='type: hologram; convex: false'></a-plane>
+				<a-plane id='cB' position='-3.7 -3.2 .05' scale='7  1.5 1' color='white' n-mesh-collider='type: hologram; convex: false'></a-plane>
+				<a-plane id='dB' position='3.7 -3.2 .05' scale='7 1.5 1' color='white' n-mesh-collider='type: hologram; convex: false'></a-plane>
+
+				<a-entity id='questionT' position='0 3 .1' n-text='width: 14; fontSize: 7; verticalAlign: top; text: ?'></a-entity>
+
+				<a-entity id='aT' position='-3.7 -1.5 .15' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: A: '></a-entity>
+				<a-entity id='bT' position='3.7 -1.5 .15' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: B: '></a-entity>
+				<a-entity id='cT' position='-3.7 -3.2 .15' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: C: '></a-entity>
+				<a-entity id='dT' position='3.7 -3.2 .15' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: D: '></a-entity>
+
+				<a-box id='get' position='-2 -7 0' scale='1 1 .5' color='red' n-text='fontSize: 5; horizontalAlign: left; text: Start/End' n-box-collider='type: hologram'></a-box>
+				<a-box id='next' position='5 -7 0' scale='1 1 .5' color='blue' n-text='fontSize: 5; horizontalAlign: left; text: Next Question' n-box-collider='type: hologram'></a-box>
+
+				<a-box id='confirmB' position='-2 -9 0' scale='1 1 .5' color='green' n-text='fontSize: 5; horizontalAlign: left; text: Confirm Answer' n-box-collider='type: hologram'></a-box>
+				<a-box id='categoryB' position='5 -9 0' scale='1 1 .5' color='yellow' n-text='fontSize: 5; horizontalAlign: left; text: Select Category' n-box-collider='type: hologram'></a-box>
+
+				<a-box id='resetB' position='5 -11 0' scale='1 1 .5' color='black' n-text='fontSize: 5; horizontalAlign: left; text: Reset Buzzers' n-box-collider='type: hologram'></a-box>
+
+			</a-entity>
+		</a-entity>
+
+
+		<a-entity id='podiums' position='-1.6 0 -1.6' rotation='0 45 0'>
+			<a-entity id='podium1' position='-2 0 0'>
+				<a-box position='0 .6 0' scale='.5 1.2 .5' color='#666'></a-box>
+				<a-box position='0 1.2 0' scale='.6 .2 .6' rotation='-20 0 0' color='#555'></a-box>
+				<a-box id='p1Panel' position='0 .93 .26' scale='.4 .4 .02' color='#fff'></a-box>
+				<a-cylinder id='p1Buzzer' position='0 1.28 -.04' scale='.07 .1 .07' rotation='-20 0 0' color='#b00'></a-cylinder>
+
+				<a-entity id='p1Score' position='0 .93 .29' n-text='fontSize: 3; text: <color=black>1'></a-entity>
+				<a-entity id='p1Name' position='0 1.3 .3' rotation='-20 0 0' n-text='fontSize: 1; text: Player 1'></a-entity>
+			</a-entity>
+
+			<a-entity id='podium2' position='-1 0 0'>
+				<a-box position='0 .6 0' scale='.5 1.2 .5' color='#666'></a-box>
+				<a-box position='0 1.2 0' scale='.6 .2 .6' rotation='-20 0 0' color='#555'></a-box>
+				<a-box id='p2Panel' position='0 .93 .26' scale='.4 .4 .02' color='#fff'></a-box>
+				<a-cylinder id='p2Buzzer' position='0 1.28 -.04' scale='.07 .1 .07' rotation='-20 0 0' color='#b00'></a-cylinder>
+
+				<a-entity id='p2Score' position='0 .93 .29' n-text='fontSize: 3; text: <color=black>2'></a-entity>
+				<a-entity id='p2Name' position='0 1.3 .3' rotation='-20 0 0' n-text='fontSize: 1; text: Player 2'></a-entity>
+			</a-entity>
+
+			<a-entity id='podium3' position='0 0 0'>
+				<a-box position='0 .6 0' scale='.5 1.2 .5' color='#666'></a-box>
+				<a-box position='0 1.2 0' scale='.6 .2 .6' rotation='-20 0 0' color='#555'></a-box>
+				<a-box id='p3Panel' position='0 .93 .26' scale='.4 .4 .02' color='#fff'></a-box>
+				<a-cylinder id='p3Buzzer' position='0 1.28 -.04' scale='.07 .1 .07' rotation='-20 0 0' color='#b00'></a-cylinder>
+
+				<a-entity id='p3Score' position='0 .93 .29' n-text='fontSize: 3; text: <color=black>3'></a-entity>
+				<a-entity id='p3Name' position='0 1.3 .3' rotation='-20 0 0' n-text='fontSize: 1; text: Player 3'></a-entity>
+			</a-entity>
+
+			<a-entity id='podium4' position='1 0 0'>
+				<a-box position='0 .6 0' scale='.5 1.2 .5' color='#666'></a-box>
+				<a-box position='0 1.2 0' scale='.6 .2 .6' rotation='-20 0 0' color='#555'></a-box>
+				<a-box id='p4Panel' position='0 .93 .26' scale='.4 .4 .02' color='#fff'></a-box>
+				<a-cylinder id='p4Buzzer' position='0 1.28 -.04' scale='.07 .1 .07' rotation='-20 0 0' color='#b00'></a-cylinder>
+
+				<a-entity id='p4Score' position='0 .93 .29' n-text='fontSize: 3; text: <color=black>4'></a-entity>
+				<a-entity id='p4Name' position='0 1.3 .3' rotation='-20 0 0' n-text='fontSize: 1; text: Player 4'></a-entity>
+			</a-entity>
+
+			<a-entity id='podium5' position='2' 0 0'>
+				<a-box position='0 .6 0' scale='.5 1.2 .5' color='#666'></a-box>
+				<a-box position='0 1.2 0' scale='.6 .2 .6' rotation='-20 0 0' color='#555'></a-box>
+				<a-box id='p5Panel' position='0 .93 .26' scale='.4 .4 .02' color='#fff'></a-box>
+				<a-cylinder id='p5Buzzer' position='0 1.28 -.04' scale='.07 .1 .07' rotation='-20 0 0' color='#b00'></a-cylinder>
+
+				<a-entity id='p5Score' position='0 .93 .29' n-text='fontSize: 3; text: <color=black>5'></a-entity>
+				<a-entity id='p5Name' position='0 1.3 .3' rotation='-20 0 0' n-text='fontSize: 1; text: Player 5'></a-entity>
+			</a-entity>
+		</a-entity>
+
+
+		<a-entity id='sound'></a-entity>
+
+
+
+	</a-scene>
+<script>
+
+	sound.setAttribute('n-sound', {src: /Mobile/i.test(navigator.userAgent) ? 'https://bengarfield.github.io/AltVR/Hive/sounds/ding.mp3' : 'https://bengarfield.github.io/AltVR/Hive/sounds/ding.ogg', volume: 0.3, spatialBlend: 0.5});
+
+	var scores = [];
+	var categories = [{id:9,name:'General Knowledge'},{id:10,name:'Books'},{id:11,name:'Film'},{id:12,name:'Music'},{id:13,name:'Musicals & Theatres'},{id:14,name:'Television'},{id:15,name:'Video Games'},{id:16,name:'Board Games'},{id:17,name:'Science & Nature'},{id:18,name:'Computers'},{id:19,name:'Mathematics'},{id:20,name:'Mythology'},{id:21,name:'Sports'},{id:22,name:'Geography'},{id:23,name:'History'},{id:24,name:'Politics'},{id:25,name:'Art'},{id:26,name:'Celebrities'},{id:27,name:'Animals'},{id:28,name:'Vehicles'},{id:29,name:'Comics'},{id:30,name:'Gadgets'},{id:31,name:'Japanese Anime & Manga'},{id:32,name:'Cartoon & Animations'}];
+	var scene = document.querySelector('a-scene');
+  scene.addEventListener('connected', function() {
+  	var sync = scene.systems['sync-system'].connection;
+
+
+  	altspace.getUser().then(function(user){
+
+  		sync.instance.child('host').on('value', function(data){
+				if (data.val() != null) {
+
+				} else {
+
+				}
+			});
+			
+			sync.instance.child('players').on('value', function(data){
+				if (data.val() != null) {
+					for (var i = 0; i < data.val().length; i++) {
+						document.querySelector('#p' + (i + 1) + 'Name').setAttribute('n-text', 'text', data.val()[i].displayName);
+					}
+				} else {
+					sync.instance.child('players').set([{displayName: 'Player 1', userId: '1'},{displayName: 'Player 2', userId: '2'},{displayName: 'Player 3', userId: '3'},{displayName: 'Player 4', userId: '4'},{displayName: 'Player 5', userId: '5'}]);
+				}
+			});
+
+			var done = false;
+			var playerBuzzedIn;
+			sync.instance.child('click').on('value', function(data){
+	      if (data.val() == null) {
+	        for (var i = 1; i < 6; i++) {
+	        	document.querySelector('#p' + i + 'Buzzer').setAttribute('color', '#b00');
+		        document.querySelector('#p' + i + 'Panel').setAttribute('color', '#fff');
+	        }
+	        done = false;
+	        playerBuzzedIn = null;
+	      } else {
+	        if (!done) {
+	        	var p = data.val()[Object.keys(data.val())[0]];
+	        	for (var i = 1; i < 6; i++) {
+		        	document.querySelector('#p' + i + 'Buzzer').setAttribute('color', '#b00');
+			        document.querySelector('#p' + i + 'Panel').setAttribute('color', '#999');
+		        }
+		        document.querySelector('#p' + p + 'Buzzer').setAttribute('color', 'green');
+		        document.querySelector('#p' + p + 'Panel').setAttribute('color', '#fff');
+
+	          sound.components['n-sound'].playSound();
+	          done = true;
+	          playerBuzzedIn = p;
+	        }
+	      }
+	    });
+
+			sync.instance.child('scores').on('value', function(data){
+				if (data.val() != null) {
+					for (var i = 0; i < data.val().length; i++) {
+						document.querySelector('#p' + (i + 1) + 'Score').setAttribute('n-text', 'text', '<color=black>' + data.val()[i]);
+					}
+					scores = data.val();
+				} else {
+					sync.instance.child('scores').set([0,0,0,0,0]);
+				}
+			});
+
+			var mode;
+			sync.instance.child('mode').on('value', function(data){
+				if (data.val() != null) {
+					mode = data.val();
+				} else {
+					sync.instance.child('mode').set('category');
+				}
+			});
+
+			var categoriesOnScreen;
+			sync.instance.child('categories').on('value', function(data){
+				if (data.val() != null) {
+					//mode = data.val();
+					console.log(data.val());
+					categoriesOnScreen = data.val();
+					if (mode == 'category') {
+						console.log(true);
+						questionT.setAttribute('n-text', 'text', 'Select a Category');
+						aT.setAttribute('n-text', 'text', data.val()[0]);
+				    bT.setAttribute('n-text', 'text', data.val()[1]);
+				    cT.setAttribute('n-text', 'text', data.val()[2]);
+				    dT.setAttribute('n-text', 'text', data.val()[3]);
+
+				    questionTScreen.setAttribute('n-text', 'text', 'Select a Category');
+				    aTScreen.setAttribute('n-text', 'text', data.val()[0]);
+				    bTScreen.setAttribute('n-text', 'text', data.val()[1]);
+				    cTScreen.setAttribute('n-text', 'text', data.val()[2]);
+				    dTScreen.setAttribute('n-text', 'text', data.val()[3]);
+					}
+				}
+			});
+
+			sync.instance.child('categoriesChosen').on('child_added', function(data){
+				console.log('Chose ', data.val());
+			});
+
+			sync.instance.child('questions').on('value', function(data){
+				if (data.val() != null) {
+					questions = data.val();
+
+					clicked = true;
+			  	//get.setAttribute('color', '#866');
+			  	questionT.setAttribute('n-text', 'text', 'Questions Loaded');
+				}
+			});
+
+			sync.instance.child('current').on('value', function(data){
+				if (data.val() != null) {
+					current = data.val();
+					if (current != -1) {
+						nextQ(current);
+					} else {
+						//reset();
+					}
+				} else {
+					sync.instance.child('current').set(-1);
+				}
+			});
+
+			sync.instance.child('selectedAnswer').on('value', function(data){
+				aB.setAttribute('color', '#fff');
+				bB.setAttribute('color', '#fff');
+				cB.setAttribute('color', '#fff');
+				dB.setAttribute('color', '#fff');
+				aBScreen.setAttribute('color', '#fff');
+				bBScreen.setAttribute('color', '#fff');
+				cBScreen.setAttribute('color', '#fff');
+				dBScreen.setAttribute('color', '#fff');
+				if (data.val() != null) {
+					document.querySelector('#' + data.val() + 'B').setAttribute('color', '#0af');
+					document.querySelector('#' + data.val() + 'BScreen').setAttribute('color', '#0af');
+				}
+				selected = data.val();
+			});
+
+			var answered;
+			sync.instance.child('answered').on('value', function(data){
+				if (data.val()) {
+					document.querySelector('#' + answer + 'B').setAttribute('color', 'green');
+					document.querySelector('#' + answer + 'BScreen').setAttribute('color', 'green');
+					if (selected != answer && selected != null) {
+						document.querySelector('#' + selected + 'B').setAttribute('color', 'red');
+						document.querySelector('#' + selected + 'BScreen').setAttribute('color', 'red');
+					}
+				}
+				answered = data.val();
+			});
+
+			sync.instance.child('apiKey').on('value', function(data){
+				if (data.val() != null) {
+					apiKey = data.val();
+				} else {
+					var dataRequest = (THREE.FileLoader ? new THREE.FileLoader() : new THREE.XHRLoader(/* DEPRECATED: r83 */));
+					dataRequest.load('https://opentdb.com/api_token.php?command=request', onLoaded, undefined, undefined);
+					function onLoaded(obj) {
+				    var data = JSON.parse(obj);
+				    console.log(data);
+				    if (data['response_code'] == 0) {
+				    	sync.instance.child('apiKey').set(data.token);
+				    }
+				  }
+				}
+			});
+
+
+			p1Buzzer.addEventListener('mousedown', function(){
+        //if (user.displayName == p1name) {
+          sync.instance.child('click').push('1');
+        //}
+      });
+      p2Buzzer.addEventListener('mousedown', function(){
+        //if (user.displayName == p1name) {
+          sync.instance.child('click').push('2');
+        //}
+      });
+      p3Buzzer.addEventListener('mousedown', function(){
+        //if (user.displayName == p1name) {
+          sync.instance.child('click').push('3');
+        //}
+      });
+      p4Buzzer.addEventListener('mousedown', function(){
+        //if (user.displayName == p1name) {
+          sync.instance.child('click').push('4');
+        //}
+      });
+      p5Buzzer.addEventListener('mousedown', function(){
+        //if (user.displayName == p1name) {
+          sync.instance.child('click').push('5');
+        //}
+      });
+
+			function reset() {
+				aB.setAttribute('color', 'white');
+				bB.setAttribute('color', 'white');
+				cB.setAttribute('color', 'white');
+				dB.setAttribute('color', 'white');
+
+				aT.setAttribute('n-text', 'text', 'A:');
+		    bT.setAttribute('n-text', 'text', 'B:');
+		    cT.setAttribute('n-text', 'text', 'C:');
+		    dT.setAttribute('n-text', 'text', 'D:');
+
+		    questionT.setAttribute('n-text', 'text', '?');
+			}
+		
+
+			var answer;
+			var questions;
+			var current;
+			var selected;
+
+			var isHost = false;
+
+			var apiKey = '';
+
+			function getQs(c) {
+				current = -1;
+				var dataRequest = (THREE.FileLoader ? new THREE.FileLoader() : new THREE.XHRLoader(/* DEPRECATED: r83 */));
+
+			  dataRequest.load('https://opentdb.com/api.php?amount=10&type=multiple&encode=url3986&category=' + c + '&token=' + apiKey + '&' + Math.random().toString(), onLoaded, undefined, undefined);
+
+			  function onLoaded(obj) {
+			    var data = JSON.parse(obj);
+
+			    console.log('Response code: ' + data['response_code']);
+			    if (data['response_code'] == 0) {
+			    	decode(data);
+
+				    questions = data.results;
+		    		sortAnswers(questions);
+		    		console.log(questions);
+		    		//questionT.setAttribute('n-text', 'text', 'Questions Loaded');
+
+		    		sync.instance.child('selectedAnswer').set(null);
+		    		sync.instance.child('questions').set(questions);
+		    		sync.instance.child('mode').set('question');
+		    		sync.instance.child('current').set(0);
+			    } else {
+			    	questionT.setAttribute('n-text', 'text', 'Reset API Key');
+			    }
+			  }
+			}
+
+		  function decode(data) {
+		  	for (var i = 0; i < data.results.length; i++) {
+		  		data.results[i].category = decodeURIComponent(data.results[i].category);
+		  		data.results[i].difficulty = decodeURIComponent(data.results[i].difficulty);
+		  		data.results[i].question = decodeURIComponent(data.results[i].question);
+		  		data.results[i].correct_answer = decodeURIComponent(data.results[i].correct_answer);
+		  		for (var x = 0; x < 3; x++) {
+						data.results[i].incorrect_answers[x] = decodeURIComponent(data.results[i].incorrect_answers[x]);
+		  		}
+		  	}
+		  	return data;
+		  }
+
+		  function sortAnswers(list) {
+		  	for (var i = 0; i < list.length; i++) {
+		  		//console.log()
+		  		var c = Math.floor(Math.random() * 4);
+			    var answers = list[i].incorrect_answers
+			    shuffleArray(answers);
+
+			    answers.splice(c, 0, list[i].correct_answer);
+
+			    if (c == 0) {
+			    	list[i].correct_answer = 'a';
+			    } else if (c == 1) {
+			    	list[i].correct_answer = 'b';
+			    } else if (c == 2) {
+			    	list[i].correct_answer = 'c';
+			    } else if (c == 3) {
+			    	list[i].correct_answer = 'd';
+			    }
+
+		  	}
+		  }
+
+		  function nextQ(c) {
+		  	current = c;
+		  	console.log('Question ' + (current + 1));
+		  	answered = false;
+
+		  	aB.setAttribute('color', '#fff');
+				bB.setAttribute('color', '#fff');
+				cB.setAttribute('color', '#fff');
+				dB.setAttribute('color', '#fff');
+			
+				aBScreen.setAttribute('color', '#fff');
+				bBScreen.setAttribute('color', '#fff');
+				cBScreen.setAttribute('color', '#fff');
+				dBScreen.setAttribute('color', '#fff');
+
+		  	console.log(questions[current].category);
+		    console.log(questions[current].difficulty);
+		    console.log(questions[current].question);
+
+		    questionT.setAttribute('n-text', 'text', questions[current].question);
+		    questionTScreen.setAttribute('n-text', 'text', questions[current].question);
+
+		    var answers = questions[current].incorrect_answers
+
+		    var sizes = getSizes(answers);
+		    
+		    aT.setAttribute('n-text', 'text', 'A: ' + answers[0]);
+		    bT.setAttribute('n-text', 'text', 'B: ' + answers[1]);
+		    cT.setAttribute('n-text', 'text', 'C: ' + answers[2]);
+		    dT.setAttribute('n-text', 'text', 'D: ' + answers[3]);
+
+		    aTScreen.setAttribute('n-text', 'text', 'A: ' + answers[0]);
+		    bTScreen.setAttribute('n-text', 'text', 'B: ' + answers[1]);
+		    cTScreen.setAttribute('n-text', 'text', 'C: ' + answers[2]);
+		    dTScreen.setAttribute('n-text', 'text', 'D: ' + answers[3]);
+
+		    aT.setAttribute('n-text', 'fontSize', sizes[0]);
+		    bT.setAttribute('n-text', 'fontSize', sizes[1]);
+		    cT.setAttribute('n-text', 'fontSize', sizes[2]);
+		    dT.setAttribute('n-text', 'fontSize', sizes[3]);
+
+		    aTScreen.setAttribute('n-text', 'fontSize', sizes[0]);
+		    bTScreen.setAttribute('n-text', 'fontSize', sizes[1]);
+		    cTScreen.setAttribute('n-text', 'fontSize', sizes[2]);
+		    dTScreen.setAttribute('n-text', 'fontSize', sizes[3]);
+
+		    answer = questions[current].correct_answer;
+		  }
+
+		  function categorySelect() {
+		  	questionT.setAttribute('n-text', 'text', 'Select a Category');
+		  	aT.setAttribute('n-text', 'text', categories[0].name);
+		  	bT.setAttribute('n-text', 'text', categories[1].name);
+		  	cT.setAttribute('n-text', 'text', categories[2].name);
+		  	dT.setAttribute('n-text', 'text', categories[3].name);
+
+		  	questionTScreen.setAttribute('n-text', 'text', 'Select a Category');
+		  	aTScreen.setAttribute('n-text', 'text', categories[0].name);
+		  	bTScreen.setAttribute('n-text', 'text', categories[1].name);
+		  	cTScreen.setAttribute('n-text', 'text', categories[2].name);
+		  	dTScreen.setAttribute('n-text', 'text', categories[3].name);
+		  }
+
+		  aB.addEventListener('mouseup', function(){
+		  	select('a');
+		  });
+		  bB.addEventListener('mouseup', function(){
+		  	select('b');
+		  });
+		  cB.addEventListener('mouseup', function(){
+		  	select('c');
+		  });
+		  dB.addEventListener('mouseup', function(){
+		  	select('d');
+		  });
+
+		  function select(a) {
+				if (selected == a) {
+					selected = null;
+				} else {
+					selected = a;
+				}
+				sync.instance.child('selectedAnswer').set(selected);
+		  }
+
+		  function getSizes(arr) {
+		  	var result = [5,5,5,5];
+		  	for ( var i = 0; i < 4; i++) {
+			  	if (arr[i].length > 50) {
+			  		result[i] = 3;
+			  	} else if (arr[i].length > 30) {
+			  		result[i] = 4;
+		  		}
+		  	}
+		  	return result;
+		  }
+
+		  function checkAnswer(a) {
+		  	console.log(a, answer, scores, playerBuzzedIn);
+		  	if (a == answer) {
+			  	scores[playerBuzzedIn - 1]++;
+			  } else {
+			  	scores[playerBuzzedIn - 1]--;
+			  }
+			  sync.instance.child('scores').set(scores);
+		  	sync.instance.child('answered').set('true');
+		  }
+
+		  if (user.isModerator) {
+			  var clicked = false;
+			  get.addEventListener('mouseup', function(){
+			  	sync.instance.child('current').set(-1);
+			  	getQs(9);
+			  });
+
+			  next.addEventListener('mouseup', function(){
+			  	if (current < 9) {
+				  	//nextQ();
+				  	sync.instance.child('current').set(current + 1);
+				  }
+				  if (current == 14) {
+				  	next.setAttribute('color', '#668');
+				  }
+				  sync.instance.child('answered').set(false);
+				  sync.instance.child('selectedAnswer').set(null);
+				  sync.instance.child('click').set(null);
+			  });
+
+			  var indexes = ['a','b','c','d'];
+
+			  confirmB.addEventListener('mouseup', function(){
+			  	console.log('selected', selected);
+			  	if (selected != null) {
+				  	if (mode == 'category') {
+				  		console.log(categoriesOnScreen[indexes.indexOf(selected)]);
+				  		console.log(categories);
+				  		for (var i = 0; i < categories.length; i++) {
+				  			if (categories[i].name == categoriesOnScreen[indexes.indexOf(selected)]) {
+				  				console.log(categories[i]);
+				  				getQs(categories[i].id);
+				  			}
+				  		}
+				  	} else {
+					  	checkAnswer(selected);
+					  }
+					} else {
+						sync.instance.child('answered').set(true);
+					}
+			  });
+
+			  categoryB.addEventListener('mouseup', function(){
+			  	shuffleArray(categories);
+			  	console.log(categories[0].name);
+			  	console.log(categories[1].name);
+			  	console.log(categories[2].name);
+			  	console.log(categories[3].name);
+			  	//categorySelect();
+			  	sync.instance.child('mode').set('category');
+			  	sync.instance.child('categories').set([categories[0].name,categories[1].name,categories[2].name,categories[3].name]);
+			  	//console.log(categories);
+			  });
+
+			  resetB.addEventListener('mouseup', function(){
+			  	sync.instance.child('click').set(null);
+			  });
+			}
+
+	  });
+  });
+
+	function getAverage(arr) {
+		var sum = 0;
+		for (var i = 0; i < arr.length; i++) {
+			sum += arr[i];
+		}
+		return sum / (arr.length);
+	}
+
+	function sortByKey(array, key) {
+    return array.sort(function(a, b) {
+      var x = a[key]; var y = b[key];
+      return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+    });
+	}
+
+	function shuffleArray(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+    }
+    return array;
+  }
+
+</script>		
+</body>
+</html>
