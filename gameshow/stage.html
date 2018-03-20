@@ -486,7 +486,7 @@
 		    console.log(questions[current].difficulty);
 		    console.log(questions[current].question);
 
-		    questionT.setAttribute('n-text', 'text', questions[current].question);
+		    questionT.setAttribute('n-text', 'text', (current + 1) +  ': ' + questions[current].question);
 		    questionTScreen.setAttribute('n-text', 'text', questions[current].question);
 
 		    var answers = questions[current].incorrect_answers
