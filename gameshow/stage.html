@@ -9,27 +9,32 @@
 	<a-scene altspace='fullspace: true' sync-system='author: BenG; app: quizStage; refUrl: https://altvr-apps.firebaseio.com/'>
 		<a-plane position='0 0 0' scale='20 20 0' rotation='-90 0 0' material='visible: false' n-mesh-collider='type: environment; convex: false'></a-plane>
 
-		<a-entity id='screen' position='0 4.5 -4' scale='.5 .5 .5'>
-			<a-plane scale='16 9 1' color='black' side='double' altspace-cursor-collider='enabled: false' altspace-cursor-collider='enabled: false'></a-plane>
-			<a-entity position='0 -3.5 -.15' rotation='0 180 0' n-text='fontSize: 7; text: v0.081'></a-entity>
+		<a-entity id='screenContainer' rotation='0 0 0'>
+			<a-entity id='screen' position='0 4.5 -4' scale='.5 .5 .5'>
+				<a-plane scale='16 9 1' color='black' side='double' altspace-cursor-collider='enabled: false' altspace-cursor-collider='enabled: false'></a-plane>
+				<a-entity position='0 -3.5 -.15' rotation='0 180 0' n-text='fontSize: 7; text: v0.081'></a-entity>
 
-			<a-plane position='-3.7 -1.5 .1' scale='6.8 1.3 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
-			<a-plane position='3.7 -1.5 .1' scale='6.8 1.3 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
-			<a-plane position='-3.7 -3.2 .1' scale='6.8 1.3 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
-			<a-plane position='3.7 -3.2 .1' scale='6.8 1.3 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
+				<a-plane position='-3.7 -1.5 .1' scale='6.8 1.3 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
+				<a-plane position='3.7 -1.5 .1' scale='6.8 1.3 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
+				<a-plane position='-3.7 -3.2 .1' scale='6.8 1.3 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
+				<a-plane position='3.7 -3.2 .1' scale='6.8 1.3 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
 
-			<a-plane id='aBScreen' position='-3.7 -1.5 .05' scale='7 1.5 1' color='white' altspace-cursor-collider='enabled: false'></a-plane>
-			<a-plane id='bBScreen' position='3.7 -1.5 .05' scale='7 1.5 1' color='white' altspace-cursor-collider='enabled: false'></a-plane>
-			<a-plane id='cBScreen' position='-3.7 -3.2 .05' scale='7  1.5 1' color='white' altspace-cursor-collider='enabled: false'></a-plane>
-			<a-plane id='dBScreen' position='3.7 -3.2 .05' scale='7 1.5 1' color='white' altspace-cursor-collider='enabled: false'></a-plane>
+				<a-plane id='aBScreen' position='-3.7 -1.5 .05' scale='7 1.5 1' color='white' altspace-cursor-collider='enabled: false'></a-plane>
+				<a-plane id='bBScreen' position='3.7 -1.5 .05' scale='7 1.5 1' color='white' altspace-cursor-collider='enabled: false'></a-plane>
+				<a-plane id='cBScreen' position='-3.7 -3.2 .05' scale='7  1.5 1' color='white' altspace-cursor-collider='enabled: false'></a-plane>
+				<a-plane id='dBScreen' position='3.7 -3.2 .05' scale='7 1.5 1' color='white' altspace-cursor-collider='enabled: false'></a-plane>
 
-			<a-entity id='questionTScreen' position='0 3 .1' n-text='width: 14; fontSize: 7; verticalAlign: top; text: ?'></a-entity>
+				<a-entity id='questionTScreen' position='0 3 .1' n-text='width: 14; fontSize: 7; verticalAlign: top; text: ?'></a-entity>
 
-			<a-entity id='aTScreen' position='-3.7 -1.5 .15' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: A: '></a-entity>
-			<a-entity id='bTScreen' position='3.7 -1.5 .15' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: B: '></a-entity>
-			<a-entity id='cTScreen' position='-3.7 -3.2 .15' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: C: '></a-entity>
-			<a-entity id='dTScreen' position='3.7 -3.2 .15' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: D: '></a-entity>
+				<a-entity id='aTScreen' position='-3.7 -1.5 .15' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: A: '></a-entity>
+				<a-entity id='bTScreen' position='3.7 -1.5 .15' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: B: '></a-entity>
+				<a-entity id='cTScreen' position='-3.7 -3.2 .15' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: C: '></a-entity>
+				<a-entity id='dTScreen' position='3.7 -3.2 .15' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: D: '></a-entity>
+			</a-entity>
+			<a-animation to='0 -135 0' dur='3000' begin='move'></a-animation>
 		</a-entity>
+
+		<a-box position='0 .2 -4' scale='.3 .3 .3' color='blue' onClick='screenContainer.emit("move")'></a-box>
 
 
 		<a-entity id='hostPodium' position='2.3 0 -1.2' rotation='0 105 0'>
