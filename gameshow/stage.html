@@ -9,10 +9,10 @@
 	<a-scene altspace='fullspace: true' sync-system='author: BenG; app: quizStage; refUrl: https://altvr-apps.firebaseio.com/'>
 		<a-plane position='0 0 0' scale='20 20 0' rotation='-90 0 0' material='visible: false' n-mesh-collider='type: environment; convex: false'></a-plane>
 
-		<a-entity id='screenContainer' rotation='0 0 0'>
+		<a-entity id='screenContainer'>
 			<a-entity id='screen' position='0 4.5 -4' scale='.5 .5 .5'>
 				<a-plane scale='16 9 1' color='black' side='double' altspace-cursor-collider='enabled: false' altspace-cursor-collider='enabled: false'></a-plane>
-				<a-entity position='0 -3.5 -.15' rotation='0 180 0' n-text='fontSize: 7; text: v0.02'></a-entity>
+				<a-entity position='0 -3.5 -.15' rotation='0 180 0' n-text='fontSize: 7; text: v0.03'></a-entity>
 
 				<a-plane position='-3.7 -1.5 .1' scale='6.8 1.3 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
 				<a-plane position='3.7 -1.5 .1' scale='6.8 1.3 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
@@ -32,6 +32,8 @@
 				<a-entity id='dTScreen' position='3.7 -3.2 .15' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: D: '></a-entity>
 			</a-entity>
 			<a-animation to='0 -135 0' dur='3000' begin='move'></a-animation>
+			<a-animation attribute='position' to='0 -.3 0' dur='3000' begin='move'></a-animation>
+			<a-animation attribute='scale' to='.8 .8 .8' dur='3000' begin='move'></a-animation>
 		</a-entity>
 
 		<a-box position='0 .2 -4' scale='.3 .3 .3' color='blue' onClick='screenContainer.emit("move")'></a-box>
@@ -41,7 +43,7 @@
 			<a-box position='0 .6 0' scale='.5 1.2 .5' color='#666'></a-box>
 			<a-box position='0 1.2 0' scale='.6 .6 .2' rotation='-70 0 0' color='#555'></a-box>
 
-			<a-box id='hostJoin' position='0 1 .25' scale='.05 .05 .05' color='green' n-box-collider='type: hologram'></a-box>
+			<a-box id='hostJoin' position='0 .9 .25' scale='.05 .05 .05' color='red' n-box-collider='type: hologram'></a-box>
 
 			<a-entity position='0 1.34 -.09' rotation='-70 0 0' scale='.03 .03 .03'>
 				<a-plane scale='16 9 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
@@ -84,6 +86,8 @@
 
 				<a-entity id='p1Score' position='0 .93 .29' n-text='fontSize: 3; text: <color=black>1'></a-entity>
 				<a-entity id='p1Name' position='0 1.3 .3' rotation='-20 0 0' n-text='fontSize: 1; text: Player 1'></a-entity>
+
+				<a-box id='p1Join' class='joinButton' position='0 .9 -.25' scale='.05 .05 .05' color='red' n-box-collider='type: hologram'></a-box>
 			</a-entity>
 
 			<a-entity id='podium2' position='-1 0 0'>
@@ -94,6 +98,8 @@
 
 				<a-entity id='p2Score' position='0 .93 .29' n-text='fontSize: 3; text: <color=black>2'></a-entity>
 				<a-entity id='p2Name' position='0 1.3 .3' rotation='-20 0 0' n-text='fontSize: 1; text: Player 2'></a-entity>
+
+				<a-box id='p2Join' class='joinButton' position='0 .9 -.25' scale='.05 .05 .05' color='red' n-box-collider='type: hologram'></a-box>
 			</a-entity>
 
 			<a-entity id='podium3' position='0 0 0'>
@@ -104,6 +110,8 @@
 
 				<a-entity id='p3Score' position='0 .93 .29' n-text='fontSize: 3; text: <color=black>3'></a-entity>
 				<a-entity id='p3Name' position='0 1.3 .3' rotation='-20 0 0' n-text='fontSize: 1; text: Player 3'></a-entity>
+
+				<a-box id='p3Join' class='joinButton' position='0 .9 -.25' scale='.05 .05 .05' color='red' n-box-collider='type: hologram'></a-box>
 			</a-entity>
 
 			<a-entity id='podium4' position='1 0 0'>
@@ -114,6 +122,8 @@
 
 				<a-entity id='p4Score' position='0 .93 .29' n-text='fontSize: 3; text: <color=black>4'></a-entity>
 				<a-entity id='p4Name' position='0 1.3 .3' rotation='-20 0 0' n-text='fontSize: 1; text: Player 4'></a-entity>
+
+				<a-box id='p4Join' class='joinButton' position='0 .9 -.25' scale='.05 .05 .05' color='red' n-box-collider='type: hologram'></a-box>
 			</a-entity>
 
 			<a-entity id='podium5' position='2' 0 0'>
@@ -124,13 +134,12 @@
 
 				<a-entity id='p5Score' position='0 .93 .29' n-text='fontSize: 3; text: <color=black>5'></a-entity>
 				<a-entity id='p5Name' position='0 1.3 .3' rotation='-20 0 0' n-text='fontSize: 1; text: Player 5'></a-entity>
+
+				<a-box id='p5Join' class='joinButton' position='0 .9 -.25' scale='.05 .05 .05' color='red' n-box-collider='type: hologram'></a-box>
 			</a-entity>
 		</a-entity>
 
-
 		<a-entity id='sound'></a-entity>
-
-
 
 	</a-scene>
 <script>
@@ -145,22 +154,49 @@
 
 
   	altspace.getUser().then(function(user){
+  		var isMod = user.isModerator;
+  		var isHost = false;
 
+  		var hasHost = false;
   		sync.instance.child('host').on('value', function(data){
 				if (data.val() != null) {
-
+					hasHost = true;
+					hostJoin.setAttribute('color', 'green');
+					if(data.val().userId == user.userId) {
+						isHost = true;
+						console.log('You are host!');
+					} else {
+						isHost = false;
+					}
 				} else {
-
+					hasHost = false;
+					hostJoin.setAttribute('color', 'red');
+					isHost = false;
 				}
 			});
 			
+			var players = [];
 			sync.instance.child('players').on('value', function(data){
 				if (data.val() != null) {
-					for (var i = 0; i < data.val().length; i++) {
-						document.querySelector('#p' + (i + 1) + 'Name').setAttribute('n-text', 'text', data.val()[i].displayName);
+					players = data.val();
+					joined = 0;
+					for (var i = 0; i < 5; i++) {
+						if (players[i].joined) {
+							document.querySelector('#p' + (i + 1) + 'Name').setAttribute('n-text', 'text', data.val()[i].displayName);
+							document.querySelector('#p' + (i + 1) + 'Score').setAttribute('n-text', 'text', '<color=black>' + data.val()[i].score);
+							document.querySelector('#p' + (i + 1) + 'Join').setAttribute('color', 'green');
+						} else {
+							document.querySelector('#p' + (i + 1) + 'Name').setAttribute('n-text', 'text', '');
+							document.querySelector('#p' + (i + 1) + 'Score').setAttribute('n-text', 'text', '');
+							document.querySelector('#p' + (i + 1) + 'Join').setAttribute('color', 'red');
+						}
+						if (players[i].id == user.userId) {
+							console.log(i + ' is you');
+							joined = i + 1;
+						}
 					}
 				} else {
-					sync.instance.child('players').set([{displayName: 'Player 1', userId: '1'},{displayName: 'Player 2', userId: '2'},{displayName: 'Player 3', userId: '3'},{displayName: 'Player 4', userId: '4'},{displayName: 'Player 5', userId: '5'}]);
+					sync.instance.child('players').set([{joined: false},{joined: false},{joined: false},{joined: false},{joined: false}]);
 				}
 			});
 
@@ -190,17 +226,6 @@
 	        }
 	      }
 	    });
-
-			sync.instance.child('scores').on('value', function(data){
-				if (data.val() != null) {
-					for (var i = 0; i < data.val().length; i++) {
-						document.querySelector('#p' + (i + 1) + 'Score').setAttribute('n-text', 'text', '<color=black>' + data.val()[i]);
-					}
-					scores = data.val();
-				} else {
-					sync.instance.child('scores').set([0,0,0,0,0]);
-				}
-			});
 
 			var mode;
 			sync.instance.child('mode').on('value', function(data){
@@ -308,29 +333,29 @@
 
 
 			p1Buzzer.addEventListener('mousedown', function(){
-        //if (user.displayName == p1name) {
+       if (joined == 1) {
           sync.instance.child('click').push('1');
-        //}
+        }
       });
       p2Buzzer.addEventListener('mousedown', function(){
-        //if (user.displayName == p1name) {
+        if (joined == 2) {
           sync.instance.child('click').push('2');
-        //}
+        }
       });
       p3Buzzer.addEventListener('mousedown', function(){
-        //if (user.displayName == p1name) {
+        if (joined == 3) {
           sync.instance.child('click').push('3');
-        //}
+        }
       });
       p4Buzzer.addEventListener('mousedown', function(){
-        //if (user.displayName == p1name) {
+        if (joined == 4) {
           sync.instance.child('click').push('4');
-        //}
+        }
       });
       p5Buzzer.addEventListener('mousedown', function(){
-        //if (user.displayName == p1name) {
+        if (joined == 5) {
           sync.instance.child('click').push('5');
-        //}
+        }
       });
 
       p1Buzzer.object3D.children[0].addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({
@@ -355,29 +380,29 @@
       }));
 
       p1Buzzer.object3D.children[0].addEventListener('jointcollisionenter', function(e){
-        //if (user.displayName == p1name) {
+        if (joined == 1) {
           sync.instance.child('click').push('1');
-        //}
+        }
       });
       p2Buzzer.object3D.children[0].addEventListener('jointcollisionenter', function(e){
-        //if (user.displayName == p1name) {
+        if (joined == 2) {
           sync.instance.child('click').push('2');
-        //}
+        }
       });
       p3Buzzer.object3D.children[0].addEventListener('jointcollisionenter', function(e){
-        //if (user.displayName == p1name) {
+        if (joined == 3) {
           sync.instance.child('click').push('3');
-        //}
+        }
       });
       p4Buzzer.object3D.children[0].addEventListener('jointcollisionenter', function(e){
-        //if (user.displayName == p1name) {
+        if (joined == 4) {
           sync.instance.child('click').push('4');
-        //}
+        }
       });
       p5Buzzer.object3D.children[0].addEventListener('jointcollisionenter', function(e){
-        //if (user.displayName == p1name) {
+        if (joined == 5) {
           sync.instance.child('click').push('5');
-        //}
+        }
       });
 
 			function reset() {
@@ -567,22 +592,25 @@
 		  function checkAnswer(a) {
 		  	console.log(a, answer, scores, playerBuzzedIn);
 		  	if (a == answer) {
-			  	scores[playerBuzzedIn - 1]++;
+			  	players[playerBuzzedIn - 1].score++;
 			  } else {
-			  	scores[playerBuzzedIn - 1]--;
+			  	players[playerBuzzedIn - 1].score--;
 			  }
-			  sync.instance.child('scores').set(scores);
+			  sync.instance.child('players').set(players);
 		  	sync.instance.child('answered').set('true');
 		  }
 
-		  if (user.isModerator) {
-			  var clicked = false;
-			  get.addEventListener('mouseup', function(){
-			  	sync.instance.child('current').set(-1);
-			  	getQs(9);
-			  });
 
-			  next.addEventListener('mouseup', function(){
+		  var clicked = false;
+		  get.addEventListener('mouseup', function(){
+		  	if (isHost || isMod) {
+			  	//sync.instance.child('current').set(-1);
+			  	//getQs(9);
+			  }
+		  });
+
+		  next.addEventListener('mouseup', function(){
+		  	if (isHost || isMod) {
 			  	if (current < 9) {
 				  	//nextQ();
 				  	sync.instance.child('current').set(current + 1);
@@ -593,11 +621,13 @@
 				  sync.instance.child('answered').set(false);
 				  sync.instance.child('selectedAnswer').set(null);
 				  sync.instance.child('click').set(null);
-			  });
+				}
+		  });
 
-			  var indexes = ['a','b','c','d'];
+		  var indexes = ['a','b','c','d'];
 
-			  confirmB.addEventListener('mouseup', function(){
+		  confirmB.addEventListener('mouseup', function(){
+		  	if (!answered && (isHost || isMod)) {
 			  	console.log('selected', selected);
 			  	if (selected != null) {
 				  	if (mode == 'category') {
@@ -616,9 +646,11 @@
 					} else {
 						sync.instance.child('answered').set(true);
 					}
-			  });
+				}
+		  });
 
-			  categoryB.addEventListener('mouseup', function(){
+		  categoryB.addEventListener('mouseup', function(){
+		  	if (isHost || isMod) {
 			  	shuffleArray(categories);
 			  	console.log(categories[0].name);
 			  	console.log(categories[1].name);
@@ -631,12 +663,39 @@
 			  	sync.instance.child('mode').set('category');
 			  	sync.instance.child('categories').set([categories[0].name,categories[1].name,categories[2].name,categories[3].name]);
 			  	//console.log(categories);
-			  });
+			  }
+		  });
 
-			  resetB.addEventListener('mouseup', function(){
+		  resetB.addEventListener('mouseup', function(){
+		  	if (isHost || isMod) {
 			  	sync.instance.child('click').set(null);
+		  	}
+		  });
+
+		  hostJoin.addEventListener('mouseup', function(){
+		  	if (!hasHost && (isHost || isMod)) {
+			  	sync.instance.child('host').set(user);
+		  	} else if (hasHost && (isHost || isMod)) {
+		  		sync.instance.child('host').set(null);
+		  	}
+		  });
+
+		  var joined = 0;
+		  for (var i = 0; i < 5; i++) {
+		  	document.querySelectorAll('.joinButton')[i].addEventListener('mouseup', function(e){
+			  	var i = parseInt(e.target.id.slice(1,2));
+			  	console.log(i);
+			  	if (!players[i - 1].joined && joined == 0) {
+			  		console.log('not joined');
+			  		//joined = i;
+			  		sync.instance.child('players').child(i - 1).set({displayName: user.displayName, id: user.userId, joined: true, score: 0});
+			  	} else if (joined == i) {
+			  		//joined = 0;
+			  		sync.instance.child('players').child(i - 1).set({joined: false});
+			  	}
 			  });
-			}
+		  }
+		  
 
 	  });
   });
