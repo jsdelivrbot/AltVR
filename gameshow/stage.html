@@ -12,7 +12,7 @@
 		<a-entity id='screenContainer'>
 			<a-entity id='screen' position='0 4.5 -4' scale='.5 .5 .5'>
 				<a-plane scale='16 9 1' color='black' side='double' altspace-cursor-collider='enabled: false' altspace-cursor-collider='enabled: false'></a-plane>
-				<a-entity position='0 -3.5 -.15' rotation='0 180 0' n-text='fontSize: 7; text: v0.045'></a-entity>
+				<a-entity position='0 -3.5 -.15' rotation='0 180 0' n-text='fontSize: 7; text: v0.046'></a-entity>
 
 				<a-plane position='-3.7 -1.5 .1' scale='6.8 1.3 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
 				<a-plane position='3.7 -1.5 .1' scale='6.8 1.3 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
@@ -689,7 +689,7 @@
 			  		console.log('not joined');
 			  		//joined = i;
 			  		sync.instance.child('players').child(i - 1).set({displayName: user.displayName, id: user.userId, joined: true, score: 0});
-			  	} else if (joined == i) {
+			  	} else if (joined == i || isMod) {
 			  		//joined = 0;
 			  		sync.instance.child('players').child(i - 1).set({joined: false});
 			  	}
