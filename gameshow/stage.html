@@ -12,7 +12,7 @@
 		<a-entity id='screenContainer'>
 			<a-entity id='screen' position='0 4.5 -4' scale='.5 .5 .5'>
 				<a-plane scale='16 9 1' color='black' side='double' altspace-cursor-collider='enabled: false' altspace-cursor-collider='enabled: false'></a-plane>
-				<a-entity position='0 -3.5 -.15' rotation='0 180 0' n-text='fontSize: 7; text: v0.04'></a-entity>
+				<a-entity position='0 -3.5 -.15' rotation='0 180 0' n-text='fontSize: 7; text: v0.045'></a-entity>
 
 				<a-plane position='-3.7 -1.5 .1' scale='6.8 1.3 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
 				<a-plane position='3.7 -1.5 .1' scale='6.8 1.3 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
@@ -211,7 +211,6 @@
 	        done = false;
 	        playerBuzzedIn = null;
 	      } else {
-	        if (!done) {
 	        	var p = data.val()[Object.keys(data.val())[0]];
 	        	for (var i = 1; i < 6; i++) {
 		        	document.querySelector('#p' + i + 'Buzzer').setAttribute('color', '#b00');
@@ -220,6 +219,7 @@
 		        document.querySelector('#p' + p + 'Buzzer').setAttribute('color', 'green');
 		        document.querySelector('#p' + p + 'Panel').setAttribute('color', '#fff');
 
+	        if (!done) {
 	          sound.components['n-sound'].playSound();
 	          done = true;
 	          playerBuzzedIn = p;
