@@ -6,7 +6,7 @@
   <script src="https://cdn.rawgit.com/norybiak/UltimateLoader/v0.4.6/dist/UltimateLoader.min.js"></script>
   <script src="https://cdn.rawgit.com/Ooblik/AltVRNC/master/dist/AltVRNC.min.js"></script>
   <script src="https://cdn.rawgit.com/NGenesis/altspacevr-behaviors/7cf658d3/js/NativeComponent.js"></script>
-  <script src="https://tweenjs.github.io/tween.js/src/Tween.js"></script>
+  <script src="https://bengarfield.github.io/AltVR/house/TWEEN.js"></script>
 </head>
 <body>
   <a-scene altspace='fullspace: true'>
@@ -15,6 +15,15 @@
     <a-entity position='16.5 -90 -8' rotation='0 -90 0' scale="5 5 5" n-layout-browser="url: https://video-jukebox.firebaseapp.com/?room=minimap"></a-entity> -->
     <!-- <a-entity position='-115 -140 -60' rotation='0 0 0' n-portal='targetSpace: event-661755213408895236-306'></a-entity> -->
   </a-scene>
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- ToyHouse -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:728px;height:90px"
+     data-ad-client="ca-pub-4104619818447346"
+     data-ad-slot="3265966998"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
 <script>
   var scene = document.querySelector('a-scene').object3D;
   var updateRate = 500;
@@ -119,7 +128,6 @@
     loader.load('https://bengarfield.github.io/AltVR/models/mouse.obj', 'https://bengarfield.github.io/AltVR/models/mouse.mtl', mouse);
     
     function house(obj) {
-      console.log(obj);
       for (var i = 0; i < obj.children.length; i++) {
         if (obj.children[i].material.type == 'MultiMaterial') {
           //console.log('multi', obj.children[i].name, obj.children[i].material);
@@ -189,7 +197,6 @@
     }
     
     function house2(obj) {
-      console.log(obj);
       for (var i = 0; i < obj.children.length; i++) {
         if (obj.children[i].material.type == 'MultiMaterial') {
           //console.log('multi', obj.children[i].name, obj.children[i].material);
@@ -224,7 +231,6 @@
     }
     
     function tree(obj) {
-      console.log('tree: ', obj);
       obj.scale.divideScalar(250);
       obj.position.set(-.2,1.31,.4);
       obj.rotation.y = THREE.Math.degToRad(65);
@@ -252,7 +258,6 @@
     }
     
     function rocks(obj) {
-      console.log('rocks: ', obj);
       obj.scale.divideScalar(100);
       obj.position.set(-.2,1.31,.4);
       new NativeComponent('n-mesh-collider', {type: 'hologram', convex: false}, obj).addTo(offset);
@@ -269,7 +274,6 @@
       new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, obj.clone()).addTo(big);
     }
     function table(obj) {
-      console.log('table',obj)
       obj.scale.divideScalar(1.33);
       obj.position.set(-2.5,0,.5);
       //obj.rotation.y = THREE.Math.degToRad(40);
@@ -294,10 +298,10 @@
     var bigTableGroup = tableGroup.clone();
     
     function cutlery(obj) {
-      console.log('TeaSpoon', obj.children[0]);
+      /*console.log('TeaSpoon', obj.children[0]);
       console.log('Knife', obj.children[1]);
       console.log('Fork', obj.children[2]);
-      console.log('TableSpoon', obj.children[3]);
+      console.log('TableSpoon', obj.children[3]);*/
       obj.scale.divideScalar(75);
       obj.rotation.y = THREE.Math.degToRad(180);
       var sx = new THREE.Group();
@@ -307,7 +311,6 @@
       sz.add(sy);
       sy.add(sx);
       sx.add(obj.children[3]);
-      console.log('spoon', sz);
       sz.rotation.z = THREE.Math.degToRad(-21);
       sy.rotation.y = THREE.Math.degToRad(-90);
       sx.rotation.x = THREE.Math.degToRad(180);
@@ -329,7 +332,6 @@
     }
     
     function bowl(obj) {
-      console.log('Bowl', obj);
       obj.scale.divideScalar(6);
       obj.position.set(-.1,0,-.5);
       obj.rotation.y = THREE.Math.degToRad(250);
@@ -344,7 +346,6 @@
     }
     
     function glass(obj) {
-      console.log('Glass', obj);
       obj.scale.divideScalar(6);
       obj.position.set(.15,0,-.3);
       obj.children[0].material.transparent = true;
@@ -364,7 +365,6 @@
     }
     
     function mouse(obj) {
-      console.log('Mouse', obj);
       obj.scale.divideScalar(20);
       obj.position.set(-4.75,0,1.75);
       obj.rotation.y = THREE.Math.degToRad(180);
