@@ -54,6 +54,11 @@
   ]).then(function(results){
     var sync = results[0].instance;
     var user = results[1];
+	  
+    if (user.legacyUserId) {
+      user.userId = user.legacyUserId;
+    }
+	  
     var skeleton = results[2];
     //console.log(sync)
     var models = [];
