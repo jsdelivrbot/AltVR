@@ -4,6 +4,7 @@
 	<title>GameShow Test</title>
 	<script src="https://aframe.io/releases/0.7.0/aframe.js"></script>
 	<script src="https://sdk.altvr.com/libs/altspace.js/2.8.2/altspace.min.js"></script>
+	<script src="https://cdn.rawgit.com/NGenesis/altspacevr-behaviors/v0.8.1/js/altspaceutil.min.js"></script>
 </head>
 <body>
 	<a-scene altspace='verticalAlign: bottom'>
@@ -17,31 +18,59 @@
 			<a-entity position='0 1.3 .3' rotation='-20 0 0' n-text='fontSize: 1; text: Player 1'></a-entity>
 		</a-entity>
 
-		<a-entity id='newPodium' position='0 0 1' rotation='0 -90 05' scale='.5 .55 .5' obj-model='obj: url(podium.obj); mtl: url(podium2.mtl)'></a-entity>
-		<a-cylinder position='0 1.24 .90' rotation='-25 0 0' scale='.07 .1 .07' color='#b00'></a-cylinder>
-		<!-- <a-box position='0 1 1.14' scale='.32 .32 .03'></a-box> -->
-		<!-- <a-entity position='0 1 1.16' n-text='fontSize: 3; text: <color=black>1'></a-entity> -->
+		<a-entity position='0 0 1'>
+			<a-entity id='newPodium' scale='1 1 1'></a-entity>
+			<!-- <a-box position='0 1 1.14' scale='.32 .32 .03'></a-box> -->
+			<!-- <a-entity position='0 1 1.16' n-text='fontSize: 3; text: <color=black>1'></a-entity> -->
+			<a-entity position='0 .9 .235' rotation='7.5 0 0'>
+				<!-- <a-plane scale='.4 1 1'></a-plane> -->
+				<a-entity position='0 .23 .005' scale='.75 .75 .75' n-text='width: 0.5; fontSize: 1; text: <color=black>Player 1'></a-entity>
+				<a-entity position='0 0 .005' scale='.9 .9 .9' n-text='fontSize: 3; text: <color=black>1'></a-entity>
+			</a-entity>
+		</a-entity>
 
 
-		<a-entity id='podium1' position='-1.6 0 -2' rotation='0 -90 0' scale='.5 .5 .5' obj-model='obj: url(podium.obj); mtl: url(podium2.mtl)'></a-entity>
-		<a-cylinder position='-1.6 1.13 -2' rotation='-20 0 0' scale='.07 .1 .07' color='red'></a-cylinder>
+		<a-entity id='podium1' position='-1.6 0 -1.5'>
+			<a-entity position='0 .9 .235' rotation='8 0 0'>
+				<a-entity position='0 .23 .005' scale='.75 .75 .75' n-text='width: 0.5; fontSize: 1; text: <color=black>Player 1'></a-entity>
+				<a-entity position='0 0 .005' scale='.9 .9 .9' n-text='fontSize: 3; text: <color=black>1'></a-entity>
+			</a-entity>
+		</a-entity>
 
-		<a-entity id='podium2' position='-.8 0 -2' rotation='0 -90 0' scale='.5 .5 .5' obj-model='obj: url(podium.obj); mtl: url(podium2.mtl)'></a-entity>
-		<a-cylinder position='-.8 1.13 -2' rotation='-20 0 0' scale='.07 .1 .07' color='red'></a-cylinder>
+		<a-entity id='podium2' position='-.8 0 -1.5'>
+			<a-entity position='0 .9 .235' rotation='8 0 0'>
+				<a-entity position='0 .23 .005' scale='.75 .75 .75' n-text='width: 0.5; fontSize: 1; text: <color=black>Player 2'></a-entity>
+				<a-entity position='0 0 .005' scale='.9 .9 .9' n-text='fontSize: 3; text: <color=black>2'></a-entity>
+			</a-entity>
+		</a-entity>
 
-		<a-entity id='podium3' position='0 0 -2' rotation='0 -90 0' scale='.5 .5 .5' obj-model='obj: url(podium.obj); mtl: url(podium2.mtl)'></a-entity>
-		<a-cylinder position='0 1.13 -2' rotation='-20 0 0' scale='.07 .1 .07' color='red'></a-cylinder>
+		<a-entity id='podium3' position='0 0 -1.5'>
+			<a-entity position='0 .9 .235' rotation='8 0 0'>
+				<a-entity position='0 .23 .005' scale='.75 .75 .75' n-text='width: 0.5; fontSize: 1; text: <color=black>Player 3'></a-entity>
+				<a-entity position='0 0 .005' scale='.9 .9 .9' n-text='fontSize: 3; text: <color=black>3'></a-entity>
+			</a-entity>
+		</a-entity>
 
-		<a-entity id='podium4' position='.8 0 -2' rotation='0 -90 0' scale='.5 .5 .5' obj-model='obj: url(podium.obj); mtl: url(podium2.mtl)'></a-entity>
-		<a-cylinder position='.8 1.13 -2' rotation='-20 0 0' scale='.07 .1 .07' color='red'></a-cylinder>
+		<a-entity id='podium4' position='.8 0 -1.5'>
+			<a-entity position='0 .9 .235' rotation='8 0 0'>
+				<a-entity position='0 .23 .005' scale='.75 .75 .75' n-text='width: 0.5; fontSize: 1; text: <color=black>Player 4'></a-entity>
+				<a-entity position='0 0 .005' scale='.9 .9 .9' n-text='fontSize: 3; text: <color=black>4'></a-entity>
+			</a-entity>
+		</a-entity>
 
-		<a-entity id='podium5' position='1.6 0 -2' rotation='0 -90 0' scale='.5 .5 .5' obj-model='obj: url(podium.obj); mtl: url(podium2.mtl)'></a-entity>
-		<a-cylinder position='1.6 1.13 -2' rotation='-20 0 0' scale='.07 .1 .07' color='red'></a-cylinder>
+		<a-entity id='podium5' position='1.6 0 -1.5'>
+			<a-entity position='0 .9 .235' rotation='8 0 0'>
+				<a-entity position='0 .23 .005' scale='.75 .75 .75' n-text='width: 0.5; fontSize: 1; text: <color=black>Player 5'></a-entity>
+				<a-entity position='0 0 .005' scale='.9 .9 .9' n-text='fontSize: 3; text: <color=black>5'></a-entity>
+			</a-entity>
+		</a-entity>
 
 		<a-box id='button1' position='-.35 0 2' scale='.2 .2 .2'></a-box>
 		<a-box id='button2' position='0 0 1.85' scale='.2 .2 .2' color='green'></a-box>
 		<a-box id='button3' position='0 0 2.15' scale='.2 .2 .2' color='red'></a-box>
 		<a-box id='button4' position='.35 0 2' scale='.2 .2 .2' color='black'></a-box>
+
+		<!-- <a-plane position='0 0 0' scale='5.375 5.375 1' rotation='-90 0 0' material='visible: false' n-mesh-collider='type: environment; convex: false'></a-plane> -->
 
 		<!-- <a-cone position='0 1.5 .5' scale='.5 3 .5' rotation='45 0 0' opacity='.1'></a-cone> -->
 		
@@ -51,14 +80,71 @@
    //scene.addEventListener('connected', function() {
  //  	var sync = scene.systems['sync-system'].connection;
 
-  	var stripes;
-		newPodium.addEventListener('model-loaded', function(){
-			console.log('loaded');
+ 		var dur = 500;
 
+ 		var loader = new THREE.OBJLoader();
+ 		loader.load('podium.obj', onLoad, undefined, undefined);
+
+ 		function onLoad(obj) {
+ 			console.log('OBJ loaded')
+ 			console.log(obj);
+ 			obj.rotation.y = -Math.PI/2;
+ 			obj.scale.setScalar(.5);
+
+ 			obj.getObjectByName('base').material.map = new THREE.TextureLoader().load('base.png');
+ 			obj.getObjectByName('stripes').material.map = new THREE.TextureLoader().load('light.png');
+ 			obj.getObjectByName('button').material.map = new THREE.TextureLoader().load('base.png');
+ 			obj.getObjectByName('base').material.color.set(new THREE.Color(0,.2,.5));
+ 			obj.getObjectByName('button').material.color.set(new THREE.Color(1,0,0));
+ 			obj.getObjectByName('panels').material.color.set(new THREE.Color(.8,.8,.8));
+
+ 			newPodium.object3D.add(obj.clone());
+
+ 			var list = [podium1.object3D,podium2.object3D,podium3.object3D,podium4.object3D,podium5.object3D];
+
+ 			for (var i = 0; i < list.length; i++) {
+ 				//obj.getObjectByName('stripes').material = obj.getObjectByName('stripes').material.clone();
+ 				var p = obj.clone();
+ 				list[i].add(p);
+
+ 				p.getObjectByName('stripes').material = new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load('light.png')});
+ 				//p.getObjectByName('stripes').material.;
+	 			p.getObjectByName('panels').material = obj.getObjectByName('panels').material.clone();
+
+	 			p.addBehavior(new altspaceutil.behaviors.NativeComponent('n-mesh-collider', { convex: false, type: 'hologram' }));
+ 				
+
+ 				//p.getObjectByName('button').userData.id = i;
+ 				p.getObjectByName('button').addEventListener('cursorup', function(e){
+					if (e.target.parent.getObjectByName('stripes').material.map.offset.y == 0) {
+						new TWEEN.Tween(e.target.parent.getObjectByName('stripes').material.map.offset).to({y: -.5}, dur).start();
+						e.target.parent.getObjectByName('panels').material.color.set(new THREE.Color(1,1,1));
+					} else {
+						new TWEEN.Tween(e.target.parent.getObjectByName('stripes').material.map.offset).to({y: 0}, dur).onComplete(function(){
+							e.target.parent.getObjectByName('panels').material.color.set(new THREE.Color(.8,.8,.8));
+						}).start();
+					}
+ 				});
+
+ 				p.getObjectByName('button').addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({
+	        joints: [['Index','Right',3],['Index','Left',3],['Hand','Right',0],['Hand','Left',0]],
+	        jointCubeSize: .02
+	      }));
+
+	      p.getObjectByName('button').addEventListener('jointcollisionenter', function(e){
+	        if (e.target.parent.getObjectByName('stripes').material.map.offset.y == 0) {
+						new TWEEN.Tween(e.target.parent.getObjectByName('stripes').material.map.offset).to({y: -.5}, dur).start();
+						e.target.parent.getObjectByName('panels').material.color.set(new THREE.Color(1,1,1));
+					} else {
+						new TWEEN.Tween(e.target.parent.getObjectByName('stripes').material.map.offset).to({y: 0}, dur).onComplete(function(){
+							e.target.parent.getObjectByName('panels').material.color.set(new THREE.Color(.8,.8,.8));
+						}).start();
+					}
+	      });
+ 			}
+ 		
 			var currentState = 'black'
-
-			stripes = newPodium.object3D.children[0].getObjectByName('stripes');
-
+			var stripes = newPodium.object3D.getObjectByName('stripes');
 
 			//setColor('green');
 	  	function setColor(c) {
@@ -78,9 +164,7 @@
 	  		}
 	  	}
 
-			var dur = 500;
-
-			//stripes.material.map.offset.x = .2;
+			
 			button1.addEventListener('mouseup', function(){
 				if (currentState == 'black') {
 					stripes.material.map.offset.x = 0;
@@ -88,6 +172,7 @@
 					new TWEEN.Tween(stripes.material.map.offset).to({y: -.5}, dur).start();
 
 					currentState = 'white';
+					newPodium.object3D.getObjectByName('panels').material.color.set(new THREE.Color(1,1,1));
 				}
 			});
 			button2.addEventListener('mouseup', function(){
@@ -113,7 +198,9 @@
 				if (currentState == 'white') {
 					stripes.material.map.offset.x = 0;
 					stripes.material.map.offset.y = -.5;
-					new TWEEN.Tween(stripes.material.map.offset).to({y: 0}, dur).start();
+					new TWEEN.Tween(stripes.material.map.offset).to({y: 0}, dur).onComplete(function(){
+						newPodium.object3D.getObjectByName('panels').material.color.set(new THREE.Color(.8,.8,.8));
+					}).start();
 
 					currentState = 'black';
 				}
@@ -121,7 +208,9 @@
 				if (currentState == 'green') {
 					stripes.material.map.offset.x = .6;
 					stripes.material.map.offset.y = -.5;
-					new TWEEN.Tween(stripes.material.map.offset).to({y: 0}, dur).start();
+					new TWEEN.Tween(stripes.material.map.offset).to({y: 0}, dur).onComplete(function(){
+						newPodium.object3D.getObjectByName('panels').material.color.set(new THREE.Color(.8,.8,.8));
+					}).start();
 
 					currentState = 'black';
 				}
@@ -129,12 +218,14 @@
 				if (currentState == 'red') {
 					stripes.material.map.offset.x = .8;
 					stripes.material.map.offset.y = -.5;
-					new TWEEN.Tween(stripes.material.map.offset).to({y: 0}, dur).start();
+					new TWEEN.Tween(stripes.material.map.offset).to({y: 0}, dur).onComplete(function(){
+						newPodium.object3D.getObjectByName('panels').material.color.set(new THREE.Color(.8,.8,.8));
+					}).start();
 
 					currentState = 'black';
 				}
 			});
-		});
+		}
 
 		// var previousState;
   // 	sync.instance.child('color').on('value', function(data){
