@@ -91,12 +91,15 @@
  			obj.rotation.y = -Math.PI/2;
  			obj.scale.setScalar(.5);
 
+ 			var white = new THREE.Color(1,1,1);
+ 			var grey = new THREE.Color(.6,.6,.6);
+
  			obj.getObjectByName('base').material.map = new THREE.TextureLoader().load('Base.png');
  			obj.getObjectByName('stripes').material.map = new THREE.TextureLoader().load('light.png');
  			obj.getObjectByName('button').material.map = new THREE.TextureLoader().load('Base.png');
  			obj.getObjectByName('base').material.color.set(new THREE.Color(0,.2,.5));
  			obj.getObjectByName('button').material.color.set(new THREE.Color(1,0,0));
- 			obj.getObjectByName('panels').material.color.set(new THREE.Color(.8,.8,.8));
+ 			obj.getObjectByName('panels').material.color.set(grey);
 
  			newPodium.object3D.add(obj.clone());
 
@@ -118,10 +121,10 @@
  				p.getObjectByName('button').addEventListener('cursorup', function(e){
 					if (e.target.parent.getObjectByName('stripes').material.map.offset.y == 0) {
 						new TWEEN.Tween(e.target.parent.getObjectByName('stripes').material.map.offset).to({y: -.5}, dur).start();
-						e.target.parent.getObjectByName('panels').material.color.set(new THREE.Color(1,1,1));
+						e.target.parent.getObjectByName('panels').material.color.set(white);
 					} else {
 						new TWEEN.Tween(e.target.parent.getObjectByName('stripes').material.map.offset).to({y: 0}, dur).onComplete(function(){
-							e.target.parent.getObjectByName('panels').material.color.set(new THREE.Color(.8,.8,.8));
+							e.target.parent.getObjectByName('panels').material.color.set(grey);
 						}).start();
 					}
  				});
@@ -137,7 +140,7 @@
 						e.target.parent.getObjectByName('panels').material.color.set(new THREE.Color(1,1,1));
 					} else {
 						new TWEEN.Tween(e.target.parent.getObjectByName('stripes').material.map.offset).to({y: 0}, dur).onComplete(function(){
-							e.target.parent.getObjectByName('panels').material.color.set(new THREE.Color(.8,.8,.8));
+							e.target.parent.getObjectByName('panels').material.color.set(grey);
 						}).start();
 					}
 	      });
@@ -172,7 +175,7 @@
 					new TWEEN.Tween(stripes.material.map.offset).to({y: -.5}, dur).start();
 
 					currentState = 'white';
-					newPodium.object3D.getObjectByName('panels').material.color.set(new THREE.Color(1,1,1));
+					newPodium.object3D.getObjectByName('panels').material.color.set(white);
 				}
 			});
 			button2.addEventListener('mouseup', function(){
@@ -199,7 +202,7 @@
 					stripes.material.map.offset.x = 0;
 					stripes.material.map.offset.y = -.5;
 					new TWEEN.Tween(stripes.material.map.offset).to({y: 0}, dur).onComplete(function(){
-						newPodium.object3D.getObjectByName('panels').material.color.set(new THREE.Color(.8,.8,.8));
+						newPodium.object3D.getObjectByName('panels').material.color.set(grey);
 					}).start();
 
 					currentState = 'black';
@@ -209,7 +212,7 @@
 					stripes.material.map.offset.x = .6;
 					stripes.material.map.offset.y = -.5;
 					new TWEEN.Tween(stripes.material.map.offset).to({y: 0}, dur).onComplete(function(){
-						newPodium.object3D.getObjectByName('panels').material.color.set(new THREE.Color(.8,.8,.8));
+						newPodium.object3D.getObjectByName('panels').material.color.set(grey);
 					}).start();
 
 					currentState = 'black';
@@ -219,7 +222,7 @@
 					stripes.material.map.offset.x = .8;
 					stripes.material.map.offset.y = -.5;
 					new TWEEN.Tween(stripes.material.map.offset).to({y: 0}, dur).onComplete(function(){
-						newPodium.object3D.getObjectByName('panels').material.color.set(new THREE.Color(.8,.8,.8));
+						newPodium.object3D.getObjectByName('panels').material.color.set(grey);
 					}).start();
 
 					currentState = 'black';
