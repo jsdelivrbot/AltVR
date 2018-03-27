@@ -465,6 +465,10 @@
   var scene = document.querySelector('a-scene');
   scene.addEventListener('connected', function() {
     altspace.getUser().then(function(user){
+      if (user.legacyUserId) {
+        user.userId = user.legacyUserId;
+      }
+
       if (user.userId == '706584809928917156') {
         scene.systems['sync-system'].instantiate('badge pink', scene);
         scene.systems['sync-system'].instantiate('badgeText1', scene);
