@@ -139,7 +139,7 @@
             if (this.data.object == 'slice') {
             	this.syncSystem.removeLast(this.grabbedObject[hand]);
             	this.syncSystem.removeLast(this.grabbedObject[hand]);
-            } else if (this.data.object == 'cake1' || this.data.object == 'cake2') {
+            } else if (this.data.object == 'cake' || this.data.object == 'cake2') {
               this.syncSystem.removeLast(this.grabbedObject[hand]);
               this.syncSystem.removeLast(this.grabbedObject[hand]);
               this.syncSystem.removeLast(this.grabbedObject[hand]);
@@ -150,7 +150,7 @@
               this.syncSystem.removeLast(this.grabbedObject[hand]);
               this.syncSystem.removeLast(this.grabbedObject[hand]);
 
-              if (this.data.object == 'cake1') {
+              if (this.data.object == 'cake') {
 	            this.syncSystem.connection.instance.child('cakeState').set('placed');
 	          } else {
 	          	this.syncSystem.connection.instance.child('cake2State').set('placed');
