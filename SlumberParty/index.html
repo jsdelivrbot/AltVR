@@ -481,7 +481,7 @@
         scene.systems['sync-system'].instantiate('badge pink', scene);
         scene.systems['sync-system'].instantiate('badgeText4', scene);
       } else if (user.userId == '582115151281389721') {
-        if (new Date().toLocaleDateString() == '3/31/2018') {
+        if (new Date().getDate() == 31 && new Date().getMonth() == 2) {
           scene.systems['sync-system'].instantiate('badge blue', scene);
           scene.systems['sync-system'].instantiate('birthdayText', scene);
         } else {
