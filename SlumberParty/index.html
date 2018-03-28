@@ -69,9 +69,9 @@
 <body>
   <a-scene altspace='fullspace: true' sync-system='author: BenG; app: SlumberParty; refUrl: https://altvr-apps.firebaseio.com/'>
     
-    <!-- <a-entity id='backWallScreen' position='-2.08 12.1 -51.3' scale='6 6 6' rotation='0 180 0' n-layout-browser='url: https://video-jukebox.firebaseapp.com/index.html?room=slumberparty; isEnclosure: false'></a-entity> -->
-    <a-entity id='stageScreen' position='-2.08 12.1 -50.25' scale='6 6 6' rotation='0 0 0' n-layout-browser='url: https://docs.google.com/presentation/d/e/2PACX-1vQunrbJPJ3H1eoEU4u308AjUGvsi1m_d9VEeUlSpe2j3oCFWEjZgEyC--JcHhg-qM83XZUx2xY1wYKV/pub?start=false&loop=false&delayms=60000; isEnclosure: false'></a-entity>
-    <a-entity position='-.8 17.75 -29.2' rotation='90 0 0' scale='3 3 3' n-layout-browser='url: https://video-jukebox.firebaseapp.com/index.html?room=slumberparty; isEnclosure: false'></a-entity>
+    <a-entity id='backWallScreen' position='-2.08 12.1 -51.3' scale='6 6 6' rotation='0 180 0' n-layout-browser='url: https://video-jukebox.firebaseapp.com/index.html?room=slumberparty; isEnclosure: false'></a-entity>
+    <!-- <a-entity id='stageScreen' position='-2.08 12.1 -50.25' scale='6 6 6' rotation='0 0 0' n-layout-browser='url: https://docs.google.com/presentation/d/e/2PACX-1vQunrbJPJ3H1eoEU4u308AjUGvsi1m_d9VEeUlSpe2j3oCFWEjZgEyC--JcHhg-qM83XZUx2xY1wYKV/pub?start=false&loop=false&delayms=60000; isEnclosure: false'></a-entity> -->
+    <!-- <a-entity id='controlRoomScreen' position='-.8 17.75 -29.2' rotation='90 0 0' scale='3 3 3' n-layout-browser='url: https://video-jukebox.firebaseapp.com/index.html?room=slumberparty; isEnclosure: false'></a-entity> -->
     <!-- <a-entity position='0 1 0' scale='1 1 1' n-layout-browser='url: ; isEnclosure: true'></a-entity> -->
     
     <a-entity id='grill' position='17 4.75 -67' rotation='0 125 0'>
@@ -416,6 +416,7 @@
     <a-mixin id='badgeText2' n-text='fontSize: 1; text: <color=black>I made\nthis bitch' position='-.1 .35 -.151' scale='.15 .15 .15' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
     <a-mixin id='badgeText3' n-text='fontSize: 1; text: <color=black>I designed\nthis bitch' position='-.1 .35 -.151' scale='.15 .15 .15' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
     <a-mixin id='badgeText4' n-text='fontSize: 1; text: <color=black>Bouncer\nBitch' position='-.1 .35 -.151' scale='.15 .15 .15' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
+    <a-mixin id='birthdayText' n-text="fontSize: 1; text: <color=black>It's my\nbirthday" position='-.1 .35 -.151' scale='.15 .15 .15' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
 
     <a-entity id='pillow1' position='-14.5 8.8 -23.3' rotation='-30 80 0' scale='.008 .008 .008' cached-obj-model='obj: url(models/cushion.obj); mtl: url(models/cushion.mtl)' bake-vertex-light></a-entity>
     <a-entity id='pillow2' position='-14.5 8.8 -22.2' rotation='-25 95 0' scale='.008 .008 .008' cached-obj-model='obj: url(models/cushion.obj); mtl: url(models/cushion.mtl)' bake-vertex-light></a-entity>
@@ -479,12 +480,16 @@
       } else if (user.userId == '672823420869673861') {
         scene.systems['sync-system'].instantiate('badge pink', scene);
         scene.systems['sync-system'].instantiate('badgeText4', scene);
-      } else if (user.userId == '582115151281389721' || user.userId == '734434534321291312') {
-        scene.systems['sync-system'].instantiate('badge blue', scene);
-        scene.systems['sync-system'].instantiate('badgeText2', scene);
-        if (user.userId == '734434534321291312') {
-          scene.systems['sync-system'].instantiate('chickenThing', scene);
+      } else if (user.userId == '582115151281389721') {
+        if (new Date().toLocaleDateString() == '3/31/2018') {
+          scene.systems['sync-system'].instantiate('badge blue', scene);
+          scene.systems['sync-system'].instantiate('birthdayText', scene);
+        } else {
+          scene.systems['sync-system'].instantiate('badge blue', scene);
+          scene.systems['sync-system'].instantiate('badgeText2', scene);
         }
+      } else  if (user.userId == '734434534321291312') {
+        scene.systems['sync-system'].instantiate('chickenThing', scene);
       }
     });
 
