@@ -15,15 +15,6 @@
     <a-entity position='16.5 -90 -8' rotation='0 -90 0' scale="5 5 5" n-layout-browser="url: https://video-jukebox.firebaseapp.com/?room=minimap"></a-entity> -->
     <!-- <a-entity position='-115 -140 -60' rotation='0 0 0' n-portal='targetSpace: event-661755213408895236-306'></a-entity> -->
   </a-scene>
-  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- ToyHouse -->
-<ins class="adsbygoogle"
-     style="display:inline-block;width:728px;height:90px"
-     data-ad-client="ca-pub-4104619818447346"
-     data-ad-slot="3265966998"></ins>
-<script>
-(adsbygoogle = window.adsbygoogle || []).push({});
-</script>
 <script>
   var scene = document.querySelector('a-scene').object3D;
   var updateRate = 500;
@@ -54,11 +45,6 @@
   ]).then(function(results){
     var sync = results[0].instance;
     var user = results[1];
-	  
-    if (user.legacyUserId) {
-      user.userId = user.legacyUserId;
-    }
-	  
     var skeleton = results[2];
     //console.log(sync)
     var models = [];
@@ -289,13 +275,13 @@
       new NativeComponent('n-mesh-collider', {type: 'hologram', convex: false}, obj).addTo(offset);
       new NativeComponent('n-mesh-collider', {type: 'environment', convex: false}, obj.clone()).addTo(big);
       
-      var vivT = new THREE.TextureLoader().load('https://bengarfield.github.io/AltVR/models/viv.png');
+      /*var vivT = new THREE.TextureLoader().load('https://bengarfield.github.io/AltVR/models/viv.png');
       var viv = new THREE.Mesh(new THREE.PlaneGeometry(.1,.1), new THREE.MeshBasicMaterial({transparent: true, map: vivT, color: 0x999999}));
       viv.userData.altspace = {collider: {enabled: false}};
       viv.position.set(-2.2,.89,.6);
       viv.rotation.set(Math.PI/2,THREE.Math.degToRad(0),0);
       offset.add(viv);
-      big.add(viv.clone());
+      big.add(viv.clone());*/
     }
     
     var tableGroup = new THREE.Group();
@@ -605,258 +591,253 @@
     
     //start of sync code
     
+
+
+    if (user.avatarInfo.primaryColor) {
+      user.avatarInfo.primaryColor = user.avatarInfo.primaryColor.match(/\d+/g).map(Number);
+      user.avatarInfo.highlightColor = user.avatarInfo.highlightColor.match(/\d+/g).map(Number);
+    }
+
+    var avatar = user.avatarInfo;
+    console.log('avatar: ', avatar);
+    var sid = avatar.sid;
+    you.avatar = {type:sid};
+
+    if (sid =='a-series-m01' || sid == 'pod-classic' || sid == 's-series-f01' || sid == 's-series-m01' || sid == 'x-series-m02'){
+      var pColor = avatar.primaryColor;
+      var hColor = avatar.highlightColor;
+      if (pColor[0] == 'white') {
+        pColor = [255,255,255];
+      } else if (pColor[0] == 'lightgrey') {
+        pColor = [255,255,255];
+      } else if (pColor[0] == 'grey') {
+        pColor = [191,191,191];
+      } else if (pColor[0] == 'darkgrey') {
+        pColor = [77,77,77];
+      } else if (pColor[0] == 'black') {
+        pColor = [26,26,26];
+      }
+      you.avatar.color = {pColor:pColor,hColor:hColor};
+    } else if (sid == 'rubenoid-male-01' || sid == 'rubenoid-female-01') {
+      you.avatar.tex = avatar.textures;
+    }
+
+    function updateSync() {
+      var s = skeleton.getJoint('Spine');
+      var h = skeleton.getJoint('Head');
+      you.body = {pos:s.position,quat:{x:s.quaternion.x,y:s.quaternion.y,z:s.quaternion.z,w:s.quaternion.w}};
+      you.head = {pos:h.position,quat:{x:h.quaternion.x,y:h.quaternion.y,z:h.quaternion.z,w:h.quaternion.w}};
+      you.hands = hands;
+      if (hands) {
+        var l = skeleton.trackingJoints.LeftHand0;
+        var r = skeleton.trackingJoints.RightHand0;
+        you.lHand = {pos:l.position,quat:{x:l.quaternion.x,y:l.quaternion.y,z:l.quaternion.z,w:l.quaternion.w}};
+        you.rHand = {pos:r.position,quat:{x:r.quaternion.x,y:r.quaternion.y,z:r.quaternion.z,w:r.quaternion.w}};
+      }
+      if (syncYou != null) {
+        syncYou.set(you);
+      }
+    }
+
+    setInterval(updateSync, syncRate);
     
-    var dataRequest = (THREE.FileLoader ? new THREE.FileLoader() : new THREE.XHRLoader(/* DEPRECATED: r83 */));
-    dataRequest.setWithCredentials(true);
-    dataRequest.load('https://account.altvr.com/api/v1/users/' + user.userId, onLoaded, undefined, undefined);
-
-    function onLoaded(obj) {
-      //console.log(obj);
-      var avatar = JSON.parse(obj).users[0].user_avatar.config.avatar;
-      //console.log(avatar);
-      var sid = avatar.avatar_sid;
-      you.avatar = {type:sid};
-
-      if (sid =='a-series-m01' || sid == 'pod-classic' || sid == 's-series-f01' || sid == 's-series-m01' || sid == 'x-series-m02'){
-        var pColor = avatar['primary-color'];
-        var hColor = avatar['highlight-color'];
-        if (pColor[0] == 'white') {
-          pColor = [255,255,255];
-        } else if (pColor[0] == 'lightgrey') {
-          pColor = [255,255,255];
-        } else if (pColor[0] == 'grey') {
-          pColor = [191,191,191];
-        } else if (pColor[0] == 'darkgrey') {
-          pColor = [77,77,77];
-        } else if (pColor[0] == 'black') {
-          pColor = [26,26,26];
-        }
-        you.avatar.color = {pColor:pColor,hColor:hColor};
-      } else if (sid == 'rubenoid-male-01') {
-        var rubeM = [avatar['rubenoid-male-texture-1'][0], avatar['rubenoid-male-texture-2'][0], avatar['rubenoid-male-texture-3'][0]];
-        you.avatar.tex = rubeM;
-      } else if (sid == 'rubenoid-female-01') {
-        var rubeF = [avatar['rubenoid-female-texture-1'][0], avatar['rubenoid-female-texture-2'][0], avatar['rubenoid-female-texture-3'][0]];
-        you.avatar.tex = rubeF;
-      }
-
-      function updateSync() {
-        var s = skeleton.getJoint('Spine');
-        var h = skeleton.getJoint('Head');
-        you.body = {pos:s.position,quat:{x:s.quaternion.x,y:s.quaternion.y,z:s.quaternion.z,w:s.quaternion.w}};
-        you.head = {pos:h.position,quat:{x:h.quaternion.x,y:h.quaternion.y,z:h.quaternion.z,w:h.quaternion.w}};
-        you.hands = hands;
-        if (hands) {
-          var l = skeleton.trackingJoints.LeftHand0;
-          var r = skeleton.trackingJoints.RightHand0;
-          you.lHand = {pos:l.position,quat:{x:l.quaternion.x,y:l.quaternion.y,z:l.quaternion.z,w:l.quaternion.w}};
-          you.rHand = {pos:r.position,quat:{x:r.quaternion.x,y:r.quaternion.y,z:r.quaternion.z,w:r.quaternion.w}};
-        }
-        if (syncYou != null) {
-          syncYou.set(you);
-        }
-      }
-
-      setInterval(updateSync, syncRate);
+    syncPlayers.on('child_added', function(childSnapshot, prevChildKey) {
+      // code to handle new child.
+      console.log(childSnapshot.key(), childSnapshot.val());
+      console.log(childSnapshot.val().name + ' has joined');
+      if (childSnapshot.val().id != user.userId){
+        addPlayer(childSnapshot.val(), childSnapshot.key());
       
-      syncPlayers.on('child_added', function(childSnapshot, prevChildKey) {
-        // code to handle new child.
-        console.log(childSnapshot.key(), childSnapshot.val());
-        console.log(childSnapshot.val().name + ' has joined');
-        if (childSnapshot.val().id != user.userId){
-          addPlayer(childSnapshot.val(), childSnapshot.key());
-        
-          syncPlayers.child(childSnapshot.key()).on('value', function(data){
-            //console.log('change', childSnapshot.key(), data.val());
-            if (data.val() != null) {
-              var key = childSnapshot.key();
-              smallTween(players[key].small.getObjectByName('head'), data.val().head.pos, data.val().head.quat);
-              smallTween(players[key].small.getObjectByName('body'), data.val().body.pos, data.val().body.quat);           
-              bigTween(players[key].big.getObjectByName('head'), data.val().head.pos, data.val().head.quat);
-              bigTween(players[key].big.getObjectByName('body'), data.val().body.pos, data.val().body.quat);
+        syncPlayers.child(childSnapshot.key()).on('value', function(data){
+          //console.log('change', childSnapshot.key(), data.val());
+          if (data.val() != null) {
+            var key = childSnapshot.key();
+            smallTween(players[key].small.getObjectByName('head'), data.val().head.pos, data.val().head.quat);
+            smallTween(players[key].small.getObjectByName('body'), data.val().body.pos, data.val().body.quat);           
+            bigTween(players[key].big.getObjectByName('head'), data.val().head.pos, data.val().head.quat);
+            bigTween(players[key].big.getObjectByName('body'), data.val().body.pos, data.val().body.quat);
 
-              if (data.val().hands) {
-                if (data.val().avatar.type == 'robothead-propellerhead-01' || data.val().avatar.type == 'robothead-roundguy-01') {
-                  players[key].small.getObjectByName('body').getObjectByName('BodyArms').visible = false;
-                  players[key].big.getObjectByName('body').getObjectByName('BodyArms').visible = false;
-                }
-                if (data.val().avatar.type == 'rubenoid-male-01' || data.val().avatar.type == 'rubenoid-female-01') {
-                  players[key].small.getObjectByName('body').getObjectByName('Arms').visible = false;
-                  players[key].small.getObjectByName('body').getObjectByName('ArmsSleeves').visible = false;
-                  players[key].big.getObjectByName('body').getObjectByName('Arms').visible = false;
-                  players[key].big.getObjectByName('body').getObjectByName('ArmsSleeves').visible = false;
-                }
-                players[key].small.getObjectByName('lHand').getObjectByName('HandLeft').visible = true;
-                players[key].small.getObjectByName('rHand').getObjectByName('HandRight').visible = true;
-                players[key].big.getObjectByName('lHand').getObjectByName('HandLeft').visible = true;
-                players[key].big.getObjectByName('rHand').getObjectByName('HandRight').visible = true;
+            if (data.val().hands) {
+              if (data.val().avatar.type == 'robothead-propellerhead-01' || data.val().avatar.type == 'robothead-roundguy-01') {
+                players[key].small.getObjectByName('body').getObjectByName('BodyArms').visible = false;
+                players[key].big.getObjectByName('body').getObjectByName('BodyArms').visible = false;
+              }
+              if (data.val().avatar.type == 'rubenoid-male-01' || data.val().avatar.type == 'rubenoid-female-01') {
+                players[key].small.getObjectByName('body').getObjectByName('Arms').visible = false;
+                players[key].small.getObjectByName('body').getObjectByName('ArmsSleeves').visible = false;
+                players[key].big.getObjectByName('body').getObjectByName('Arms').visible = false;
+                players[key].big.getObjectByName('body').getObjectByName('ArmsSleeves').visible = false;
+              }
+              players[key].small.getObjectByName('lHand').getObjectByName('HandLeft').visible = true;
+              players[key].small.getObjectByName('rHand').getObjectByName('HandRight').visible = true;
+              players[key].big.getObjectByName('lHand').getObjectByName('HandLeft').visible = true;
+              players[key].big.getObjectByName('rHand').getObjectByName('HandRight').visible = true;
 
-                smallTween(players[key].small.getObjectByName('lHand'), data.val().lHand.pos, data.val().lHand.quat);
-                smallTween(players[key].small.getObjectByName('rHand'), data.val().rHand.pos, data.val().rHand.quat);
-                bigTween(players[key].big.getObjectByName('lHand'), data.val().lHand.pos, data.val().lHand.quat);
-                bigTween(players[key].big.getObjectByName('rHand'), data.val().rHand.pos, data.val().rHand.quat);
-              } else {
-                players[key].small.getObjectByName('lHand').getObjectByName('HandLeft').visible = false;
-                players[key].small.getObjectByName('rHand').getObjectByName('HandRight').visible = false;
-                players[key].big.getObjectByName('lHand').getObjectByName('HandLeft').visible = false;
-                players[key].big.getObjectByName('rHand').getObjectByName('HandRight').visible = false;
-                if (data.val().avatar.type == 'rubenoid-male-01' || data.val().avatar.type == 'rubenoid-female-01') {
-                  players[key].small.getObjectByName('lHand').getObjectByName('HandLeftCuff').visible = false;
-                  players[key].small.getObjectByName('rHand').getObjectByName('HandRightCuff').visible = false;
-                  players[key].big.getObjectByName('lHand').getObjectByName('HandLeftCuff').visible = false;
-                  players[key].big.getObjectByName('rHand').getObjectByName('HandRightCuff').visible = false;
-                }
+              smallTween(players[key].small.getObjectByName('lHand'), data.val().lHand.pos, data.val().lHand.quat);
+              smallTween(players[key].small.getObjectByName('rHand'), data.val().rHand.pos, data.val().rHand.quat);
+              bigTween(players[key].big.getObjectByName('lHand'), data.val().lHand.pos, data.val().lHand.quat);
+              bigTween(players[key].big.getObjectByName('rHand'), data.val().rHand.pos, data.val().rHand.quat);
+            } else {
+              players[key].small.getObjectByName('lHand').getObjectByName('HandLeft').visible = false;
+              players[key].small.getObjectByName('rHand').getObjectByName('HandRight').visible = false;
+              players[key].big.getObjectByName('lHand').getObjectByName('HandLeft').visible = false;
+              players[key].big.getObjectByName('rHand').getObjectByName('HandRight').visible = false;
+              if (data.val().avatar.type == 'rubenoid-male-01' || data.val().avatar.type == 'rubenoid-female-01') {
+                players[key].small.getObjectByName('lHand').getObjectByName('HandLeftCuff').visible = false;
+                players[key].small.getObjectByName('rHand').getObjectByName('HandRightCuff').visible = false;
+                players[key].big.getObjectByName('lHand').getObjectByName('HandLeftCuff').visible = false;
+                players[key].big.getObjectByName('rHand').getObjectByName('HandRightCuff').visible = false;
               }
             }
-          });
+          }
+        });
+      }
+    });
+    
+    syncPlayers.on('child_removed', function(oldChildSnapshot) {
+      // code to handle child removal.
+      console.log(oldChildSnapshot.val().name + ' has left');
+      offset.remove(players[oldChildSnapshot.key()].small);
+      big.remove(players[oldChildSnapshot.key()].big);
+      delete players[oldChildSnapshot.key()];
+    });
+    
+    function addPlayer(p, key) {
+      //add to map
+      var body = new THREE.Group();
+      body.name = 'body';
+      body.scale.divideScalar(25);
+      var head = new THREE.Group();
+      head.name = 'head';
+      head.scale.divideScalar(25);
+      var rHand = new THREE.Group();
+      rHand.name = 'rHand';
+      rHand.scale.divideScalar(25);
+      var lHand = new THREE.Group();
+      lHand.name = 'lHand';
+      lHand.scale.divideScalar(25);
+
+      var sid = p.avatar.type;
+      var av = avatars[sid].clone();
+      if (sid =='a-series-m01' || sid == 'pod-classic' || sid == 's-series-f01' || sid == 's-series-m01' || sid == 'x-series-m02') {
+        var pColor = p.avatar.color.pColor;
+        var hColor = p.avatar.color.hColor;
+        var hands = p.hands;
+
+        var prim = av.getObjectByName('Body').material.clone();
+        var high = av.getObjectByName('BodyGlow').material.clone();
+
+        av.getObjectByName('Body').material = prim;
+        av.getObjectByName('Head').material = prim;
+        av.getObjectByName('HandRight').material = prim;
+        av.getObjectByName('HandLeft').material = prim;
+        av.getObjectByName('BodyGlow').material = high;
+        av.getObjectByName('HeadGlow').material = high;
+
+        body.add(av.getObjectByName('Body'), av.getObjectByName('BodyGlow'));
+        if (sid =='a-series-m01') {
+          head.add(av.getObjectByName('HeadGlow'));
+        } else {
+          head.add(av.getObjectByName('Head'), av.getObjectByName('HeadGlow'));
         }
-      });
+        rHand.add(av.getObjectByName('HandRight'));
+        lHand.add(av.getObjectByName('HandLeft'));
+
+        var highP = Math.max(pColor[0], pColor[1], pColor[2]);
+        var highH = Math.max(hColor[0], hColor[1], hColor[2]);
+        if (highP > 255) {
+          for (var i = 0; i < 3; i++) {
+            pColor[i] = Math.floor(pColor[i] / highP * 255);
+          }
+          if (sid == 's-series-m01') {
+            var tex = new THREE.TextureLoader().load('https://bengarfield.github.io/AltVR/avatar/s-series-m01_diff_bright.png');  
+            prim.map = tex;
+            prim.needsUpdate = true;
+          }
+        }
+        if (highH > 255) {
+          high.map = null;
+          for (var i = 0; i < 3; i++) {
+            hColor[i] = Math.floor(hColor[i] / highH * 255);
+          }
+        }
+
+        prim.color.set('rgb(' + pColor[0] + ',' + pColor[1] + ',' + pColor[2] + ')');
+        high.color.set('rgb(' + hColor[0] + ',' + hColor[1] + ',' + hColor[2] + ')');
+      } else if (sid == 'robothead-roundguy-01' || sid == 'robothead-propellerhead-01') {
+        if (sid == 'robothead-roundguy-01') {
+          body.add(av.getObjectByName('Body'));
+        } else {
+          head.add(av.getObjectByName('Prop'));
+        }
+        body.add(av.getObjectByName('BodyArms'));
+        head.add(av.getObjectByName('Head'));
+        rHand.add(av.getObjectByName('HandRight'));
+        lHand.add(av.getObjectByName('HandLeft'));
+      } else if (sid == 'rubenoid-male-01' || sid == 'rubenoid-female-01') {
+        var skin = av.getObjectByName('Head').material.clone();
+        var hair = av.getObjectByName('Hair').material.clone();
+        var clothing = av.getObjectByName('Body').material.clone();
+
+        av.getObjectByName('Arms').material = skin;
+        av.getObjectByName('Head').material = skin;
+        av.getObjectByName('HandRight').material = skin;
+        av.getObjectByName('HandLeft').material = skin;
+        av.getObjectByName('Hair').material = hair;
+        av.getObjectByName('ArmsSleeves').material = clothing;
+        av.getObjectByName('Body').material = clothing;
+        av.getObjectByName('HandRightCuff').material = clothing;
+        av.getObjectByName('HandLeftCuff').material = clothing;
+        
+        if (sid == 'rubenoid-female-01') {
+          av.getObjectByName('Ankles').material = skin;
+          body.add(av.getObjectByName('Ankles'));
+        }
+        
+        body.add(av.getObjectByName('Body'), av.getObjectByName('Arms'), av.getObjectByName('ArmsSleeves'));
+        head.add(av.getObjectByName('Head'), av.getObjectByName('Hair'));
+        rHand.add(av.getObjectByName('HandRight'), av.getObjectByName('HandRightCuff'));
+        lHand.add(av.getObjectByName('HandLeft'), av.getObjectByName('HandLeftCuff'));
+        var s = new THREE.TextureLoader().load('https://bengarfield.github.io/AltVR/avatar/' + sid + '_skin-0' + p.avatar.tex[1] + '.png');
+        var h = new THREE.TextureLoader().load('https://bengarfield.github.io/AltVR/avatar/' + sid + '_hair-0' + p.avatar.tex[0] + '.png');
+        var c = new THREE.TextureLoader().load('https://bengarfield.github.io/AltVR/avatar/' + sid + '_clothing-0' + p.avatar.tex[2] + '.png');
+        skin.map = s;
+        hair.map = h;
+        clothing.map = c;
+      }
       
-      syncPlayers.on('child_removed', function(oldChildSnapshot) {
-        // code to handle child removal.
-        console.log(oldChildSnapshot.val().name + ' has left');
-        offset.remove(players[oldChildSnapshot.key()].small);
-        big.remove(players[oldChildSnapshot.key()].big);
-        delete players[oldChildSnapshot.key()];
-      });
       
-      function addPlayer(p, key) {
-        //add to map
-        var body = new THREE.Group();
-        body.name = 'body';
-        body.scale.divideScalar(25);
-        var head = new THREE.Group();
-        head.name = 'head';
-        head.scale.divideScalar(25);
-        var rHand = new THREE.Group();
-        rHand.name = 'rHand';
-        rHand.scale.divideScalar(25);
-        var lHand = new THREE.Group();
-        lHand.name = 'lHand';
-        lHand.scale.divideScalar(25);
-
-        var sid = p.avatar.type;
-        var av = avatars[sid].clone();
-        if (sid =='a-series-m01' || sid == 'pod-classic' || sid == 's-series-f01' || sid == 's-series-m01' || sid == 'x-series-m02') {
-          var pColor = p.avatar.color.pColor;
-          var hColor = p.avatar.color.hColor;
-          var hands = p.hands;
-
-          var prim = av.getObjectByName('Body').material.clone();
-          var high = av.getObjectByName('BodyGlow').material.clone();
-
-          av.getObjectByName('Body').material = prim;
-          av.getObjectByName('Head').material = prim;
-          av.getObjectByName('HandRight').material = prim;
-          av.getObjectByName('HandLeft').material = prim;
-          av.getObjectByName('BodyGlow').material = high;
-          av.getObjectByName('HeadGlow').material = high;
-
-          body.add(av.getObjectByName('Body'), av.getObjectByName('BodyGlow'));
-          if (sid =='a-series-m01') {
-            head.add(av.getObjectByName('HeadGlow'));
-          } else {
-            head.add(av.getObjectByName('Head'), av.getObjectByName('HeadGlow'));
-          }
-          rHand.add(av.getObjectByName('HandRight'));
-          lHand.add(av.getObjectByName('HandLeft'));
-
-          var highP = Math.max(pColor[0], pColor[1], pColor[2]);
-          var highH = Math.max(hColor[0], hColor[1], hColor[2]);
-          if (highP > 255) {
-            for (var i = 0; i < 3; i++) {
-              pColor[i] = Math.floor(pColor[i] / highP * 255);
-            }
-            if (sid == 's-series-m01') {
-              var tex = new THREE.TextureLoader().load('https://bengarfield.github.io/AltVR/avatar/s-series-m01_diff_bright.png');  
-              prim.map = tex;
-              prim.needsUpdate = true;
-            }
-          }
-          if (highH > 255) {
-            high.map = null;
-            for (var i = 0; i < 3; i++) {
-              hColor[i] = Math.floor(hColor[i] / highH * 255);
-            }
-          }
-
-          prim.color.set('rgb(' + pColor[0] + ',' + pColor[1] + ',' + pColor[2] + ')');
-          high.color.set('rgb(' + hColor[0] + ',' + hColor[1] + ',' + hColor[2] + ')');
-        } else if (sid == 'robothead-roundguy-01' || sid == 'robothead-propellerhead-01') {
-          if (sid == 'robothead-roundguy-01') {
-            body.add(av.getObjectByName('Body'));
-          } else {
-            head.add(av.getObjectByName('Prop'));
-          }
-          body.add(av.getObjectByName('BodyArms'));
-          head.add(av.getObjectByName('Head'));
-          rHand.add(av.getObjectByName('HandRight'));
-          lHand.add(av.getObjectByName('HandLeft'));
-        } else if (sid == 'rubenoid-male-01' || sid == 'rubenoid-female-01') {
-          var skin = av.getObjectByName('Head').material.clone();
-          var hair = av.getObjectByName('Hair').material.clone();
-          var clothing = av.getObjectByName('Body').material.clone();
-
-          av.getObjectByName('Arms').material = skin;
-          av.getObjectByName('Head').material = skin;
-          av.getObjectByName('HandRight').material = skin;
-          av.getObjectByName('HandLeft').material = skin;
-          av.getObjectByName('Hair').material = hair;
-          av.getObjectByName('ArmsSleeves').material = clothing;
-          av.getObjectByName('Body').material = clothing;
-          av.getObjectByName('HandRightCuff').material = clothing;
-          av.getObjectByName('HandLeftCuff').material = clothing;
-          
-          if (sid == 'rubenoid-female-01') {
-            av.getObjectByName('Ankles').material = skin;
-            body.add(av.getObjectByName('Ankles'));
-          }
-          
-          body.add(av.getObjectByName('Body'), av.getObjectByName('Arms'), av.getObjectByName('ArmsSleeves'));
-          head.add(av.getObjectByName('Head'), av.getObjectByName('Hair'));
-          rHand.add(av.getObjectByName('HandRight'), av.getObjectByName('HandRightCuff'));
-          lHand.add(av.getObjectByName('HandLeft'), av.getObjectByName('HandLeftCuff'));
-          var s = new THREE.TextureLoader().load('https://bengarfield.github.io/AltVR/avatar/' + sid + '_skin-0' + p.avatar.tex[1] + '.png');
-          var h = new THREE.TextureLoader().load('https://bengarfield.github.io/AltVR/avatar/' + sid + '_hair-0' + p.avatar.tex[0] + '.png');
-          var c = new THREE.TextureLoader().load('https://bengarfield.github.io/AltVR/avatar/' + sid + '_clothing-0' + p.avatar.tex[2] + '.png');
-          skin.map = s;
-          hair.map = h;
-          clothing.map = c;
-        }
-        
-        
-        
-        var smallPlayer = new THREE.Group();
-        var bigPlayer = new THREE.Group();
-        smallPlayer.add(body, head, lHand, rHand);
-        offset.add(smallPlayer);
-        var b = body.clone();
-        b.scale.multiplyScalar(25);
-        var h = head.clone();
-        h.scale.multiplyScalar(25);
-        var lh = lHand.clone();
-        lh.scale.multiplyScalar(25);
-        var rh = rHand.clone();
-        rh.scale.multiplyScalar(25);
-        bigPlayer.add(b, h, lh, rh);
-        big.add(bigPlayer);
-        players[key] = {big: bigPlayer, small: smallPlayer};
-        
-        console.log(bigPlayer.children[1].children[0])
-        bigPlayer.children[1].addBehavior(new altspaceutil.behaviors.NativeComponent('n-mesh-collider', { convex: false, type: 'environment' }));
-        bigPlayer.children[2].addBehavior(new altspaceutil.behaviors.NativeComponent('n-mesh-collider', { convex: false, type: 'environment' }));
-        bigPlayer.children[3].addBehavior(new altspaceutil.behaviors.NativeComponent('n-mesh-collider', { convex: false, type: 'environment' }));
-        
-        
-        //Player name
-        addNameTextBig(bigPlayer, p.name);
-        addNameTextSmall(smallPlayer, p.name);
-        
-        //propleller
-        if (sid == 'robothead-propellerhead-01') {
-          new TWEEN.Tween(head.getObjectByName('Prop').rotation).to({y:Math.PI * 2}, 200).repeat(Infinity).start();
-          new TWEEN.Tween(h.getObjectByName('Prop').rotation).to({y:Math.PI * 2}, 200).repeat(Infinity).start();
-        }
+      
+      var smallPlayer = new THREE.Group();
+      var bigPlayer = new THREE.Group();
+      smallPlayer.add(body, head, lHand, rHand);
+      offset.add(smallPlayer);
+      var b = body.clone();
+      b.scale.multiplyScalar(25);
+      var h = head.clone();
+      h.scale.multiplyScalar(25);
+      var lh = lHand.clone();
+      lh.scale.multiplyScalar(25);
+      var rh = rHand.clone();
+      rh.scale.multiplyScalar(25);
+      bigPlayer.add(b, h, lh, rh);
+      big.add(bigPlayer);
+      players[key] = {big: bigPlayer, small: smallPlayer};
+      
+      console.log(bigPlayer.children[1].children[0])
+      bigPlayer.children[1].addBehavior(new altspaceutil.behaviors.NativeComponent('n-mesh-collider', { convex: false, type: 'environment' }));
+      bigPlayer.children[2].addBehavior(new altspaceutil.behaviors.NativeComponent('n-mesh-collider', { convex: false, type: 'environment' }));
+      bigPlayer.children[3].addBehavior(new altspaceutil.behaviors.NativeComponent('n-mesh-collider', { convex: false, type: 'environment' }));
+      
+      
+      //Player name
+      addNameTextBig(bigPlayer, p.name);
+      addNameTextSmall(smallPlayer, p.name);
+      
+      //propleller
+      if (sid == 'robothead-propellerhead-01') {
+        new TWEEN.Tween(head.getObjectByName('Prop').rotation).to({y:Math.PI * 2}, 200).repeat(Infinity).start();
+        new TWEEN.Tween(h.getObjectByName('Prop').rotation).to({y:Math.PI * 2}, 200).repeat(Infinity).start();
       }
     }
     
