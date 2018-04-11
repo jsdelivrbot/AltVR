@@ -606,15 +606,15 @@
     if (sid =='a-series-m01' || sid == 'pod-classic' || sid == 's-series-f01' || sid == 's-series-m01' || sid == 'x-series-m02'){
       var pColor = avatar.primaryColor;
       var hColor = avatar.highlightColor;
-      if (pColor[0] == 'white') {
+      if (pColor == 'white') {
         pColor = [255,255,255];
-      } else if (pColor[0] == 'lightgrey') {
+      } else if (pColor == 'lightgrey') {
         pColor = [255,255,255];
-      } else if (pColor[0] == 'grey') {
+      } else if (pColor == 'grey') {
         pColor = [191,191,191];
-      } else if (pColor[0] == 'darkgrey') {
+      } else if (pColor == 'darkgrey') {
         pColor = [77,77,77];
-      } else if (pColor[0] == 'black') {
+      } else if (pColor == 'black') {
         pColor = [26,26,26];
       }
       you.avatar.color = {pColor:pColor,hColor:hColor};
