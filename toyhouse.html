@@ -592,12 +592,6 @@
     //start of sync code
     
 
-
-    if (user.avatarInfo.primaryColor) {
-      user.avatarInfo.primaryColor = user.avatarInfo.primaryColor.match(/\d+/g).map(Number);
-      user.avatarInfo.highlightColor = user.avatarInfo.highlightColor.match(/\d+/g).map(Number);
-    }
-
     var avatar = user.avatarInfo;
     console.log('avatar: ', avatar);
     var sid = avatar.sid;
@@ -616,7 +610,10 @@
         pColor = [77,77,77];
       } else if (pColor == 'black') {
         pColor = [26,26,26];
+      } else {
+        pColor = pColor.match(/\d+/g).map(Number);  
       }
+      hColor = hColor.match(/\d+/g).map(Number);
       you.avatar.color = {pColor:pColor,hColor:hColor};
     } else if (sid == 'rubenoid-male-01' || sid == 'rubenoid-female-01') {
       you.avatar.tex = avatar.textures;
