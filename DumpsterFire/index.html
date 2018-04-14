@@ -11,15 +11,6 @@
     <!-- <a-box></a-box> -->
     <a-entity position='4 0 -54' rotation='0 180 0'>
 
-      <a-entity position='0 1.5 3' scale='2 2 2'>
-        <a-plane position='0 .5 0' rotation='90 0 0' src='sky/up.jpg'></a-plane>
-        <a-plane position='0 -.5 0' rotation='-90 0 0' src='sky/down.jpg'></a-plane>
-        <a-plane position='.5 0 0' rotation='0 -90 0' src='sky/front.jpg'></a-plane>
-        <a-plane position='0 0 -.5' rotation='0 0 0' src='sky/right.jpg'></a-plane>
-        <a-plane position='-.5 0 0' rotation='0 90 0' src='sky/back.jpg'></a-plane>
-        <a-plane position='0 0 .5' rotation='0 180 0' src='sky/left.jpg'></a-plane>
-      </a-entity>
-
       <a-entity position='0 0 0' scale='500 500 500'>
         <a-plane position='0 .5 0' rotation='90 0 0' src='sky/up.jpg'></a-plane>
         <a-plane position='0 -.5 0' rotation='-90 0 0' src='sky/down.jpg'></a-plane>
@@ -30,8 +21,6 @@
       </a-entity>
 
       <a-entity id='model' position='0 0 0' scale='7 7 7' obj-model='obj: url(Alley.obj)' n-mesh-collider='type: environment; convex: false'></a-entity>
-      <!-- <a-entity position='0 0 0' scale='500 500 500' obj-model='obj: url(skybox.obj); mtl: url(skybox.mtl)'></a-entity> -->
-      <a-entity position='0 1.5 0' scale='1 1 1' obj-model='obj: url(skybox.obj); mtl: url(skybox.mtl)'></a-entity>
 
       <a-entity position='-4.8 .05 -8.25' scale='1.1 1.1 1.1' rotation='0 0 0'>
         <a-entity obj-model='obj: url(fence.obj); mtl: url(fence.mtl)' n-mesh-collider='type: environment; convex: false'></a-entity>
