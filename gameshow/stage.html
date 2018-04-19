@@ -8,6 +8,7 @@
 <body>
 	<a-scene altspace='fullspace: true' sync-system='author: BenG; app: quizStage; refUrl: https://altvr-apps.firebaseio.com/'>
 		<a-plane position='0 0 0' scale='20 20 0' rotation='-90 0 0' material='visible: false' n-mesh-collider='type: environment; convex: false'></a-plane>
+		<!-- <a-cylinder position='0 -.24 0' height='.6' radius='4.05' color='#101' opacity='.9' n-mesh-collider='type: environment; convex: false'></a-cylinder> -->
 
 		<a-entity id='screenContainer'>
 			<a-entity id='screen' position='0 4.5 -4' scale='.5 .5 .5'>
@@ -39,14 +40,14 @@
 		<a-box position='0 .2 -4' scale='.3 .3 .3' color='blue' onClick='screenContainer.emit("move")'></a-box>
 
 
-		<a-entity id='hostPodium' position='2.3 0 -1.2' rotation='0 105 0'>
-			<a-box position='0 .6 0' scale='.5 1.2 .5' color='#666'></a-box>
-			<a-box position='0 1.2 0' scale='.6 .6 .2' rotation='-70 0 0' color='#555'></a-box>
+		<a-entity id='hostPodium' position='2.3 .06 -1.2' rotation='0 105 0'>
+			<!-- <a-box position='0 .6 0' scale='.5 1.2 .5' color='#666'></a-box> -->
+			<!-- <a-box position='0 1.2 0' scale='.6 .6 .2' rotation='-70 0 0' color='#555'></a-box> -->
 
 			<a-box id='hostJoin' position='0 .9 .25' scale='.05 .05 .05' color='red' n-box-collider='type: hologram'></a-box>
 
-			<a-entity position='0 1.34 -.09' rotation='-70 0 0' scale='.03 .03 .03'>
-				<a-plane scale='16 9 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
+			<a-entity position='0 1.28 -.08' rotation='-73.5 0 0' scale='.03 .03 .03'>
+				<a-plane scale='16 9 1' color='#666' n-mesh-collider='type: hologram; convex: false'></a-plane>
 
 				<a-plane position='-3.7 -1.5 .1' scale='6.8 1.3 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
 				<a-plane position='3.7 -1.5 .1' scale='6.8 1.3 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
@@ -65,77 +66,63 @@
 				<a-entity id='cT' position='-3.7 -3.2 .15' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: C: '></a-entity>
 				<a-entity id='dT' position='3.7 -3.2 .15' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: D: '></a-entity>
 
-				<a-box id='get' position='-2 -7 0' scale='1 1 .5' color='red' n-text='fontSize: 5; horizontalAlign: left; text: Start/End' n-box-collider='type: hologram'></a-box>
-				<a-box id='next' position='5 -7 0' scale='1 1 .5' color='blue' n-text='fontSize: 5; horizontalAlign: left; text: Next Question' n-box-collider='type: hologram'></a-box>
+				<a-cylinder id='hostNext' position='0 -7 0' rotation='90 0 0' radius='1.5' color='#282' n-mesh-collider='type: hologram; convex: false'></a-cylinder>
 
-				<a-box id='confirmB' position='-2 -9 0' scale='1 1 .5' color='green' n-text='fontSize: 5; horizontalAlign: left; text: Confirm Answer' n-box-collider='type: hologram'></a-box>
-				<a-box id='categoryB' position='5 -9 0' scale='1 1 .5' color='yellow' n-text='fontSize: 5; horizontalAlign: left; text: Select Category' n-box-collider='type: hologram'></a-box>
+				<a-entity position='20 0 0'>
+					<a-entity position='0 -5 0' n-text='fontSize: 10; text: To be removed'></a-entity>
+					<a-box id='get' position='-2 -7 0' scale='1 1 .5' color='red' n-text='fontSize: 5; horizontalAlign: left; text: Start/End' n-box-collider='type: hologram'></a-box>
+					<a-box id='next' position='5 -7 0' scale='1 1 .5' color='blue' n-text='fontSize: 5; horizontalAlign: left; text: Next Question' n-box-collider='type: hologram'></a-box>
 
-				<a-box id='resetB' position='5 -11 0' scale='1 1 .5' color='black' n-text='fontSize: 5; horizontalAlign: left; text: Reset Buzzers' n-box-collider='type: hologram'></a-box>
+					<a-box id='confirmB' position='-2 -9 0' scale='1 1 .5' color='green' n-text='fontSize: 5; horizontalAlign: left; text: Confirm Answer' n-box-collider='type: hologram'></a-box>
+					<a-box id='categoryB' position='5 -9 0' scale='1 1 .5' color='yellow' n-text='fontSize: 5; horizontalAlign: left; text: Select Category' n-box-collider='type: hologram'></a-box>
+
+					<a-box id='resetKey' position='-2 -11 0' scale='1 1 .5' color='red' n-text='fontSize: 5; horizontalAlign: left; text: Reset API Key' n-box-collider='type: hologram'></a-box>
+				</a-entity>
+
+				<a-box id='resetB' position='7 -9 0' scale='1 1 .5' color='black' n-text='fontSize: 5; horizontalAlign: left; text: Reset Buzzers' n-box-collider='type: hologram'></a-box>
 
 			</a-entity>
 		</a-entity>
 
-
-		<a-entity id='podiums' position='-1.6 0 -1.6' rotation='0 45 0'>
-			<a-entity id='podium1' position='-2 0 0'>
-				<a-box position='0 .6 0' scale='.5 1.2 .5' color='#666'></a-box>
-				<a-box position='0 1.2 0' scale='.6 .2 .6' rotation='-20 0 0' color='#555'></a-box>
-				<a-box id='p1Panel' position='0 .93 .26' scale='.4 .4 .02' color='#fff'></a-box>
-				<a-cylinder id='p1Buzzer' position='0 1.28 -.04' scale='.07 .1 .07' rotation='-20 0 0' color='#b00'></a-cylinder>
-
-				<a-entity id='p1Score' position='0 .93 .29' n-text='fontSize: 3; text: <color=black>1'></a-entity>
-				<a-entity id='p1Name' position='0 1.3 .3' rotation='-20 0 0' n-text='fontSize: 1; text: Player 1'></a-entity>
-
-				<a-box id='p1Join' class='joinButton' position='0 .9 -.25' scale='.05 .05 .05' color='red' n-box-collider='type: hologram'></a-box>
+		<a-entity id='newPodiums' position='-1.6 .06 -1.6' rotation='0 45 0'>
+			<a-entity id='podium1' position='-1.6 0 0'>
+				<a-entity position='0 1 .235' rotation='8 0 0'>
+					<a-entity id='p1Name' position='0 .23 .005' scale='.75 .75 .75' n-text='width: 0.5; fontSize: 1; text: <color=black>Player 1'></a-entity>
+					<a-entity id='p1Score' position='0 0 .005' scale='.9 .9 .9' n-text='fontSize: 3; text: <color=black>1'></a-entity>
+				</a-entity>
+				<a-box id='p1Join' class='joinButton' position='0 .9 -.22' scale='.05 .05 .05' color='red' n-box-collider='type: hologram'></a-box>
 			</a-entity>
 
-			<a-entity id='podium2' position='-1 0 0'>
-				<a-box position='0 .6 0' scale='.5 1.2 .5' color='#666'></a-box>
-				<a-box position='0 1.2 0' scale='.6 .2 .6' rotation='-20 0 0' color='#555'></a-box>
-				<a-box id='p2Panel' position='0 .93 .26' scale='.4 .4 .02' color='#fff'></a-box>
-				<a-cylinder id='p2Buzzer' position='0 1.28 -.04' scale='.07 .1 .07' rotation='-20 0 0' color='#b00'></a-cylinder>
-
-				<a-entity id='p2Score' position='0 .93 .29' n-text='fontSize: 3; text: <color=black>2'></a-entity>
-				<a-entity id='p2Name' position='0 1.3 .3' rotation='-20 0 0' n-text='fontSize: 1; text: Player 2'></a-entity>
-
-				<a-box id='p2Join' class='joinButton' position='0 .9 -.25' scale='.05 .05 .05' color='red' n-box-collider='type: hologram'></a-box>
+			<a-entity id='podium2' position='-.8 0 0'>
+				<a-entity position='0 1 .235' rotation='8 0 0'>
+					<a-entity id='p2Name' position='0 .23 .005' scale='.75 .75 .75' n-text='width: 0.5; fontSize: 1; text: <color=black>Player 2'></a-entity>
+					<a-entity id='p2Score' position='0 0 .005' scale='.9 .9 .9' n-text='fontSize: 3; text: <color=black>2'></a-entity>
+				</a-entity>
+				<a-box id='p2Join' class='joinButton' position='0 .9 -.22' scale='.05 .05 .05' color='red' n-box-collider='type: hologram'></a-box>
 			</a-entity>
 
 			<a-entity id='podium3' position='0 0 0'>
-				<a-box position='0 .6 0' scale='.5 1.2 .5' color='#666'></a-box>
-				<a-box position='0 1.2 0' scale='.6 .2 .6' rotation='-20 0 0' color='#555'></a-box>
-				<a-box id='p3Panel' position='0 .93 .26' scale='.4 .4 .02' color='#fff'></a-box>
-				<a-cylinder id='p3Buzzer' position='0 1.28 -.04' scale='.07 .1 .07' rotation='-20 0 0' color='#b00'></a-cylinder>
-
-				<a-entity id='p3Score' position='0 .93 .29' n-text='fontSize: 3; text: <color=black>3'></a-entity>
-				<a-entity id='p3Name' position='0 1.3 .3' rotation='-20 0 0' n-text='fontSize: 1; text: Player 3'></a-entity>
-
-				<a-box id='p3Join' class='joinButton' position='0 .9 -.25' scale='.05 .05 .05' color='red' n-box-collider='type: hologram'></a-box>
+				<a-entity position='0 1 .235' rotation='8 0 0'>
+					<a-entity id='p3Name' position='0 .23 .005' scale='.75 .75 .75' n-text='width: 0.5; fontSize: 1; text: <color=black>Player 3'></a-entity>
+					<a-entity id='p3Score' position='0 0 .005' scale='.9 .9 .9' n-text='fontSize: 3; text: <color=black>3'></a-entity>
+				</a-entity>
+				<a-box id='p3Join' class='joinButton' position='0 .9 -.22' scale='.05 .05 .05' color='red' n-box-collider='type: hologram'></a-box>
 			</a-entity>
 
-			<a-entity id='podium4' position='1 0 0'>
-				<a-box position='0 .6 0' scale='.5 1.2 .5' color='#666'></a-box>
-				<a-box position='0 1.2 0' scale='.6 .2 .6' rotation='-20 0 0' color='#555'></a-box>
-				<a-box id='p4Panel' position='0 .93 .26' scale='.4 .4 .02' color='#fff'></a-box>
-				<a-cylinder id='p4Buzzer' position='0 1.28 -.04' scale='.07 .1 .07' rotation='-20 0 0' color='#b00'></a-cylinder>
-
-				<a-entity id='p4Score' position='0 .93 .29' n-text='fontSize: 3; text: <color=black>4'></a-entity>
-				<a-entity id='p4Name' position='0 1.3 .3' rotation='-20 0 0' n-text='fontSize: 1; text: Player 4'></a-entity>
-
-				<a-box id='p4Join' class='joinButton' position='0 .9 -.25' scale='.05 .05 .05' color='red' n-box-collider='type: hologram'></a-box>
+			<a-entity id='podium4' position='.8 0 0'>
+				<a-entity position='0 1 .235' rotation='8 0 0'>
+					<a-entity id='p4Name' position='0 .23 .005' scale='.75 .75 .75' n-text='width: 0.5; fontSize: 1; text: <color=black>Player 4'></a-entity>
+					<a-entity id='p4Score' position='0 0 .005' scale='.9 .9 .9' n-text='fontSize: 3; text: <color=black>4'></a-entity>
+				</a-entity>
+				<a-box id='p4Join' class='joinButton' position='0 .9 -.22' scale='.05 .05 .05' color='red' n-box-collider='type: hologram'></a-box>
 			</a-entity>
 
-			<a-entity id='podium5' position='2' 0 0'>
-				<a-box position='0 .6 0' scale='.5 1.2 .5' color='#666'></a-box>
-				<a-box position='0 1.2 0' scale='.6 .2 .6' rotation='-20 0 0' color='#555'></a-box>
-				<a-box id='p5Panel' position='0 .93 .26' scale='.4 .4 .02' color='#fff'></a-box>
-				<a-cylinder id='p5Buzzer' position='0 1.28 -.04' scale='.07 .1 .07' rotation='-20 0 0' color='#b00'></a-cylinder>
-
-				<a-entity id='p5Score' position='0 .93 .29' n-text='fontSize: 3; text: <color=black>5'></a-entity>
-				<a-entity id='p5Name' position='0 1.3 .3' rotation='-20 0 0' n-text='fontSize: 1; text: Player 5'></a-entity>
-
-				<a-box id='p5Join' class='joinButton' position='0 .9 -.25' scale='.05 .05 .05' color='red' n-box-collider='type: hologram'></a-box>
+			<a-entity id='podium5' position='1.6 0 0'>
+				<a-entity position='0 1 .235' rotation='8 0 0'>
+					<a-entity id='p5Name' position='0 .23 .005' scale='.75 .75 .75' n-text='width: 0.5; fontSize: 1; text: <color=black>Player 5'></a-entity>
+					<a-entity id='p5Score' position='0 0 .005' scale='.9 .9 .9' n-text='fontSize: 3; text: <color=black>5'></a-entity>
+				</a-entity>
+				<a-box id='p5Join' class='joinButton' position='0 .9 -.22' scale='.05 .05 .05' color='red' n-box-collider='type: hologram'></a-box>
 			</a-entity>
 		</a-entity>
 
@@ -143,17 +130,147 @@
 
 	</a-scene>
 <script>
+	var scene = document.querySelector('a-scene');
+	scene.addEventListener('connected', function() {
+  	var sync = scene.systems['sync-system'].connection;
 
 	sound.setAttribute('n-sound', {src: /Mobile/i.test(navigator.userAgent) ? 'https://bengarfield.github.io/AltVR/Hive/sounds/ding.mp3' : 'https://bengarfield.github.io/AltVR/Hive/sounds/ding.ogg', volume: 0.3, spatialBlend: 0.5});
 
+
 	var scores = [];
 	var categories = [{id:9,name:'General Knowledge'},{id:10,name:'Books'},{id:11,name:'Film'},{id:12,name:'Music'},{id:13,name:'Musicals & Theatres'},{id:14,name:'Television'},{id:15,name:'Video Games'},{id:16,name:'Board Games'},{id:17,name:'Science & Nature'},{id:18,name:'Computers'},{id:19,name:'Mathematics'},{id:20,name:'Mythology'},{id:21,name:'Sports'},{id:22,name:'Geography'},{id:23,name:'History'},{id:24,name:'Politics'},{id:25,name:'Art'},{id:26,name:'Celebrities'},{id:27,name:'Animals'},{id:28,name:'Vehicles'},{id:29,name:'Comics'},{id:30,name:'Gadgets'},{id:31,name:'Japanese Anime & Manga'},{id:32,name:'Cartoon & Animations'}];
-	var scene = document.querySelector('a-scene');
-  scene.addEventListener('connected', function() {
-  	var sync = scene.systems['sync-system'].connection;
+	var podiumList = [];
+
+	altspace.getUser().then(function(user){
+		var loader = new THREE.OBJLoader();
+		loader.load('models/podiumTall.obj', podiumLoad, undefined, undefined);
+		loader.load('models/hostPodium.obj', hostPodiumLoad, undefined, undefined);
+		loader.load('models/stage.obj', stageLoad, undefined, undefined);
+
+		function stageLoad(obj) {
+			console.log('stage', obj);
+
+			var stage = new THREE.Color(.15,0,.3);
+
+			//var stage = new THREE.Color(1,1,1);
+
+			obj.getObjectByName('Cylinder').material = new THREE.MeshBasicMaterial({color: stage, map: new THREE.TextureLoader().load('models/stage.png')});
+			obj.getObjectByName('Cylinder').userData.altspace = {collider: {enabled: false}};
+			scene.object3D.add(obj);
+		}
+
+		function hostPodiumLoad(obj) {
+			console.log('host', obj);
+			obj.rotation.y = Math.PI/2;
+			obj.scale.setScalar(.5);
+			//obj.scale.z = .4;
+			obj.position.y = 0.1;
 
 
-  	altspace.getUser().then(function(user){
+			var blue = new THREE.Color(0,.15,.4);
+			//var blue = new THREE.Color(.2,0,.1);
+
+			obj.getObjectByName('base').material = new THREE.MeshBasicMaterial({color: blue, map: new THREE.TextureLoader().load('models/hostBase.png')});
+			obj.getObjectByName('screen').material = new THREE.MeshBasicMaterial({color: 0x000000});
+			//obj.getObjectByName('stripes').material = new THREE.MeshBasicMaterial({color: 0x000000});
+
+			//obj.remove(obj.getObjectByName('screen'));
+
+			obj.getObjectByName('screen').userData.altspace = {collider: {enabled: false}};
+
+			hostPodium.object3D.add(obj);
+		}
+
+		function podiumLoad(obj) {
+			console.log('OBJ loaded')
+			console.log(obj);
+			obj.rotation.y = -Math.PI/2;
+			obj.scale.setScalar(.5);
+			obj.position.y = 0.1;
+
+			var blue = new THREE.Color(0,.2,.5);
+			var red = new THREE.Color(1,0,0);
+			var white = new THREE.Color(1,1,1);
+			var grey = new THREE.Color(.6,.6,.6);
+
+			var darkBlue = new THREE.Color(0,.12,.3);
+			obj.getObjectByName('stripes').material.color.set(darkBlue);
+			obj.getObjectByName('panels').material.color.set(darkBlue);
+
+			/*var h = obj.clone()
+			h.rotation.y = Math.PI/2;
+			h.scale.z = .65;
+
+			h.remove(h.getObjectByName('button'));
+			hostPodium.object3D.add(h);*/
+
+			for (var i = 1; i < 6; i++) {
+				var p = obj.clone();
+
+				p.getObjectByName('base').material = new THREE.MeshBasicMaterial({color: blue, map: new THREE.TextureLoader().load('models/podium' + i + '.png')});
+				p.getObjectByName('button').material = new THREE.MeshBasicMaterial({color: red, map: new THREE.TextureLoader().load('models/podium' + i + '.png')});
+
+				p.getObjectByName('stripes').material = new THREE.MeshBasicMaterial({map: new THREE.TextureLoader().load('models/light.png')});
+				p.getObjectByName('panels').material = new THREE.MeshBasicMaterial({color: grey});
+
+				document.querySelector('#podium' + i).object3D.add(p);
+				podiumList.push(p);
+			}
+		
+
+			function setColor(p,c) {
+				var dur = 500;
+				var stripes = podiumList[p].getObjectByName('stripes').material;
+				switch (c) {
+					case 'black':
+						if (/*white*/stripes.map.offset.x == 0 && stripes.map.offset.y == -.5) {
+							new TWEEN.Tween(stripes.map.offset).to({y: 0}, dur).start();
+						} else if (/*green*/stripes.map.offset.x == .2 && stripes.map.offset.y == -.5) {
+							stripes.map.offset.set(.6,-.5);
+							new TWEEN.Tween(stripes.map.offset).to({y: 0}, dur).start();
+						} else if (/*red*/stripes.map.offset.x == .4 && stripes.map.offset.y == -.5) {
+							stripes.map.offset.set(.8,-.5);
+							new TWEEN.Tween(stripes.map.offset).to({y: 0}, dur).start();
+						} else {
+							stripes.map.offset.set(0,0);
+						}
+						break;
+					case 'white':
+						if (stripes.map.offset.x == 0 && stripes.map.offset.y == 0) {
+							new TWEEN.Tween(stripes.map.offset).to({y: -.5}, dur).start();
+						} else {
+							stripes.map.offset.set(0,-.5);
+						}
+						break;
+					case 'green':
+						if (stripes.map.offset.x == 0 && stripes.map.offset.y == -.5) {
+							stripes.map.offset.set(.2,0);
+							new TWEEN.Tween(stripes.map.offset).to({y: -.5}, dur).start();
+						} else {
+							stripes.map.offset.set(.2,-.5);
+						}
+						break;
+					case 'red':
+						if (stripes.map.offset.x == 0 && stripes.map.offset.y == -.5) {
+							stripes.map.offset.set(.4,0);
+							new TWEEN.Tween(stripes.map.offset).to({y: -.5}, dur).start();
+						} else {
+							stripes.map.offset.set(.4,-.5);
+						}
+						break;
+				}
+			}
+
+			function setPanelLight(p,on) {
+				var panel = podiumList[p].getObjectByName('panels').material;
+				if (on) {
+					panel.color.set(white);
+				} else {
+					panel.color.set(grey);
+				}
+			}
+
+
   		var isMod = user.isModerator;
   		var isHost = false;
 
@@ -178,17 +295,22 @@
 			var players = [];
 			sync.instance.child('players').on('value', function(data){
 				if (data.val() != null) {
+					//console.log(data.val());
 					players = data.val();
 					joined = 0;
 					for (var i = 0; i < 5; i++) {
 						if (players[i].joined) {
-							document.querySelector('#p' + (i + 1) + 'Name').setAttribute('n-text', 'text', data.val()[i].displayName);
+							document.querySelector('#p' + (i + 1) + 'Name').setAttribute('n-text', 'text', '<color=black>' + data.val()[i].displayName);
 							document.querySelector('#p' + (i + 1) + 'Score').setAttribute('n-text', 'text', '<color=black>' + data.val()[i].score);
 							document.querySelector('#p' + (i + 1) + 'Join').setAttribute('color', 'green');
+							if (playerBuzzedIn == i + 1) {
+								setPanelLight(i, true);
+							}
 						} else {
 							document.querySelector('#p' + (i + 1) + 'Name').setAttribute('n-text', 'text', '');
 							document.querySelector('#p' + (i + 1) + 'Score').setAttribute('n-text', 'text', '');
 							document.querySelector('#p' + (i + 1) + 'Join').setAttribute('color', 'red');
+							setPanelLight(i, false);
 						}
 						if (players[i].id == user.userId) {
 							console.log(i + ' is you');
@@ -204,26 +326,42 @@
 			var playerBuzzedIn;
 			sync.instance.child('click').on('value', function(data){
 	      if (data.val() == null) {
-	        for (var i = 1; i < 6; i++) {
-	        	document.querySelector('#p' + i + 'Buzzer').setAttribute('color', '#b00');
-		        document.querySelector('#p' + i + 'Panel').setAttribute('color', '#fff');
+	        for (var i = 0; i < 5; i++) {
+		        setColor(i, 'black');
+
+
+		        // if not joined set grey, else set white
+		        if (players[i].joined) {
+		        	setPanelLight(i, true);
+		        } else {
+			        setPanelLight(i, false);
+			      }
 	        }
 	        done = false;
 	        playerBuzzedIn = null;
 	      } else {
 	        	var p = data.val()[Object.keys(data.val())[0]];
-	        	for (var i = 1; i < 6; i++) {
-		        	document.querySelector('#p' + i + 'Buzzer').setAttribute('color', '#b00');
-			        document.querySelector('#p' + i + 'Panel').setAttribute('color', '#999');
+	        	for (var i = 0; i < 5; i++) {
+			        setColor(i, 'black');
+			        setPanelLight(i, false);
 		        }
-		        document.querySelector('#p' + p + 'Buzzer').setAttribute('color', 'green');
-		        document.querySelector('#p' + p + 'Panel').setAttribute('color', '#fff');
+		        setColor(p - 1, 'white');
+		        setPanelLight(p - 1, true);
 
 	        if (!done) {
 	          sound.components['n-sound'].playSound();
 	          done = true;
 	          playerBuzzedIn = p;
 	        }
+	      }
+	    });
+
+	    sync.instance.child('playerBuzzedIn').on('value', function(data){
+	      if (data.val() == null) {
+	      	playerBuzzedIn = data.val();
+
+	      } else {
+	      	sync.instance.child('playerBuzzedIn').set(-1);
 	      }
 	    });
 
@@ -234,6 +372,10 @@
 				} else {
 					sync.instance.child('mode').set('category');
 				}
+			});
+
+			sync.instance.child('categoriesDone').on('value', function(data){
+				console.log(data.val());
 			});
 
 			var categoriesOnScreen;
@@ -276,7 +418,7 @@
 			sync.instance.child('current').on('value', function(data){
 				if (data.val() != null) {
 					current = data.val();
-					if (current != -1) {
+					if (current != -1 && mode == 'question') {
 						nextQ(current);
 					} else {
 						//reset();
@@ -310,6 +452,9 @@
 					if (selected != answer && selected != null) {
 						document.querySelector('#' + selected + 'B').setAttribute('color', 'red');
 						document.querySelector('#' + selected + 'BScreen').setAttribute('color', 'red');
+						setColor(playerBuzzedIn - 1, 'red');
+					} else if (selected == answer) {
+						setColor(playerBuzzedIn - 1, 'green');
 					}
 				}
 				answered = data.val();
@@ -332,78 +477,64 @@
 			});
 
 
-			p1Buzzer.addEventListener('mousedown', function(){
-       if (joined == 1) {
-          sync.instance.child('click').push('1');
-        }
+      podiumList[0].getObjectByName('button').addEventListener('cursordown', function(){
+      	buzz(1);
       });
-      p2Buzzer.addEventListener('mousedown', function(){
-        if (joined == 2) {
-          sync.instance.child('click').push('2');
-        }
+      podiumList[1].getObjectByName('button').addEventListener('cursordown', function(){
+      	buzz(2);
       });
-      p3Buzzer.addEventListener('mousedown', function(){
-        if (joined == 3) {
-          sync.instance.child('click').push('3');
-        }
+      podiumList[2].getObjectByName('button').addEventListener('cursordown', function(){
+      	buzz(3);
       });
-      p4Buzzer.addEventListener('mousedown', function(){
-        if (joined == 4) {
-          sync.instance.child('click').push('4');
-        }
+      podiumList[3].getObjectByName('button').addEventListener('cursordown', function(){
+      	buzz(4);
       });
-      p5Buzzer.addEventListener('mousedown', function(){
-        if (joined == 5) {
-          sync.instance.child('click').push('5');
-        }
+      podiumList[4].getObjectByName('button').addEventListener('cursordown', function(){
+      	buzz(5);
       });
 
-      p1Buzzer.object3D.children[0].addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({
+      podiumList[0].getObjectByName('button').addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({
         joints: [['Index','Right',3],['Index','Left',3],['Hand','Right',0],['Hand','Left',0]],
         jointCubeSize: .02
       }));
-      p2Buzzer.object3D.children[0].addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({
+      podiumList[1].getObjectByName('button').addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({
         joints: [['Index','Right',3],['Index','Left',3],['Hand','Right',0],['Hand','Left',0]],
         jointCubeSize: .02
       }));
-      p3Buzzer.object3D.children[0].addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({
+      podiumList[2].getObjectByName('button').addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({
         joints: [['Index','Right',3],['Index','Left',3],['Hand','Right',0],['Hand','Left',0]],
         jointCubeSize: .02
       }));
-      p4Buzzer.object3D.children[0].addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({
+      podiumList[3].getObjectByName('button').addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({
         joints: [['Index','Right',3],['Index','Left',3],['Hand','Right',0],['Hand','Left',0]],
         jointCubeSize: .02
       }));
-      p5Buzzer.object3D.children[0].addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({
+      podiumList[4].getObjectByName('button').addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({
         joints: [['Index','Right',3],['Index','Left',3],['Hand','Right',0],['Hand','Left',0]],
         jointCubeSize: .02
       }));
 
-      p1Buzzer.object3D.children[0].addEventListener('jointcollisionenter', function(e){
-        if (joined == 1) {
-          sync.instance.child('click').push('1');
-        }
+      podiumList[0].getObjectByName('button').addEventListener('jointcollisionenter', function(e){
+        buzz(1);
       });
-      p2Buzzer.object3D.children[0].addEventListener('jointcollisionenter', function(e){
-        if (joined == 2) {
-          sync.instance.child('click').push('2');
-        }
+      podiumList[1].getObjectByName('button').addEventListener('jointcollisionenter', function(e){
+        buzz(2);
       });
-      p3Buzzer.object3D.children[0].addEventListener('jointcollisionenter', function(e){
-        if (joined == 3) {
-          sync.instance.child('click').push('3');
-        }
+      podiumList[2].getObjectByName('button').addEventListener('jointcollisionenter', function(e){
+        buzz(3);
       });
-      p4Buzzer.object3D.children[0].addEventListener('jointcollisionenter', function(e){
-        if (joined == 4) {
-          sync.instance.child('click').push('4');
-        }
+      podiumList[3].getObjectByName('button').addEventListener('jointcollisionenter', function(e){
+        buzz(4);
       });
-      p5Buzzer.object3D.children[0].addEventListener('jointcollisionenter', function(e){
-        if (joined == 5) {
-          sync.instance.child('click').push('5');
-        }
+      podiumList[4].getObjectByName('button').addEventListener('jointcollisionenter', function(e){
+        buzz(5);
       });
+
+      function buzz(i) {
+      	if (joined == i && playerBuzzedIn == null && mode == 'question') {
+          sync.instance.child('click').push(i.toString());
+        }
+      }
 
 			function reset() {
 				aB.setAttribute('color', 'white');
@@ -611,59 +742,74 @@
 
 		  next.addEventListener('mouseup', function(){
 		  	if (isHost || isMod) {
-			  	if (current < 9) {
-				  	//nextQ();
-				  	sync.instance.child('current').set(current + 1);
-				  }
-				  if (current == 14) {
-				  	next.setAttribute('color', '#668');
-				  }
-				  sync.instance.child('answered').set(false);
-				  sync.instance.child('selectedAnswer').set(null);
-				  sync.instance.child('click').set(null);
+			  	nextQuestion();
 				}
 		  });
+
+		  function nextQuestion() {
+		  	if (current < 9) {
+			  	sync.instance.child('current').set(current + 1);
+			  }
+			  sync.instance.child('answered').set(false);
+			  sync.instance.child('selectedAnswer').set(null);
+			  sync.instance.child('click').set(null);
+		  }
 
 		  var indexes = ['a','b','c','d'];
 
 		  confirmB.addEventListener('mouseup', function(){
-		  	if (!answered && (isHost || isMod)) {
-			  	console.log('selected', selected);
-			  	if (selected != null) {
-				  	if (mode == 'category') {
-				  		console.log(categoriesOnScreen[indexes.indexOf(selected)]);
-				  		console.log(categories);
-				  		for (var i = 0; i < categories.length; i++) {
-				  			if (categories[i].name == categoriesOnScreen[indexes.indexOf(selected)]) {
-				  				console.log(categories[i]);
-				  				getQs(categories[i].id);
-				  			}
-				  		}
-				  		//sync.instance.child('answered').set(false);
-				  	} else {
-					  	checkAnswer(selected);
-					  }
-					} else {
-						sync.instance.child('answered').set(true);
-					}
+				if (!answered && (isHost || isMod)) {
+					answerQuestion();
 				}
 		  });
 
+		  function answerQuestion() {
+		  	console.log('selected', selected);
+				if (selected != null) {
+					if (mode == 'category') {
+						console.log(categoriesOnScreen[indexes.indexOf(selected)]);
+						console.log(categories);
+						for (var i = 0; i < categories.length; i++) {
+							if (categories[i].name == categoriesOnScreen[indexes.indexOf(selected)]) {
+								console.log(categories[i]);
+								getQs(categories[i].id);
+								sync.instance.child('categoriesDone').push(categories[i]);
+							}
+						}
+						//sync.instance.child('answered').set(false);
+					} else {
+						checkAnswer(selected);
+					}
+				} else {
+					sync.instance.child('answered').set(true);
+				}
+		  }
+
 		  categoryB.addEventListener('mouseup', function(){
 		  	if (isHost || isMod) {
-			  	shuffleArray(categories);
-			  	console.log(categories[0].name);
-			  	console.log(categories[1].name);
-			  	console.log(categories[2].name);
-			  	console.log(categories[3].name);
-			  	//categorySelect();
-			  	sync.instance.child('click').set(null);
-			  	sync.instance.child('answered').set(false);
-				  sync.instance.child('selectedAnswer').set(null);
-			  	sync.instance.child('mode').set('category');
-			  	sync.instance.child('categories').set([categories[0].name,categories[1].name,categories[2].name,categories[3].name]);
-			  	//console.log(categories);
-			  }
+					categorySelect();
+				}
+		  });
+
+		  function categorySelect() {
+		  	shuffleArray(categories);
+		  	console.log(categories[0].name);
+		  	console.log(categories[1].name);
+		  	console.log(categories[2].name);
+		  	console.log(categories[3].name);
+		  	//categorySelect();
+		  	sync.instance.child('click').set(null);
+		  	sync.instance.child('answered').set(false);
+			  sync.instance.child('selectedAnswer').set(null);
+		  	sync.instance.child('mode').set('category');
+		  	sync.instance.child('categories').set([categories[0].name,categories[1].name,categories[2].name,categories[3].name]);
+		  	//console.log(categories);
+		  }
+
+		  resetKey.addEventListener('mouseup', function(){
+		  	if (isHost || isMod) {
+			  	sync.instance.child('apiKey').set(null);
+		  	}
 		  });
 
 		  resetB.addEventListener('mouseup', function(){
@@ -671,6 +817,24 @@
 			  	sync.instance.child('click').set(null);
 		  	}
 		  });
+
+
+		  hostNext.addEventListener('mouseup', function(){
+		  	if (isHost || isMod) {
+		  		console.log(current);
+		  		if (current == -1 && selected == null || (answered && current == 9) || (mode == 'category' && selected == null)) {
+		  			console.log('go to gategory selection');
+		  			categorySelect();
+		  		} else if (!answered) {
+		  			console.log('answer question');
+		  			answerQuestion();
+		  		} else if ((answered && current < 9) || (mode == 'category' && selected != null)) {
+		  			console.log('go to next question');
+		  			nextQuestion();
+		  		}
+		  	}
+		  });
+
 
 		  hostJoin.addEventListener('mouseup', function(){
 		  	if (!hasHost) {
@@ -696,7 +860,7 @@
 			  });
 		  }
 		  
-
+			}
 	  });
   });
 
