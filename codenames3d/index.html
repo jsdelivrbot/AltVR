@@ -522,7 +522,7 @@
           new TWEEN.Tween(cont.object3D.scale).to({x:data.val().scale,y:data.val().scale,z:data.val().scale}, 1000).easing(TWEEN.Easing.Quadratic.Out).start();
           new TWEEN.Tween(cont.object3D.position).to({x:data.val().pos.x,y:data.val().pos.y,z:data.val().pos.z}, 1000).easing(TWEEN.Easing.Quadratic.Out).start();
           new TWEEN.Tween(cont.object3D.rotation).to({x:THREE.Math.degToRad(data.val().rot.x),y:THREE.Math.degToRad(data.val().rot.y),z:THREE.Math.degToRad(data.val().rot.z)}, 1000).easing(TWEEN.Easing.Quadratic.Out).start();
-          if (user.isModerator && !panelCreated) {
+          if (user.userId == 'fv9tBAsC4mxoI2ROTJfgnwRYnULP3RR7eH_lkGAsRU0' && !panelCreated) {
             panelCreated = true;
             createModControls(data.val());
           }
@@ -699,7 +699,7 @@
         var hidden = true;
         var moveB = document.createElement('a-box');
         moveB.setAttribute('scale', '.1 .1 .1');
-        moveB.setAttribute('position', '-1 0 -1');
+        moveB.setAttribute('position', '-1.2 0 -1');
         moveB.setAttribute('n-cockpit-parent', '');
         moveB.setAttribute('altspace-cursor-collider', 'enabled: true');
         scene.appendChild(moveB);
