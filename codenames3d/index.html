@@ -317,7 +317,7 @@
               y = y - .6;
               x = -1.8 + ((i - 20) * .9);
             }
-            document.querySelector('#card' + i).setAttribute('position', {x:x,y:y,z:0});
+            document.querySelector('#card' + i).object3D.position.set(x,y,0);
           }
         } else {
           shuffle();
