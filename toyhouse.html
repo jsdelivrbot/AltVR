@@ -797,7 +797,7 @@
         lHand.add(av.getObjectByName('HandLeft'), av.getObjectByName('HandLeftCuff'));
         var s = new THREE.TextureLoader().load('https://bengarfield.github.io/AltVR/avatar/' + sid + '_skin-0' + p.avatar.tex[1] + '.png');
         var h = new THREE.TextureLoader().load('https://bengarfield.github.io/AltVR/avatar/' + sid + '_hair-0' + p.avatar.tex[0] + '.png');
-        var c = new THREE.TextureLoader().load('https://bengarfield.github.io/AltVR/avatar/' + sid + '_clothing-0' + p.avatar.tex[2] + '.png');
+        var c = new THREE.TextureLoader().load('https://bengarfield.github.io/AltVR/avatar/' + sid + '_clothing-' + (p.avatar.tex[2] < 10) ? '0' : '' + p.avatar.tex[2] + '.png');
         skin.map = s;
         hair.map = h;
         clothing.map = c;
