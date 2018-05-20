@@ -7,6 +7,7 @@
 </head>
 <body>
 	<a-scene altspace='fullspace: true' sync-system='author: BenG; app: quizStage; refUrl: https://altvr-apps.firebaseio.com/'>
+		<a-entity n-layout-browser='url: https://shanesedit.org/r/mc; isEnclosure: true'></a-entity>
 		<a-plane position='0 0 0' scale='20 20 0' rotation='-90 0 0' material='visible: false' n-mesh-collider='type: environment; convex: false'></a-plane>
 		<!-- <a-cylinder position='0 -.24 0' height='.6' radius='4.05' color='#101' opacity='.9' n-mesh-collider='type: environment; convex: false'></a-cylinder> -->
 
@@ -18,8 +19,9 @@
 				<a-circle position='-7 -3.5 0' color='black' side='double' altspace-cursor-collider='enabled: false'></a-circle>
 				<a-circle position='7 3.5 0' color='black' side='double' altspace-cursor-collider='enabled: false'></a-circle>
 				<a-circle position='7 -3.5 0' color='black' side='double' altspace-cursor-collider='enabled: false'></a-circle>
+				<a-box position='0 0 -.1' scale='15 8 .2' color='black'></a-box>
 
-				<a-entity position='0 -3.5 -.15' rotation='0 180 0' n-text='fontSize: 7; text: v0.05'></a-entity>
+				<a-entity position='0 -3.5 -.25' rotation='0 180 0' n-text='fontSize: 7; text: v0.05'></a-entity>
 
 				<a-entity id='titleScreen' position='0 0 0'>
 					<a-entity position='0 0 .1' scale='2 2 2' n-text='text: Logo\ngoes here'></a-entity>
@@ -152,6 +154,8 @@
 		</a-entity>
 
 		<a-entity id='sound'></a-entity>
+		<a-entity id='correct' sync sync-n-sound></a-entity>
+		<a-entity id='incorrect' sync sync-n-sound></a-entity>
 
 	</a-scene>
 <script>
@@ -160,6 +164,8 @@
   	var sync = scene.systems['sync-system'].connection;
 
 	sound.setAttribute('n-sound', {src: /Mobile/i.test(navigator.userAgent) ? 'https://bengarfield.github.io/AltVR/Hive/sounds/ding.mp3' : 'https://bengarfield.github.io/AltVR/Hive/sounds/ding.ogg', volume: 0.3, spatialBlend: 0.5});
+	correct.setAttribute('n-sound', {src: /Mobile/i.test(navigator.userAgent) ? 'https://bengarfield.github.io/AltVR/codenames/sounds/win2.mp3' : 'https://bengarfield.github.io/AltVR/codenames/sounds/win2.ogg', volume: 0.3, spatialBlend: 0.5});
+	incorrect.setAttribute('n-sound', {src: /Mobile/i.test(navigator.userAgent) ? 'https://bengarfield.github.io/AltVR/codenames/sounds/fail.mp3' : 'https://bengarfield.github.io/AltVR/codenames/sounds/fail.ogg', volume: 0.3, spatialBlend: 0.5});
 
 
 	var scores = [];
@@ -206,7 +212,7 @@
 		}
 
 		function podiumLoad(obj) {
-			console.log('OBJ loaded')
+			console.log('podium OBJ loaded')
 			console.log(obj);
 			obj.rotation.y = -Math.PI/2;
 			obj.scale.setScalar(.5);
@@ -240,6 +246,8 @@
 				document.querySelector('#podium' + i).object3D.add(p);
 				podiumList.push(p);
 			}
+
+			var podiumColors = ['black','black','black','black','black'];
 		
 
 			function setColor(p,c) {
@@ -352,7 +360,6 @@
 	      if (data.val() == null) {
 	        for (var i = 0; i < 5; i++) {
 		        setColor(i, 'black');
-
 
 		        // if not joined set grey, else set white
 		        if (players[i].joined) {
@@ -797,8 +804,12 @@
 		  	console.log(a, answer, scores, playerBuzzedIn);
 		  	if (a == answer) {
 			  	players[playerBuzzedIn - 1].score++;
+			  	//playSound(correct);
+			  	correct.components['n-sound'].playSound();
 			  } else {
 			  	players[playerBuzzedIn - 1].score--;
+			  	//playsound(wrong);
+			  	incorrect.components['n-sound'].playSound();
 			  }
 			  sync.instance.child('players').set(players);
 		  	sync.instance.child('answered').set('true');
