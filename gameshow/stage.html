@@ -13,15 +13,18 @@
 
 		<a-entity id='screenContainer'>
 			<a-entity id='screen' position='0 4.5 -4' scale='.5 .5 .5'>
-				<a-plane scale='14 9 1' color='black' side='double' altspace-cursor-collider='enabled: false'></a-plane>
-				<a-plane scale='16 7 1' color='black' side='double' altspace-cursor-collider='enabled: false'></a-plane>
-				<a-circle position='-7 3.5 0' color='black' side='double' altspace-cursor-collider='enabled: false'></a-circle>
-				<a-circle position='-7 -3.5 0' color='black' side='double' altspace-cursor-collider='enabled: false'></a-circle>
-				<a-circle position='7 3.5 0' color='black' side='double' altspace-cursor-collider='enabled: false'></a-circle>
-				<a-circle position='7 -3.5 0' color='black' side='double' altspace-cursor-collider='enabled: false'></a-circle>
-				<a-box position='0 0 -.1' scale='15 8 .2' color='black'></a-box>
+				<!-- <a-plane scale='15 9 1' color='black' side='double' altspace-cursor-collider='enabled: false'></a-plane> -->
+				<!-- <a-plane scale='16 8 1' color='black' side='double' altspace-cursor-collider='enabled: false'></a-plane> -->
+				
+				<a-box position='0 0 -.1' scale='15 9 .2' color='black'></a-box>
+				<a-box position='0 0 -.1' scale='16 8 .2' color='black'></a-box>
 
-				<a-entity position='0 -3.5 -.25' rotation='0 180 0' n-text='fontSize: 7; text: v0.05'></a-entity>
+				<a-cylinder position='-7.5 4 -.1' rotation='90 0 0' height='.2' radius='.5' segments-height='1' color='black' altspace-cursor-collider='enabled: false'></a-cylinder>
+				<a-cylinder position='-7.5 -4 -.1' rotation='90 0 0' height='.2' radius='.5' segments-height='1' color='black' altspace-cursor-collider='enabled: false'></a-cylinder>
+				<a-cylinder position='7.5 4 -.1' rotation='90 0 0' height='.2' radius='.5' segments-height='1' color='black' altspace-cursor-collider='enabled: false'></a-cylinder>
+				<a-cylinder position='7.5 -4 -.1' rotation='90 0 0' height='.2' radius='.5' segments-height='1' color='black' altspace-cursor-collider='enabled: false'></a-cylinder>
+
+				<a-entity position='0 -3.5 -.25' rotation='0 180 0' n-text='fontSize: 7; text: v0.06'></a-entity>
 
 				<a-entity id='titleScreen' position='0 0 0'>
 					<a-entity position='0 0 .1' scale='2 2 2' n-text='text: Logo\ngoes here'></a-entity>
@@ -38,7 +41,7 @@
 					<a-plane id='cBScreen' position='-3.7 -3.2 .05' scale='7  1.5 1' color='white' altspace-cursor-collider='enabled: false'></a-plane>
 					<a-plane id='dBScreen' position='3.7 -3.2 .05' scale='7 1.5 1' color='white' altspace-cursor-collider='enabled: false'></a-plane>
 
-					<a-entity id='questionTScreen' position='0 3 .1' n-text='width: 14; fontSize: 7; verticalAlign: top; text: ?'></a-entity>
+					<a-entity id='questionTScreen' position='0 1.75 .1' n-text='width: 14; height: 4; fontSize: 7; verticalAlign: center; text: ?'></a-entity>
 
 					<a-entity id='aTScreen' position='-3.7 -1.5 .15' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: A: '></a-entity>
 					<a-entity id='bTScreen' position='3.7 -1.5 .15' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: B: '></a-entity>
@@ -51,9 +54,9 @@
 				</a-entity>
 
 			</a-entity>
-			<a-animation to='0 -135 0' dur='3000' begin='move'></a-animation>
-			<a-animation attribute='position' to='0 -.5 0' dur='3000' begin='move'></a-animation>
-			<a-animation attribute='scale' to='.7 .7 .7' dur='3000' begin='move'></a-animation>
+			<a-animation to='-20 -135 0' dur='3000' begin='move'></a-animation>
+			<a-animation attribute='position' to='0 0.1 0' dur='3000' begin='move'></a-animation>
+			<a-animation attribute='scale' to='.35 .35 .35' dur='3000' begin='move'></a-animation>
 		</a-entity>
 
 		<a-box position='0 .2 -4' scale='.3 .3 .3' color='blue' onClick='screenContainer.emit("move")'></a-box>
@@ -83,7 +86,7 @@
 					<a-plane id='cB' position='-3.7 -3.2 .05' scale='7  1.5 1' color='white' n-mesh-collider='type: hologram; convex: false'></a-plane>
 					<a-plane id='dB' position='3.7 -3.2 .05' scale='7 1.5 1' color='white' n-mesh-collider='type: hologram; convex: false'></a-plane>
 
-					<a-entity id='questionT' position='0 3 .1' n-text='width: 14; fontSize: 7; verticalAlign: top; text: ?'></a-entity>
+					<a-entity id='questionT' position='0 1.75 .1' n-text='width: 14; height: 4; fontSize: 7; verticalAlign: center; text: ?'></a-entity>
 
 					<a-entity id='aT' position='-3.7 -1.5 .15' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: A: '></a-entity>
 					<a-entity id='bT' position='3.7 -1.5 .15' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: B: '></a-entity>
@@ -95,7 +98,7 @@
 					<a-entity id='endGameText2' position='0 0 .1' scale='2 2 2' n-text='text: Winner:\nPlayer 1'></a-entity>
 				</a-entity>
 
-				<a-cylinder id='hostNext' position='0 -7 0' rotation='90 0 0' radius='1.5' color='#282' n-mesh-collider='type: hologram; convex: false'></a-cylinder>
+				<a-cylinder id='hostNext' position='0 -7 0' rotation='90 0 0' radius='1.5' color='#282' segments-height='1' n-mesh-collider='type: hologram; convex: false'></a-cylinder>
 
 				<a-entity position='20 0 0'>
 					<a-entity position='0 -5 0' n-text='fontSize: 10; text: To be removed'></a-entity>
