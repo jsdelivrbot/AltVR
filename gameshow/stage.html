@@ -3,7 +3,7 @@
 <head>
 	<title>GameShow Test</title>
 	<script src="https://aframe.io/releases/0.7.0/aframe.js"></script>
-	<script src="https://sdk.altvr.com/libs/altspace.js/2.8.2/altspace.min.js"></script>
+	<script src="https://sdk.altvr.com/libs/altspace.js/2.9.0/altspace.min.js"></script>
 </head>
 <body>
 	<a-scene altspace='fullspace: true' sync-system='author: BenG; app: quizStage; refUrl: https://altvr-apps.firebaseio.com/'>
@@ -24,7 +24,7 @@
 				<a-cylinder position='7.5 4 -.1' rotation='90 0 0' height='.2' radius='.5' segments-height='1' color='black' altspace-cursor-collider='enabled: false'></a-cylinder>
 				<a-cylinder position='7.5 -4 -.1' rotation='90 0 0' height='.2' radius='.5' segments-height='1' color='black' altspace-cursor-collider='enabled: false'></a-cylinder>
 
-				<a-entity position='0 -3.5 -.25' rotation='0 180 0' n-text='fontSize: 7; text: v0.06'></a-entity>
+				<a-entity position='0 -3.5 -.25' rotation='0 180 0' n-text='fontSize: 7; text: v0.09'></a-entity>
 
 				<a-entity id='titleScreen' position='0 0 0'>
 					<a-entity position='0 0 .1' scale='2 2 2' n-text='text: Logo\ngoes here'></a-entity>
@@ -73,6 +73,7 @@
 
 				<a-entity id='titleScreen2' position='0 0 0'>
 					<a-entity position='0 0 .1' scale='2 2 2' n-text='text: Logo\ngoes here'></a-entity>
+					<a-entity id='questionLoadText' position='0 -3.5 .1' n-text='fontSize: 7; text: Questions not loaded'></a-entity>
 				</a-entity>
 
 				<a-entity id='gameScreen2' position='0 0 -.2'>
@@ -186,8 +187,6 @@
 
 			var stage = new THREE.Color(.15,0,.3);
 
-			//var stage = new THREE.Color(1,1,1);
-
 			obj.getObjectByName('Cylinder').material = new THREE.MeshBasicMaterial({color: stage, map: new THREE.TextureLoader().load('models/stage.png')});
 			obj.getObjectByName('Cylinder').userData.altspace = {collider: {enabled: false}};
 			scene.object3D.add(obj);
@@ -230,13 +229,6 @@
 			obj.getObjectByName('stripes').material.color.set(darkBlue);
 			obj.getObjectByName('panels').material.color.set(darkBlue);
 
-			/*var h = obj.clone()
-			h.rotation.y = Math.PI/2;
-			h.scale.z = .65;
-
-			h.remove(h.getObjectByName('button'));
-			hostPodium.object3D.add(h);*/
-
 			for (var i = 1; i < 6; i++) {
 				var p = obj.clone();
 
@@ -250,52 +242,7 @@
 				podiumList.push(p);
 			}
 
-			var podiumColors = ['black','black','black','black','black'];
-		
-
-			function setColor(p,c) {
-				var dur = 500;
-				var stripes = podiumList[p].getObjectByName('stripes').material;
-				switch (c) {
-					case 'black':
-						if (/*white*/stripes.map.offset.x == 0 && stripes.map.offset.y == -.5) {
-							new TWEEN.Tween(stripes.map.offset).to({y: 0}, dur).start();
-						} else if (/*green*/stripes.map.offset.x == .2 && stripes.map.offset.y == -.5) {
-							stripes.map.offset.set(.6,-.5);
-							new TWEEN.Tween(stripes.map.offset).to({y: 0}, dur).start();
-						} else if (/*red*/stripes.map.offset.x == .4 && stripes.map.offset.y == -.5) {
-							stripes.map.offset.set(.8,-.5);
-							new TWEEN.Tween(stripes.map.offset).to({y: 0}, dur).start();
-						} else {
-							stripes.map.offset.set(0,0);
-						}
-						break;
-					case 'white':
-						if (stripes.map.offset.x == 0 && stripes.map.offset.y == 0) {
-							new TWEEN.Tween(stripes.map.offset).to({y: -.5}, dur).start();
-						} else {
-							stripes.map.offset.set(0,-.5);
-						}
-						break;
-					case 'green':
-						if (stripes.map.offset.x == 0 && stripes.map.offset.y == -.5) {
-							stripes.map.offset.set(.2,0);
-							new TWEEN.Tween(stripes.map.offset).to({y: -.5}, dur).start();
-						} else {
-							stripes.map.offset.set(.2,-.5);
-						}
-						break;
-					case 'red':
-						if (stripes.map.offset.x == 0 && stripes.map.offset.y == -.5) {
-							stripes.map.offset.set(.4,0);
-							new TWEEN.Tween(stripes.map.offset).to({y: -.5}, dur).start();
-						} else {
-							stripes.map.offset.set(.4,-.5);
-						}
-						break;
-				}
-			}
-
+			
 			function setPanelLight(p,on) {
 				var panel = podiumList[p].getObjectByName('panels').material;
 				if (on) {
@@ -357,12 +304,64 @@
 				}
 			});
 
+			var podiumLightState = ['off','off','off','off','off'];
+
+			function setColor(p,to) {
+				var dur = 500;
+				var stripes = podiumList[p].getObjectByName('stripes').material;
+				switch (to) {
+					case 'off':
+						if (podiumLightState[p] == 'buzzed') {
+							new TWEEN.Tween(stripes.map.offset).to({y: 0}, dur).start();
+						} else if (podiumLightState[p] == 'correct') {
+							stripes.map.offset.set(.6,-.5);
+							new TWEEN.Tween(stripes.map.offset).to({y: 0}, dur).start();
+						} else if (podiumLightState[p] == 'wrong') {
+							stripes.map.offset.set(.8,-.5);
+							new TWEEN.Tween(stripes.map.offset).to({y: 0}, dur).start();
+						} else {
+							stripes.map.offset.set(0,0);
+						}
+						break;
+					case 'buzzed':
+						if (podiumLightState[p] == 'off') {
+							stripes.map.offset.set(0,0);
+							new TWEEN.Tween(stripes.map.offset).to({y: -.5}, dur).start();
+						} else {
+							stripes.map.offset.set(0,-.5);
+						}
+						break;
+					case 'correct':
+						if (podiumLightState[p] == 'buzzed') {
+							stripes.map.offset.set(.2,0);
+							new TWEEN.Tween(stripes.map.offset).to({y: -.5}, dur).start();
+						} else {
+							stripes.map.offset.set(.2,-.5);
+						}
+						break;
+					case 'wrong':
+						if (podiumLightState[p] == 'buzzed') {
+							stripes.map.offset.set(.4,0);
+							new TWEEN.Tween(stripes.map.offset).to({y: -.5}, dur).start();
+						} else {
+							stripes.map.offset.set(.4,-.5);
+						}
+						break;
+					case 'winner':
+						stripes.map.offset.set(0,0);
+						new TWEEN.Tween(stripes.map.offset).to({x: .8, y: -.5}, dur * 10).start();
+						break;
+				}
+				podiumLightState[p] = to;
+			}
+
 			var done = false;
 			var playerBuzzedIn;
 			sync.instance.child('click').on('value', function(data){
 	      if (data.val() == null) {
 	        for (var i = 0; i < 5; i++) {
-		        setColor(i, 'black');
+	        	setColor(i, 'off');
+		        //sync.instance.child('podiumLightState').child(i).set('off');
 
 		        // if not joined set grey, else set white
 		        if (players[i].joined) {
@@ -376,10 +375,12 @@
 	      } else {
 	        	var p = data.val()[Object.keys(data.val())[0]];
 	        	for (var i = 0; i < 5; i++) {
-			        setColor(i, 'black');
+	        		setColor(i, 'off');
+			        //sync.instance.child('podiumLightState').child(i).set('off');
 			        setPanelLight(i, false);
 		        }
-		        setColor(p - 1, 'white');
+		        setColor(p - 1, 'buzzed');
+		        //sync.instance.child('podiumLightState').child(p - 1).set('buzzed');
 		        setPanelLight(p - 1, true);
 
 	        if (!done) {
@@ -387,15 +388,6 @@
 	          done = true;
 	          playerBuzzedIn = p;
 	        }
-	      }
-	    });
-
-	    sync.instance.child('playerBuzzedIn').on('value', function(data){
-	      if (data.val() == null) {
-	      	playerBuzzedIn = data.val();
-
-	      } else {
-	      	sync.instance.child('playerBuzzedIn').set(-1);
 	      }
 	    });
 
@@ -448,6 +440,14 @@
 				}
 			});
 
+			var currentCategory;
+			sync.instance.child('category').on('value', function(data){
+				if (data.val() != null) {
+					currentCategory = data.val();
+					console.log('Current Catergory:', currentCategory);
+				}
+			});
+
 			sync.instance.child('categoriesDone').on('child_added', function(data){
 				console.log('Catergory chosen:', data.val().name);
 
@@ -492,9 +492,9 @@
 				if (data.val() != null) {
 					questions = data.val();
 
+					questionsLoaded = true;
 					clicked = true;
-			  	//get.setAttribute('color', '#866');
-			  	questionT.setAttribute('n-text', 'text', 'Questions Loaded');
+			  	questionLoadText.setAttribute('n-text', 'text', 'Questions loaded');
 				}
 			});
 
@@ -535,9 +535,11 @@
 					if (selected != answer && selected != null) {
 						document.querySelector('#' + selected + 'B').setAttribute('color', 'red');
 						document.querySelector('#' + selected + 'BScreen').setAttribute('color', 'red');
-						setColor(playerBuzzedIn - 1, 'red');
+						setColor(playerBuzzedIn - 1, 'wrong');
+						//sync.instance.child('podiumLightState').child(playerBuzzedIn - 1).set('wrong');
 					} else if (selected == answer) {
-						setColor(playerBuzzedIn - 1, 'green');
+						setColor(playerBuzzedIn - 1, 'correct');
+						//sync.instance.child('podiumLightState').child(playerBuzzedIn - 1).set('correct');
 					}
 				}
 				answered = data.val();
@@ -635,7 +637,7 @@
 		
 
 			var answer;
-			var questions;
+			var questions = {pre_game: {questions: []}};
 			var current;
 			var selected;
 
@@ -643,50 +645,62 @@
 
 			var apiKey = '';
 
-			function getQs(c) {
-				current = -1;
-				var dataRequest = (THREE.FileLoader ? new THREE.FileLoader() : new THREE.XHRLoader(/* DEPRECATED: r83 */));
+			var questionsLoaded = false;
+			function getAllQuestions() {
+		  	var dataRequest = new THREE.FileLoader();
+				dataRequest.load('https://opentdb.com/api_token.php?command=request&' + Math.random().toString(), function(obj){
+			    var token = JSON.parse(obj).token;
+			  	var i = 0;
+			  	function next() {
+				  	dataRequest.load('https://opentdb.com/api.php?amount=10&type=multiple&encode=url3986&category=' + categories[i].id + '&token=' + token + '&' + Math.random().toString(), function(obj){
+			  			var data = JSON.parse(obj);
+			  			decode(data);
+			  			sortAnswers(data.results);
+			  			console.log(Math.round((i + 1) / (categories.length + 3) * 100) + '%');
+			  			questionLoadText.setAttribute('n-text', 'text', Math.round((i + 1) / (categories.length + 3) * 100) + '%');
+			  			questions[categories[i].id.toString()] = {category: categories[i].name, questions: data.results};
 
-			  dataRequest.load('https://opentdb.com/api.php?amount=10&type=multiple&encode=url3986&category=' + c + '&token=' + apiKey + '&' + Math.random().toString(), onLoaded, undefined, undefined);
+			  			if (i < categories.length - 1) {
+			  				i++;
+			  				next();
+			  			} else {
+			  				var c = 0;
+			  				var pregame = [{diff:'easy',amm:4},{diff:'medium',amm:3},{diff:'hard',amm:3}];
+			  				function getPreGameQuestions() {
+			  					dataRequest.load('https://opentdb.com/api.php?amount=' + pregame[c].amm + '&difficulty=' + pregame[c].diff + '&type=multiple&encode=url3986&token=' + token + '&' + Math.random().toString(), function(obj){
+			  						var data = JSON.parse(obj);
+						  			decode(data);
+						  			sortAnswers(data.results);
+						  			/*for (var x = 0; x < data.results.length; x++) {
+						  				questions.pre_game.questions.push(data.results[x]);
+						  			}*/
+						  			data.results.forEach(function(q){
+						  				questions.pre_game.questions.push(q);
+						  			});
 
-			  function onLoaded(obj) {
-			    var data = JSON.parse(obj);
-
-			    console.log('Response code: ' + data['response_code']);
-			    if (data['response_code'] == 0) {
-			    	decode(data);
-
-				    questions = data.results;
-		    		sortAnswers(questions);
-		    		console.log(questions);
-		    		//questionT.setAttribute('n-text', 'text', 'Questions Loaded');
-
-		    		sync.instance.child('selectedAnswer').set(null);
-		    		sync.instance.child('questions').set(questions);
-		    		sync.instance.child('mode').set('question');
-		    		sync.instance.child('current').set(0);
-			    } else {
-			    	questionT.setAttribute('n-text', 'text', 'Reset API Key');
-			    }
-			  }
-			}
-
-		  function decode(data) {
-		  	for (var i = 0; i < data.results.length; i++) {
-		  		data.results[i].category = decodeURIComponent(data.results[i].category);
-		  		data.results[i].difficulty = decodeURIComponent(data.results[i].difficulty);
-		  		data.results[i].question = decodeURIComponent(data.results[i].question);
-		  		data.results[i].correct_answer = decodeURIComponent(data.results[i].correct_answer);
-		  		for (var x = 0; x < 3; x++) {
-						data.results[i].incorrect_answers[x] = decodeURIComponent(data.results[i].incorrect_answers[x]);
-		  		}
-		  	}
-		  	return data;
+						  			console.log(Math.round((i + 1 + c + 1) / (categories.length + 3) * 100) + '%');
+						  			questionLoadText.setAttribute('n-text', 'text', Math.round((i + 1 + c + 1) / (categories.length + 3) * 100) + '%');
+						  			if (c < pregame.length - 1) {
+						  				c++;
+						  				getPreGameQuestions();
+						  			} else {
+						  				console.log(questions);
+						  				questionLoadText.setAttribute('n-text', 'text', 'Questions loaded');
+						  				sync.instance.child('questions').set(questions);
+						  				questionsLoaded = true;
+						  			}
+			  					}, undefined, undefined);
+			  				}
+			  				getPreGameQuestions();
+			  			}
+			  		}, undefined, undefined);
+			  	}
+			  	next();
+			  }, undefined, undefined);
 		  }
 
 		  function sortAnswers(list) {
 		  	for (var i = 0; i < list.length; i++) {
-		  		//console.log()
 		  		var c = Math.floor(Math.random() * 4);
 			    var answers = list[i].incorrect_answers
 			    shuffleArray(answers);
@@ -702,7 +716,11 @@
 			    } else if (c == 3) {
 			    	list[i].correct_answer = 'd';
 			    }
-
+			    list[i].answers = list[i].incorrect_answers;
+			    delete list[i].incorrect_answers;
+			    delete list[i].category;
+		  		delete list[i].type;
+		  		//delete list[i].difficulty;
 		  	}
 		  }
 
@@ -721,14 +739,13 @@
 				cBScreen.setAttribute('color', '#fff');
 				dBScreen.setAttribute('color', '#fff');
 
-		  	console.log(questions[current].category);
-		    console.log(questions[current].difficulty);
-		    console.log(questions[current].question);
+		    console.log(questions[currentCategory].questions[current].difficulty);
+		    console.log(questions[currentCategory].questions[current].question);
 
-		    questionT.setAttribute('n-text', 'text', (current + 1) +  ': ' + questions[current].question);
-		    questionTScreen.setAttribute('n-text', 'text', questions[current].question);
+		    questionT.setAttribute('n-text', 'text', (current + 1) +  ': ' + questions[currentCategory].questions[current].question);
+		    questionTScreen.setAttribute('n-text', 'text', questions[currentCategory].questions[current].question);
 
-		    var answers = questions[current].incorrect_answers
+		    var answers = questions[currentCategory].questions[current].answers
 
 		    var sizes = getSizes(answers);
 		    
@@ -752,7 +769,7 @@
 		    cTScreen.setAttribute('n-text', 'fontSize', sizes[2]);
 		    dTScreen.setAttribute('n-text', 'fontSize', sizes[3]);
 
-		    answer = questions[current].correct_answer;
+		    answer = questions[currentCategory].questions[current].correct_answer;
 		  }
 
 		  function categorySelect() {
@@ -866,8 +883,16 @@
 						for (var i = 0; i < categories.length; i++) {
 							if (categories[i].name == categoriesOnScreen[indexes.indexOf(selected)]) {
 								//console.log(categories[i]);
-								getQs(categories[i].id);
+								
+								//REPLACE WITH NEW
+								//getQs(categories[i].id);
+
+								sync.instance.child('category').set(categories[i].id);
 								sync.instance.child('categoriesDone').push(categories[i]);
+
+								sync.instance.child('selectedAnswer').set(null);
+				    		sync.instance.child('mode').set('question');
+				    		sync.instance.child('current').set(0);
 							}
 						}
 						//sync.instance.child('answered').set(false);
@@ -916,7 +941,10 @@
 		  hostNext.addEventListener('mouseup', function(){
 		  	if (isHost || isMod) {
 		  		console.log(current);
-		  		if (current == -1 && selected == null || (answered && current == 9) || (mode == 'category' && selected == null)) {
+		  		if (!questionsLoaded) {
+		  			console.log('loadQuestions');
+		  			getAllQuestions();
+		  		} else if (current == -1 && selected == null || (answered && current == 9) || (mode == 'category' && selected == null)) {
 		  			console.log('go to gategory selection');
 		  			categorySelect();
 		  		} else if (!answered) {
@@ -981,6 +1009,19 @@
       array[j] = temp;
     }
     return array;
+  }
+
+  function decode(data) {
+  	for (var i = 0; i < data.results.length; i++) {
+  		data.results[i].category = decodeURIComponent(data.results[i].category);
+  		data.results[i].difficulty = decodeURIComponent(data.results[i].difficulty);
+  		data.results[i].question = decodeURIComponent(data.results[i].question);
+  		data.results[i].correct_answer = decodeURIComponent(data.results[i].correct_answer);
+  		for (var x = 0; x < 3; x++) {
+				data.results[i].incorrect_answers[x] = decodeURIComponent(data.results[i].incorrect_answers[x]);
+  		}
+  	}
+  	return data;
   }
 
 </script>		
