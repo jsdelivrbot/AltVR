@@ -11,7 +11,7 @@
 		<a-plane position='0 0 0' scale='20 20 0' rotation='-90 0 0' material='visible: false' n-mesh-collider='type: environment; convex: false'></a-plane>
 		<!-- <a-cylinder position='0 -.24 0' height='.6' radius='4.05' color='#101' opacity='.9' n-mesh-collider='type: environment; convex: false'></a-cylinder> -->
 
-		<a-entity id='screenContainer'>
+		<a-entity id='screenContainer' position='0 -.5 0'>
 			<a-entity id='screen' position='0 4.5 -4' scale='.5 .5 .5'>
 				<!-- <a-plane scale='15 9 1' color='black' side='double' altspace-cursor-collider='enabled: false'></a-plane> -->
 				<!-- <a-plane scale='16 8 1' color='black' side='double' altspace-cursor-collider='enabled: false'></a-plane> -->
@@ -24,7 +24,7 @@
 				<a-cylinder position='7.5 4 -.1' rotation='90 0 0' height='.2' radius='.5' segments-height='1' color='black' altspace-cursor-collider='enabled: false'></a-cylinder>
 				<a-cylinder position='7.5 -4 -.1' rotation='90 0 0' height='.2' radius='.5' segments-height='1' color='black' altspace-cursor-collider='enabled: false'></a-cylinder>
 
-				<a-entity position='0 -3.5 -.25' rotation='0 180 0' n-text='fontSize: 7; text: v0.09'></a-entity>
+				<a-entity position='0 -3.5 -.25' rotation='0 180 0' n-text='fontSize: 7; text: v0.10'></a-entity>
 
 				<a-entity id='titleScreen' position='0 0 0'>
 					<a-entity position='0 0 .1' scale='2 2 2' n-text='text: Logo\ngoes here'></a-entity>
@@ -54,12 +54,9 @@
 				</a-entity>
 
 			</a-entity>
-			<a-animation to='-20 -135 0' dur='3000' begin='move'></a-animation>
-			<a-animation attribute='position' to='0 0.1 0' dur='3000' begin='move'></a-animation>
-			<a-animation attribute='scale' to='.35 .35 .35' dur='3000' begin='move'></a-animation>
 		</a-entity>
 
-		<a-box position='0 .2 -4' scale='.3 .3 .3' color='blue' onClick='screenContainer.emit("move")'></a-box>
+		
 
 
 		<a-entity id='hostPodium' position='2.3 .06 -1.2' rotation='0 105 0'>
@@ -155,6 +152,12 @@
 				</a-entity>
 				<a-box id='p5Join' class='joinButton' position='0 .9 -.22' scale='.05 .05 .05' color='red' n-box-collider='type: hologram'></a-box>
 			</a-entity>
+
+			<a-entity id='contestantContainer'>
+				<a-box position='-1.5 1 -1.5' rotation='0 30 0' scale='3 2 3' material='visible: false' opacity='.01' altspace-cursor-collider='enabled: false'></a-box>
+				<a-box position='1.5 1 -1.5' rotation='0 -30 0' scale='3 2 3' material='visible: false' opacity='.01' altspace-cursor-collider='enabled: false'></a-box>
+			</a-entity>
+			
 		</a-entity>
 
 		<a-entity id='sound'></a-entity>
@@ -1022,6 +1025,28 @@
   		}
   	}
   	return data;
+  }
+
+  contestantContainer.object3D.addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({
+    joints: [['Head','Center',0]],
+    jointCubeSize: .01
+  }));
+
+  contestantContainer.object3D.addEventListener('jointcollisionenter', function(e){
+    moveScreen(1);
+  });
+  contestantContainer.object3D.addEventListener('jointcollisionleave', function(e){
+    moveScreen(0);
+  });
+
+  function moveScreen(i) {
+  	var a = [{pos:{x:0,y:-0.5,z:0}, scale:{x:1,y:1,z:1}, rot:{x:0,y:0,z:0}}, {pos:{x:0,y:0.1,z:0}, scale:{x:0.35,y:0.35,z:0.35}, rot:{x:THREE.Math.degToRad(-20),y:THREE.Math.degToRad(-135),z:THREE.Math.degToRad(0)}}];
+
+  	console.log(a[i]);
+
+  	new TWEEN.Tween(screenContainer.object3D.position).to(a[i].pos, 1000).start();
+  	new TWEEN.Tween(screenContainer.object3D.scale).to(a[i].scale, 1000).start();
+  	new TWEEN.Tween(screenContainer.object3D.rotation).to(a[i].rot, 1000).start();
   }
 
 </script>		
