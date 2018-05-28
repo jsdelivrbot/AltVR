@@ -24,7 +24,7 @@
 				<a-cylinder position='7.5 4 -.1' rotation='90 0 0' height='.2' radius='.5' segments-height='1' color='black' altspace-cursor-collider='enabled: false'></a-cylinder>
 				<a-cylinder position='7.5 -4 -.1' rotation='90 0 0' height='.2' radius='.5' segments-height='1' color='black' altspace-cursor-collider='enabled: false'></a-cylinder>
 
-				<a-entity position='0 -3.5 -.25' rotation='0 180 0' n-text='fontSize: 7; text: v0.11'></a-entity>
+				<a-entity position='0 -3.5 -.25' rotation='0 180 0' n-text='fontSize: 7; text: v0.12'></a-entity>
 
 				<a-entity id='titleScreen' position='0 0 0'>
 					<a-entity position='0 0 .1' scale='2 2 2' n-text='text: Logo\ngoes here'></a-entity>
@@ -94,15 +94,6 @@
 				</a-entity>
 
 				<a-cylinder id='hostNext' position='0 -7 0' rotation='90 0 0' radius='1.5' color='#282' segments-height='1' n-mesh-collider='type: hologram; convex: false'></a-cylinder>
-
-				<a-entity position='20 0 0'>
-					<a-entity position='0 -5 0' n-text='fontSize: 10; text: To be removed'></a-entity>
-					
-					<a-box id='next' position='5 -7 0' scale='1 1 .5' color='blue' n-text='fontSize: 5; horizontalAlign: left; text: Next Question' n-box-collider='type: hologram'></a-box>
-					<a-box id='confirmB' position='-2 -7 0' scale='1 1 .5' color='green' n-text='fontSize: 5; horizontalAlign: left; text: Confirm Answer' n-box-collider='type: hologram'></a-box>
-					<a-box id='categoryB' position='5 -9 0' scale='1 1 .5' color='yellow' n-text='fontSize: 5; horizontalAlign: left; text: Select Category' n-box-collider='type: hologram'></a-box>
-					<a-box id='resetKey' position='-2 -9 0' scale='1 1 .5' color='red' n-text='fontSize: 5; horizontalAlign: left; text: Reset API Key' n-box-collider='type: hologram'></a-box>
-				</a-entity>
 
 				<a-box id='endGameB' position='-7 -9 0' scale='1 1 .5' color='red' n-text='fontSize: 5; horizontalAlign: right; width: 7; text: End Game' n-box-collider='type: hologram'></a-box>
 				<a-box id='resetB' position='7 -9 0' scale='1 1 .5' color='black' n-text='fontSize: 5; horizontalAlign: left; width: 9; text: Reset Buzzers' n-box-collider='type: hologram'></a-box>
@@ -448,17 +439,21 @@
 				}
 			});
 
-			sync.instance.child('categoriesDone').on('child_added', function(data){
-				console.log('Catergory chosen:', data.val().name);
+			var categoriesLeft = categories.slice(0);
 
-				for (var i = 0; i < categories.length; i++) {
-					if (categories[i].id == data.val().id) {
-						console.log(i, categories[i]);
-						categories.splice(i, 1);
+			sync.instance.child('categoriesDone').on('child_added', function(data){
+				for (var i = 0; i < categoriesLeft.length; i++) {
+					if (categoriesLeft[i].id == data.val().id) {
+						categoriesLeft.splice(i, 1);
 					}
 				}
+			});
 
-				console.log('Categories left:', categories);
+			sync.instance.child('categoriesDone').on('value', function(data){
+				if (data.val() == null) {
+					categoriesLeft = categories.slice(0);
+				}
+				console.log(categoriesLeft);
 			});
 
 			var categoriesOnScreen;
@@ -495,6 +490,9 @@
 					questionsLoaded = true;
 					clicked = true;
 			  	questionLoadText.setAttribute('n-text', 'text', 'Questions loaded');
+				} else {
+					questionsLoaded = false;
+			  	questionLoadText.setAttribute('n-text', 'text', 'Questions not loaded');
 				}
 			});
 
@@ -545,21 +543,6 @@
 				answered = data.val();
 			});
 
-			sync.instance.child('apiKey').on('value', function(data){
-				if (data.val() != null) {
-					apiKey = data.val();
-				} else {
-					var dataRequest = (THREE.FileLoader ? new THREE.FileLoader() : new THREE.XHRLoader(/* DEPRECATED: r83 */));
-					dataRequest.load('https://opentdb.com/api_token.php?command=request', onLoaded, undefined, undefined);
-					function onLoaded(obj) {
-				    var data = JSON.parse(obj);
-				    console.log(data);
-				    if (data['response_code'] == 0) {
-				    	sync.instance.child('apiKey').set(data.token);
-				    }
-				  }
-				}
-			});
 
 			contestantContainer1.object3D.addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({
 		    joints: [['Head','Center',0]],
@@ -782,6 +765,19 @@
 		  	}
 		  }
 
+		  function decode(data) {
+		  	for (var i = 0; i < data.results.length; i++) {
+		  		data.results[i].category = decodeURIComponent(data.results[i].category);
+		  		data.results[i].difficulty = decodeURIComponent(data.results[i].difficulty);
+		  		data.results[i].question = decodeURIComponent(data.results[i].question);
+		  		data.results[i].correct_answer = decodeURIComponent(data.results[i].correct_answer);
+		  		for (var x = 0; x < 3; x++) {
+						data.results[i].incorrect_answers[x] = decodeURIComponent(data.results[i].incorrect_answers[x]);
+		  		}
+		  	}
+		  	return data;
+		  }
+
 		  function nextQ(c) {
 		  	current = c;
 		  	console.log('Question ' + (current + 1));
@@ -832,16 +828,16 @@
 
 		  function categorySelect() {
 		  	questionT.setAttribute('n-text', 'text', 'Select a Category');
-		  	aT.setAttribute('n-text', 'text', categories[0].name);
-		  	bT.setAttribute('n-text', 'text', categories[1].name);
-		  	cT.setAttribute('n-text', 'text', categories[2].name);
-		  	dT.setAttribute('n-text', 'text', categories[3].name);
+		  	aT.setAttribute('n-text', 'text', categoriesLeft[0].name);
+		  	bT.setAttribute('n-text', 'text', categoriesLeft[1].name);
+		  	cT.setAttribute('n-text', 'text', categoriesLeft[2].name);
+		  	dT.setAttribute('n-text', 'text', categoriesLeft[3].name);
 
 		  	questionTScreen.setAttribute('n-text', 'text', 'Select a Category');
-		  	aTScreen.setAttribute('n-text', 'text', categories[0].name);
-		  	bTScreen.setAttribute('n-text', 'text', categories[1].name);
-		  	cTScreen.setAttribute('n-text', 'text', categories[2].name);
-		  	dTScreen.setAttribute('n-text', 'text', categories[3].name);
+		  	aTScreen.setAttribute('n-text', 'text', categoriesLeft[0].name);
+		  	bTScreen.setAttribute('n-text', 'text', categoriesLeft[1].name);
+		  	cTScreen.setAttribute('n-text', 'text', categoriesLeft[2].name);
+		  	dTScreen.setAttribute('n-text', 'text', categoriesLeft[3].name);
 		  }
 
 		  aB.addEventListener('mouseup', function(){
@@ -902,17 +898,14 @@
 
 			  	sync.instance.child('categories').set(null);
 			  	if (screenState == 3) {
+			  		sync.instance.child('questions').set(null);
+			  		sync.instance.child('current').set(-1);
+			  		sync.instance.child('categoriesDone').set(null);
 			  		sync.instance.child('screenState').set(1);
 			  	} else {
 				  	sync.instance.child('screenState').set(3);
 				  }
 			  }
-		  });
-
-		  next.addEventListener('mouseup', function(){
-		  	if (isHost || isMod) {
-			  	nextQuestion();
-				}
 		  });
 
 		  function nextQuestion() {
@@ -925,12 +918,6 @@
 		  }
 
 		  var indexes = ['a','b','c','d'];
-
-		  confirmB.addEventListener('mouseup', function(){
-				if (!answered && (isHost || isMod)) {
-					answerQuestion();
-				}
-		  });
 
 		  function answerQuestion() {
 		  	console.log('selected', selected);
@@ -962,32 +949,20 @@
 				}
 		  }
 
-		  categoryB.addEventListener('mouseup', function(){
-		  	if (isHost || isMod) {
-					categorySelect();
-				}
-		  });
-
 		  function categorySelect() {
-		  	shuffleArray(categories);
-		  	console.log(categories[0].name);
-		  	console.log(categories[1].name);
-		  	console.log(categories[2].name);
-		  	console.log(categories[3].name);
+		  	shuffleArray(categoriesLeft);
+		  	console.log(categoriesLeft[0].name);
+		  	console.log(categoriesLeft[1].name);
+		  	console.log(categoriesLeft[2].name);
+		  	console.log(categoriesLeft[3].name);
 		  	//categorySelect();
 		  	sync.instance.child('click').set(null);
 		  	sync.instance.child('answered').set(false);
 			  sync.instance.child('selectedAnswer').set(null);
 		  	sync.instance.child('mode').set('category');
-		  	sync.instance.child('categories').set([categories[0].name,categories[1].name,categories[2].name,categories[3].name]);
+		  	sync.instance.child('categories').set([categoriesLeft[0].name,categoriesLeft[1].name,categoriesLeft[2].name,categoriesLeft[3].name]);
 		  	//console.log(categories);
 		  }
-
-		  resetKey.addEventListener('mouseup', function(){
-		  	if (isHost || isMod) {
-			  	sync.instance.child('apiKey').set(null);
-		  	}
-		  });
 
 		  resetB.addEventListener('mouseup', function(){
 		  	if (isHost || isMod) {
@@ -1069,18 +1044,6 @@
     return array;
   }
 
-  function decode(data) {
-  	for (var i = 0; i < data.results.length; i++) {
-  		data.results[i].category = decodeURIComponent(data.results[i].category);
-  		data.results[i].difficulty = decodeURIComponent(data.results[i].difficulty);
-  		data.results[i].question = decodeURIComponent(data.results[i].question);
-  		data.results[i].correct_answer = decodeURIComponent(data.results[i].correct_answer);
-  		for (var x = 0; x < 3; x++) {
-				data.results[i].incorrect_answers[x] = decodeURIComponent(data.results[i].incorrect_answers[x]);
-  		}
-  	}
-  	return data;
-  }
 
 </script>		
 </body>
