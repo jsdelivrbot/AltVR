@@ -14,6 +14,17 @@
     <a-entity position='4.5 1.4 -8' rotation='0 -90 0' scale=".2 .2 .2" n-layout-browser="url: https://video-jukebox.firebaseapp.com/?room=minimap"></a-entity>
     <a-entity position='16.5 -90 -8' rotation='0 -90 0' scale="5 5 5" n-layout-browser="url: https://video-jukebox.firebaseapp.com/?room=minimap"></a-entity> -->
     <!-- <a-entity position='-115 -140 -60' rotation='0 0 0' n-portal='targetSpace: event-661755213408895236-306'></a-entity> -->
+
+    <a-mixin id='badge' geometry='primitive: circle; radius: .038' material='src: #badgeb; side: double' position='-.1 .35 -.15' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
+    <a-mixin id='ring' geometry='primitive: ring; radius-outer: .04; radius-inner: .038' material='color: black; side: double' position='-.1 .35 -.15' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
+    
+    <a-mixin id='blue' material='color: blue; side: double'></a-mixin>
+    <a-mixin id='red' material='color: red; side: double'></a-mixin>
+    <a-mixin id='gold' material='color: #ffbf00; side: double'></a-mixin>
+    
+    <a-mixin id='creatortext' n-text='fontSize: 1; text: <color=black>I built\nthis place' position='-.1 .35 -.151' scale='.15 .15 .15' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
+    <a-mixin id='devtext' n-text='fontSize: 1; text: <color=black>I am a\ndeveloper' position='-.1 .35 -.151' scale='.15 .15 .15' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
+    <a-mixin id='admintext' n-text='fontSize: 1; text: <color=black>I work\nhere' position='-.1 .35 -.151' scale='.15 .15 .15' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
   </a-scene>
 <script>
   var scene = document.querySelector('a-scene').object3D;
@@ -47,6 +58,13 @@
     var user = results[1];
     var skeleton = results[2];
     //console.log(sync)
+
+    if (user.userId == 'fv9tBAsC4mxoI2ROTJfgnwRYnULP3RR7eH_lkGAsRU0') {
+      scene.systems['sync-system'].instantiate('badge', scene);
+      scene.systems['sync-system'].instantiate('ring blue', scene);
+      scene.systems['sync-system'].instantiate('creatortext', scene);
+    }
+
     var models = [];
     for (var i = 0; i < results[3].length; i++) {
       models.push(results[3][i].children[0].children[0]);
