@@ -25,6 +25,9 @@
     <a-mixin id='creatortext' n-text='fontSize: 1; text: <color=black>I built\nthis place' position='-.1 .35 -.151' scale='.15 .15 .15' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
     <a-mixin id='devtext' n-text='fontSize: 1; text: <color=black>I am a\ndeveloper' position='-.1 .35 -.151' scale='.15 .15 .15' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
     <a-mixin id='admintext' n-text='fontSize: 1; text: <color=black>I work\nhere' position='-.1 .35 -.151' scale='.15 .15 .15' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
+
+
+    <a-entity id='visitorText' position='-120 -138 55.98' rotation='0 180 0' scale='.2 .2 .2' n-text='text: Visitors: 0'></a-entity>
   </a-scene>
 <script>
   var sc = document.querySelector('a-scene');
@@ -474,6 +477,12 @@
     date = date.replace('T', ' ');
     date = date.replace('Z', '');
     sync.child('log').child(date.replace('.', ':')).set(user.displayName);
+
+    var visCount = 0;
+    sync.child('log').on('child_added', function(data){
+      visCount++;
+      visitorText.setAttribute('n-text', 'text', 'Visitors: ' + visCount);
+    });
     
     
     var tag = new THREE.TextureLoader().load('https://bengarfield.github.io/AltVR/nametag.png');
