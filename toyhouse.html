@@ -1,15 +1,15 @@
 <html>
 <head>
 	<title>Minimap</title>
-  <script src="https://aframe.io/releases/0.3.0/aframe.js"></script>
-  <script src="https://sdk.altvr.com/libs/altspace.js/2.4.0/altspace.min.js"></script>
+  <script src="https://aframe.io/releases/0.7.0/aframe.js"></script>
+  <script src="https://sdk.altvr.com/libs/altspace.js/2.9.0/altspace.min.js"></script>
   <script src="https://cdn.rawgit.com/norybiak/UltimateLoader/v0.4.6/dist/UltimateLoader.min.js"></script>
   <script src="https://cdn.rawgit.com/Ooblik/AltVRNC/master/dist/AltVRNC.min.js"></script>
   <script src="https://cdn.rawgit.com/NGenesis/altspacevr-behaviors/7cf658d3/js/NativeComponent.js"></script>
-  <script src="https://bengarfield.github.io/AltVR/house/TWEEN.js"></script>
+  <!-- <script src="https://bengarfield.github.io/AltVR/house/TWEEN.js"></script> -->
 </head>
 <body>
-  <a-scene altspace='fullspace: true'>
+  <a-scene altspace='fullspace: true' sync-system='author: BenG; app: Minimap; refUrl: https://altvr-apps.firebaseio.com/'>
     <!-- <a-entity position='4 -90.7 -15.5' rotation='0 0 0' scale="4 4 4" n-layout-browser="url: http://hah.altvr.com/play; isEnclosure: true"></a-entity>
     <a-entity position='4.5 1.4 -8' rotation='0 -90 0' scale=".2 .2 .2" n-layout-browser="url: https://video-jukebox.firebaseapp.com/?room=minimap"></a-entity>
     <a-entity position='16.5 -90 -8' rotation='0 -90 0' scale="5 5 5" n-layout-browser="url: https://video-jukebox.firebaseapp.com/?room=minimap"></a-entity> -->
@@ -27,6 +27,7 @@
     <a-mixin id='admintext' n-text='fontSize: 1; text: <color=black>I work\nhere' position='-.1 .35 -.151' scale='.15 .15 .15' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
   </a-scene>
 <script>
+  var sc = document.querySelector('a-scene');
   var scene = document.querySelector('a-scene').object3D;
   var updateRate = 500;
   
@@ -60,9 +61,9 @@
     //console.log(sync)
 
     if (user.userId == 'fv9tBAsC4mxoI2ROTJfgnwRYnULP3RR7eH_lkGAsRU0') {
-      //scene.systems['sync-system'].instantiate('badge', scene);
-      //scene.systems['sync-system'].instantiate('ring blue', scene);
-      //scene.systems['sync-system'].instantiate('creatortext', scene);
+      sc.systems['sync-system'].instantiate('badge', sc);
+      sc.systems['sync-system'].instantiate('ring blue', sc);
+      sc.systems['sync-system'].instantiate('creatortext', sc);
     }
 
     var models = [];
