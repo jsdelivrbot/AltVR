@@ -64,7 +64,7 @@
       sc.systems['sync-system'].instantiate('badge', sc);
       sc.systems['sync-system'].instantiate('ring blue', sc);
       sc.systems['sync-system'].instantiate('creatortext', sc);
-      sync.child('scene').onDisconnect().set(null);
+      sync.child('scene').onDisconnect().setWithPriority(null, 10);
     }
 
     var models = [];
