@@ -69,11 +69,51 @@
 <body>
   <a-scene altspace='fullspace: true' sync-system='author: BenG; app: SlumberParty; refUrl: https://altvr-apps.firebaseio.com/'>
     
-    <a-entity position='-2.08 12.1 -50.25' scale='6 6 6' n-layout-browser='url: https://docs.google.com/presentation/d/e/2PACX-1vRrgAzwXqB41xm9X0d9C7c4Ai53mYvFJe2M8d03rZALKLnl2__C4DYfiR-jRWYc9NQk4LyE50cojp-B/pub?start=false&loop=false&delayms=60000; isEnclosure: false'></a-entity>
-    <a-entity position='-.8 17.75 -29.2' rotation='90 0 0' scale='3 3 3' n-layout-browser='url: https://video-jukebox.firebaseapp.com/index.html?room=slumberparty; isEnclosure: false'></a-entity>
-    <a-entity position='0 1.5 -10' scale='1 1 1' n-layout-browser='url: https://bengarfield.github.io/AltVR/house/cake/engagement.html?altspace-sync-instance=miyk; isEnclosure: true'></a-entity>
-    <!-- <a-entity position='0 1 0' scale='1 1 1' n-layout-browser='url: https://jsbin.com/kakamaq; isEnclosure: true'></a-entity> -->
+    <a-entity id='backWallScreen' position='-2.08 12.1 -51.3' scale='6 6 6' rotation='0 180 0' n-layout-browser='url: https://video-jukebox.firebaseapp.com/index.html?room=slumberparty; isEnclosure: false'></a-entity>
+    <!-- <a-entity id='stageScreen' position='-2.08 12.1 -50.25' scale='6 6 6' rotation='0 0 0' n-layout-browser='url: https://docs.google.com/presentation/d/e/2PACX-1vQunrbJPJ3H1eoEU4u308AjUGvsi1m_d9VEeUlSpe2j3oCFWEjZgEyC--JcHhg-qM83XZUx2xY1wYKV/pub?start=false&loop=false&delayms=60000; isEnclosure: false'></a-entity> -->
+    <!-- <a-entity id='controlRoomScreen' position='-.8 17.75 -29.2' rotation='90 0 0' scale='3 3 3' n-layout-browser='url: https://video-jukebox.firebaseapp.com/index.html?room=slumberparty; isEnclosure: false'></a-entity> -->
+    <!-- <a-entity position='0 1 0' scale='1 1 1' n-layout-browser='url: ; isEnclosure: true'></a-entity> -->
     
+    <a-entity id='grill' position='17 4.75 -67' rotation='0 125 0'>
+      <a-entity rotation='0 90 0' obj-model='obj: url(models/Grill.obj); mtl: url(models/Grill.mtl)' n-mesh-collider='type: environment; convex: false' bake-vertex-light></a-entity>
+
+      <a-entity position='0 .15 .2' scale='100000 100000 100000' n-object='res: effects/fire'></a-entity>
+      <a-entity position='0 .15 -.2' scale='100000 100000 100000' n-object='res: effects/fire'></a-entity>
+
+      <a-box position='0 1.05 0' scale='1 .01 1' material='visible: false' n-box-collider='type: environment'></a-box>
+
+      <a-entity position='0 .8 0' scale='.5 .5 .5' n-object='res: objects/heatsource-campfire'></a-entity>
+
+      <a-entity position='-1.05 .01 -.25' rotation='0 -90 0' n-object='res: objects/burgers-uncooked'></a-entity>
+      <a-entity position='-.8 .98 -.3' n-spawner='res: interactables/burger-patty'></a-entity>
+      <a-entity position='-.83 .965 .1' n-spawner='res: interactables/burger-sandwich'></a-entity>
+      <a-entity position='-1.1 .98 -.4' rotation='0 180 0' n-spawner='res: interactables/spatula'></a-entity>
+
+      <a-entity position='.9 .965 0' n-object='res: objects/pizza-box'></a-entity>
+      <a-entity position='.9 .965 0' n-spawner='res: interactables/pizza-slice'></a-entity>
+
+      <a-entity position='1.1 .965 -.21' n-spawner='res: interactables/can-beer-millenniale'></a-entity>
+      <a-entity position='1 .965 -.32' n-spawner='res: interactables/can-beer-litaf'></a-entity>
+      <a-entity position='.9 .965 -.18' n-spawner='res: interactables/can-beer-oface'></a-entity>
+      <a-entity position='.8 .965 -.31' n-spawner='res: interactables/can-beer-king'></a-entity>
+      <a-entity position='.7 .965 -.23' n-spawner='res: interactables/can-beer-pegleg'></a-entity>
+
+      <a-entity position='1.9 .05 0' rotation='0 0 0' n-object='res: objects/corgi-red'></a-entity>
+      <a-entity position='-1.9 .05 0' rotation='0 0 0' n-object='res: objects/corgi-grey'></a-entity>
+    </a-entity>
+
+    <a-entity position='-1 4.75 -72.7' scale='1.3 1.3 1.3' obj-model='obj: url(models/Lifeguard.obj)' n-mesh-collider='type: environment; convex: false' bake-vertex-light></a-entity>
+
+    <a-entity position='-12.7 8.81 -22.7' rotation='0 -90 0' n-object='res: objects/owl'></a-entity>
+    <a-entity position='-2.4 8.77 -42.2' rotation='0 180 0' n-object='res: objects/kitten-grey'></a-entity>
+    <a-entity position='-2.2 8.77 -42.2' rotation='0 180 0' n-object='res: objects/kitten-yellow'></a-entity>
+    <a-entity position='-.5 7.44 -72.8' rotation='0 180 0' n-object='res: objects/fox-standing'></a-entity>
+
+    <a-entity position='1.85 7.77 -51.7' rotation='0 0 0' n-object='res: objects/panda-standing'></a-entity>
+    <a-entity position='-6 7.77 -51.7' rotation='0 0 0' n-object='res: objects/red-panda'></a-entity>
+
+    <a-mixin id='chickenThing' position='0.19 0.47 0' n-object='res: objects/kiwi' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
+
     <a-light type="point" position="-5.67 16.37 -22.22" intensity="50">
       <!-- <a-sphere radius='.2' color='yellow'></a-sphere> -->
     </a-light>
@@ -96,6 +136,13 @@
       <a-plane position='0 -.5 0' rotation='-90 0 0' src='https://bengarfield.github.io/AltVR/AZHouse/sky/smaller/down.jpg'></a-plane>
     </a-entity>
 
+    <!-- <a-box scale='-500 500 500' material='src:url(images/stars.png); repeat: 3 3' altspace-cursor-collider='enabled: false'></a-box>
+    <a-entity rotation='30 -140 0'>
+      <a-plane position='0 0 -350' scale='40 40 1' src='textures/moon.png' transparent='true' altspace-cursor-collider='enabled: false'></a-plane>
+    </a-entity> -->
+
+    <!-- <a-sky id='sky' radius='500' src='pinkSky.png'></a-sky> -->
+
     
     <a-entity id='container' position='-.25 10.3 -16.75' scale='50 50 50'>
       <a-entity id='house'></a-entity>
@@ -103,7 +150,7 @@
       <a-entity id='bed' obj-model='obj: url(bed.obj); mtl: url(bed.mtl)' n-mesh-collider='type: environment; convex: false' bake-vertex-light></a-entity>
     </a-entity>
     
-    <a-plane if='frontBanner' position='-.6 16 -5.27' scale='7 1.8 1' color='#888' src='https://bengarfield.github.io/AltVR/AZHouse/2/images/auzbanner2.jpg'></a-plane>
+    <a-plane if='frontBanner' position='-.6 15.9 -5.27' scale='6 2.1 1' src='images/houseBanner.png' transparent='true'></a-plane>
     <!-- <a-plane id='banner' position='-1.5 16.75 -42.75' scale='7.6 3.5 1' src='https://bengarfield.github.io/AltVR/AZHouse/2/images/banner.jpg'></a-plane> -->
     
     <!-- dolls -->
@@ -146,15 +193,21 @@
       <a-plane id='pool' position='0 4.5 -65.9' rotation='-90 0 0' scale='21.5 10.5 1' material='src:url(https://bengarfield.github.io/AltVR/AZHouse/waterPink.jpg); repeat: 1.5 0.5' opacity='.8' side='double' altspace-cursor-collider='enabled: false' texture-scroll='x: .0001; y: -.00003'></a-plane>
 
       <a-plane id='hottub' position='-20.7 5.8 -66.1' rotation='-90 0 0' scale='6.5 6 1' material='src:url(https://bengarfield.github.io/AltVR/AZHouse/water.jpg); repeat: 0.99 0.99' opacity='.8' side='double' altspace-cursor-collider='enabled: false' texture-scroll='x: .0001; y: -.00003'></a-plane>
-      <a-entity id='steam' position='-20.7 3 -66.1' n-object='res:effects/steam'></a-entity>
+      <a-entity id='steam' position='-20.7 0 -66.1' n-object='res:effects/steam'></a-entity>
       
-      <a-entity id='smoke' position='-16.65 25 -28' n-object='res:effects/smoke'></a-entity>
+      <a-entity id='smoke' position='-16.65 27.5 -28' n-object='res:effects/fire'></a-entity>
 
       <a-entity position='.37 3.9 3.56'>
         <a-circle id='fountainbottom' position='-11.2 1.45 -7.4' rotation='-90 0 0' radius='4' material='src:url(https://bengarfield.github.io/AltVR/AZHouse/waterPink.jpg); repeat: 0.9 0.9' opacity='.8' texture-scroll='x: .0001; y: -.0001'></a-circle>
-        <a-plane id='fountaintop' position='-11.2 2.45 -7.5' rotation='-90 0 0' scale='3.1 3.1 1' material='src:url(https://bengarfield.github.io/AltVR/AZHouse/waterPink.jpg); repeat: 0.5 0.5' opacity='.8' texture-scroll='x: .0001; y: -.0001'></a-plane>
+        <a-plane id='fountaintop' position='-11.2 2.45 -7.5' rotation='-90 0 0' scale='3.1 3.1 1' material='src:url(https://bengarfield.github.io/AltVR/AZHouse/waterPink.jpg); repeat: 0.5 0.5' opacity='.8' texture-scroll='x: .0001; y: -.0001'>
+          <a-entity n-sound='src: sounds/water.ogg; loop: true; autoplay: true; rolloff: cosine; maxDistance: 12; volume: 0.3'></a-entity>
+          <a-entity n-sound='src: sounds/water.mp3; loop: true; autoplay: true; rolloff: cosine; maxDistance: 12; volume: 0.3'></a-entity>
+        </a-plane>
         <a-circle id='fountain2bottom' position='11.8 1.45 -7.5' rotation='-90 0 0' radius='4' material='src:url(https://bengarfield.github.io/AltVR/AZHouse/water.jpg); repeat: 0.901 0.901' opacity='.8' texture-scroll='x: .0001; y: -.0001'></a-circle>
-        <a-plane id='fountain2top' position='11.8 2.45 -7.5' rotation='-90 0 0' scale='3.1 3.1 1' material='src:url(https://bengarfield.github.io/AltVR/AZHouse/water.jpg); repeat: 0.501 0.501' opacity='.8' texture-scroll='x: .0001; y: -.0001'></a-plane>
+        <a-plane id='fountain2top' position='11.8 2.45 -7.5' rotation='-90 0 0' scale='3.1 3.1 1' material='src:url(https://bengarfield.github.io/AltVR/AZHouse/water.jpg); repeat: 0.501 0.501' opacity='.8' texture-scroll='x: .0001; y: -.0001'>
+          <a-entity n-sound='src: sounds/water.ogg; loop: true; autoplay: true; rolloff: cosine; maxDistance: 12; volume: 0.3'></a-entity>
+          <a-entity n-sound='src: sounds/water.mp3; loop: true; autoplay: true; rolloff: cosine; maxDistance: 12; volume: 0.3'></a-entity>
+        </a-plane>
       </a-entity>
 
       <a-box id='roomButton' position='-16.3 -100 -25.9' scale='.15 .15 .1' color='blue'></a-box>
@@ -180,17 +233,39 @@
           <a-cylinder id='martiniButton3' position='.04 .02 0' radius='.015' height='.03' rotation='90 0 0' color='red' segments-radial='12' segments-height='1'></a-cylinder>
           <a-cylinder id='martiniButton4' position='.1 -.024 0' radius='.01' height='.03' rotation='90 0 0' color='red' segments-radial='12' segments-height='1'></a-cylinder>
         </a-entity>
+
+        <a-entity position='0 .1 .055'>
+          <a-entity position='0 .09 0' scale='.1 .1 .1' n-text='fontSize: 4; text: Mic'></a-entity>
+          <a-box id='micButton' position='0 0 0' scale='.05 .05 .025' color='red'></a-box>
+        </a-entity>
       </a-entity>
 
 
       <a-entity id='roomPortalTarget' position='-16 15.5 -28.4' rotation='0 90 0'></a-entity>
 
-      <a-entity id='barMartini1' position='13.05 9.25 -21.3' scale='.45 .45 .45' cached-obj-model='obj: url(models/martini_glass.obj); mtl: url(models/martini_glass.mtl)' n-mesh-collider='type: environment; convex: false' bake-vertex-light></a-entity>
-      <a-entity id='barMartini2' position='13.15 9.25 -20.5' scale='.45 .45 .45' cached-obj-model='obj: url(models/martini_glass.obj); mtl: url(models/martini_glass.mtl)' n-mesh-collider='type: environment; convex: false' bake-vertex-light></a-entity>
-      <a-entity id='barMartini3' position='13.1 9.25 -19.6' scale='.45 .45 .45' cached-obj-model='obj: url(models/martini_glass.obj); mtl: url(models/martini_glass.mtl)' n-mesh-collider='type: environment; convex: false' bake-vertex-light></a-entity>
+      <a-entity id='barMartini1' position='13.05 9.25 -21.3' scale='.45 .45 .45' cached-obj-model='obj: url(models/martini_glass.obj); mtl: url(models/martini_glass.mtl)' bake-vertex-light></a-entity>
+      <a-entity id='barMartini2' position='13.15 9.25 -20.5' scale='.45 .45 .45' cached-obj-model='obj: url(models/martini_glass.obj); mtl: url(models/martini_glass.mtl)' bake-vertex-light></a-entity>
+      <a-entity id='barMartini3' position='13.1 9.25 -19.6' scale='.45 .45 .45' cached-obj-model='obj: url(models/martini_glass.obj); mtl: url(models/martini_glass.mtl)' bake-vertex-light></a-entity>
 
       <!-- <a-entity id='deskChairs' position='-1 8.89 -45' scale='.6 .6 .6' obj-model='obj: url(models/desk/desk.obj); mtl: url(models/desk/desk.mtl)' altspace-cursor-collider='enabled: false'></a-entity> -->
     </a-entity>
+
+    <a-curvedimage position='13.637 8.98 -22.965' rotation='0 -30 0' src='images/drinks/jd.png' scale='-.09 .15 .09' side='back' theta-length='120' segments-radial='4' radius='1' altspace-cursor-collider='enabled: false'></a-curvedimage>
+    <a-curvedimage position='13.637 8.98 -22.74' rotation='0 -30 0' src='images/drinks/absolut.png' scale='-.09 .15 .09' side='back' theta-length='120' segments-radial='4' radius='1' altspace-cursor-collider='enabled: false'></a-curvedimage>
+    <a-curvedimage position='13.626 8.98 -22.498' rotation='0 -30 0' src='images/drinks/hennessy.png' scale='-.09 .15 .09' side='back' theta-length='120' segments-radial='4' radius='1' altspace-cursor-collider='enabled: false'></a-curvedimage>
+    <a-curvedimage position='13.615 8.98 -22.274' rotation='0 -30 0' src='images/drinks/fireball.png' scale='-.09 .15 .09' side='back' theta-length='120' segments-radial='4' radius='1' altspace-cursor-collider='enabled: false'></a-curvedimage>
+
+    <a-curvedimage position='13.648 8.98 -20.083' rotation='0 -30 0' src='images/drinks/malibu.png' scale='-.09 .15 .09' side='back' theta-length='120' segments-radial='4' radius='1' altspace-cursor-collider='enabled: false'></a-curvedimage>
+
+    <a-curvedimage position='13.694 9.77 -22.752' rotation='0 -30 0' src='images/drinks/crownroyal.png' scale='-.09 .15 .09' side='back' theta-length='120' segments-radial='4' radius='1' altspace-cursor-collider='enabled: false'></a-curvedimage>
+    <a-curvedimage position='13.694 9.77 -22.527' rotation='0 -30 0' src='images/drinks/tanqueray.png' scale='-.09 .15 .09' side='back' theta-length='120' segments-radial='4' radius='1' altspace-cursor-collider='enabled: false'></a-curvedimage>
+    <a-curvedimage position='13.683 9.77 -22.285' rotation='0 -30 0' src='images/drinks/captmorgan.png' scale='-.09 .15 .09' side='back' theta-length='120' segments-radial='4' radius='1' altspace-cursor-collider='enabled: false'></a-curvedimage>
+    <a-curvedimage position='13.671 9.77 -22.06' rotation='0 -30 0' src='images/drinks/ciroc.png' scale='-.09 .15 .09' side='back' theta-length='120' segments-radial='4' radius='1' altspace-cursor-collider='enabled: false'></a-curvedimage>
+
+    <a-curvedimage position='13.677 9.77 -20.926' rotation='0 -30 0' src='images/drinks/bombay.png' scale='-.09 .15 .09' side='back' theta-length='120' segments-radial='4' radius='1' altspace-cursor-collider='enabled: false'></a-curvedimage>
+
+    <a-entity position='11.8 8.94 -23.2' rotation='0 90 0' n-spawner='res: interactables/can-soda-coconut'></a-entity>
+    <a-entity position='11.79 8.94 -23.05' rotation='0 90 0' n-spawner='res: interactables/can-soda-melon'></a-entity>
     
     <a-entity id='roomPortal' position='0 -100 0' n-portal='targetEntity: #roomPortalTarget' n-skeleton-parent='part: head'></a-entity>
     
@@ -341,6 +416,12 @@
     <a-mixin id='badgeText2' n-text='fontSize: 1; text: <color=black>I made\nthis bitch' position='-.1 .35 -.151' scale='.15 .15 .15' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
     <a-mixin id='badgeText3' n-text='fontSize: 1; text: <color=black>I designed\nthis bitch' position='-.1 .35 -.151' scale='.15 .15 .15' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
     <a-mixin id='badgeText4' n-text='fontSize: 1; text: <color=black>Bouncer\nBitch' position='-.1 .35 -.151' scale='.15 .15 .15' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
+    <a-mixin id='birthdayText' n-text="fontSize: 1; text: <color=black>It's my\nbirthday!\n<size=35%>And I made this bitch" position='-.1 .35 -.151' scale='.15 .15 .15' rotation='0 180 0' n-skeleton-parent='part: spine' sync sync-n-skeleton-parent></a-mixin>
+
+    <!-- <a-entity position='0 6.2 0' scale='1 1 1'>
+      <a-entity geometry='primitive: circle; radius: .04' position='-.1 .35 -.15' rotation='0 180 0' material='color: #55f; side: double'></a-entity>
+      <a-entity n-text="fontSize: 1; text: <color=black>It's my\nbirthday!\n<size=35%>And I made this bitch" position='-.1 .35 -.151' scale='.15 .15 .15' rotation='0 180 0'></a-entity>
+    </a-entity> -->
 
     <a-entity id='pillow1' position='-14.5 8.8 -23.3' rotation='-30 80 0' scale='.008 .008 .008' cached-obj-model='obj: url(models/cushion.obj); mtl: url(models/cushion.mtl)' bake-vertex-light></a-entity>
     <a-entity id='pillow2' position='-14.5 8.8 -22.2' rotation='-25 95 0' scale='.008 .008 .008' cached-obj-model='obj: url(models/cushion.obj); mtl: url(models/cushion.mtl)' bake-vertex-light></a-entity>
@@ -374,11 +455,27 @@
       <a-animation attribute='position' from='0 0 0' to='0 -.4 0' dur='5000' begin='lower'></a-animation>
     </a-entity>
 
+    <a-entity id='mic' position='0 -1.7 0'>
+      <a-entity position='-2 9.4 -42'>
+        <a-cylinder position='0 0 0' scale='.01 2 .01' material='src: url(textures/mic.jpg); repeat: 1 10' segments-height='1' segments-radial='16'></a-cylinder>
+        <a-entity position='0 1 0' rotation='-80 0 0'>
+          <a-cone position='0 0 0' height='.2' radius-top='.03' radius-bottom='.02' src='textures/256/desk.jpg' segments-height='1' segments-radial='16'></a-cone>
+          <a-sphere position='0 .1 0' scale='.04 .04 .04' material='src: url(textures/mic2.jpg); repeat: 1 0.5'></a-sphere>
+        </a-entity>
+      </a-entity>
+      <a-animation attribute='position' from='0 -1.7 0' to='0 0 0' dur='5000' begin='raise'></a-animation>
+      <a-animation attribute='position' from='0 0 0' to='0 -1.7 0' dur='5000' begin='lower'></a-animation>
+    </a-entity>
+
   </a-scene>
 <script>
   var scene = document.querySelector('a-scene');
   scene.addEventListener('connected', function() {
     altspace.getUser().then(function(user){
+      if (user.legacyUserId) {
+        user.userId = user.legacyUserId;
+      }
+
       if (user.userId == '706584809928917156') {
         scene.systems['sync-system'].instantiate('badge pink', scene);
         scene.systems['sync-system'].instantiate('badgeText1', scene);
@@ -388,9 +485,18 @@
       } else if (user.userId == '672823420869673861') {
         scene.systems['sync-system'].instantiate('badge pink', scene);
         scene.systems['sync-system'].instantiate('badgeText4', scene);
-      } else if (user.userId == '582115151281389721' || user.userId == '734434534321291312') {
+      } else if (user.userId == '582115151281389721') {
+        if (new Date().getDate() == 31 && new Date().getMonth() == 2) {
+          scene.systems['sync-system'].instantiate('badge blue', scene);
+          scene.systems['sync-system'].instantiate('birthdayText', scene);
+        } else {
+          scene.systems['sync-system'].instantiate('badge blue', scene);
+          scene.systems['sync-system'].instantiate('badgeText2', scene);
+        }
+      } else  if (user.userId == '734434534321291312') {
         scene.systems['sync-system'].instantiate('badge blue', scene);
         scene.systems['sync-system'].instantiate('badgeText2', scene);
+        scene.systems['sync-system'].instantiate('chickenThing', scene);
       }
     });
 
@@ -399,14 +505,18 @@
     sync.instance.child('martini1State').on('value', function(data){
       if (data.val() != null) {
         if (data.val() == 'raised') {
-          if (martini1State == undefined) {
-            martiniGlass1.setAttribute('position', '0 -.4 0');
+          if (martini1State == 'raised') {
+            martiniGlass1.setAttribute('position', '0 0 0');
           } else {
             martiniGlass1.emit('raise');
           }
           martiniButton1.setAttribute('color', '#0f0');
-        } else if (martini1State != null) {
-          martiniGlass1.emit('lower');
+        } else {
+          if (martini1State == 'lowered') {
+            martiniGlass1.setAttribute('position', '0 -.4 0');
+          } else {
+            martiniGlass1.emit('lower');
+          }
           martiniButton1.setAttribute('color', 'red');
         }
         martini1State = data.val();
@@ -418,14 +528,18 @@
     sync.instance.child('martini2State').on('value', function(data){
       if (data.val() != null) {
         if (data.val() == 'raised') {
-          if (martini2State == undefined) {
-            martiniGlass2.setAttribute('position', '0 -.4 0');
+          if (martini2State == 'raised') {
+            martiniGlass2.setAttribute('position', '0 0 0');
           } else {
             martiniGlass2.emit('raise');
           }
           martiniButton2.setAttribute('color', '#0f0');
-        } else if (martini1State != null) {
-          martiniGlass2.emit('lower');
+        } else {
+          if (martini2State == 'lowered') {
+            martiniGlass2.setAttribute('position', '0 -.4 0');
+          } else {
+            martiniGlass2.emit('lower');
+          }
           martiniButton2.setAttribute('color', 'red');
         }
         martini2State = data.val();
@@ -437,14 +551,18 @@
     sync.instance.child('martini3State').on('value', function(data){
       if (data.val() != null) {
         if (data.val() == 'raised') {
-          if (martini3State == undefined) {
-            martiniGlass3.setAttribute('position', '0 -.53 0');
+          if (martini3State == 'raised') {
+            martiniGlass3.setAttribute('position', '0 0 0');
           } else {
             martiniGlass3.emit('raise');
           }
           martiniButton3.setAttribute('color', '#0f0');
-        } else if (martini3State != null) {
-          martiniGlass3.emit('lower');
+        } else {
+          if (martini3State == 'lowered') {
+            martiniGlass3.setAttribute('position', '0 -.53 0');
+          } else {
+            martiniGlass3.emit('lower');
+          }
           martiniButton3.setAttribute('color', 'red');
         }
         martini3State = data.val();
@@ -456,14 +574,18 @@
     sync.instance.child('martini4State').on('value', function(data){
       if (data.val() != null) {
         if (data.val() == 'raised') {
-          if (martini4State == undefined) {
-            martiniGlass4.setAttribute('position', '0 -.4 0');
+          if (martini4State == 'raised') {
+            martiniGlass4.setAttribute('position', '0 0 0');
           } else {
             martiniGlass4.emit('raise');
           }
           martiniButton4.setAttribute('color', '#0f0');
-        } else if (martini4State != null) {
-          martiniGlass4.emit('lower');
+        } else {
+          if (martini4State == 'lowered') {
+            martiniGlass4.setAttribute('position', '0 -.4 0');
+          } else {
+            martiniGlass4.emit('lower');
+          }
           martiniButton4.setAttribute('color', 'red');
         }
         martini4State = data.val();
@@ -472,10 +594,34 @@
       }
     });
 
+    sync.instance.child('micState').on('value', function(data){
+      if (data.val() != null) {
+        if (data.val() == 'raised') {
+          if (micState == 'raised') {
+            mic.setAttribute('position', '0 0 0');
+          } else {
+            mic.emit('raise');
+          }
+          micButton.setAttribute('color', '#0f0');
+        } else {
+          if (micState == 'lowered') {
+            mic.setAttribute('position', '0 -1.7 0');
+          } else {
+            mic.emit('lower');
+          }
+          micButton.setAttribute('color', 'red');
+        }
+        micState = data.val();
+      } else {
+        sync.instance.child('micState').set('lowered');
+      }
+    });
+
     var martini1State = 'lowered';
     var martini2State = 'lowered';
     var martini3State = 'lowered';
     var martini4State = 'lowered';
+    var micState = 'lowered';
     altspace.getUser().then(function(user){
       if (user.isModerator) {
         roomButton.setAttribute('position', '-16.3 6.5 -25.9');
@@ -528,6 +674,14 @@
             sync.instance.child('martini4State').set('lowered');
           }
         });
+
+        micButton.addEventListener('mouseup', function(){
+          if (micState == 'lowered') {
+            sync.instance.child('micState').set('raised');
+          } else {
+            sync.instance.child('micState').set('lowered');
+          }
+        });
       }
     });
   });
@@ -563,8 +717,14 @@
   altspace.getThreeJSTrackingSkeleton().then(function(skeleton){
     console.log(skeleton);
     var head = skeleton.getJoint('Head');
+    var isMod = false;
+    altspace.getUser().then(function(user) {
+      if (user.isModerator) {
+        isMod = true;
+      }
+    });
     setInterval(function(){
-      if (loaded && head.position.y < 5 && ((head.position.x < -13 || head.position.x > 10.5) || (head.position.z < -72 || head.position.z > -61.5))) {
+      if (!isMod && loaded && head.position.y < 5 && ((head.position.x < -13 || head.position.x > 10.5) || (head.position.z < -72 || head.position.z > -61.5))) {
         sendUp();
       }
     },1000);
@@ -683,19 +843,7 @@
           applyTextures(model.children[i].children[0], 'barWalls.jpg', 60, 'combinedLightNew.png', 1);
           break;
         case 'barBanner':
-          //applyTextures(model.children[i].children[0], 'barBanner.jpg', 1, 'combinedLightNew.png', 0);
-          var mesh = model.children[i].children[0];
-          //mesh.material.map = THREE.ImageUtils.loadTexture('http://localhost:8002/cake/engagement/banner.jpg');
-          mesh.material.map = THREE.ImageUtils.loadTexture('https://bengarfield.github.io/AltVR/house/cake/engagement/banner.jpg');
-          mesh.material.map.wrapS = mesh.material.map.wrapT = THREE.RepeatWrapping;
-          mesh.material.map.repeat.set(1, 1);
-          mesh.material.lightMap = THREE.ImageUtils.loadTexture('combinedLightNew.png');
-          mesh.material.lightMapIntensity = 0;
-          mesh.material.color.set(new THREE.Color(1,1,1));
-          mesh.addBehaviors(
-            new altspaceutil.behaviors.NativeComponent('n-mesh-collider', { convex: false, type: 'environment' })
-          );
-
+          applyTextures(model.children[i].children[0], 'barBanner.jpg', 1, 'combinedLightNew.png', 0);
           break;
         
         case 'deckLegs':
