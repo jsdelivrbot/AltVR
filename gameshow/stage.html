@@ -598,9 +598,9 @@
 		  	screenPos = i;
 		  	var a = [{pos:{x:0,y:-0.5,z:0}, scale:{x:1,y:1,z:1}, rot:{x:0,y:0,z:0}}, {pos:{x:0,y:0.1,z:0}, scale:{x:0.35,y:0.35,z:0.35}, rot:{x:THREE.Math.degToRad(-20),y:THREE.Math.degToRad(-135),z:THREE.Math.degToRad(0)}}];
 
-		  	new TWEEN.Tween(screenContainer.object3D.position).to(a[i].pos, 1000).start();
-		  	new TWEEN.Tween(screenContainer.object3D.scale).to(a[i].scale, 1000).start();
-		  	new TWEEN.Tween(screenContainer.object3D.rotation).to(a[i].rot, 1000).start();
+		  	new TWEEN.Tween(screenContainer.object3D.position).to(a[i].pos, 500).start();
+		  	new TWEEN.Tween(screenContainer.object3D.scale).to(a[i].scale, 500).start();
+		  	new TWEEN.Tween(screenContainer.object3D.rotation).to(a[i].rot, 500).start();
 		  }
 
       podiumList[0].getObjectByName('button').addEventListener('cursordown', function(){
