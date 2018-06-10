@@ -41,7 +41,7 @@
 				<a-cylinder position='7.5 4 -.1' rotation='90 0 0' height='.2' radius='.5' segments-height='1' color='black' altspace-cursor-collider='enabled: false'></a-cylinder>
 				<a-cylinder position='7.5 -4 -.1' rotation='90 0 0' height='.2' radius='.5' segments-height='1' color='black' altspace-cursor-collider='enabled: false'></a-cylinder>
 
-				<a-entity position='0 -3.5 -.25' rotation='0 180 0' n-text='fontSize: 7; text: v0.13'></a-entity>
+				<a-entity position='0 -3.5 -.25' rotation='0 180 0' n-text='fontSize: 7; text: v0.14'></a-entity>
 
 				<a-entity id='titleScreen' position='0 0 0'>
 					<a-entity position='0 0 .1' scale='2 2 2' n-text='text: Logo\ngoes here'></a-entity>
@@ -715,6 +715,7 @@
       	if (joined == i && playerBuzzedIn == null && mode == 'question') {
           sync.instance.child('click').push(i.toString());
           
+          buzzIn.components.sync.takeOwnership();
           buzzIn.components['n-sound'].playSound();
         }
       }
@@ -936,10 +937,12 @@
 		  	if (a == answer) {
 			  	players[playerBuzzedIn - 1].score++;
 			  	//playSound(correct);
+			  	correct.components.sync.takeOwnership();
 			  	correct.components['n-sound'].playSound();
 			  } else {
 			  	players[playerBuzzedIn - 1].score--;
 			  	//playsound(wrong);
+			  	incorrect.components.sync.takeOwnership();
 			  	incorrect.components['n-sound'].playSound();
 			  }
 			  sync.instance.child('players').set(players);
