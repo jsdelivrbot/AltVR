@@ -33,7 +33,7 @@
 
 		<a-entity id='screenContainer' position='0 -.5 0'>
 			<a-entity id='bigScreen' position='0 4.5 -4' scale='.5 .5 .5'>
-				<a-entity position='0 -3.5 -.32' rotation='0 180 0' n-text='fontSize: 7; text: v0.20'></a-entity>
+				<a-entity position='0 -3.5 -.32' rotation='0 180 0' n-text='fontSize: 7; text: v0.21'></a-entity>
 
 				<a-plane scale='14 8 1' color='black'></a-plane>
 
@@ -100,7 +100,7 @@
 				<a-box id='controlB' position='7 -7 0' scale='1 1 .5' color='blue' n-text='fontSize: 5; horizontalAlign: left; width: 9; text: Control Panel' n-box-collider='type: hologram'></a-box>
 			</a-entity>
 
-			<a-entity id='hostControlPanel' position='0 1 0' rotation='-50 -50 0' scale='.5 .5 .5'>
+			<a-entity id='hostControlPanel' position='.65 1.3 .4' rotation='-50 -50 0' scale='1 1 1'>
 					<a-box position='0 0 0' scale='0.6 0.34 .02' color='black'></a-box>
 					<a-box position='0 0 0' scale='0.54 0.4 .02' color='black'></a-box>
 					<a-cylinder position='.27 .17 0' rotation='90 0 0' height='.02' radius='.03' segments-height='1' color='black'></a-cylinder>
@@ -108,8 +108,44 @@
 					<a-cylinder position='-.27 .17 0' rotation='90 0 0' height='.02' radius='.03' segments-height='1' color='black'></a-cylinder>
 					<a-cylinder position='-.27 -.17 0' rotation='90 0 0' height='.02' radius='.03' segments-height='1' color='black'></a-cylinder>
 
-					<a-box id='manJoinB' position='-.15 -.1 .011' scale='.025 .025 .025' color='red' n-text='fontSize: 5; horizontalAlign: left; width: 9; text: Manual Join' n-box-collider='type: hologram'></a-box>
-					<a-box id='clearPlayersB' position='-.15 -.15 .011' scale='.025 .025 .025' color='red' n-text='fontSize: 5; horizontalAlign: left; width: 9; text: Clear Podiums' n-box-collider='type: hologram'></a-box>
+					<a-box id='p5ControlPanelColor' position='-.22 .15 .01' scale='.1 .03 .001' altspace-cursor-collider='enabled: false'></a-box>
+					<a-box id='p4ControlPanelColor' position='-.22 .11 .01' scale='.1 .03 .001' altspace-cursor-collider='enabled: false'></a-box>
+					<a-box id='p3ControlPanelColor' position='-.22 .07 .01' scale='.1 .03 .001' altspace-cursor-collider='enabled: false'></a-box>
+					<a-box id='p2ControlPanelColor' position='-.22 .03 .01' scale='.1 .03 .001' altspace-cursor-collider='enabled: false'></a-box>
+					<a-box id='p1ControlPanelColor' position='-.22 -.01 .01' scale='.1 .03 .001' altspace-cursor-collider='enabled: false'></a-box>
+
+					<a-entity id='p5ControlPanel' position='-.15 .15 .011' scale='.025 .025 .025' n-text='fontSize: 5; horizontalAlign: left; width: 9; text: Player 1'></a-entity>
+					<a-entity id='p4ControlPanel' position='-.15 .11 .011' scale='.025 .025 .025' n-text='fontSize: 5; horizontalAlign: left; width: 9; text: Player 2'></a-entity>
+					<a-entity id='p3ControlPanel' position='-.15 .07 .011' scale='.025 .025 .025' n-text='fontSize: 5; horizontalAlign: left; width: 9; text: Player 3'></a-entity>
+					<a-entity id='p2ControlPanel' position='-.15 .03 .011' scale='.025 .025 .025' n-text='fontSize: 5; horizontalAlign: left; width: 9; text: Player 4'></a-entity>
+					<a-entity id='p1ControlPanel' position='-.15 -.01 .011' scale='.025 .025 .025' n-text='fontSize: 5; horizontalAlign: left; width: 9; text: Player 5'></a-entity>
+
+					<a-box id='p5Kick' class='kickButton' position='0 .15 .011' scale='.025 .025 .01' color='red' n-text='fontSize: 5; verticalAlign: top; height: 3; text: Kick' n-box-collider='type: hologram'></a-box>
+					<a-box id='p4Kick' class='kickButton' position='0 .11 .011' scale='.025 .025 .01' color='red' n-box-collider='type: hologram'></a-box>
+					<a-box id='p3Kick' class='kickButton' position='0 .07 .011' scale='.025 .025 .01' color='red' n-box-collider='type: hologram'></a-box>
+					<a-box id='p2Kick' class='kickButton' position='0 .03 .011' scale='.025 .025 .01' color='red' n-box-collider='type: hologram'></a-box>
+					<a-box id='p1Kick' class='kickButton' position='0 -.01 .011' scale='.025 .025 .01' color='red' n-box-collider='type: hologram'></a-box>
+
+					<a-box id='p5Add' class='addButton' position='-.15 .15 .011' scale='.025 .025 .01' color='#0c0' n-text='fontSize: 5; verticalAlign: top; height: 3; text: Add' n-box-collider='type: hologram'></a-box>
+					<a-box id='p4Add' class='addButton' position='-.15 .11 .011' scale='.025 .025 .01' color='#0c0' n-box-collider='type: hologram'></a-box>
+					<a-box id='p3Add' class='addButton' position='-.15 .07 .011' scale='.025 .025 .01' color='#0c0' n-box-collider='type: hologram'></a-box>
+					<a-box id='p2Add' class='addButton' position='-.15 .03 .011' scale='.025 .025 .01' color='#0c0' n-box-collider='type: hologram'></a-box>
+					<a-box id='p1Add' class='addButton' position='-.15 -.01 .011' scale='.025 .025 .01' color='#0c0' n-box-collider='type: hologram'></a-box>
+
+					<a-box id='p5Sub' class='subtractButton' position='-.1 .15 .011' scale='.025 .025 .01' color='#b70' n-text='fontSize: 5; verticalAlign: top; height: 3; text: Sub' n-box-collider='type: hologram'></a-box>
+					<a-box id='p4Sub' class='subtractButton' position='-.1 .11 .011' scale='.025 .025 .01' color='#b70' n-box-collider='type: hologram'></a-box>
+					<a-box id='p3Sub' class='subtractButton' position='-.1 .07 .011' scale='.025 .025 .01' color='#b70' n-box-collider='type: hologram'></a-box>
+					<a-box id='p2Sub' class='subtractButton' position='-.1 .03 .011' scale='.025 .025 .01' color='#b70' n-box-collider='type: hologram'></a-box>
+					<a-box id='p1Sub' class='subtractButton' position='-.1 -.01 .011' scale='.025 .025 .01' color='#b70' n-box-collider='type: hologram'></a-box>
+
+					<a-box id='p5Rename' class='renameButton' position='-.05 .15 .011' scale='.025 .025 .01' color='blue' n-text='fontSize: 5; verticalAlign: top; height: 3; text: Rename' n-box-collider='type: hologram'></a-box>
+					<a-box id='p4Rename' class='renameButton' position='-.05 .11 .011' scale='.025 .025 .01' color='blue' n-box-collider='type: hologram'></a-box>
+					<a-box id='p3Rename' class='renameButton' position='-.05 .07 .011' scale='.025 .025 .01' color='blue' n-box-collider='type: hologram'></a-box>
+					<a-box id='p2Rename' class='renameButton' position='-.05 .03 .011' scale='.025 .025 .01' color='blue' n-box-collider='type: hologram'></a-box>
+					<a-box id='p1Rename' class='renameButton' position='-.05 -.01 .011' scale='.025 .025 .01' color='blue' n-box-collider='type: hologram'></a-box>
+
+					<a-box id='manJoinB' position='-.15 -.15 .011' scale='.025 .025 .01' color='red' n-text='fontSize: 5; horizontalAlign: left; width: 9; text: Manual Join' n-box-collider='type: hologram'></a-box>
+					<a-box id='clearPlayersB' position='-0 -.15 .011' scale='.025 .025 .01' color='red' n-text='fontSize: 5; horizontalAlign: left; width: 9; text: Clear Podiums' n-box-collider='type: hologram'></a-box>
 			</a-entity>
 			
 			<a-entity id='pregameControls' position='-.6 1.2 .3' rotation='-70 50 0'>
@@ -334,6 +370,7 @@
 				podiumList.push(p);
 
 				document.querySelector('#p' + (i) + 'Join').setAttribute('color', '#' + podiumColors[i].getHexString());
+				document.querySelector('#p' + (i) + 'ControlPanelColor').setAttribute('color', '#' + podiumColors[i].getHexString());
 
 			}
 			modelsLoaded++;
@@ -425,19 +462,20 @@
 							document.querySelector('#p' + (i + 1) + 'Name').setAttribute('n-text', 'text', '<color=black>' + data.val()[i].displayName);
 							document.querySelector('#p' + (i + 1) + 'Score').setAttribute('n-text', 'text', '<color=black>' + data.val()[i].score);
 							document.querySelector('#p' + (i + 1) + 'Join').setAttribute('position', '0 -.5 0');
+							document.querySelector('#p' + (i + 1) + 'ControlPanel').setAttribute('n-text', 'text', '<color=white>' + data.val()[i].displayName);
 							if (!playerBuzzedIn) {
 								setPanelLight(i, true);
 							}
 						} else {
 							document.querySelector('#p' + (i + 1) + 'Name').setAttribute('n-text', 'text', '');
 							document.querySelector('#p' + (i + 1) + 'Score').setAttribute('n-text', 'text', '');
+							document.querySelector('#p' + (i + 1) + 'ControlPanel').setAttribute('n-text', 'text', '<color=#888>Not joined');
 							if (manualJoin) {
 								document.querySelector('#p' + (i + 1) + 'Join').setAttribute('position', '0 2 0');
 							}
 							setPanelLight(i, false);
 						}
 						if (players[i].id == user.userId) {
-							console.log(i + ' is you');
 							joined = i + 1;
 						}
 					}
@@ -616,9 +654,11 @@
 							var str = '<size=60%>Top 5<size=15%>\n\n<size=45%><align="left">										<color=#' + podiumColors[5].getHexString() + '>1:<color="white"> ';
 							var str2 = str;
 							for (var i = 0; i < 5; i++) {
-								var temp = pregameScores[i].displayName + '		' + Math.floor(pregameScores[i].score);
-								str += temp;
-								str2 += temp + '	' + (10 - Math.round(((pregameScores[i].score - Math.floor(pregameScores[i].score)) * 10) * 100) / 100);
+								if (pregameScores[i]) {
+									var temp = pregameScores[i].displayName + '		' + Math.floor(pregameScores[i].score);
+									str += temp;
+									str2 += temp + '	' + (10 - Math.round(((pregameScores[i].score - Math.floor(pregameScores[i].score)) * 10) * 100) / 100);
+								}
 								if (i < 4) {
 									str += '\n		<color=#' + podiumColors[5 - (i+1)].getHexString() + '>' + (i + 2) + ':<color="white"> ';
 									str2 += '\n		<color=#' + podiumColors[5 - (i+1)].getHexString() + '>' + (i + 2) + ':<color="white"> ';
@@ -1424,6 +1464,38 @@
 			  		//joined = 0;
 			  		sync.instance.child('players').child(i - 1).set({joined: false});
 			  	}
+			  });
+
+				document.querySelectorAll('.kickButton')[i].addEventListener('mouseup', function(e){
+			  	var i = parseInt(e.target.id.slice(1,2));
+					if (isHost || isMod) {
+						sync.instance.child('players').child(i - 1).set({joined: false});
+					}
+			  });
+
+				document.querySelectorAll('.addButton')[i].addEventListener('mouseup', function(e){
+			  	var i = parseInt(e.target.id.slice(1,2));
+					if ((isHost || isMod) && players[i - 1].joined) {
+						sync.instance.child('players').child(i - 1).child('score').set(players[i - 1].score + 1);
+					}
+			  });
+
+				document.querySelectorAll('.subtractButton')[i].addEventListener('mouseup', function(e){
+			  	var i = parseInt(e.target.id.slice(1,2));
+					if ((isHost || isMod) && players[i - 1].joined) {
+						sync.instance.child('players').child(i - 1).child('score').set(players[i - 1].score - 1);
+					}
+			  });
+
+				document.querySelectorAll('.renameButton')[i].addEventListener('mouseup', function(e){
+			  	var i = parseInt(e.target.id.slice(1,2));
+					if ((isHost || isMod) && players[i - 1].joined) {
+						//sync.instance.child('players').child(i - 1).child('score').set(players[i - 1].score - 1);
+						//console.log('Rename player ' + i);
+						var url = location.origin + '/namechange.html' + location.search + '&player=' + (i - 1);
+						console.log(url);
+						altspace.open(url);
+					}
 			  });
 		  }
 

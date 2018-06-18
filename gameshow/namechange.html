@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Name Change</title>
+	<script src="https://aframe.io/releases/0.7.0/aframe.js"></script>
+	<script src="https://sdk.altvr.com/libs/altspace.js/2.9.0/altspace.min.js"></script>
+	<style>
+		.center {
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				transform: translateX(-50%) translateY(-50%);
+				zoom: 300%;
+		}
+	</style>
+</head>
+<body>
+		<input id='nameField' class='center'>
+<script>
+	altspace.utilities.sync.connect({baseRefUrl: "https://altvr-apps.firebaseio.com/",authorId: "BenG",appId: "quizStage"}).then(function(sync){
+		var p = findGetParameter('player');
+		
+		sync.instance.child('players').child(p).child('displayName').on('value', function(data){
+			nameField.value = data.val();
+		});
+
+		nameField.oninput = function(){
+			sync.instance.child('players').child(p).child('displayName').set(nameField.value);
+		}
+	});
+
+	function findGetParameter(parameterName) {
+    var result = null,
+        tmp = [];
+    location.search
+    .substr(1)
+        .split("&")
+        .forEach(function (item) {
+        tmp = item.split("=");
+        if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+    });
+    return result;
+  }
+</script>
+</body>
+</html>
