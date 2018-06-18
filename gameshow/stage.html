@@ -1492,7 +1492,7 @@
 					if ((isHost || isMod) && players[i - 1].joined) {
 						//sync.instance.child('players').child(i - 1).child('score').set(players[i - 1].score - 1);
 						//console.log('Rename player ' + i);
-						var url = location.origin + '/namechange.html' + location.search + '&player=' + (i - 1);
+						var url = location.origin + location.pathname.slice(0, location.pathname.lastIndexOf('/')) + '/namechange.html' + location.search + '&player=' + (i - 1);
 						console.log(url);
 						altspace.open(url);
 					}
