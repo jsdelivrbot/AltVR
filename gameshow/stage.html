@@ -134,6 +134,7 @@
 
 					<a-entity position='0 0.12 .012' scale='.3 .3 .3' n-text='width: 1.8; fontSize: 1; horizontalAlign: left; text:Player			Points 	Avg'></a-entity>
 					<a-entity id='preLeaders' position='.29 -.045 .012' scale='.3 .3 .3' n-text='width: 3.8; fontSize: 1; horizontalAlign: left; text:1:\n2:\n3:\n4:\n5:\n6:\n7:\n8:'></a-entity>
+					<a-entity id='preLeaderScores' position='.68 -.045 .012' scale='.3 .3 .3' n-text='width: 3.8; fontSize: 1; horizontalAlign: left; text:1:\n2:\n3:\n4:\n5:\n6:\n7:\n8:'></a-entity>
 				</a-entity>
 			</a-entity>
 		</a-entity>
@@ -1459,14 +1460,18 @@
 					preRemain.setAttribute('n-text', 'text', 'Remaining: ' + remainingPlayers);
 
 					var str = '';
+					var str2 = '';
 					for (var i = 0; i < 8; i++) {
 						if (pregameScores[i]) {
-							str += (i + 1) + ': ' + pregameScores[i].displayName + '				' + Math.floor(pregameScores[i].score) + '	' + (10 - Math.round(((pregameScores[i].score - Math.floor(pregameScores[i].score)) * 10) * 100) / 100) + '\n';
+							str += (i + 1) + ': ' + pregameScores[i].displayName + '\n';
+							str2 += Math.floor(pregameScores[i].score) + '	' + (10 - Math.floor(((pregameScores[i].score - Math.floor(pregameScores[i].score)) * 10) * 100) / 100).toString().slice(0,4) + '\n';
 						} else {
 							str += (i + 1) + ': \n';
+							str2 += '\n';
 						}
 					}
 					preLeaders.setAttribute('n-text', 'text', str);
+					preLeaderScores.setAttribute('n-text', 'text', str2);
 				}
 
 				pregameStart.addEventListener('mouseup', function(){
@@ -1559,7 +1564,7 @@
 					document.querySelector('#' + answer + 'BScreen').object3D.getObjectByName('outer').material.color.set(new THREE.Color('green'));
 					document.querySelector('#' + answer + 'B').object3D.getObjectByName('outer').material.color.set(new THREE.Color('green'));
 
-					if (inPregame && (pregameAnswer == null || pregameAnswer != answer)) {
+					if (inPregame && current != 0 && (pregameAnswer == null || pregameAnswer != answer)) {
 						inPregame = false;
 						console.log("You're out");
 						preUser.child('inGame').set(false);
