@@ -7,7 +7,7 @@
 </head>
 <body>
 	<a-scene position='0 0 0' altspace='fullspace: true' sync-system='author: BenG; app: quizStage; refUrl: https://altvr-apps.firebaseio.com/'>
-		<a-entity n-layout-browser='url: https://shanesedit.org/r/mc; isEnclosure: true'></a-entity>
+		<!-- <a-entity n-layout-browser='url: https://shanesedit.org/r/mc; isEnclosure: true'></a-entity> -->
 
 		<a-sky id='sky' radius='500' src='sky.png'></a-sky>
 
@@ -23,82 +23,51 @@
 				<a-plane position='0 2 -4.5' rotation='0 0 0' scale='6 4 0' material='visible: false'></a-plane>
 			</a-entity>
 			<a-entity rotation='0 -90 0'>
-				<a-plane position='2.5 2 -5' rotation='0 0 0' scale='10 4 0' material='visible: false'></a-plane>
+				<a-plane position='1 2 -5' rotation='0 0 0' scale='7 4 0' material='visible: false'></a-plane>
 			</a-entity>
 			<a-entity rotation='0 90 0'>
-				<a-plane position='-2.5 2 -5' rotation='0 0 0' scale='10 4 0' material='visible: false'></a-plane>
+				<a-plane position='-1 2 -5' rotation='0 0 0' scale='7 4 0' material='visible: false'></a-plane>
 			</a-entity>
 		</a-entity>
 		<!-- <a-cylinder position='0 -.24 0' height='.6' radius='4.05' color='#101' opacity='.9' n-mesh-collider='type: environment; convex: false'></a-cylinder> -->
 
 		<a-entity id='screenContainer' position='0 -.5 0'>
-			<a-entity id='screen' position='0 4.5 -4' scale='.5 .5 .5'>
-				<!-- <a-plane scale='15 9 1' color='black' side='double' altspace-cursor-collider='enabled: false'></a-plane> -->
-				<!-- <a-plane scale='16 8 1' color='black' side='double' altspace-cursor-collider='enabled: false'></a-plane> -->
-				
-				<a-box position='0 0 -.1' scale='15 9 .2' color='black' altspace-cursor-collider='enabled: false'></a-box>
-				<a-box position='0 0 -.1' scale='16 8 .2' color='black' altspace-cursor-collider='enabled: false'></a-box>
+			<a-entity id='bigScreen' position='0 4.5 -4' scale='.5 .5 .5'>
+				<a-entity position='0 -3.5 -.32' rotation='0 180 0' n-text='fontSize: 7; text: v0.20'></a-entity>
 
-				<a-cylinder position='-7.5 4 -.1' rotation='90 0 0' height='.2' radius='.5' segments-height='1' color='black' altspace-cursor-collider='enabled: false'></a-cylinder>
-				<a-cylinder position='-7.5 -4 -.1' rotation='90 0 0' height='.2' radius='.5' segments-height='1' color='black' altspace-cursor-collider='enabled: false'></a-cylinder>
-				<a-cylinder position='7.5 4 -.1' rotation='90 0 0' height='.2' radius='.5' segments-height='1' color='black' altspace-cursor-collider='enabled: false'></a-cylinder>
-				<a-cylinder position='7.5 -4 -.1' rotation='90 0 0' height='.2' radius='.5' segments-height='1' color='black' altspace-cursor-collider='enabled: false'></a-cylinder>
-
-				<a-entity position='0 -3.5 -.25' rotation='0 180 0' n-text='fontSize: 7; text: v0.15'></a-entity>
+				<a-plane scale='14 8 1' color='black'></a-plane>
 
 				<a-entity id='titleScreen' position='0 0 0'>
-					<a-entity position='0 0 .1' scale='2 2 2' n-text='text: Logo\ngoes here'></a-entity>
+					<!-- <a-entity position='0 0 .1' scale='2 2 2' n-text='text: Logo\ngoes here'></a-entity> -->
+					<a-entity position='0 0 .01' scale='2 2 2' n-text="width: 2.8; text: <line-height=65%><align=left>Alt\n<line-height=35%><align=right>Quiz\n<align=center><size=30%>It's a quiz"></a-entity>
 				</a-entity>
 
 				<a-entity id='gameScreen' position='0 0 -.2'>
-					<a-plane position='-3.7 -1.5 .1' scale='6.8 1.3 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
-					<a-plane position='3.7 -1.5 .1' scale='6.8 1.3 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
-					<a-plane position='-3.7 -3.2 .1' scale='6.8 1.3 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
-					<a-plane position='3.7 -3.2 .1' scale='6.8 1.3 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
+					<a-entity id='aBScreen' position='-3.7 -1.5 .01' n-mesh-collider='type: hologram; convex: false'></a-entity>
+					<a-entity id='bBScreen' position='3.7 -1.5 .01' n-mesh-collider='type: hologram; convex: false'></a-entity>
+					<a-entity id='cBScreen' position='-3.7 -3.2 .01' n-mesh-collider='type: hologram; convex: false'></a-entity>
+					<a-entity id='dBScreen' position='3.7 -3.2 .01' n-mesh-collider='type: hologram; convex: false'></a-entity>
 
-					<a-plane id='aBScreen' position='-3.7 -1.5 .05' scale='7 1.5 1' color='white' n-mesh-collider='type: hologram; convex: false'></a-plane>
-					<a-plane id='bBScreen' position='3.7 -1.5 .05' scale='7 1.5 1' color='white' n-mesh-collider='type: hologram; convex: false'></a-plane>
-					<a-plane id='cBScreen' position='-3.7 -3.2 .05' scale='7  1.5 1' color='white' n-mesh-collider='type: hologram; convex: false'></a-plane>
-					<a-plane id='dBScreen' position='3.7 -3.2 .05' scale='7 1.5 1' color='white' n-mesh-collider='type: hologram; convex: false'></a-plane>
+					<a-entity id='questionTScreen' position='0 1.75 .02' n-text='width: 14; height: 4; fontSize: 7; verticalAlign: center; text: ?'></a-entity>
 
-					<a-entity id='questionTScreen' position='0 1.75 .1' n-text='width: 14; height: 4; fontSize: 7; verticalAlign: center; text: ?'></a-entity>
+					<a-entity id='aTScreen' position='-3.7 -1.5 .02' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: A: '></a-entity>
+					<a-entity id='bTScreen' position='3.7 -1.5 .02' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: B: '></a-entity>
+					<a-entity id='cTScreen' position='-3.7 -3.2 .02' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: C: '></a-entity>
+					<a-entity id='dTScreen' position='3.7 -3.2 .02' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: D: '></a-entity>
 
-					<a-entity id='aTScreen' position='-3.7 -1.5 .15' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: A: '></a-entity>
-					<a-entity id='bTScreen' position='3.7 -1.5 .15' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: B: '></a-entity>
-					<a-entity id='cTScreen' position='-3.7 -3.2 .15' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: C: '></a-entity>
-					<a-entity id='dTScreen' position='3.7 -3.2 .15' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: D: '></a-entity>
-
-					<a-entity id='screenBorder'>
-						<a-plane position='0 0 .01' scale='15 9 1' altspace-cursor-collider='enabled: false'></a-plane>
-						<a-plane position='0 0 .01' scale='16 8 1' altspace-cursor-collider='enabled: false'></a-plane>
-
-						<a-circle position='7.5 4 .01' radius='.5' altspace-cursor-collider='enabled: false'></a-circle>
-						<a-circle position='-7.5 4 .01' radius='.5' altspace-cursor-collider='enabled: false'></a-circle>
-						<a-circle position='7.5 -4 .01' radius='.5' altspace-cursor-collider='enabled: false'></a-circle>
-						<a-circle position='-7.5 -4 .01' radius='.5' altspace-cursor-collider='enabled: false'></a-circle>
-					</a-entity>
-
-					<a-plane position='0 0 .02' scale='15 8.6 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
-					<a-plane position='0 0 .02' scale='15.6 8 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
-
-					<a-circle position='7.5 4 .02' radius='.3' color='black' altspace-cursor-collider='enabled: false'></a-circle>
-					<a-circle position='-7.5 4 .02' radius='.3' color='black' altspace-cursor-collider='enabled: false'></a-circle>
-					<a-circle position='7.5 -4 .02' radius='.3' color='black' altspace-cursor-collider='enabled: false'></a-circle>
-					<a-circle position='-7.5 -4 .02' radius='.3' color='black' altspace-cursor-collider='enabled: false'></a-circle>
+					<a-entity id='pregameTimeCount' position='0 3.3 .01' n-text='fontSize: 8'></a-entity>
 				</a-entity>
 
 				<a-entity id='endScreen' position='0 0 -.2'>
-					<a-entity id='endGameText' position='0 0 .1' scale='2 2 2' n-text='text: Winner:\nPlayer 1''></a-entity>
+					<a-entity id='endGameText' position='0 0 .01' scale='2 2 2' n-text='text: Winner:\nPlayer 1'></a-entity>
 				</a-entity>
 			</a-entity>
 		</a-entity>
 
 		
 		<a-entity id='hostPodium' position='2.3 .06 -1.2' rotation='0 105 0'>
-			<!-- <a-box position='0 .6 0' scale='.5 1.2 .5' color='#666'></a-box> -->
-			<!-- <a-box position='0 1.2 0' scale='.6 .6 .2' rotation='-70 0 0' color='#555'></a-box> -->
-			<a-entity position='0 1.28 -.08' rotation='-73.5 0 0' scale='.03 .03 .03'>
-				<a-plane scale='16 9 1' color='#666' n-mesh-collider='type: hologram; convex: false'></a-plane>
+			<a-entity position='0 1.28 -.075' rotation='-73.3 0 0' scale='.03 .03 .03'>
+				<a-plane position='0 0 -.1' scale='16 9 1' color='#666' n-mesh-collider='type: hologram; convex: false'></a-plane>
 
 				<a-entity id='titleScreen2' position='0 0 0'>
 					<a-entity position='0 0 .1' scale='2 2 2' n-text='text: Logo\ngoes here'></a-entity>
@@ -106,15 +75,10 @@
 				</a-entity>
 
 				<a-entity id='gameScreen2' position='0 0 -.2'>
-					<a-plane position='-3.7 -1.5 .1' scale='6.8 1.3 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
-					<a-plane position='3.7 -1.5 .1' scale='6.8 1.3 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
-					<a-plane position='-3.7 -3.2 .1' scale='6.8 1.3 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
-					<a-plane position='3.7 -3.2 .1' scale='6.8 1.3 1' color='black' altspace-cursor-collider='enabled: false'></a-plane>
-
-					<a-plane id='aB' position='-3.7 -1.5 .05' scale='7 1.5 1' color='white' n-mesh-collider='type: hologram; convex: false'></a-plane>
-					<a-plane id='bB' position='3.7 -1.5 .05' scale='7 1.5 1' color='white' n-mesh-collider='type: hologram; convex: false'></a-plane>
-					<a-plane id='cB' position='-3.7 -3.2 .05' scale='7  1.5 1' color='white' n-mesh-collider='type: hologram; convex: false'></a-plane>
-					<a-plane id='dB' position='3.7 -3.2 .05' scale='7 1.5 1' color='white' n-mesh-collider='type: hologram; convex: false'></a-plane>
+					<a-entity id='aB' position='-3.7 -1.5 .05' n-mesh-collider='type: hologram; convex: false'></a-entity>
+					<a-entity id='bB' position='3.7 -1.5 .05' n-mesh-collider='type: hologram; convex: false'></a-entity>
+					<a-entity id='cB' position='-3.7 -3.2 .05' n-mesh-collider='type: hologram; convex: false'></a-entity>
+					<a-entity id='dB' position='3.7 -3.2 .05' n-mesh-collider='type: hologram; convex: false'></a-entity>
 
 					<a-entity id='questionT' position='0 1.75 .1' n-text='width: 14; height: 4; fontSize: 7; verticalAlign: center; text: ?'></a-entity>
 
@@ -132,17 +96,38 @@
 
 				<a-box id='endGameB' position='-7 -9 0' scale='1 1 .5' color='red' n-text='fontSize: 5; horizontalAlign: right; width: 7; text: End Game' n-box-collider='type: hologram'></a-box>
 				<a-box id='resetB' position='7 -9 0' scale='1 1 .5' color='black' n-text='fontSize: 5; horizontalAlign: left; width: 9; text: Reset Buzzers' n-box-collider='type: hologram'></a-box>
+
+				<a-box id='controlB' position='11 -9 0' scale='1 1 .5' color='blue' n-text='fontSize: 5; horizontalAlign: right; width: 9; text: Control Panel' n-box-collider='type: hologram'></a-box>
+			</a-entity>
+
+			<a-entity position='.4 1.1 .4' rotation='-70 -50 0' scale='.25 .25 .25'>
+					<a-box id='manJoinB' position='0 1 0' scale='.1 .1 .1' color='red' n-text='fontSize: 5; horizontalAlign: left; width: 9; text: Manual Join' n-box-collider='type: hologram'></a-box>
+					<a-box id='clearPlayersB' position='0 .8 0' scale='.1 .1 .1' color='red' n-text='fontSize: 5; horizontalAlign: left; width: 9; text: Clear Podiums' n-box-collider='type: hologram'></a-box>
 			</a-entity>
 			
-			<a-entity position='-.6 1.2 .3' rotation='-70 50 0'>
-				<a-box position='0 0 0' scale='.6 .3 .05' color='#666'></a-box>
+			<a-entity id='pregameControls' position='-.6 1.2 .3' rotation='-70 50 0'>
+				<a-box position='0 0 0' scale='.35 .3 .05' color='#666'></a-box>
 				<a-entity position='0 .12 .03' scale='.05 .05 .05' n-text='text: pre-game'></a-entity>
-				<a-entity id='preRemain' position='0.15 .06 .03' scale='.03 .03 .03' n-text='text: Remaining: 0'></a-entity>
-				<a-entity id='preLeaders' position='0.15 -.05 .03' scale='.03 .03 .03' n-text='horizontalAlign: left; text: 1:\n2:\n3:\n4:\n5:'></a-entity>
 
-				<a-box id='pregameStart' position='-.25 -.08 .03' scale='.05 .05 .01' color='red' n-text='verticalAlign: top; height: 2.5; fontSize: 6; text: Start' n-box-collider='type: hologram'></a-box>
-				<a-box id='pregameNext' position='-.15 -.08 .03' scale='.05 .05 .01' color='green' n-text='verticalAlign: top; height: 2.5; fontSize: 6; text: Next' n-box-collider='type: hologram'></a-box>
-				<a-box id='pregameEnd' position='-.05 -.08 .03' scale='.05 .05 .01' color='blue' n-text='verticalAlign: top; height: 2.5; fontSize: 6; text: End' n-box-collider='type: hologram'></a-box>
+				<a-box id='pregameStart' position='-.1 -.08 .03' scale='.05 .05 .01' color='red' n-text='verticalAlign: top; height: 2.5; fontSize: 6; text: Start' n-box-collider='type: hologram'></a-box>
+				<a-box id='pregameNext' position='0 -.08 .03' scale='.05 .05 .01' color='green' n-text='verticalAlign: top; height: 2.5; fontSize: 6; text: Next' n-box-collider='type: hologram'></a-box>
+				<a-box id='pregameEnd' position='.1 -.08 .03' scale='.05 .05 .01' color='blue' n-text='verticalAlign: top; height: 2.5; fontSize: 6; text: End' n-box-collider='type: hologram'></a-box>
+			</a-entity>
+
+			<a-entity position='0 .9 -.2' rotation='-10 0 0'>
+				<a-entity id='hostControlPanel' position='0 .25 0' scale='.7 .7 1'>
+					<a-box position='0 0 0' scale='0.6 0.34 .02' color='black'></a-box>
+					<a-box position='0 0 0' scale='0.54 0.4 .02' color='black'></a-box>
+					<a-cylinder position='.27 .17 0' rotation='90 0 0' height='.02' radius='.03' segments-height='1' color='black'></a-cylinder>
+					<a-cylinder position='.27 -.17 0' rotation='90 0 0' height='.02' radius='.03' segments-height='1' color='black'></a-cylinder>
+					<a-cylinder position='-.27 .17 0' rotation='90 0 0' height='.02' radius='.03' segments-height='1' color='black'></a-cylinder>
+					<a-cylinder position='-.27 -.17 0' rotation='90 0 0' height='.02' radius='.03' segments-height='1' color='black'></a-cylinder>
+
+				<a-entity id='preRemain' position='0.215 0.16 .012' scale='.3 .3 .3' n-text='width: 1; fontSize: 1; horizontalAlign: left; text:Remaining: 0'></a-entity>
+
+				<a-entity position='0 0.12 .012' scale='.3 .3 .3' n-text='width: 1.8; fontSize: 1; horizontalAlign: left; text:Player			Points 	Avg'></a-entity>
+				<a-entity id='preLeaders' position='.29 -.045 .012' scale='.3 .3 .3' n-text='width: 3.8; fontSize: 1; horizontalAlign: left; text:1:\n2:\n3:\n4:\n5:\n6:\n7:\n8:'></a-entity>
+				</a-entity>
 			</a-entity>
 		</a-entity>
 
@@ -152,6 +137,7 @@
 					<a-entity id='p1Name' position='0 .23 .005' scale='.2 .2 .2' n-text='fontSize: 1; text: <color=black>Player 1'></a-entity>
 					<a-entity id='p1Score' position='0 0 .005' scale='.9 .9 .9' n-text='fontSize: 3; text: <color=black>1'></a-entity>
 				</a-entity>
+				<a-sphere id='p1Join' class='joinButton' position='0 -.5 0' radius='.2' color='#a00' n-billboard n-text='fontSize: 1; verticalAlign: top; height: 0.8; text: Click to join' n-sphere-collider='radius: 0.2; type: hologram'></a-sphere>
 			</a-entity>
 
 			<a-entity id='podium2' position='-.8 0 0'>
@@ -159,6 +145,7 @@
 					<a-entity id='p2Name' position='0 .23 .005' scale='.2 .2 .2' n-text='fontSize: 1; text: <color=black>Player 2'></a-entity>
 					<a-entity id='p2Score' position='0 0 .005' scale='.9 .9 .9' n-text='fontSize: 3; text: <color=black>2'></a-entity>
 				</a-entity>
+				<a-sphere id='p2Join' class='joinButton' position='0 -.5 0' radius='.2' color='#a00' n-billboard n-text='fontSize: 1; verticalAlign: top; height: 0.8; text: Click to join' n-sphere-collider='radius: 0.2; type: hologram'></a-sphere>
 			</a-entity>
 
 			<a-entity id='podium3' position='0 0 0'>
@@ -166,6 +153,7 @@
 					<a-entity id='p3Name' position='0 .23 .005' scale='.2 .2 .2' n-text='fontSize: 1; text: <color=black>Player 3'></a-entity>
 					<a-entity id='p3Score' position='0 0 .005' scale='.9 .9 .9' n-text='fontSize: 3; text: <color=black>3'></a-entity>
 				</a-entity>
+				<a-sphere id='p3Join' class='joinButton' position='0 -.5 0' radius='.2' color='#a00' n-billboard n-text='fontSize: 1; verticalAlign: top; height: 0.8; text: Click to join' n-sphere-collider='radius: 0.2; type: hologram'></a-sphere>
 			</a-entity>
 
 			<a-entity id='podium4' position='.8 0 0'>
@@ -173,6 +161,7 @@
 					<a-entity id='p4Name' position='0 .23 .005' scale='.2 .2 .2' n-text='fontSize: 1; text: <color=black>Player 4'></a-entity>
 					<a-entity id='p4Score' position='0 0 .005' scale='.9 .9 .9' n-text='fontSize: 3; text: <color=black>4'></a-entity>
 				</a-entity>
+				<a-sphere id='p4Join' class='joinButton' position='0 -.5 0' radius='.2' color='#a00' n-billboard n-text='fontSize: 1; verticalAlign: top; height: 0.8; text: Click to join' n-sphere-collider='radius: 0.2; type: hologram'></a-sphere>
 			</a-entity>
 
 			<a-entity id='podium5' position='1.6 0 0'>
@@ -180,6 +169,7 @@
 					<a-entity id='p5Name' position='0 .23 .005' scale='.2 .2 .2' n-text='fontSize: 1; text: <color=black>Player 5'></a-entity>
 					<a-entity id='p5Score' position='0 0 .005' scale='.9 .9 .9' n-text='fontSize: 3; text: <color=black>5'></a-entity>
 				</a-entity>
+				<a-sphere id='p5Join' class='joinButton' position='0 -.5 0' radius='.2' color='#a00' n-billboard n-text='fontSize: 1; verticalAlign: top; height: 0.8; text: Click to join' n-sphere-collider='radius: 0.2; type: hologram'></a-sphere>
 			</a-entity>
 
 			<a-box id='contestantContainer1' position='-2 1 -1' scale='2 2 2' material='visible: false' opacity='.01' altspace-cursor-collider='enabled: false'></a-box>
@@ -188,21 +178,6 @@
 		</a-entity>
 
 		<a-entity position='0 3.5 6'>
-			<a-entity position='-4 0 0'>
-				<a-box position='-.05 .05 0' scale='.1 .3 .8' color='#666'></a-box>
-				<a-entity position='.01 .12 0' scale='.1 .1 .1' rotation='0 90 0' n-text='fontSize: 7; text: Podiums'></a-entity>
-				<a-box id='p1Join' class='joinButton' position='0 0 .3' scale='.05 .05 .05' color='red' n-box-collider='type: hologram'></a-box>
-				<a-box id='p2Join' class='joinButton' position='0 0 .15' scale='.05 .05 .05' color='red' n-box-collider='type: hologram'></a-box>
-				<a-box id='p3Join' class='joinButton' position='0 0 0' scale='.05 .05 .05' color='red' n-box-collider='type: hologram'></a-box>
-				<a-box id='p4Join' class='joinButton' position='0 0 -.15' scale='.05 .05 .05' color='red' n-box-collider='type: hologram'></a-box>
-				<a-box id='p5Join' class='joinButton' position='0 0 -.3' scale='.05 .05 .05' color='red' n-box-collider='type: hologram'></a-box>
-
-				<a-box position='0 0 .3' scale='.02 .06 .06' color='#a00'></a-box>
-				<a-box position='0 0 .15' scale='.02 .06 .06' color='#c60'></a-box>
-				<a-box position='0 0 0' scale='.02 .06 .06' color='#aa0'></a-box>
-				<a-box position='0 0 -.15' scale='.02 .06 .06' color='#090'></a-box>
-				<a-box position='0 0 -.3' scale='.02 .06 .06' color='#22b'></a-box>
-			</a-entity>
 
 			<a-entity position='4 0 0'>
 				<a-box position='.05 .05 0' scale='.1 .3 .3' color='#666'></a-box>
@@ -214,12 +189,11 @@
 		<a-entity id='buzzIn' sync sync-n-sound></a-entity>
 		<a-entity id='correct' sync sync-n-sound></a-entity>
 		<a-entity id='incorrect' sync sync-n-sound></a-entity>
-
 	</a-scene>
 <script>
 	var scene = document.querySelector('a-scene');
 	scene.addEventListener('connected', function() {
-  	var sync = scene.systems['sync-system'].connection;
+	var sync = scene.systems['sync-system'].connection;
 
 	buzzIn.setAttribute('n-sound', {src: /Mobile/i.test(navigator.userAgent) ? 'https://bengarfield.github.io/AltVR/Hive/sounds/ding.mp3' : 'https://bengarfield.github.io/AltVR/Hive/sounds/ding.ogg', volume: 0.3, spatialBlend: 0.5});
 	correct.setAttribute('n-sound', {src: /Mobile/i.test(navigator.userAgent) ? 'https://bengarfield.github.io/AltVR/codenames/sounds/win2.mp3' : 'https://bengarfield.github.io/AltVR/codenames/sounds/win2.ogg', volume: 0.3, spatialBlend: 0.5});
@@ -235,6 +209,48 @@
 		loader.load('models/podiumTall.obj', podiumLoad, undefined, undefined);
 		loader.load('models/hostPodium.obj', hostPodiumLoad, undefined, undefined);
 		loader.load('models/stage.obj', stageLoad, undefined, undefined);
+		loader.load('models/screen.obj', screenLoad, undefined, undefined);
+		loader.load('models/button.obj', buttonLoad, undefined, undefined);
+
+		var modelsLoaded = 0;
+		
+		function buttonLoad(obj) {
+			obj.scale.setScalar(2);
+			obj.position.set(0,0,0);
+			obj.getObjectByName('inner').material.color = new THREE.Color(0,0,0);
+			
+			var buttons = [aBScreen,bBScreen,cBScreen,dBScreen,aB,bB,cB,dB];
+			for (var i = 0; i < buttons.length; i++) {
+				var b = obj.clone();
+				b.getObjectByName('outer').material = b.getObjectByName('outer').material.clone();
+
+				buttons[i].setObject3D('mesh', b);
+				buttons[i].emit('model-loaded', {format: 'obj', model: b});
+			}
+			modelsLoaded++;
+			modelCheck();
+		}
+
+		function screenLoad(obj) {
+			obj.scale.setScalar(2);
+			obj.position.set(0,0,-.1)
+
+			obj.getObjectByName('screen').userData.altspace = {collider: {enabled: false}};
+			obj.getObjectByName('border').userData.altspace = {collider: {enabled: false}};
+			obj.getObjectByName('edge').userData.altspace = {collider: {enabled: false}};
+
+			var edge = new THREE.Color(.2,.2,.2);
+
+			obj.getObjectByName('screen').material.color = new THREE.Color(0,0,0);
+			obj.getObjectByName('border').material.color = new THREE.Color(0,0,0);
+			obj.getObjectByName('border').material.map = new THREE.TextureLoader().load('models/timer.png');
+			console.log('timer', obj.getObjectByName('border').material);
+			obj.getObjectByName('edge').material = new THREE.MeshBasicMaterial({color: edge, map: new THREE.TextureLoader().load('models/screen.png')});
+
+			bigScreen.object3D.add(obj);
+			modelsLoaded++;
+			modelCheck();
+		}
 
 		function stageLoad(obj) {
 			console.log('stage', obj);
@@ -243,7 +259,10 @@
 
 			obj.getObjectByName('Cylinder').material = new THREE.MeshBasicMaterial({color: stage, map: new THREE.TextureLoader().load('models/stage.png')});
 			obj.getObjectByName('Cylinder').userData.altspace = {collider: {enabled: false}};
+
 			scene.object3D.add(obj);
+			modelsLoaded++;
+			modelCheck();
 		}
 
 		function hostPodiumLoad(obj) {
@@ -258,13 +277,17 @@
 
 			obj.getObjectByName('base').material = new THREE.MeshBasicMaterial({color: blue, map: new THREE.TextureLoader().load('models/hostBase.png')});
 			obj.getObjectByName('screen').material = new THREE.MeshBasicMaterial({color: 0x000000});
-			//obj.getObjectByName('stripes').material = new THREE.MeshBasicMaterial({color: 0x000000});
+			obj.getObjectByName('border').material = new THREE.MeshBasicMaterial({color: 0x000000});
 
-			//obj.remove(obj.getObjectByName('screen'));
+			// obj.getObjectByName('screen').userData.altspace = {collider: {enabled: false}};
+			obj.getObjectByName('border').userData.altspace = {collider: {enabled: false}};
+			// obj.getObjectByName('base').userData.altspace = {collider: {enabled: false}};
 
 			obj.getObjectByName('screen').userData.altspace = {collider: {enabled: false}};
 
 			hostPodium.object3D.add(obj);
+			modelsLoaded++;
+			modelCheck();
 		}
 
 		var black = new THREE.Color(0,0,0);
@@ -284,8 +307,7 @@
 
 			var blue = new THREE.Color(0,.2,.5);
 			var red = new THREE.Color(1,0,0);
-			var white = new THREE.Color(1,1,1);
-			var grey = new THREE.Color(.6,.6,.6);
+			
 
 			var darkBlue = new THREE.Color(0,.12,.3);
 			obj.getObjectByName('stripes').material.color.set(darkBlue);
@@ -302,9 +324,24 @@
 
 				document.querySelector('#podium' + i).object3D.add(p);
 				podiumList.push(p);
-			}
 
-			
+				document.querySelector('#p' + (i) + 'Join').setAttribute('color', '#' + podiumColors[i].getHexString());
+
+			}
+			modelsLoaded++;
+			modelCheck();
+		}
+
+		function modelCheck() {
+			if (modelsLoaded == 5) {
+				start();
+			}
+		}
+
+		var white = new THREE.Color(1,1,1);
+		var grey = new THREE.Color(.6,.6,.6);
+
+		function start() {
 			function setPanelLight(p,on) {
 				var panel = podiumList[p].getObjectByName('panels').material;
 				if (on) {
@@ -339,8 +376,28 @@
 					}
 				}
 			});
+
+			var players = [{joined: false},{joined: false},{joined: false},{joined: false},{joined: false}];
+			var manualJoin = false;
+			sync.instance.child('manualJoin').on('value', function(data){
+				if (data.val() != null) {
+					manualJoin = data.val();
+					for (var i = 0; i < 5; i++) {
+						if (manualJoin) {
+							if (!players[i].joined) {
+								document.querySelector('#p' + (i + 1) + 'Join').setAttribute('position', '0 2 0');
+							}
+							manJoinB.setAttribute('color', 'green');
+						} else {
+							document.querySelector('#p' + (i + 1) + 'Join').setAttribute('position', '0 -.5 0');
+							manJoinB.setAttribute('color', 'red');
+						}
+					}
+				} else {
+					sync.instance.child('manualJoin').set(false);
+				}
+			});
 			
-			var players = [];
 			sync.instance.child('players').on('value', function(data){
 				if (data.val() != null) {
 					//console.log(data.val());
@@ -359,14 +416,16 @@
 							document.querySelector('#p' + (i + 1) + 'Name').setAttribute('n-text', 'fontSize', size);
 							document.querySelector('#p' + (i + 1) + 'Name').setAttribute('n-text', 'text', '<color=black>' + data.val()[i].displayName);
 							document.querySelector('#p' + (i + 1) + 'Score').setAttribute('n-text', 'text', '<color=black>' + data.val()[i].score);
-							document.querySelector('#p' + (i + 1) + 'Join').setAttribute('color', 'green');
+							document.querySelector('#p' + (i + 1) + 'Join').setAttribute('position', '0 -.5 0');
 							if (!playerBuzzedIn) {
 								setPanelLight(i, true);
 							}
 						} else {
 							document.querySelector('#p' + (i + 1) + 'Name').setAttribute('n-text', 'text', '');
 							document.querySelector('#p' + (i + 1) + 'Score').setAttribute('n-text', 'text', '');
-							document.querySelector('#p' + (i + 1) + 'Join').setAttribute('color', 'red');
+							if (manualJoin) {
+								document.querySelector('#p' + (i + 1) + 'Join').setAttribute('position', '0 2 0');
+							}
 							setPanelLight(i, false);
 						}
 						if (players[i].id == user.userId) {
@@ -459,9 +518,7 @@
 	        }
 	        done = false;
 	        playerBuzzedIn = null;
-	        screenBorder.object3D.children.forEach(function(c,i){
-						c.children[0].material.color = podiumColors[0];
-					});
+	        setBorderColor(0);
 	      } else {
 	        	var p = data.val()[Object.keys(data.val())[0]];
 	        	for (var i = 0; i < 5; i++) {
@@ -478,12 +535,51 @@
 	          //done = true;
 	          playerBuzzedIn = p;
 
-	          screenBorder.object3D.children.forEach(function(c,i){
-							c.children[0].material.color = podiumColors[p];
-						});
+	          setBorderColor(p);
 	        //}
 	      }
 	    });
+
+			function setBorderColor(color) {
+				bigScreen.object3D.getObjectByName('border').material.color.set(podiumColors[color]);
+				hostPodium.object3D.getObjectByName('border').material.color.set(podiumColors[color]);
+			}
+
+			var pregameScores = [];
+			var responseTimes = [];
+
+			var preUser = sync.instance.child('pregame').child('players').child(user.displayName + user.userId);
+
+			sync.instance.child('pregame').child('players').on('child_added', function(data){
+				pregameScores.push(data.val());
+				sortScores();
+			});
+
+			sync.instance.child('pregame').child('players').on('child_changed', function(data){
+				console.log(data.val());
+				pregameScores.forEach(function(s,i){
+					if (s.userId == data.val().userId) {
+						pregameScores[i] = data.val();
+						sortScores();
+					}
+				});
+			});
+
+			var mode;
+			sync.instance.child('mode').on('value', function(data){
+				if (data.val() != null) {
+					mode = data.val();
+					if (mode == 'pregame') {
+						new TWEEN.Tween(hostControlPanel.object3D.position).to(controlPos[0].pos, 500).start();
+						new TWEEN.Tween(hostControlPanel.object3D.scale).to(controlPos[0].scale, 500).start();
+					} else {
+						new TWEEN.Tween(hostControlPanel.object3D.position).to(controlPos[1].pos, 500).start();
+						new TWEEN.Tween(hostControlPanel.object3D.scale).to(controlPos[1].scale, 500).start();
+					}
+				} else {
+					sync.instance.child('mode').set('category');
+				}
+			});
 
 	    var screenState;
 	    sync.instance.child('screenState').on('value', function(data){
@@ -505,16 +601,36 @@
 						gameScreen.setAttribute('position', '0 0 0');
 						gameScreen2.setAttribute('position', '0 0 0');
 					} else {
-						var winner;
-						for (var i = 0; i < 5; i++) {
-							if (players[i].joined) {
-								if (winner == null || players[i].score > winner.score) {
-									winner = players[i];
+						if (mode == 'pregame') {
+							console.log(pregameScores);
+							
+							var str = '<size=60%>Top 5<size=15%>\n\n<size=45%><align="left">										<color=#' + podiumColors[5].getHexString() + '>1:<color="white"> ';
+							var str2 = str;
+							for (var i = 0; i < 5; i++) {
+								var temp = pregameScores[i].displayName + '		' + Math.floor(pregameScores[i].score);
+								str += temp;
+								str2 += temp + '	' + (10 - Math.round(((pregameScores[i].score - Math.floor(pregameScores[i].score)) * 10) * 100) / 100);
+								if (i < 4) {
+									str += '\n		<color=#' + podiumColors[5 - (i+1)].getHexString() + '>' + (i + 2) + ':<color="white"> ';
+									str2 += '\n		<color=#' + podiumColors[5 - (i+1)].getHexString() + '>' + (i + 2) + ':<color="white"> ';
 								}
 							}
+							
+							endGameText.setAttribute('n-text', 'text', str);
+							
+							endGameText2.setAttribute('n-text', 'text', str2);
+						} else {
+							var winner;
+							for (var i = 0; i < 5; i++) {
+								if (players[i].joined) {
+									if (winner == null || players[i].score > winner.score) {
+										winner = players[i];
+									}
+								}
+							}
+							endGameText.setAttribute('n-text', 'text', 'Winner:\n' + winner.displayName);
+							endGameText2.setAttribute('n-text', 'text', 'Winner:\n' + winner.displayName);
 						}
-						endGameText.setAttribute('n-text', 'text', 'Winner:\n' + winner.displayName);
-						endGameText2.setAttribute('n-text', 'text', 'Winner:\n' + winner.displayName);
 
 						endScreen.setAttribute('position', '0 0 0');
 						endScreen2.setAttribute('position', '0 0 0');
@@ -522,15 +638,6 @@
 
 				} else {
 					sync.instance.child('screenState').set(1);
-				}
-			});
-
-			var mode;
-			sync.instance.child('mode').on('value', function(data){
-				if (data.val() != null) {
-					mode = data.val();
-				} else {
-					sync.instance.child('mode').set('category');
 				}
 			});
 
@@ -575,12 +682,22 @@
 					sync.instance.child('round').set(0);
 				}
 			});
+			
+			var lastPlayer;
+			sync.instance.child('lastToChoose').on('value', function(data){
+				if (data.val() != null) {
+					lastPlayer = data.val();
+				} else {
+					sync.instance.child('lastToChoose').set(4);
+				}
+			});
 
 			var categoriesOnScreen;
 			sync.instance.child('categories').on('value', function(data){
 				if (data.val() != null) {
 					//mode = data.val();
 					console.log(data.val());
+					resetScreenButtons();
 					categoriesOnScreen = data.val();
 					if (mode == 'category') {
 						var d
@@ -603,6 +720,8 @@
 				    bTScreen.setAttribute('n-text', 'text', data.val()[1]);
 				    cTScreen.setAttribute('n-text', 'text', data.val()[2]);
 				    dTScreen.setAttribute('n-text', 'text', data.val()[3]);
+
+						setBorderColor(lastPlayer + 1);
 					}
 
 					if (screenState != 3) {
@@ -628,10 +747,11 @@
 			sync.instance.child('current').on('value', function(data){
 				if (data.val() != null) {
 					current = data.val();
-					if (current != -1 && mode == 'question') {
+					if (current != -1 && (mode == 'question') || (mode == 'pregame')) {
+						if (mode == 'pregame' && current == 0) {
+							inPregame = true;
+						}
 						nextQ(current);
-					} else {
-						//reset();
 					}
 				} else {
 					sync.instance.child('current').set(-1);
@@ -639,17 +759,10 @@
 			});
 
 			sync.instance.child('selectedAnswer').on('value', function(data){
-				aB.setAttribute('color', '#fff');
-				bB.setAttribute('color', '#fff');
-				cB.setAttribute('color', '#fff');
-				dB.setAttribute('color', '#fff');
-				aBScreen.setAttribute('color', '#fff');
-				bBScreen.setAttribute('color', '#fff');
-				cBScreen.setAttribute('color', '#fff');
-				dBScreen.setAttribute('color', '#fff');
+				resetScreenButtons();
 				if (data.val() != null) {
-					document.querySelector('#' + data.val() + 'B').setAttribute('color', '#0af');
-					document.querySelector('#' + data.val() + 'BScreen').setAttribute('color', '#0af');
+					document.querySelector('#' + data.val() + 'B').object3D.getObjectByName('outer').material.color.set(new THREE.Color('#0af'));
+					document.querySelector('#' + data.val() + 'BScreen').object3D.getObjectByName('outer').material.color.set(new THREE.Color('#0af'));
 				}
 				selected = data.val();
 			});
@@ -657,11 +770,11 @@
 			var answered;
 			sync.instance.child('answered').on('value', function(data){
 				if (data.val()) {
-					document.querySelector('#' + answer + 'B').setAttribute('color', 'green');
-					document.querySelector('#' + answer + 'BScreen').setAttribute('color', 'green');
+					document.querySelector('#' + answer + 'B').object3D.getObjectByName('outer').material.color.set(new THREE.Color('green'));
+					document.querySelector('#' + answer + 'BScreen').object3D.getObjectByName('outer').material.color.set(new THREE.Color('green'));
 					if (selected != answer && selected != null) {
-						document.querySelector('#' + selected + 'B').setAttribute('color', 'red');
-						document.querySelector('#' + selected + 'BScreen').setAttribute('color', 'red');
+						document.querySelector('#' + selected + 'B').object3D.getObjectByName('outer').material.color.set(new THREE.Color('red'));
+						document.querySelector('#' + selected + 'BScreen').object3D.getObjectByName('outer').material.color.set(new THREE.Color('red'));
 						setColor(playerBuzzedIn - 1, 'wrong');
 						//sync.instance.child('podiumLightState').child(playerBuzzedIn - 1).set('wrong');
 					} else if (selected == answer) {
@@ -669,18 +782,21 @@
 						//sync.instance.child('podiumLightState').child(playerBuzzedIn - 1).set('correct');
 					}
 				} else {
-					aB.setAttribute('color', '#fff');
-					bB.setAttribute('color', '#fff');
-					cB.setAttribute('color', '#fff');
-					dB.setAttribute('color', '#fff');
-					aBScreen.setAttribute('color', '#fff');
-					bBScreen.setAttribute('color', '#fff');
-					cBScreen.setAttribute('color', '#fff');
-					dBScreen.setAttribute('color', '#fff');
+					resetScreenButtons();
 				}
 				answered = data.val();
 			});
 
+			function resetScreenButtons() {
+					aB.object3D.getObjectByName('outer').material.color.set(new THREE.Color('#fff'));
+					bB.object3D.getObjectByName('outer').material.color.set(new THREE.Color('#fff'));
+					cB.object3D.getObjectByName('outer').material.color.set(new THREE.Color('#fff'));
+					dB.object3D.getObjectByName('outer').material.color.set(new THREE.Color('#fff'));
+					aBScreen.object3D.getObjectByName('outer').material.color.set(new THREE.Color('#fff'));
+					bBScreen.object3D.getObjectByName('outer').material.color.set(new THREE.Color('#fff'));
+					cBScreen.object3D.getObjectByName('outer').material.color.set(new THREE.Color('#fff'));
+					dBScreen.object3D.getObjectByName('outer').material.color.set(new THREE.Color('#fff'));
+			}
 
 			contestantContainer1.object3D.addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({
 		    joints: [['Head','Center',0]],
@@ -834,74 +950,83 @@
 			var questionsLoaded = false;
 			var loadingQuestions = false;
 			function getAllQuestions() {
-				loadingQuestions = true;
+		  	loadingQuestions = true;
+		  	var diffs = ['easy','medium','hard'];
 		  	var dataRequest = new THREE.FileLoader();
-				dataRequest.load('https://opentdb.com/api_token.php?command=request&' + Math.random().toString(), function(obj){
+
+		  	dataRequest.load('https://opentdb.com/api_token.php?command=request&' + Math.random().toString(), function(obj){
 			    var token = JSON.parse(obj).token;
-			  	var i = 0;
-			  	var d = 0;
-			  	var diffs = ['easy','medium','hard']
-			  	function next() {
-				  	dataRequest.load('https://opentdb.com/api.php?amount=5&difficulty=' + diffs[d] + '&type=multiple&encode=url3986&category=' + categories[i].id + '&token=' + token + '&' + Math.random().toString(), function(obj){
-			  			var data = JSON.parse(obj);
-			  			decode(data);
+			    var done = 0;
+
+			  	categories.forEach(function(c){
+			  		qGet(c,diffs[0]);
+			  		qGet(c,diffs[1]);
+			  		qGet(c,diffs[2]);
+			  	});
+
+			  	pregameQGet(4,diffs[0]);
+			  	pregameQGet(3,diffs[1]);
+			  	pregameQGet(3,diffs[2]);
+
+			  	function qGet(cat,diff) {
+			  		dataRequest.load('https://opentdb.com/api.php?amount=5&difficulty=' + diff + '&type=multiple&encode=url3986&category=' + cat.id + '&token=' + token + '&' + Math.random().toString(), function(obj){
+							var data = JSON.parse(obj);
+
+							if (data.response_code != 0) {
+								console.log('ERROR: ' + cat.id + ' ' + cat.name +  ' ' + diff);
+								sync.instance.child('categoriesDone').push(cat);
+							}
+
+							decode(data);
 			  			sortAnswers(data.results);
-			  			//console.log(Math.round((i + 1) / (categories.length + 3) * 100) + '%');
-			  			questionLoadText.setAttribute('n-text', 'text', Math.round((i + ((d + 1) / 3)) / (categories.length + 3) * 100) + '%');
-			  			//questions[categories[i].id.toString()] = {category: categories[i].name, questions: data.results};
 
-			  			if (questions[categories[i].id.toString()]) {
-			  				questions[categories[i].id.toString()][diffs[d]] = data.results;
+
+							if (questions[cat.id.toString()]) {
+			  				questions[cat.id.toString()][diff] = data.results;
 			  			} else {
-			  				questions[categories[i].id.toString()] = {category: categories[i].name};
-			  				questions[categories[i].id.toString()][diffs[d]] = data.results;
+			  				questions[cat.id.toString()] = {category: cat.name};
+			  				questions[cat.id.toString()][diff] = data.results;
 			  			}
 
-			  			if (d != 2) {
-			  				d++;
-			  			} else {
-			  				d = 0;
-			  				i++;
-			  			}
-
-			  			if (i < categories.length - 1) {
-			  				//i++;
-			  				next();
-			  			} else {
-			  				var c = 0;
-			  				var pregame = [{diff:'easy',amm:4},{diff:'medium',amm:3},{diff:'hard',amm:3}];
-			  				function getPreGameQuestions() {
-			  					dataRequest.load('https://opentdb.com/api.php?amount=' + pregame[c].amm + '&difficulty=' + pregame[c].diff + '&type=multiple&encode=url3986&token=' + token + '&' + Math.random().toString(), function(obj){
-			  						var data = JSON.parse(obj);
-						  			decode(data);
-						  			sortAnswers(data.results);
-						  			/*for (var x = 0; x < data.results.length; x++) {
-						  				questions.pre_game.questions.push(data.results[x]);
-						  			}*/
-						  			data.results.forEach(function(q){
-						  				questions.pre_game.questions.push(q);
-						  			});
-
-						  			console.log(Math.round((i + 1 + c + 1) / (categories.length + 3) * 100) + '%');
-						  			questionLoadText.setAttribute('n-text', 'text', Math.round((i + 1 + c + 1) / (categories.length + 3) * 100) + '%');
-						  			if (c < pregame.length - 1) {
-						  				c++;
-						  				getPreGameQuestions();
-						  			} else {
-						  				console.log(questions);
-						  				questionLoadText.setAttribute('n-text', 'text', 'Questions loaded');
-						  				sync.instance.child('questions').set(questions);
-						  				questionsLoaded = true;
-						  				loadingQuestions = false;
-						  			}
-			  					}, undefined, undefined);
-			  				}
-			  				getPreGameQuestions();
-			  			}
-			  		}, undefined, undefined);
+							done ++;
+							questionLoadText.setAttribute('n-text', 'text', Math.round((done * 100) / ((categories.length * diffs.length) + 3)) + '%');
+							if (done == categories.length * diffs.length + 3) {
+								finished();
+							}
+						}, undefined, undefined);
 			  	}
-			  	next();
-			  }, undefined, undefined);
+
+			  	var preTemp = {};
+
+			  	function pregameQGet(amm,diff) {
+			  		dataRequest.load('https://opentdb.com/api.php?amount=' + amm + '&difficulty=' + diff + '&type=multiple&encode=url3986&token=' + token + '&' + Math.random().toString(), function(obj){
+							var data = JSON.parse(obj);
+							decode(data);
+			  			sortAnswers(data.results);
+			  			
+			  			preTemp[diff] = data.results;
+
+			  			if (preTemp.easy && preTemp.medium && preTemp.hard) {
+			  				questions.pre_game = {questions: preTemp.easy.concat(preTemp.medium,preTemp.hard)};
+			  			}
+
+							done ++;
+							questionLoadText.setAttribute('n-text', 'text', Math.round((done * 100) / ((categories.length * diffs.length) + 3)) + '%');
+							if (done == categories.length * diffs.length + 3) {
+								finished();
+							}
+						}, undefined, undefined);
+			  	}
+
+			  	function finished() {
+			  		console.log(questions);
+			  		questionLoadText.setAttribute('n-text', 'text', 'Questions loaded');
+						sync.instance.child('questions').set(questions);
+						questionsLoaded = true;
+						loadingQuestions = false;
+			  	}
+
+		  	}, undefined, undefined);
 		  }
 
 		  function sortAnswers(list) {
@@ -941,29 +1066,58 @@
 		  	}
 		  	return data;
 		  }
+			
+			var timeTemp;
+
+		  var timeAnim = new TWEEN.Tween(bigScreen.object3D.getObjectByName('border').material.map.offset).to({x: -.497}, 10000)
+				.onUpdate(function(){
+				var time = Math.floor(11 - timeAnim._object.x / timeAnim._valuesEnd.x * 10);
+				if (time != timeTemp) {
+					timeTemp = time;
+					//console.log(time);
+					pregameTimeCount.setAttribute('n-text', 'text', time);
+				}
+			}).onComplete(function(){
+				pregameTimeCount.setAttribute('n-text', 'text', "Time's up!");
+				pregameCheck();
+			});
+			//var timeAnim3 = new TWEEN.Tween(ringTimer.object3D.children[0].material.map.repeat).to({x:0.8,y:0.8}, 10000);
+			//var timeAnim4 = new TWEEN.Tween(ringTimer.object3D.children[0].material.map.offset).to({x:0.1,y:0.1}, 10000);
 
 		  function nextQ(c) {
+				setBorderColor(0);
 		  	current = c;
-		  	console.log('Question ' + (current + 1));
+		  	//console.log('Question ' + (current + 1));
 		  	answered = false;
+				var q;
 
-		  	aB.setAttribute('color', '#fff');
-				bB.setAttribute('color', '#fff');
-				cB.setAttribute('color', '#fff');
-				dB.setAttribute('color', '#fff');
-			
-				aBScreen.setAttribute('color', '#fff');
-				bBScreen.setAttribute('color', '#fff');
-				cBScreen.setAttribute('color', '#fff');
-				dBScreen.setAttribute('color', '#fff');
+		  	if (mode == 'pregame') {
+		  		pregameAnswer = null;
+					q = questions.pre_game.questions[current];
+					
+					bigScreen.object3D.getObjectByName('border').material.color = new THREE.Color(.5,1,1);
+					bigScreen.object3D.getObjectByName('border').material.map.offset.x = 0;
+					timeAnim.start();
+		  	} else {
+					pregameTimeCount.setAttribute('n-text', 'text', '');
+		  		bigScreen.object3D.getObjectByName('border').material.color = new THREE.Color(0,0,0);
+					bigScreen.object3D.getObjectByName('border').material.map.offset.x = 0;
+			  	q = questions[currentCategory][currentDiff][current];
+			  }
 
-		    console.log(questions[currentCategory][currentDiff][current].difficulty);
-		    console.log(questions[currentCategory][currentDiff][current].question);
+		  	resetScreenButtons();
 
-		    questionT.setAttribute('n-text', 'text', (current + 1) +  ': ' + questions[currentCategory][currentDiff][current].question);
-		    questionTScreen.setAttribute('n-text', 'text', questions[currentCategory][currentDiff][current].question);
+				if (mode == 'pregame' && !inPregame) {
+					aBScreen.object3D.getObjectByName('outer').material.color.set(new THREE.Color('#666'));
+					bBScreen.object3D.getObjectByName('outer').material.color.set(new THREE.Color('#666'));
+					cBScreen.object3D.getObjectByName('outer').material.color.set(new THREE.Color('#666'));
+					dBScreen.object3D.getObjectByName('outer').material.color.set(new THREE.Color('#666'));
+				}
 
-		    var answers = questions[currentCategory][currentDiff][current].answers
+		    questionT.setAttribute('n-text', 'text', (current + 1) +  ': ' + q.question);
+		    questionTScreen.setAttribute('n-text', 'text', q.question);
+
+		    var answers = q.answers
 
 		    var sizes = getSizes(answers);
 		    
@@ -987,7 +1141,7 @@
 		    cTScreen.setAttribute('n-text', 'fontSize', sizes[2]);
 		    dTScreen.setAttribute('n-text', 'fontSize', sizes[3]);
 
-		    answer = questions[currentCategory][currentDiff][current].correct_answer;
+		    answer = q.correct_answer;
 		  }
 
 		  function categorySelect() {
@@ -1003,6 +1157,30 @@
 		  	cTScreen.setAttribute('n-text', 'text', categoriesLeft[2].name);
 		  	dTScreen.setAttribute('n-text', 'text', categoriesLeft[3].name);
 		  }
+
+			function getNextPlayer(last) {
+				var check = false;
+				for (var i = 0; i < players.length; i++) {
+					if (players[i].joined) {
+						check = true;
+					}
+				}
+
+				if (check) {
+					var done = false;
+					while (!done) {
+						if (last == 0) {
+							last = players.length - 1;
+						} else {
+							last--;
+						}
+						if (players[last].joined) {
+							done = true;
+							return last;
+						}
+					}
+				}
+			}
 
 		  aB.addEventListener('mouseup', function(){
 		  	select('a');
@@ -1041,13 +1219,19 @@
 		  function checkAnswer(a) {
 		  	console.log(a, answer, scores, playerBuzzedIn);
 		  	if (a == answer) {
-			  	players[playerBuzzedIn - 1].score++;
-			  	//playSound(correct);
+					if (currentDiff == 'easy') {
+						players[playerBuzzedIn - 1].score++;
+					} else if (currentDiff == 'medium') {
+						players[playerBuzzedIn - 1].score += 2;
+					} else {
+						players[playerBuzzedIn - 1].score += 3;
+					}
+					
 			  	correct.components.sync.takeOwnership();
 			  	correct.components['n-sound'].playSound();
 			  } else {
 			  	players[playerBuzzedIn - 1].score--;
-			  	//playsound(wrong);
+
 			  	incorrect.components.sync.takeOwnership();
 			  	incorrect.components['n-sound'].playSound();
 			  }
@@ -1068,7 +1252,9 @@
 			  		sync.instance.child('round').set(0);
 			  		sync.instance.child('current').set(-1);
 			  		sync.instance.child('categoriesDone').set(null);
+						sync.instance.child('mode').set('category');
 			  		sync.instance.child('screenState').set(1);
+						sync.instance.child('lastToChoose').set(4);
 			  	} else {
 				  	sync.instance.child('screenState').set(3);
 				  }
@@ -1076,9 +1262,9 @@
 		  });
 
 		  function nextQuestion() {
-		  	if (current < 4) {
+		  	//if (current < 4) {
 			  	sync.instance.child('current').set(current + 1);
-			  }
+			  //}
 			  sync.instance.child('answered').set(false);
 			  sync.instance.child('selectedAnswer').set(null);
 			  sync.instance.child('click').set(null);
@@ -1094,11 +1280,6 @@
 						//console.log(categories);
 						for (var i = 0; i < categories.length; i++) {
 							if (categories[i].name == categoriesOnScreen[indexes.indexOf(selected)]) {
-								//console.log(categories[i]);
-								
-								//REPLACE WITH NEW
-								//getQs(categories[i].id);
-
 								sync.instance.child('category').set(categories[i].id);
 								sync.instance.child('categoriesDone').push(categories[i]);
 
@@ -1118,18 +1299,16 @@
 
 		  function categorySelect(rUp) {
 		  	shuffleArray(categoriesLeft);
-		  	console.log(categoriesLeft[0].name);
-		  	console.log(categoriesLeft[1].name);
-		  	console.log(categoriesLeft[2].name);
-		  	console.log(categoriesLeft[3].name);
-		  	//categorySelect();
+		  	
 		  	if (rUp) {
 			  	sync.instance.child('round').set(round + 1);
 			  }
+
 		  	sync.instance.child('click').set(null);
 		  	sync.instance.child('answered').set(false);
 			  sync.instance.child('selectedAnswer').set(null);
 		  	sync.instance.child('mode').set('category');
+				sync.instance.child('screenState').set(2);
 		  	sync.instance.child('categories').set([categoriesLeft[0].name,categoriesLeft[1].name,categoriesLeft[2].name,categoriesLeft[3].name]);
 		  	//console.log(categories);
 		  }
@@ -1139,27 +1318,64 @@
 			  	sync.instance.child('click').set(null);
 		  	}
 		  });
+			
+			var controlPos = [{pos: {x:0,y:.65,z:0}, scale: {x:1,y:1,z:1}}, {pos: {x:0,y:.25,z:0}, scale: {x:.7,y:.7,z:1}}];
+			var controlState = false;
+			controlB.addEventListener('mouseup', function(){
+		  	if (isHost || isMod) {
+			  	var i = 0;
+					if (controlState) {
+						i = 1;
+					}
+					controlState = !controlState;
+					new TWEEN.Tween(hostControlPanel.object3D.position).to(controlPos[i].pos, 500).start();
+					new TWEEN.Tween(hostControlPanel.object3D.scale).to(controlPos[i].scale, 500).start();
+		  	}
+		  });
+			
+			var firstPlayer = false;
 
+			function anyPlayers() {
+				var a = false;
+				for (var i = 0; i < players.length; i++) {
+					if (players[i].joined) {
+						a = true;
+					}
+				}
+				return a;
+			}
 
 		  hostNext.addEventListener('mouseup', function(){
 		  	if (isHost || isMod) {
-		  		console.log(current);
 		  		if (!questionsLoaded) {
 		  			console.log('loadQuestions');
 		  			if(!loadingQuestions) {
 			  			getAllQuestions();
 			  		}
-		  		} else if (current == -1 && selected == null || (answered && current == 4)) {
-		  			console.log('go to gategory selection');
-		  			if ((mode == 'category' && selected == null)) {
-		  				categorySelect(false);
-		  			} else {
-							categorySelect(true);
-		  			}
-		  		} else if (!answered) {
+		  		} else if ((current == -1 && selected == null) || (mode == 'category' && selected == null) || (answered && current == 4) || (mode == 'pregame' && screenState == 3)) {
+		  			if (anyPlayers()) {
+							console.log('go to gategory selection');
+							if (round == 0 && !players[4].joined && !firstPlayer) {
+								sync.instance.child('lastToChoose').set(getNextPlayer(lastPlayer));
+								firstPlayer = true;
+							}
+							if ((mode == 'category' && selected == null) || mode == 'pregame') {
+								categorySelect(false);
+							} else {							
+								sync.instance.child('lastToChoose').set(getNextPlayer(lastPlayer));
+								categorySelect(true);
+							}
+						} else {
+							console.log('start pregame');
+							startPregame();
+						}
+		  		} else if ((mode == 'category' && !answered) || mode == 'question' && !answered && ((playerBuzzedIn != null && selected != null) || (playerBuzzedIn == null && selected == null))) {
 		  			console.log('answer question');
 		  			answerQuestion();
-		  		} else if ((answered && current < 4) || (mode == 'category' && selected != null)) {
+		  		} else if (mode == 'pregame' && (current == 9 || remainingPlayers < 6)) {
+						console.log('end pregame');
+						endPregame();
+					} else if ((answered && current < 4) || (mode == 'category' && selected != null) || (mode == 'pregame' && current < 9 && screenState == 2)) {
 		  			console.log('go to next question');
 		  			nextQuestion();
 		  		}
@@ -1174,11 +1390,22 @@
 		  	}
 		  });
 
+			manJoinB.addEventListener('mouseup', function(){
+				if (isHost || isMod) {
+					sync.instance.child('manualJoin').set(!manualJoin);
+				}
+			});
+
+			clearPlayersB.addEventListener('mouseup', function(){
+				if (isHost || isMod) {
+					sync.instance.child('players').set(null);
+				}
+			});
+
 		  var joined = 0;
 		  for (var i = 0; i < 5; i++) {
 		  	document.querySelectorAll('.joinButton')[i].addEventListener('mouseup', function(e){
 			  	var i = parseInt(e.target.id.slice(1,2));
-			  	console.log(i);
 			  	if (!players[i - 1].joined && joined == 0) {
 			  		console.log('not joined');
 			  		//joined = i;
@@ -1189,79 +1416,148 @@
 			  	}
 			  });
 		  }
-		  
-			}
 
-			pregamestuff();
-			function pregamestuff() {
-				var inPregame = true;
-				var pregameScores = [];
-				var responseTimes = [];
+		  //PREGAME STUFF
+				
+			var inPregame = false;
+			var pregameScore = 0;
+			var remainingPlayers = 0;
+			
+			var responseTimes = [];
 
-				sync.instance.child('pregame').child('players').on('child_added', function(data){
-					//console.log('pregame players', data.val());
-					pregameScores.push(data.val());
-					sortScores();
-	  		});
+			var preUser = sync.instance.child('pregame').child('players').child(user.displayName + user.userId);
 
-	  		sync.instance.child('pregame').child('players').on('child_changed', function(data){
-					console.log(data.val());
-					pregameScores.forEach(function(s,i){
-						if (s.userId == data.val().userId) {
-							pregameScores[i] = data.val();
-							sortScores();
-						}
-					});
-	  		});
+			preUser.on('value', function(data){
+				if (data.val() != null) {
+					inPregame = data.val().inGame;
+				} else if (current > 0) {
+					inPregame = false;
+				}
+			});
 
-	  		function sortScores() {
+				function sortScores() {
 					sortByKey(pregameScores, 'score');
 					pregameScores.reverse();
 
-					var remaining = 0;
+					remainingPlayers = 0;
 
 					pregameScores.forEach(function(s) {
 						if (s.inGame) {
-							remaining++;
+							remainingPlayers++;
 						}
 					});
 
-					preRemain.setAttribute('n-text', 'text', 'Remaining: ' + remaining);
+					preRemain.setAttribute('n-text', 'text', 'Remaining: ' + remainingPlayers);
 
-					preLeaders.setAttribute('n-text', 'text', '1: ' + (pregameScores[0] ? pregameScores[0].displayName	: '') + '\n2: ' + (pregameScores[1] ? pregameScores[1].displayName	: '') + '\n3: ' + (pregameScores[2] ? pregameScores[2].displayName	: '') + '\n4: ' + (pregameScores[3] ? pregameScores[3].displayName	: '') + '\n5: ' + (pregameScores[4] ? pregameScores[4].displayName	: ''));
+					var str = '';
+					for (var i = 0; i < 8; i++) {
+						if (pregameScores[i]) {
+							str += (i + 1) + ': ' + pregameScores[i].displayName + '				' + Math.floor(pregameScores[i].score) + '	' + (10 - Math.round(((pregameScores[i].score - Math.floor(pregameScores[i].score)) * 10) * 100) / 100) + '\n';
+						} else {
+							str += (i + 1) + ': \n';
+						}
+					}
+					preLeaders.setAttribute('n-text', 'text', str);
 				}
 
-		  	pregameStart.addEventListener('mouseup', function(){
-		  		if ((isHost || isMod) && mode != 'pregame') {
-		  			sync.instance.child('click').set(null);
-				  	sync.instance.child('answered').set(false);
-					  sync.instance.child('selectedAnswer').set(null);
-		  			sync.instance.child('mode').set('pregame');
-		  			sync.instance.child('current').set(0);
-		  		}
-		  	});
+				pregameStart.addEventListener('mouseup', function(){
+					if ((isHost || isMod) && mode != 'pregame') {
+						startPregame();
+					}
+				});
 
-		  	pregameNext.addEventListener('mouseup', function(){
-		  		if (isHost || isMod) {
-		  			sync.instance.child('current').set(current + 1);
-		  		}
-		  	});
+				function startPregame() {
+					sync.instance.child('click').set(null);
+					sync.instance.child('answered').set(false);
+					sync.instance.child('selectedAnswer').set(null);
+					sync.instance.child('mode').set('pregame');
+					sync.instance.child('screenState').set(2);
+					sync.instance.child('current').set(0);
+				}
 
-		  	pregameEnd.addEventListener('mouseup', function(){
-		  		//if (isHost || isMod) {
-		  			var top5 = [(pregameScores[0] ? {displayName: pregameScores[0].displayName, id: pregameScores[0].userId, joined: true, score: 0}	: {joined: false}),
-		  			(pregameScores[1] ? {displayName: pregameScores[1].displayName, id: pregameScores[1].userId, joined: true, score: 0}	: {joined: false}),
-		  			(pregameScores[2] ? {displayName: pregameScores[2].displayName, id: pregameScores[2].userId, joined: true, score: 0}	: {joined: false}),
-		  			(pregameScores[3] ? {displayName: pregameScores[3].displayName, id: pregameScores[3].userId, joined: true, score: 0}	: {joined: false}),
-		  			(pregameScores[4] ? {displayName: pregameScores[4].displayName, id: pregameScores[4].userId, joined: true, score: 0}	: {joined: false})];
+				function endPregame() {
+					var top5 = [];
+					for (var i = 0; i < 5; i++) {
+						top5.push(pregameScores[i] ? {displayName: pregameScores[i].displayName, id: pregameScores[i].userId, joined: true, score: 0}	: {joined: false});
+					}
+					top5.reverse();
 
-		  			top5.reverse();
+					console.log(top5);
+					sync.instance.child('players').set(top5);
+					sync.instance.child('screenState').set(3);
+				}
 
-		  			console.log(top5);
-		  		//}
-		  	});
-		  }
+				pregameNext.addEventListener('mouseup', function(){
+					if (isHost || isMod) {
+						sync.instance.child('current').set(current + 1);
+					}
+				});
 
+				pregameEnd.addEventListener('mouseup', function(){
+					if (isHost || isMod) {
+						endPregame();
+					}
+				});
+
+				aBScreen.addEventListener('mouseup', function(){
+					pregameSelect('a');
+				});
+
+				bBScreen.addEventListener('mouseup', function(){
+					pregameSelect('b');
+				});
+
+				cBScreen.addEventListener('mouseup', function(){
+					pregameSelect('c');
+				});
+
+				dBScreen.addEventListener('mouseup', function(){
+					pregameSelect('d');
+				});
+
+				var pregameAnswer = null;
+				function pregameSelect(s) {
+					console.log(s);
+					if (mode == 'pregame' && inPregame && !pregameAnswer) {
+						console.log(s);
+						aBScreen.object3D.getObjectByName('outer').material.color.set(new THREE.Color('#666'));
+						bBScreen.object3D.getObjectByName('outer').material.color.set(new THREE.Color('#666'));
+						cBScreen.object3D.getObjectByName('outer').material.color.set(new THREE.Color('#666'));
+						dBScreen.object3D.getObjectByName('outer').material.color.set(new THREE.Color('#666'));
+
+						document.querySelector('#' + s + 'BScreen').object3D.getObjectByName('outer').material.color.set(new THREE.Color('#0af'));
+
+						var time = timeAnim._object.x / timeAnim._valuesEnd.x * 10;
+						console.log(time);
+						responseTimes.push(time);
+						pregameAnswer = s;
+					}
+				}
+
+				function pregameCheck() {
+					console.log("time's up");
+
+					var answer = questions.pre_game.questions[current].correct_answer;
+
+					if (pregameAnswer != null) {
+						document.querySelector('#' + pregameAnswer + 'BScreen').object3D.getObjectByName('outer').material.color.set(new THREE.Color('red'));
+						if (pregameAnswer == answer){
+							pregameScore += 1;
+							//scoreText.setAttribute('n-text', 'text', score);
+							preUser.set({displayName: user.displayName, inGame: true, userId: user.userId, score: Math.floor(pregameScore) + (1 - (getAverage(responseTimes) / 10))});
+						}
+					}
+					document.querySelector('#' + answer + 'BScreen').object3D.getObjectByName('outer').material.color.set(new THREE.Color('green'));
+					document.querySelector('#' + answer + 'B').object3D.getObjectByName('outer').material.color.set(new THREE.Color('green'));
+
+					if (inPregame && (pregameAnswer == null || pregameAnswer != answer)) {
+						inPregame = false;
+						console.log("You're out");
+						preUser.child('inGame').set(false);
+					}
+				}
+
+			}
 	  });
   });
 
