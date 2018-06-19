@@ -27,7 +27,7 @@
 		<a-entity position='0 0 2.6'>
 			<a-entity id='screenContainer' position='0 -.3 1.2'>
 				<a-entity id='bigScreen' position='0 4.5 -4' scale='.45 .45 .45'>
-					<a-entity position='0 -3.5 -.32' rotation='0 180 0' n-text='fontSize: 7; text: v0.31'></a-entity>
+					<a-entity position='0 -3.5 -.32' rotation='0 180 0' n-text='fontSize: 7; text: v0.32'></a-entity>
 
 					<a-plane scale='14 8 1' color='black'></a-plane>
 
@@ -54,7 +54,7 @@
 					</a-entity>
 
 					<a-entity id='endScreen' position='0 0 -.2'>
-						<a-entity id='endGameText' position='0 0 .01' scale='2 2 2' n-text='text: Winner:\nPlayer 1'></a-entity>
+						<a-entity id='endGameText' position='0 0 .01' scale='2 2 2' n-text='width: 6; text: Winner:\nPlayer 1'></a-entity>
 					</a-entity>
 				</a-entity>
 			</a-entity>
@@ -81,10 +81,12 @@
 					<a-entity id='bT' position='3.7 -1.5 .15' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: B: '></a-entity>
 					<a-entity id='cT' position='-3.7 -3.2 .15' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: C: '></a-entity>
 					<a-entity id='dT' position='3.7 -3.2 .15' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: D: '></a-entity>
+
+					<a-entity id='pregameTimeCount2' position='0 3.3 .01' n-text='fontSize: 8'></a-entity>
 				</a-entity>
 
 				<a-entity id='endScreen2' position='0 0 -.2'>
-					<a-entity id='endGameText2' position='0 0 .1' scale='2 2 2' n-text='text: Winner:\nPlayer 1'></a-entity>
+					<a-entity id='endGameText2' position='0 0 .1' scale='2 2 2' n-text='width: 6; text: Winner:\nPlayer 1'></a-entity>
 				</a-entity>
 
 				<a-cylinder id='hostNext' position='0 -7 0' rotation='90 0 0' radius='1.5' color='#282' segments-height='1' n-mesh-collider='type: hologram; convex: false'></a-cylinder>
@@ -164,7 +166,7 @@
 
 					<a-entity id='preRemain' position='0.215 0.16 .012' scale='.3 .3 .3' n-text='width: 1; fontSize: 1; horizontalAlign: left; text:Remaining: 0'></a-entity>
 
-					<a-entity position='0 0.12 .012' scale='.3 .3 .3' n-text='width: 1.8; fontSize: 1; horizontalAlign: left; text:Player			Points 	Avg'></a-entity>
+					<a-entity position='0 0.12 .012' scale='.3 .3 .3' n-text='width: 1.8; fontSize: 1; horizontalAlign: left; text:<size=75%>Player				Answered 		Time'></a-entity>
 					<a-entity id='preLeaders' position='.29 -.045 .012' scale='.3 .3 .3' n-text='width: 3.8; fontSize: 1; horizontalAlign: left; text:1:\n2:\n3:\n4:\n5:\n6:\n7:\n8:'></a-entity>
 					<a-entity id='preLeaderScores' position='.68 -.045 .012' scale='.3 .3 .3' n-text='width: 3.8; fontSize: 1; horizontalAlign: left; text:1:\n2:\n3:\n4:\n5:\n6:\n7:\n8:'></a-entity>
 				</a-entity>
@@ -327,7 +329,7 @@
 			obj.position.y = 0.1;
 
 
-			var blue = new THREE.Color(0,.15,.4);
+			var blue = new THREE.Color(0.2,0.2,0.2);
 			//var blue = new THREE.Color(.2,0,.1);
 
 			obj.getObjectByName('base').material = new THREE.MeshBasicMaterial({color: blue, map: new THREE.TextureLoader().load('models/hostBase.png')});
@@ -551,16 +553,6 @@
 				podiumLightState[p] = to;
 			}
 
-			sync.instance.child('colors').on('value', function(data){
-				if (data.val() != null) {
-					data.val().forEach(function(c,i){
-						//podiumList[i].getObjectByName('base').material.color.set(new THREE.Color(c[0],c[1],c[2]));
-					});
-				} else {
-					sync.instance.child('colors').set([[0,.2,.5],[0,.2,.5],[0,.2,.5],[0,.2,.5],[0,.2,.5]]);
-				}
-			});
-
 			var done = false;
 			var playerBuzzedIn;
 			sync.instance.child('click').on('value', function(data){
@@ -614,13 +606,29 @@
 			});
 
 			sync.instance.child('pregame').child('players').on('child_changed', function(data){
-				console.log(data.val());
 				pregameScores.forEach(function(s,i){
 					if (s.userId == data.val().userId) {
 						pregameScores[i] = data.val();
 						sortScores();
 					}
 				});
+			});
+
+			sync.instance.child('pregame').child('players').on('value', function(data){
+				if (data.val() == null) {
+					//clear list
+					pregameScores = [];
+					sortScores();
+				}
+			});
+			
+			var pregameTimerEnded = false;
+			sync.instance.child('pregame').child('timerEnded').on('value', function(data){
+				if (data.val() != null) {
+					pregameTimerEnded = data.val();
+				} else {
+					sync.instance.child('pregame').child('timerEnded').set(false);
+				}
 			});
 			
 			var pregamePanelPos = [{pos: {x:0,y:.65,z:0}, scale: {x:1,y:1,z:1}}, {pos: {x:0,y:.25,z:0}, scale: {x:.7,y:.7,z:1}}];
@@ -636,6 +644,7 @@
 						new TWEEN.Tween(hostPregamePanel.object3D.scale).to(pregamePanelPos[1].scale, 500).start();
 
 						pregameTimeCount.setAttribute('n-text', 'text', '');
+						pregameTimeCount2.setAttribute('n-text', 'text', '');
 					}
 				} else {
 					sync.instance.child('mode').set('category');
@@ -666,21 +675,21 @@
 						if (mode == 'pregame') {
 							console.log(pregameScores);
 							
-							var str = '<size=60%>Top 5<size=15%>\n\n<size=45%><align="left">										<color=#' + podiumColors[5].getHexString() + '>1:<color="white"> ';
+							var str = '<size=60%>Top 5<size=25%>\n\n<align="right">Answered          Time        <color=black>.\n<size=45%><align="left"><color=#' + podiumColors[5].getHexString() + '>1:<color="white"> ';
 							var str2 = str;
 							for (var i = 0; i < 5; i++) {
 								if (pregameScores[i]) {
 									var temp = pregameScores[i].displayName + '		' + Math.floor(pregameScores[i].score);
 									str += temp;
-									str2 += temp + '	' + (10 - Math.round(((pregameScores[i].score - Math.floor(pregameScores[i].score)) * 10) * 100) / 100);
+									str2 += temp + '	' + (10 - Math.round(((pregameScores[i].score - Math.floor(pregameScores[i].score)) * 10) * 100) / 100).toString().slice(0,4);
 								}
 								if (i < 4) {
-									str += '\n		<color=#' + podiumColors[5 - (i+1)].getHexString() + '>' + (i + 2) + ':<color="white"> ';
-									str2 += '\n		<color=#' + podiumColors[5 - (i+1)].getHexString() + '>' + (i + 2) + ':<color="white"> ';
+									str += '\n<color=#' + podiumColors[5 - (i+1)].getHexString() + '>' + (i + 2) + ':<color="white"> ';
+									str2 += '\n<color=#' + podiumColors[5 - (i+1)].getHexString() + '>' + (i + 2) + ':<color="white"> ';
 								}
 							}
 							
-							endGameText.setAttribute('n-text', 'text', str);
+							endGameText.setAttribute('n-text', 'text', str2);
 							
 							endGameText2.setAttribute('n-text', 'text', str2);
 						} else {
@@ -1142,13 +1151,17 @@
 					timeTemp = time;
 					//console.log(time);
 					pregameTimeCount.setAttribute('n-text', 'text', time);
+					pregameTimeCount2.setAttribute('n-text', 'text', time);
 				}
 			}).onComplete(function(){
 				pregameTimeCount.setAttribute('n-text', 'text', "Time's up!");
+				pregameTimeCount2.setAttribute('n-text', 'text', "Time's up!");
 				pregameCheck();
+
+				if (isHost || isMod) {
+					sync.instance.child('pregame').child('timerEnded').set(true);
+				}
 			});
-			//var timeAnim3 = new TWEEN.Tween(ringTimer.object3D.children[0].material.map.repeat).to({x:0.8,y:0.8}, 10000);
-			//var timeAnim4 = new TWEEN.Tween(ringTimer.object3D.children[0].material.map.offset).to({x:0.1,y:0.1}, 10000);
 
 		  function nextQ(c) {
 				if (mode != 'category') {
@@ -1163,11 +1176,14 @@
 		  		pregameAnswer = null;
 					q = questions.pre_game.questions[current];
 					
-					bigScreen.object3D.getObjectByName('border').material.color = new THREE.Color(.5,1,1);
-					bigScreen.object3D.getObjectByName('border').material.map.offset.x = 0;
-					timeAnim.start();
+					if (!pregameTimerEnded) {
+						bigScreen.object3D.getObjectByName('border').material.color = new THREE.Color(.5,1,1);
+						bigScreen.object3D.getObjectByName('border').material.map.offset.x = 0;
+						timeAnim.start();
+					}
 		  	} else {
 					pregameTimeCount.setAttribute('n-text', 'text', '');
+					pregameTimeCount2.setAttribute('n-text', 'text', '');
 		  		bigScreen.object3D.getObjectByName('border').material.color = new THREE.Color(0,0,0);
 					bigScreen.object3D.getObjectByName('border').material.map.offset.x = 0;
 			  	q = questions[currentCategory][currentDiff][current];
@@ -1327,6 +1343,7 @@
 						sync.instance.child('mode').set('category');
 			  		sync.instance.child('screenState').set(1);
 						sync.instance.child('lastToChoose').set(4);
+						sync.instance.child('pregame').child('players').set(null);
 			  	} else {
 				  	sync.instance.child('screenState').set(3);
 				  }
@@ -1334,9 +1351,10 @@
 		  });
 
 		  function nextQuestion() {
-		  	//if (current < 4) {
-			  	sync.instance.child('current').set(current + 1);
-			  //}
+				if (mode == 'pregame') {
+					sync.instance.child('pregame').child('timerEnded').set(false);
+				}
+			  sync.instance.child('current').set(current + 1);
 			  sync.instance.child('answered').set(false);
 			  sync.instance.child('selectedAnswer').set(null);
 			  sync.instance.child('click').set(null);
@@ -1581,6 +1599,7 @@
 				});
 
 				function startPregame() {
+					sync.instance.child('pregame').child('timerEnded').set(false);
 					sync.instance.child('click').set(null);
 					sync.instance.child('answered').set(false);
 					sync.instance.child('selectedAnswer').set(null);
@@ -1603,6 +1622,7 @@
 
 				pregameNext.addEventListener('mouseup', function(){
 					if (isHost || isMod) {
+						sync.instance.child('pregame').child('timerEnded').set(false);
 						sync.instance.child('current').set(current + 1);
 					}
 				});
