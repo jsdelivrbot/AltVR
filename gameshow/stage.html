@@ -11,21 +11,12 @@
 		<a-sky id='sky' radius='500' src='sky.png'></a-sky>
 
 		<a-entity id='colliders' altspace-cursor-collider='enabled: false'>
-			<a-plane position='0 0 0' scale='10 15 0' rotation='-90 0 0' material='visible: false'></a-plane>
-			<a-entity rotation='0 -45 0'>
-				<a-plane position='0 2 -4.5' rotation='0 0 0' scale='6 4 0' material='visible: false'></a-plane>
+			<a-plane position='0 0 2.5' scale='12 8 0' rotation='-90 0 0' material='visible: false'></a-plane>
+			<a-entity rotation='0 -123 0'>
+				<a-plane position='0 1.5 -5.5' scale='4.5 3 0' material='visible: false'></a-plane>
 			</a-entity>
-			<a-entity rotation='0 0 0'>
-				<a-plane position='0 2 -4.5' rotation='0 0 0' scale='5 4 0' material='visible: false'></a-plane>
-			</a-entity>
-			<a-entity rotation='0 45 0'>
-				<a-plane position='0 2 -4.5' rotation='0 0 0' scale='6 4 0' material='visible: false'></a-plane>
-			</a-entity>
-			<a-entity rotation='0 -90 0'>
-				<a-plane position='1 2 -5' rotation='0 0 0' scale='7 4 0' material='visible: false'></a-plane>
-			</a-entity>
-			<a-entity rotation='0 90 0'>
-				<a-plane position='-1 2 -5' rotation='0 0 0' scale='7 4 0' material='visible: false'></a-plane>
+			<a-entity rotation='0 123 0'>
+				<a-plane position='0 1.5 -5.5' scale='4.5 3 0' material='visible: false'></a-plane>
 			</a-entity>
 		</a-entity>
 		<!-- <a-cylinder position='0 -.24 0' height='.6' radius='4.05' color='#101' opacity='.9' n-mesh-collider='type: environment; convex: false'></a-cylinder> -->
@@ -36,7 +27,7 @@
 		<a-entity position='0 0 2.6'>
 			<a-entity id='screenContainer' position='0 -.3 1.2'>
 				<a-entity id='bigScreen' position='0 4.5 -4' scale='.45 .45 .45'>
-					<a-entity position='0 -3.5 -.32' rotation='0 180 0' n-text='fontSize: 7; text: v0.22'></a-entity>
+					<a-entity position='0 -3.5 -.32' rotation='0 180 0' n-text='fontSize: 7; text: v0.30'></a-entity>
 
 					<a-plane scale='14 8 1' color='black'></a-plane>
 
@@ -642,6 +633,8 @@
 					} else {
 						new TWEEN.Tween(hostPregamePanel.object3D.position).to(pregamePanelPos[1].pos, 500).start();
 						new TWEEN.Tween(hostPregamePanel.object3D.scale).to(pregamePanelPos[1].scale, 500).start();
+
+						pregameTimeCount.setAttribute('n-text', 'text', '');
 					}
 				} else {
 					sync.instance.child('mode').set('category');
@@ -1155,7 +1148,9 @@
 			//var timeAnim4 = new TWEEN.Tween(ringTimer.object3D.children[0].material.map.offset).to({x:0.1,y:0.1}, 10000);
 
 		  function nextQ(c) {
-				setBorderColor(0);
+				if (mode != 'category') {
+					setBorderColor(0);
+				}
 		  	current = c;
 		  	//console.log('Question ' + (current + 1));
 		  	answered = false;
@@ -1484,12 +1479,11 @@
 		  for (var i = 0; i < 5; i++) {
 		  	document.querySelectorAll('.joinButton')[i].addEventListener('mouseup', function(e){
 			  	var i = parseInt(e.target.id.slice(1,2));
-			  	if (!players[i - 1].joined && joined == 0) {
-			  		console.log('not joined');
-			  		//joined = i;
+			  	if (!players[i - 1].joined && joined == 0 && manualJoin) {
+			  		//join
 			  		sync.instance.child('players').child(i - 1).set({displayName: user.displayName, id: user.userId, joined: true, score: 0});
 			  	} else if (joined == i || isMod) {
-			  		//joined = 0;
+			  		//leave
 			  		sync.instance.child('players').child(i - 1).set({joined: false});
 			  	}
 			  });
