@@ -27,7 +27,7 @@
 		<a-entity position='0 0 2.6'>
 			<a-entity id='screenContainer' position='0 -.3 1.2'>
 				<a-entity id='bigScreen' position='0 4.5 -4' scale='.45 .45 .45'>
-					<a-entity position='0 -3.5 -.32' rotation='0 180 0' n-text='fontSize: 7; text: v0.30'></a-entity>
+					<a-entity position='0 -3.5 -.32' rotation='0 180 0' n-text='fontSize: 7; text: v0.31'></a-entity>
 
 					<a-plane scale='14 8 1' color='black'></a-plane>
 
@@ -470,7 +470,7 @@
 							}
 
 							document.querySelector('#p' + (i + 1) + 'Name').setAttribute('n-text', 'fontSize', size);
-							document.querySelector('#p' + (i + 1) + 'Name').setAttribute('n-text', 'text', '<color=black>' + data.val()[i].displayName);
+							document.querySelector('#p' + (i + 1) + 'Name').setAttribute('n-text', 'text', '<color=black><b>' + data.val()[i].displayName);
 							document.querySelector('#p' + (i + 1) + 'Score').setAttribute('n-text', 'text', '<color=black>' + data.val()[i].score);
 							document.querySelector('#p' + (i + 1) + 'Join').setAttribute('position', '0 -.5 0');
 							document.querySelector('#p' + (i + 1) + 'ControlPanel').setAttribute('n-text', 'text', '<color=white>' + data.val()[i].displayName);
@@ -598,6 +598,7 @@
 	    });
 
 			function setBorderColor(color) {
+				bigScreen.object3D.getObjectByName('border').material.map.offset.x = 0;
 				bigScreen.object3D.getObjectByName('border').material.color.set(podiumColors[color]);
 				hostPodium.object3D.getObjectByName('border').material.color.set(podiumColors[color]);
 			}
@@ -657,6 +658,7 @@
 					if (screenState == 1) {
 						titleScreen.setAttribute('position', '0 0 0');
 						titleScreen2.setAttribute('position', '0 0 0');
+						setBorderColor(0);
 					} else if (screenState == 2) {
 						gameScreen.setAttribute('position', '0 0 0');
 						gameScreen2.setAttribute('position', '0 0 0');
@@ -687,6 +689,7 @@
 								if (players[i].joined) {
 									if (winner == null || players[i].score > winner.score) {
 										winner = players[i];
+										setBorderColor(i + 1);
 									}
 								}
 							}
@@ -1168,6 +1171,8 @@
 		  		bigScreen.object3D.getObjectByName('border').material.color = new THREE.Color(0,0,0);
 					bigScreen.object3D.getObjectByName('border').material.map.offset.x = 0;
 			  	q = questions[currentCategory][currentDiff][current];
+
+					//fix this
 			  }
 
 		  	resetScreenButtons();
@@ -1261,12 +1266,14 @@
 		  });
 
 		  function select(a) {
-				if (selected == a) {
-					selected = null;
-				} else {
-					selected = a;
+				if (isHost || isMod) {
+					if (selected == a) {
+						selected = null;
+					} else {
+						selected = a;
+					}
+					sync.instance.child('selectedAnswer').set(selected);
 				}
-				sync.instance.child('selectedAnswer').set(selected);
 		  }
 
 		  function getSizes(arr) {
@@ -1350,6 +1357,7 @@
 
 								sync.instance.child('selectedAnswer').set(null);
 				    		sync.instance.child('mode').set('question');
+								sync.instance.child('current').set(-1);
 				    		sync.instance.child('current').set(0);
 							}
 						}
