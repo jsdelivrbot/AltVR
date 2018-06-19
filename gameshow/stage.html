@@ -30,42 +30,46 @@
 		</a-entity>
 		<!-- <a-cylinder position='0 -.24 0' height='.6' radius='4.05' color='#101' opacity='.9' n-mesh-collider='type: environment; convex: false'></a-cylinder> -->
 
-		<a-entity id='screenContainer' position='0 -.5 0'>
-			<a-entity id='bigScreen' position='0 4.5 -4' scale='.5 .5 .5'>
-				<a-entity position='0 -3.5 -.32' rotation='0 180 0' n-text='fontSize: 7; text: v0.22'></a-entity>
+		<!-- <a-curvedimage position='0 1.56 7.05' rotation='0 135 0' scale='1 1 1' height='3' radius='8.25' theta-length='90' color='#aaa' n-mesh-collider='type: environment; convex: false'></a-curvedimage> -->
+		<a-entity id='wall' n-mesh-collider='type: environment; convex: false'></a-entity>
 
-				<a-plane scale='14 8 1' color='black'></a-plane>
+		<a-entity position='0 0 2.6'>
+			<a-entity id='screenContainer' position='0 -.3 1.2'>
+				<a-entity id='bigScreen' position='0 4.5 -4' scale='.45 .45 .45'>
+					<a-entity position='0 -3.5 -.32' rotation='0 180 0' n-text='fontSize: 7; text: v0.22'></a-entity>
 
-				<a-entity id='titleScreen' position='0 0 0'>
-					<!-- <a-entity position='0 0 .1' scale='2 2 2' n-text='text: Logo\ngoes here'></a-entity> -->
-					<a-entity position='0 0 .01' scale='2 2 2' n-text="width: 2.8; text: <line-height=65%><align=left>Alt\n<line-height=35%><align=right>Quiz"></a-entity>
-					<!-- <a-entity position='0 0 .01' scale='2 2 2' n-text="width: 2.8; text: <line-height=65%><align=left>Alt\n<line-height=35%><align=right>Quiz\n<align=center><size=30%>It's a quiz"></a-entity> -->
-				</a-entity>
+					<a-plane scale='14 8 1' color='black'></a-plane>
 
-				<a-entity id='gameScreen' position='0 0 -.2'>
-					<a-entity id='aBScreen' position='-3.7 -1.5 .01' n-mesh-collider='type: hologram; convex: false'></a-entity>
-					<a-entity id='bBScreen' position='3.7 -1.5 .01' n-mesh-collider='type: hologram; convex: false'></a-entity>
-					<a-entity id='cBScreen' position='-3.7 -3.2 .01' n-mesh-collider='type: hologram; convex: false'></a-entity>
-					<a-entity id='dBScreen' position='3.7 -3.2 .01' n-mesh-collider='type: hologram; convex: false'></a-entity>
+					<a-entity id='titleScreen' position='0 0 0'>
+						<!-- <a-entity position='0 0 .1' scale='2 2 2' n-text='text: Logo\ngoes here'></a-entity> -->
+						<a-entity position='0 0 .01' scale='2 2 2' n-text="width: 2.8; text: <line-height=65%><align=left>Alt\n<line-height=35%><align=right>Quiz"></a-entity>
+						<!-- <a-entity position='0 0 .01' scale='2 2 2' n-text="width: 2.8; text: <line-height=65%><align=left>Alt\n<line-height=35%><align=right>Quiz\n<align=center><size=30%>It's a quiz"></a-entity> -->
+					</a-entity>
 
-					<a-entity id='questionTScreen' position='0 1.75 .02' n-text='width: 14; height: 4; fontSize: 7; verticalAlign: center; text: ?'></a-entity>
+					<a-entity id='gameScreen' position='0 0 -.2'>
+						<a-entity id='aBScreen' position='-3.7 -1.5 .01' n-mesh-collider='type: hologram; convex: false'></a-entity>
+						<a-entity id='bBScreen' position='3.7 -1.5 .01' n-mesh-collider='type: hologram; convex: false'></a-entity>
+						<a-entity id='cBScreen' position='-3.7 -3.2 .01' n-mesh-collider='type: hologram; convex: false'></a-entity>
+						<a-entity id='dBScreen' position='3.7 -3.2 .01' n-mesh-collider='type: hologram; convex: false'></a-entity>
 
-					<a-entity id='aTScreen' position='-3.7 -1.5 .02' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: A: '></a-entity>
-					<a-entity id='bTScreen' position='3.7 -1.5 .02' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: B: '></a-entity>
-					<a-entity id='cTScreen' position='-3.7 -3.2 .02' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: C: '></a-entity>
-					<a-entity id='dTScreen' position='3.7 -3.2 .02' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: D: '></a-entity>
+						<a-entity id='questionTScreen' position='0 1.75 .02' n-text='width: 14; height: 4; fontSize: 7; verticalAlign: center; text: ?'></a-entity>
 
-					<a-entity id='pregameTimeCount' position='0 3.3 .01' n-text='fontSize: 8'></a-entity>
-				</a-entity>
+						<a-entity id='aTScreen' position='-3.7 -1.5 .02' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: A: '></a-entity>
+						<a-entity id='bTScreen' position='3.7 -1.5 .02' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: B: '></a-entity>
+						<a-entity id='cTScreen' position='-3.7 -3.2 .02' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: C: '></a-entity>
+						<a-entity id='dTScreen' position='3.7 -3.2 .02' n-text='width: 6.5; height: .1; horizontalAlign: left; fontSize: 5; text: D: '></a-entity>
 
-				<a-entity id='endScreen' position='0 0 -.2'>
-					<a-entity id='endGameText' position='0 0 .01' scale='2 2 2' n-text='text: Winner:\nPlayer 1'></a-entity>
+						<a-entity id='pregameTimeCount' position='0 3.3 .01' n-text='fontSize: 8'></a-entity>
+					</a-entity>
+
+					<a-entity id='endScreen' position='0 0 -.2'>
+						<a-entity id='endGameText' position='0 0 .01' scale='2 2 2' n-text='text: Winner:\nPlayer 1'></a-entity>
+					</a-entity>
 				</a-entity>
 			</a-entity>
 		</a-entity>
-
 		
-		<a-entity id='hostPodium' position='2.3 .06 -1.2' rotation='0 105 0'>
+		<a-entity id='hostPodium' position='2.3 .06 1' rotation='0 95 0'>
 			<a-entity position='0 1.28 -.075' rotation='-73.3 0 0' scale='.03 .03 .03'>
 				<a-plane position='0 0 -.1' scale='16 9 1' color='#666' n-mesh-collider='type: hologram; convex: false'></a-plane>
 
@@ -176,7 +180,7 @@
 			</a-entity>
 		</a-entity>
 
-		<a-entity id='newPodiums' position='-1.6 .06 -1.6' rotation='0 45 0'>
+		<a-entity id='newPodiums' position='-1.6 .06 1' rotation='0 45 0'>
 			<a-entity id='podium1' position='-1.6 0 0'>
 				<a-entity position='0 1 .235' rotation='8 0 0'>
 					<a-entity id='p1Name' position='0 .23 .005' scale='.2 .2 .2' n-text='fontSize: 1; text: <color=black>Player 1'></a-entity>
@@ -253,9 +257,10 @@
 		var loader = new THREE.OBJLoader();
 		loader.load('models/podiumTall.obj', podiumLoad, undefined, undefined);
 		loader.load('models/hostPodium.obj', hostPodiumLoad, undefined, undefined);
-		loader.load('models/stage.obj', stageLoad, undefined, undefined);
+		loader.load('models/stage2.obj', stageLoad, undefined, undefined);
 		loader.load('models/screen.obj', screenLoad, undefined, undefined);
 		loader.load('models/button.obj', buttonLoad, undefined, undefined);
+		loader.load('models/wall.obj', wallLoad, undefined, undefined);
 
 		var modelsLoaded = 0;
 		
@@ -297,15 +302,29 @@
 			modelCheck();
 		}
 
-		function stageLoad(obj) {
-			console.log('stage', obj);
+		function stageLoad(obj) {			
+			// obj.scale.set(1.5183,1,1);
 
 			var stage = new THREE.Color(.15,0,.3);
 
-			obj.getObjectByName('Cylinder').material = new THREE.MeshBasicMaterial({color: stage, map: new THREE.TextureLoader().load('models/stage.png')});
-			obj.getObjectByName('Cylinder').userData.altspace = {collider: {enabled: false}};
+			obj.getObjectByName('stage').material = new THREE.MeshBasicMaterial({color: stage, map: new THREE.TextureLoader().load('models/stage3.png')});
+			obj.getObjectByName('stage').userData.altspace = {collider: {enabled: false}};
 
 			scene.object3D.add(obj);
+			modelsLoaded++;
+			modelCheck();
+		}
+
+		function wallLoad(obj) {			
+			obj.scale.setScalar(1);
+			var stage = new THREE.Color(.1,0,.2);
+
+			obj.getObjectByName('wall').material = new THREE.MeshBasicMaterial({color: stage, map: new THREE.TextureLoader().load('models/wall.png')});
+			obj.getObjectByName('wall').userData.altspace = {collider: {enabled: false}};
+
+			wall.setObject3D('mesh', obj);
+			wall.emit('model-loaded', {format: 'obj', model: obj});
+
 			modelsLoaded++;
 			modelCheck();
 		}
@@ -379,7 +398,7 @@
 		}
 
 		function modelCheck() {
-			if (modelsLoaded == 5) {
+			if (modelsLoaded == 6) {
 				start();
 			}
 		}
@@ -900,15 +919,16 @@
 
 		  function moveScreen(i) {
 		  	screenPos = i;
-		  	var a = [{pos:{x:0,y:-0.5,z:0}, scale:{x:1,y:1,z:1}, rot:{x:0,y:0,z:0}}, {pos:{x:0,y:0.1,z:0}, scale:{x:0.35,y:0.35,z:0.35}, rot:{x:THREE.Math.degToRad(-20),y:THREE.Math.degToRad(-135),z:THREE.Math.degToRad(0)}}];
+		  	var a = [{pos:{x:0,y:0,z:1.2}, scale:{x:1,y:1,z:1}, rot:{x:0,y:0,z:0}}, 
+								{pos:{x:0,y:0.1,z:0}, scale:{x:0.35,y:0.35,z:0.35}, rot:{x:THREE.Math.degToRad(-20),y:THREE.Math.degToRad(-135),z:THREE.Math.degToRad(0)}}];
 
 		  	//screenContainer.object3D.position.set(a[i].pos.x,a[i].pos.y,a[i].pos.z);
 		  	//screenContainer.object3D.scale.set(a[i].scale.x,a[i].scale.y,a[i].scale.z);
 		  	//screenContainer.object3D.rotation.set(a[i].rot.x,a[i].rot.y,a[i].rot.z);
 
-		  	new TWEEN.Tween(screenContainer.object3D.position).to(a[i].pos, 500).start();
-		  	new TWEEN.Tween(screenContainer.object3D.scale).to(a[i].scale, 500).start();
-		  	new TWEEN.Tween(screenContainer.object3D.rotation).to(a[i].rot, 500).start();
+		  	new TWEEN.Tween(screenContainer.object3D.position).to(a[i].pos, 300).start();
+		  	new TWEEN.Tween(screenContainer.object3D.scale).to(a[i].scale, 300).start();
+		  	new TWEEN.Tween(screenContainer.object3D.rotation).to(a[i].rot, 300).start();
 		  }
 
       podiumList[0].getObjectByName('button').addEventListener('cursordown', function(){
