@@ -1225,22 +1225,22 @@
 					dBScreen.object3D.getObjectByName('outer').material.color.set(new THREE.Color('#666'));
 				}
 
-		    questionT.setAttribute('n-text', 'text', (current + 1) +  ': ' + q.question);
-		    questionTScreen.setAttribute('n-text', 'text', q.question);
+		    questionT.setAttribute('n-text', 'text', (current + 1) +  ': ' + q.question.normalize('NFD').replace(/[\u0300-\u036f]/g, ""));
+		    questionTScreen.setAttribute('n-text', 'text', q.question.normalize('NFD').replace(/[\u0300-\u036f]/g, ""));
 
 		    var answers = q.answers
 
 		    var sizes = getSizes(answers);
 		    
-		    aT.setAttribute('n-text', 'text', 'A: ' + answers[0]);
-		    bT.setAttribute('n-text', 'text', 'B: ' + answers[1]);
-		    cT.setAttribute('n-text', 'text', 'C: ' + answers[2]);
-		    dT.setAttribute('n-text', 'text', 'D: ' + answers[3]);
+		    aT.setAttribute('n-text', 'text', 'A: ' + answers[0].normalize('NFD').replace(/[\u0300-\u036f]/g, ""));
+		    bT.setAttribute('n-text', 'text', 'B: ' + answers[1].normalize('NFD').replace(/[\u0300-\u036f]/g, ""));
+		    cT.setAttribute('n-text', 'text', 'C: ' + answers[2].normalize('NFD').replace(/[\u0300-\u036f]/g, ""));
+		    dT.setAttribute('n-text', 'text', 'D: ' + answers[3].normalize('NFD').replace(/[\u0300-\u036f]/g, ""));
 
-		    aTScreen.setAttribute('n-text', 'text', 'A: ' + answers[0]);
-		    bTScreen.setAttribute('n-text', 'text', 'B: ' + answers[1]);
-		    cTScreen.setAttribute('n-text', 'text', 'C: ' + answers[2]);
-		    dTScreen.setAttribute('n-text', 'text', 'D: ' + answers[3]);
+		    aTScreen.setAttribute('n-text', 'text', 'A: ' + answers[0].normalize('NFD').replace(/[\u0300-\u036f]/g, ""));
+		    bTScreen.setAttribute('n-text', 'text', 'B: ' + answers[1].normalize('NFD').replace(/[\u0300-\u036f]/g, ""));
+		    cTScreen.setAttribute('n-text', 'text', 'C: ' + answers[2].normalize('NFD').replace(/[\u0300-\u036f]/g, ""));
+		    dTScreen.setAttribute('n-text', 'text', 'D: ' + answers[3].normalize('NFD').replace(/[\u0300-\u036f]/g, ""));
 
 		    aT.setAttribute('n-text', 'fontSize', sizes[0]);
 		    bT.setAttribute('n-text', 'fontSize', sizes[1]);
