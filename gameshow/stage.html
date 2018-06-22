@@ -28,7 +28,7 @@
 		<a-entity position='0 0 2.6'>
 			<a-entity id='screenContainer' position='0 -.3 1.2'>
 				<a-entity id='bigScreen' position='0 4.5 -4' scale='.45 .45 .45'>
-					<a-entity position='0 -3.5 -.32' rotation='0 180 0' n-text='fontSize: 7; text: v0.35'></a-entity>
+					<a-entity position='0 -3.5 -.32' rotation='0 180 0' n-text='fontSize: 7; text: v0.36'></a-entity>
 
 					<a-plane scale='14 8 1' color='black'></a-plane>
 
@@ -1058,15 +1058,15 @@
 			    var token = JSON.parse(obj).token;
 			    var done = 0;
 
+					pregameQGet(4,diffs[0]);
+			  	pregameQGet(3,diffs[1]);
+			  	pregameQGet(3,diffs[2]);
+
 			  	categories.forEach(function(c){
 			  		qGet(c,diffs[0]);
 			  		qGet(c,diffs[1]);
 			  		qGet(c,diffs[2]);
 			  	});
-
-			  	pregameQGet(4,diffs[0]);
-			  	pregameQGet(3,diffs[1]);
-			  	pregameQGet(3,diffs[2]);
 
 			  	function qGet(cat,diff) {
 			  		dataRequest.load('https://opentdb.com/api.php?amount=5&difficulty=' + diff + '&type=multiple&encode=url3986&category=' + cat.id + '&token=' + token + '&' + Math.random().toString(), function(obj){
@@ -1307,7 +1307,7 @@
 		  });
 
 		  function select(a) {
-				if (isHost || isMod) {
+				if ((isHost || isMod) && mode != 'pregame') {
 					if (selected == a) {
 						selected = null;
 					} else {
@@ -1710,7 +1710,7 @@
 					document.querySelector('#' + answer + 'BScreen').object3D.getObjectByName('outer').material.color.set(new THREE.Color('green'));
 					document.querySelector('#' + answer + 'B').object3D.getObjectByName('outer').material.color.set(new THREE.Color('green'));
 
-					if (inPregame && current != 0 && (pregameAnswer == null || pregameAnswer != answer)) {
+					if (inPregame && (pregameAnswer == null || pregameAnswer != answer)) {
 						inPregame = false;
 						console.log("You're out");
 						preUser.once('value', function(data) {
