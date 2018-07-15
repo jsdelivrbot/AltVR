@@ -26,7 +26,7 @@
 		altspace.getUser().then(function(user){
 			var avatar = user.avatarInfo.sid;
 			var avatars = ['s-series-m01','s-series-f01','a-series-m01','x-series-m02','pod-classic','robothead-propellerhead-01','robothead-roundguy-01'];
-			if (avatars.indexOf(avatars) == -1) {
+			if (avatars.indexOf(avatar) == -1) {
 				avatar = 'rubenoid';
 			}
 			scene.systems['sync-system'].instantiate('winnerCrown ' + avatar + ' sync', scene);
