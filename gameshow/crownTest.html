@@ -25,11 +25,10 @@
 	scene.addEventListener('connected', function() {
 		altspace.getUser().then(function(user){
 			var avatar = user.avatarInfo.sid;
-			
-			if (avatar.includes('rubenoid')) {
+			var avatars = ['s-series-m01','s-series-f01','a-series-m01','x-series-m02','pod-classic','robothead-propellerhead-01','robothead-roundguy-01'];
+			if (avatars.inexOf(avatars) == -1) {
 				avatar = 'rubenoid';
 			}
-
 			scene.systems['sync-system'].instantiate('winnerCrown ' + avatar + ' sync', scene);
 		});	
 	});			
