@@ -8,7 +8,7 @@
 <body>
 	<a-scene position='0 0 0' altspace='fullspace: true' sync-system='author: BenG; app: quizStage; refUrl: https://altvr-apps.firebaseio.com/'>
 		<!-- <a-entity n-layout-browser='url: https://shanesedit.org/r/mc; isEnclosure: true'></a-entity> -->
-		<a-sky id='sky' radius='500' src='sky.png'></a-sky>
+		<a-sky id='sky' radius='500' src='textures/sky.png'></a-sky>
 
 		<a-entity id='colliders' altspace-cursor-collider='enabled: false'>
 			<a-plane position='0 0 1.5' scale='12 5.5 0' rotation='-90 0 0' material='visible: false'></a-plane>
@@ -26,7 +26,7 @@
 		<a-entity id='wall' n-mesh-collider='type: environment; convex: false'></a-entity>
 
 		<a-entity position='0 0 2.6'>
-			<a-entity id='screenContainer' position='0 -.3 1.2'>
+			<a-entity id='screenContainer' position='0 0 1.2'>
 				<a-entity id='bigScreen' position='0 4.5 -4' scale='.45 .45 .45'>
 					<a-entity position='0 -3.5 -.32' rotation='0 180 0' n-text='fontSize: 7; text: v0.37'></a-entity>
 
@@ -63,7 +63,7 @@
 		</a-entity>
 		
 		<a-entity id='hostPodium' position='2.3 .06 1' rotation='0 95 0'>
-			<a-entity position='0 1.28 -.075' rotation='-73.3 0 0' scale='.033 .033 .033'>
+			<a-entity position='0 1.28 -.075' rotation='-73.3 0 0' scale='.03 .03 .03'>
 				<a-plane position='0 0 -.1' scale='16 9 1' color='#666' n-mesh-collider='type: hologram; convex: false'></a-plane>
 
 				<a-entity id='titleScreen2' position='0 0 0'>
@@ -92,70 +92,131 @@
 					<a-entity id='endGameScoreText2' position='5 -1.3 .1' scale='2 2 2' n-text='width: 4; horizontalAlign: left;'></a-entity>
 				</a-entity>
 
-				<a-cylinder id='hostNext' position='0 -7 0' rotation='90 0 0' radius='1.5' color='#282' segments-height='1' n-mesh-collider='type: hologram; convex: false'></a-cylinder>
+				<a-cylinder id='hostNext' position='0 -7.5 0' rotation='90 0 0' radius='1.5' color='#282' segments-height='1' n-mesh-collider></a-cylinder>
+				<a-entity position='0 -7.5 .525' scale='1.5 1.75 1' n-text='text: >'></a-entity>
+				<a-entity position='-.29 -7.56 .51' scale='1.5 1.1 1' n-text='text: I'></a-entity>
+				<a-entity id='hostButtonText' position='0 -10 0' scale='.75 .75 1' n-text='fontSize: 6; verticalAlign: top;  text: Load\nQuestions'></a-entity>
 
-				<a-box id='endGameB' position='-7 -9 0' scale='1 1 .5' color='red' n-text='fontSize: 5; horizontalAlign: right; width: 7; text: End Game' n-box-collider></a-box>
-				<a-box id='resetB' position='7 -9 0' scale='1 1 .5' color='black' n-text='fontSize: 5; horizontalAlign: left; width: 9; text: Reset Buzzers' n-box-collider></a-box>
+				<a-entity id='finalRoundIndicator' position='0 0 0'>
+					<a-plane id='finalRoundBack' position='5.5 -6 0' scale='4 1 1' src='textures/finalBack.png' transparent='true' color='#020202'></a-plane>
+					<a-entity position='5.5 -6.03 .1' scale='.5 .5 1' n-text='text: <b><color=black>FINAL ROUND'></a-entity>
+				</a-entity>
 
-				<a-box id='controlB' position='7 -7 0' scale='1 1 .5' color='blue' n-text='fontSize: 5; horizontalAlign: left; width: 9; text: Control Panel' n-box-collider></a-box>
+				<a-cylinder id='controlB' position='5.5 -8.5 0' rotation='90 0 0' scale='.85 .2 .85' color='#00a' segments-height='1' n-mesh-collider></a-cylinder>
+				<a-plane position='5.5 -8.5 0.11' scale='1.2 1.2 1' src='textures/gear.png' transparent='true' altspace-cursor-collider='enabled: false'></a-plane>
+				<a-entity id='controlPopup' position='5.5 -7 -1' rotation='20 0 0'>
+					<a-plane scale='3.2 1 1' rotation='0 0 0' color='black' opacity='.8' altspace-cursor-collider='enabled: false'></a-plane>
+					<a-entity position='0 0 .05' n-text='fontSize: 4; text: Control Panel'></a-entity>
+				</a-entity>
+
+				<a-cylinder id='resetB' position='-5.5 -8.5 0' rotation='90 0 0' scale='.85 .2 .85' color='#770' segments-height='1' n-mesh-collider></a-cylinder>
+				<!-- <a-entity position='-5.5 -8.5 .11' scale='1 1 1' n-text='text: <size=90%><b>R'></a-entity> -->
+				<a-plane position='-5.5 -8.5 0.11' scale='1.3 1.3 1' src='textures/reset.png' transparent='true' altspace-cursor-collider='enabled: false'></a-plane>
+				<a-entity id='resetPopup' position='-5.5 -7 -1' rotation='20 0 0'>
+					<a-plane scale='3.25 1 1' rotation='0 0 0' color='black' opacity='.8' altspace-cursor-collider='enabled: false'></a-plane>
+					<a-entity position='0 0 .05' n-text='fontSize: 4; text: Reset Buzzers'></a-entity>
+				</a-entity>
+				
+
+				<a-cylinder id='helpB' position='-8 -5.75 0' rotation='90 0 0' scale='.5 .2 .5' color='#800' segments-height='1' n-mesh-collider></a-cylinder>
+				<a-entity position='-8 -5.75 .11' scale='.6 .6 1' n-text='text: <b>?'></a-entity>
+				<a-entity id='helpPopup' position='-8 -4.6 -1' rotation='20 0 0'>
+					<a-plane scale='1.8 1 1' rotation='0 0 0' color='black' opacity='.8' altspace-cursor-collider='enabled: false'></a-plane>
+					<a-entity position='0 0 .05' n-text='fontSize: 4; text: Help'></a-entity>
+				</a-entity>
 			</a-entity>
 
-			<a-entity id='hostControlPanel' position='0 1 0' rotation='-50 -50 0' scale='.5 .5 .5'>
-				<a-box position='0 0 0' scale='0.6 0.34 .02' color='black'></a-box>
-				<a-box position='0 0 0' scale='0.54 0.4 .02' color='black'></a-box>
-				<a-cylinder position='.27 .17 0' rotation='90 0 0' height='.02' radius='.03' segments-height='1' color='black'></a-cylinder>
-				<a-cylinder position='.27 -.17 0' rotation='90 0 0' height='.02' radius='.03' segments-height='1' color='black'></a-cylinder>
-				<a-cylinder position='-.27 .17 0' rotation='90 0 0' height='.02' radius='.03' segments-height='1' color='black'></a-cylinder>
-				<a-cylinder position='-.27 -.17 0' rotation='90 0 0' height='.02' radius='.03' segments-height='1' color='black'></a-cylinder>
+			<a-entity id='hostControlPanel' position='0.65 1.3 0.4' rotation='-50 -50 0' scale='1 1 1'>
+				<a-box position='0 0 0' scale='0.6 0.34 .02' color='#080808'></a-box>
+				<a-box position='0 0 0' scale='0.54 0.4 .02' color='#080808'></a-box>
+				<a-cylinder position='.27 .17 0' rotation='90 0 0' height='.02' radius='.03' segments-height='1' color='#080808'></a-cylinder>
+				<a-cylinder position='.27 -.17 0' rotation='90 0 0' height='.02' radius='.03' segments-height='1' color='#080808'></a-cylinder>
+				<a-cylinder position='-.27 .17 0' rotation='90 0 0' height='.02' radius='.03' segments-height='1' color='#080808'></a-cylinder>
+				<a-cylinder position='-.27 -.17 0' rotation='90 0 0' height='.02' radius='.03' segments-height='1' color='#080808'></a-cylinder>
 
-				<a-box id='p5ControlPanelColor' position='-.22 .15 .01' scale='.1 .03 .001' altspace-cursor-collider='enabled: false'></a-box>
-				<a-box id='p4ControlPanelColor' position='-.22 .11 .01' scale='.1 .03 .001' altspace-cursor-collider='enabled: false'></a-box>
-				<a-box id='p3ControlPanelColor' position='-.22 .07 .01' scale='.1 .03 .001' altspace-cursor-collider='enabled: false'></a-box>
-				<a-box id='p2ControlPanelColor' position='-.22 .03 .01' scale='.1 .03 .001' altspace-cursor-collider='enabled: false'></a-box>
-				<a-box id='p1ControlPanelColor' position='-.22 -.01 .01' scale='.1 .03 .001' altspace-cursor-collider='enabled: false'></a-box>
+				<a-entity position='0 -.05 0'>
+					<a-entity position='-.12 .22 .011' scale='.015 .015 .015' n-text='text: Podium Controls'></a-entity>
 
-				<a-entity id='p5ControlPanel' position='-.15 .15 .011' scale='.025 .025 .025' n-text='fontSize: 5; horizontalAlign: left; width: 9; text: Player 1'></a-entity>
-				<a-entity id='p4ControlPanel' position='-.15 .11 .011' scale='.025 .025 .025' n-text='fontSize: 5; horizontalAlign: left; width: 9; text: Player 2'></a-entity>
-				<a-entity id='p3ControlPanel' position='-.15 .07 .011' scale='.025 .025 .025' n-text='fontSize: 5; horizontalAlign: left; width: 9; text: Player 3'></a-entity>
-				<a-entity id='p2ControlPanel' position='-.15 .03 .011' scale='.025 .025 .025' n-text='fontSize: 5; horizontalAlign: left; width: 9; text: Player 4'></a-entity>
-				<a-entity id='p1ControlPanel' position='-.15 -.01 .011' scale='.025 .025 .025' n-text='fontSize: 5; horizontalAlign: left; width: 9; text: Player 5'></a-entity>
+					<a-box id='p5ControlPanelColor' position='-.125 .15 .01' scale='.3 .03 .001' altspace-cursor-collider='enabled: false'></a-box>
+					<a-box id='p4ControlPanelColor' position='-.125 .11 .01' scale='.3 .03 .001' altspace-cursor-collider='enabled: false'></a-box>
+					<a-box id='p3ControlPanelColor' position='-.125 .07 .01' scale='.3 .03 .001' altspace-cursor-collider='enabled: false'></a-box>
+					<a-box id='p2ControlPanelColor' position='-.125 .03 .01' scale='.3 .03 .001' altspace-cursor-collider='enabled: false'></a-box>
+					<a-box id='p1ControlPanelColor' position='-.125 -.01 .01' scale='.3 .03 .001' altspace-cursor-collider='enabled: false'></a-box>
 
-				<a-box id='p5Kick' class='kickButton' position='0 .15 .011' scale='.025 .025 .01' color='red' n-text='fontSize: 5; verticalAlign: top; height: 3; text: Kick' n-box-collider></a-box>
-				<a-box id='p4Kick' class='kickButton' position='0 .11 .011' scale='.025 .025 .01' color='red' n-box-collider></a-box>
-				<a-box id='p3Kick' class='kickButton' position='0 .07 .011' scale='.025 .025 .01' color='red' n-box-collider></a-box>
-				<a-box id='p2Kick' class='kickButton' position='0 .03 .011' scale='.025 .025 .01' color='red' n-box-collider></a-box>
-				<a-box id='p1Kick' class='kickButton' position='0 -.01 .011' scale='.025 .025 .01' color='red' n-box-collider></a-box>
+					<a-entity id='p5ControlPanel' position='-.15 .15 .011' scale='.025 .025 .025' n-text='fontSize: 5; horizontalAlign: left; width: 9; text: Player 1'></a-entity>
+					<a-entity id='p4ControlPanel' position='-.15 .11 .011' scale='.025 .025 .025' n-text='fontSize: 5; horizontalAlign: left; width: 9; text: Player 2'></a-entity>
+					<a-entity id='p3ControlPanel' position='-.15 .07 .011' scale='.025 .025 .025' n-text='fontSize: 5; horizontalAlign: left; width: 9; text: Player 3'></a-entity>
+					<a-entity id='p2ControlPanel' position='-.15 .03 .011' scale='.025 .025 .025' n-text='fontSize: 5; horizontalAlign: left; width: 9; text: Player 4'></a-entity>
+					<a-entity id='p1ControlPanel' position='-.15 -.01 .011' scale='.025 .025 .025' n-text='fontSize: 5; horizontalAlign: left; width: 9; text: Player 5'></a-entity>
 
-				<a-box id='p5Add' class='addButton' position='-.15 .15 .011' scale='.025 .025 .01' color='#0c0' n-text='fontSize: 5; verticalAlign: top; height: 3; text: Add' n-box-collider></a-box>
-				<a-box id='p4Add' class='addButton' position='-.15 .11 .011' scale='.025 .025 .01' color='#0c0' n-box-collider></a-box>
-				<a-box id='p3Add' class='addButton' position='-.15 .07 .011' scale='.025 .025 .01' color='#0c0' n-box-collider></a-box>
-				<a-box id='p2Add' class='addButton' position='-.15 .03 .011' scale='.025 .025 .01' color='#0c0' n-box-collider></a-box>
-				<a-box id='p1Add' class='addButton' position='-.15 -.01 .011' scale='.025 .025 .01' color='#0c0' n-box-collider></a-box>
+					<a-plane id='p5Kick' class='kickButton' position='0 .15 .011' scale='.025 .025 .01' src='textures/button.png' transparent='true' color='red' n-text='fontSize: 5; verticalAlign: top; height: 3; text: Kick' n-box-collider></a-plane>
+					<a-plane id='p4Kick' class='kickButton' position='0 .11 .011' scale='.025 .025 .01' src='textures/button.png' transparent='true' color='red' n-box-collider></a-plane>
+					<a-plane id='p3Kick' class='kickButton' position='0 .07 .011' scale='.025 .025 .01' src='textures/button.png' transparent='true' color='red' n-box-collider></a-plane>
+					<a-plane id='p2Kick' class='kickButton' position='0 .03 .011' scale='.025 .025 .01' src='textures/button.png' transparent='true' color='red' n-box-collider></a-plane>
+					<a-plane id='p1Kick' class='kickButton' position='0 -.01 .011' scale='.025 .025 .01' src='textures/button.png' transparent='true' color='red' n-box-collider></a-plane>
 
-				<a-box id='p5Sub' class='subtractButton' position='-.1 .15 .011' scale='.025 .025 .01' color='#b70' n-text='fontSize: 5; verticalAlign: top; height: 3; text: Sub' n-box-collider></a-box>
-				<a-box id='p4Sub' class='subtractButton' position='-.1 .11 .011' scale='.025 .025 .01' color='#b70' n-box-collider></a-box>
-				<a-box id='p3Sub' class='subtractButton' position='-.1 .07 .011' scale='.025 .025 .01' color='#b70' n-box-collider></a-box>
-				<a-box id='p2Sub' class='subtractButton' position='-.1 .03 .011' scale='.025 .025 .01' color='#b70' n-box-collider></a-box>
-				<a-box id='p1Sub' class='subtractButton' position='-.1 -.01 .011' scale='.025 .025 .01' color='#b70' n-box-collider></a-box>
+					<a-plane id='p5Add' class='addButton' position='-.15 .15 .011' scale='.025 .025 .01' src='textures/button.png' transparent='true' color='#0c0' n-text='fontSize: 5; verticalAlign: top; height: 3; text: Add' n-box-collider></a-plane>
+					<a-plane id='p4Add' class='addButton' position='-.15 .11 .011' scale='.025 .025 .01' src='textures/button.png' transparent='true' color='#0c0' n-box-collider></a-plane>
+					<a-plane id='p3Add' class='addButton' position='-.15 .07 .011' scale='.025 .025 .01' src='textures/button.png' transparent='true' color='#0c0' n-box-collider></a-plane>
+					<a-plane id='p2Add' class='addButton' position='-.15 .03 .011' scale='.025 .025 .01' src='textures/button.png' transparent='true' color='#0c0' n-box-collider></a-plane>
+					<a-plane id='p1Add' class='addButton' position='-.15 -.01 .011' scale='.025 .025 .01' src='textures/button.png' transparent='true' color='#0c0' n-box-collider></a-plane>
 
-				<a-box id='p5Rename' class='renameButton' position='-.05 .15 .011' scale='.025 .025 .01' color='blue' n-text='fontSize: 5; verticalAlign: top; height: 3; text: Rename' n-box-collider></a-box>
-				<a-box id='p4Rename' class='renameButton' position='-.05 .11 .011' scale='.025 .025 .01' color='blue' n-box-collider></a-box>
-				<a-box id='p3Rename' class='renameButton' position='-.05 .07 .011' scale='.025 .025 .01' color='blue' n-box-collider></a-box>
-				<a-box id='p2Rename' class='renameButton' position='-.05 .03 .011' scale='.025 .025 .01' color='blue' n-box-collider></a-box>
-				<a-box id='p1Rename' class='renameButton' position='-.05 -.01 .011' scale='.025 .025 .01' color='blue' n-box-collider></a-box>
+					<a-plane id='p5Sub' class='subtractButton' position='-.1 .15 .011' scale='.025 .025 .01' src='textures/button.png' transparent='true' color='#b70' n-text='fontSize: 5; verticalAlign: top; height: 3; text: Sub' n-box-collider></a-plane>
+					<a-plane id='p4Sub' class='subtractButton' position='-.1 .11 .011' scale='.025 .025 .01' src='textures/button.png' transparent='true' color='#b70' n-box-collider></a-plane>
+					<a-plane id='p3Sub' class='subtractButton' position='-.1 .07 .011' scale='.025 .025 .01' src='textures/button.png' transparent='true' color='#b70' n-box-collider></a-plane>
+					<a-plane id='p2Sub' class='subtractButton' position='-.1 .03 .011' scale='.025 .025 .01' src='textures/button.png' transparent='true' color='#b70' n-box-collider></a-plane>
+					<a-plane id='p1Sub' class='subtractButton' position='-.1 -.01 .011' scale='.025 .025 .01' src='textures/button.png' transparent='true' color='#b70' n-box-collider></a-plane>
+
+					<a-plane id='p5Rename' class='renameButton' position='-.05 .15 .011' scale='.025 .025 .01' src='textures/button.png' transparent='true' color='blue' n-text='fontSize: 5; verticalAlign: top; height: 3; text: Rename' n-box-collider></a-plane>
+					<a-plane id='p4Rename' class='renameButton' position='-.05 .11 .011' scale='.025 .025 .01' src='textures/button.png' transparent='true' color='blue' n-box-collider></a-plane>
+					<a-plane id='p3Rename' class='renameButton' position='-.05 .07 .011' scale='.025 .025 .01' src='textures/button.png' transparent='true' color='blue' n-box-collider></a-plane>
+					<a-plane id='p2Rename' class='renameButton' position='-.05 .03 .011' scale='.025 .025 .01' src='textures/button.png' transparent='true' color='blue' n-box-collider></a-plane>
+					<a-plane id='p1Rename' class='renameButton' position='-.05 -.01 .011' scale='.025 .025 .01' src='textures/button.png' transparent='true' color='blue' n-box-collider></a-plane>
+				</a-entity>
 
 				<a-entity id='controlPanelClose' position='.27 .17 .011'>
 					<a-box rotation='0 0 45' scale='.005 .025 .01' color='red' n-box-collider></a-box>
 					<a-box rotation='0 0 -45' scale='.005 .025 .01' color='red' n-box-collider></a-box>
 				</a-entity>
 
-				<a-box id='manJoinB' position='-.15 -.15 .011' scale='.025 .025 .01' color='red' n-text='fontSize: 5; horizontalAlign: left; width: 9; text: Manual Join' n-box-collider></a-box>
-				<a-box id='clearPlayersB' position='-0 -.15 .011' scale='.025 .025 .01' color='red' n-text='fontSize: 5; horizontalAlign: left; width: 9; text: Clear Podiums' n-box-collider></a-box>
+				<a-plane id='endGameB' position='-.15 -.15 .011' scale='.025 .025 .01' src='textures/button.png' transparent='true' color='red' n-text='fontSize: 5; horizontalAlign: left; width: 9; text: End Game' n-box-collider></a-plane>
+				<a-plane id='clearPlayersB' position='0 -.15 .011' scale='.025 .025 .01' src='textures/button.png' transparent='true' color='red' n-text='fontSize: 5; horizontalAlign: left; width: 9; text: Clear Podiums' n-box-collider></a-plane>
 
-				<a-entity position='.2 .025 .011' scale='.025 .025 .01' n-text='fontSize: 7; text: Temp'></a-entity>
-				<a-box id='pregameStart' position='.25 -.01 .011' scale='.025 .025 .01' color='red' n-text='horizontalAlign: left; width: 9; fontSize: 5; text: Pregame Start' n-box-collider></a-box>
-				<a-box id='pregameNext' position='.25 -.05 .011' scale='.025 .025 .01' color='green' n-text='horizontalAlign: left; width: 9; fontSize: 5; text: Pregame Next' n-box-collider></a-box>
-				<a-box id='pregameEnd' position='.25 -.09 .011' scale='.025 .025 .01' color='blue' n-text='horizontalAlign: left; width: 9; fontSize: 5; text: Pregame End' n-box-collider></a-box>
+				<a-entity id='confirmDialog' position='0 0 0' scale='.5 .5 .5'>
+					<a-box position='0 0 -.02' scale='1.2 .8 .03' material='visible: false' n-box-collider></a-box>
+
+					<a-plane position='0 0 0' scale='0.4 0.24 1' color='#111'></a-plane>
+					<a-plane position='0 0 0' scale='0.34 0.3 1' color='#111'></a-plane>
+					<a-circle position='.17 .12 0' radius='.03' color='#111'></a-circle>
+					<a-circle position='.17 -.12 0' radius='.03' color='#111'></a-circle>
+					<a-circle position='-.17 .12 0' radius='.03' color='#111'></a-circle>
+					<a-circle position='-.17 -.12 0' radius='.03' color='#111'></a-circle>
+					
+					<a-entity id='confirmText' position='0 .05 .01' scale='.5 .5 .5' n-text='fontSize: 1; text: End Game?'></a-entity>
+					<a-plane id='confirmYes' position='.095 -.05 .01' scale='.05 .05 .01' src='textures/button.png' transparent='true' color='green' n-text='fontSize: 5; horizontalAlign: left; width: 3.2; text: Yes' n-box-collider></a-plane>
+					<a-plane id='confirmNo' position='-.06 -.05 .01' scale='.05 .05 .01' src='textures/button.png' transparent='true' color='red' n-text='fontSize: 5; horizontalAlign: left; width: 3; text: No' n-box-collider></a-plane>
+				</a-entity>	
+
+				<a-entity id='hostText' position='.15 .16 .011' scale='.015 .015 1' n-text='text: Current Host:\nNot Joined'></a-entity>
+				<a-plane id='hostB' position='.19 .12 .011' scale='.025 .025 .01' src='textures/button.png' transparent='true' color='red' n-text='fontSize: 5; horizontalAlign: left; width: 5; text: Leave' n-box-collider></a-plane>
+
+				<a-entity position='.16 .03 .011' scale='1.5 1.5 1'>
+					<a-entity position='0 .03 0' scale='.01 .01 .01' n-text='text: End Game Timer'></a-entity>
+					<a-entity id='timeText' scale='.02 .02 .02' n-text='text: 00:00'></a-entity>
+					<a-cylinder id='timerHourUp' position='-.04 .01 0' rotation='-90 0 0' scale='.01 .001 .008' color='green' segments-radial='3' segments-height='1' n-box-collider></a-cylinder>
+					<a-cylinder id='timerHourDown' position='-.04 -.01 0' rotation='90 0 0' scale='.01 .001 .008' color='red' segments-radial='3' segments-height='1' n-box-collider></a-cylinder>
+					<a-cylinder id='timerMinuteUp' position='.04 .01 0' rotation='-90 0 0' scale='.01 .001 .008' color='green' segments-radial='3' segments-height='1' n-box-collider></a-cylinder>
+					<a-cylinder id='timerMinuteDown' position='.04 -.01 0' rotation='90 0 0' scale='.01 .001 .008' color='red' segments-radial='3' segments-height='1' n-box-collider></a-cylinder>
+					<a-plane id='timerEnableButton' position='-.01 -.03 0' scale='.01 .01 .01' src='textures/button.png' transparent='true' color='#800' n-text='horizontalAlign: left; width: 6.5; fontSize: 6; text: Enabled' n-box-collider></a-plane>
+					<a-plane id='timerResetButton' position='.03 -.03 0' scale='.01 .01 .01' src='textures/button.png' transparent='true' color='red' n-text='horizontalAlign: left; width: 5.2; fontSize: 6; text: Reset' n-box-collider></a-plane>
+				</a-entity>
+
+				<a-entity position='.15 -.06 .011' scale='1 1 1'>
+					<a-entity position='0 0 0' scale='.015 .015 .015' n-text='text: Settings'></a-entity>
+					<a-plane id='manJoinB' position='.05 -.035 .005' scale='.025 .025 .01' n-text='fontSize: 4; horizontalAlign: left; width: 7.1; text: Manual Join' n-box-collider></a-plane>
+					<a-plane id='hostManJoinB' position='.05 -.07 .005' scale='.025 .025 .01' n-text='fontSize: 4; horizontalAlign: left; width: 9; text: Host Manual Join' n-box-collider></a-plane>
+					<a-plane id='endKickB' position='.05 -.105 .005' scale='.025 .025 .01' n-text='fontSize: 4; horizontalAlign: left; width: 8.2; text: Game End Kick' n-box-collider></a-plane>
+				</a-entity>
 			</a-entity>
 
 			<a-entity position='0 .9 -.2' rotation='-10 0 0'>
@@ -174,15 +235,16 @@
 					<a-entity id='preLeaderScores' position='.68 -.045 .012' scale='.3 .3 .3' n-text='width: 3.8; fontSize: 1; horizontalAlign: left; text:1:\n2:\n3:\n4:\n5:\n6:\n7:\n8:'></a-entity>
 				</a-entity>
 			</a-entity>
+			<a-sphere id='h1Join' position='0 -.5 0' radius='.2' color='#333' n-billboard n-text='fontSize: 1; verticalAlign: top; height: 0.8; text: Click to Host' n-sphere-collider='radius: 0.2; type: hologram'></a-sphere>
 		</a-entity>
 
-		<a-entity id='newPodiums' position='-1.6 .06 1' rotation='0 45 0'>
+		<a-entity id='podiums' position='-1.6 .06 1' rotation='0 45 0'>
 			<a-entity id='podium1' position='-1.6 0 0'>
 				<a-entity position='0 1 .235' rotation='8 0 0'>
 					<a-entity id='p1Name' position='0 .23 .005' scale='.2 .2 .2' n-text='fontSize: 1; text: <color=black>Player 1'></a-entity>
 					<a-entity id='p1Score' position='0 0 .005' scale='.9 .9 .9' n-text='fontSize: 3; text: <color=black>1'></a-entity>
 				</a-entity>
-				<a-sphere id='p1Join' class='joinButton' position='0 -.5 0' radius='.2' color='#a00' n-billboard n-text='fontSize: 1; verticalAlign: top; height: 0.8; text: Click to join' n-sphere-collider='radius: 0.2; type: hologram'></a-sphere>
+				<a-sphere id='p1Join' class='joinButton' position='0 -.5 0' radius='.2' color='#a00' n-billboard n-text='fontSize: 1; verticalAlign: top; height: 0.8; text: Click to Play' n-sphere-collider='radius: 0.2; type: hologram'></a-sphere>
 			</a-entity>
 
 			<a-entity id='podium2' position='-.8 0 0'>
@@ -190,7 +252,7 @@
 					<a-entity id='p2Name' position='0 .23 .005' scale='.2 .2 .2' n-text='fontSize: 1; text: <color=black>Player 2'></a-entity>
 					<a-entity id='p2Score' position='0 0 .005' scale='.9 .9 .9' n-text='fontSize: 3; text: <color=black>2'></a-entity>
 				</a-entity>
-				<a-sphere id='p2Join' class='joinButton' position='0 -.5 0' radius='.2' color='#a00' n-billboard n-text='fontSize: 1; verticalAlign: top; height: 0.8; text: Click to join' n-sphere-collider='radius: 0.2; type: hologram'></a-sphere>
+				<a-sphere id='p2Join' class='joinButton' position='0 -.5 0' radius='.2' color='#a00' n-billboard n-text='fontSize: 1; verticalAlign: top; height: 0.8; text: Click to Play' n-sphere-collider='radius: 0.2; type: hologram'></a-sphere>
 			</a-entity>
 
 			<a-entity id='podium3' position='0 0 0'>
@@ -198,7 +260,7 @@
 					<a-entity id='p3Name' position='0 .23 .005' scale='.2 .2 .2' n-text='fontSize: 1; text: <color=black>Player 3'></a-entity>
 					<a-entity id='p3Score' position='0 0 .005' scale='.9 .9 .9' n-text='fontSize: 3; text: <color=black>3'></a-entity>
 				</a-entity>
-				<a-sphere id='p3Join' class='joinButton' position='0 -.5 0' radius='.2' color='#a00' n-billboard n-text='fontSize: 1; verticalAlign: top; height: 0.8; text: Click to join' n-sphere-collider='radius: 0.2; type: hologram'></a-sphere>
+				<a-sphere id='p3Join' class='joinButton' position='0 -.5 0' radius='.2' color='#a00' n-billboard n-text='fontSize: 1; verticalAlign: top; height: 0.8; text: Click to Play' n-sphere-collider='radius: 0.2; type: hologram'></a-sphere>
 			</a-entity>
 
 			<a-entity id='podium4' position='.8 0 0'>
@@ -206,7 +268,7 @@
 					<a-entity id='p4Name' position='0 .23 .005' scale='.2 .2 .2' n-text='fontSize: 1; text: <color=black>Player 4'></a-entity>
 					<a-entity id='p4Score' position='0 0 .005' scale='.9 .9 .9' n-text='fontSize: 3; text: <color=black>4'></a-entity>
 				</a-entity>
-				<a-sphere id='p4Join' class='joinButton' position='0 -.5 0' radius='.2' color='#a00' n-billboard n-text='fontSize: 1; verticalAlign: top; height: 0.8; text: Click to join' n-sphere-collider='radius: 0.2; type: hologram'></a-sphere>
+				<a-sphere id='p4Join' class='joinButton' position='0 -.5 0' radius='.2' color='#a00' n-billboard n-text='fontSize: 1; verticalAlign: top; height: 0.8; text: Click to Play' n-sphere-collider='radius: 0.2; type: hologram'></a-sphere>
 			</a-entity>
 
 			<a-entity id='podium5' position='1.6 0 0'>
@@ -214,7 +276,7 @@
 					<a-entity id='p5Name' position='0 .23 .005' scale='.2 .2 .2' n-text='fontSize: 1; text: <color=black>Player 5'></a-entity>
 					<a-entity id='p5Score' position='0 0 .005' scale='.9 .9 .9' n-text='fontSize: 3; text: <color=black>5'></a-entity>
 				</a-entity>
-				<a-sphere id='p5Join' class='joinButton' position='0 -.5 0' radius='.2' color='#a00' n-billboard n-text='fontSize: 1; verticalAlign: top; height: 0.8; text: Click to join' n-sphere-collider='radius: 0.2; type: hologram'></a-sphere>
+				<a-sphere id='p5Join' class='joinButton' position='0 -.5 0' radius='.2' color='#a00' n-billboard n-text='fontSize: 1; verticalAlign: top; height: 0.8; text: Click to Play' n-sphere-collider='radius: 0.2; type: hologram'></a-sphere>
 			</a-entity>
 
 			<a-box id='contestantContainer1' position='-2 1 -1' scale='2 2 2' material='visible: false' opacity='.01' altspace-cursor-collider='enabled: false'></a-box>
@@ -222,25 +284,44 @@
 			<a-box id='contestantContainer3' position='2 1 -1' scale='2 2 2' material='visible: false' opacity='.01' altspace-cursor-collider='enabled: false'></a-box>
 		</a-entity>
 
-		<a-entity position='.8 4.25 10' rotation='0 90 0'>
-			<a-box position='.05 .05 0' scale='.1 .3 .3' color='#666'></a-box>
-			<a-entity id='hostText' position='-.01 .12 0' scale='.1 .1 .1' rotation='0 -90 0' n-text='verticalAlign: top; fontSize: 7; text: Host'></a-entity>
-			<a-box id='hostJoin' position='0 0 0' scale='.05 .05 .05' color='red' n-box-collider></a-box>
-		</a-entity>
-
 		<a-entity id='buzzIn' sync sync-n-sound></a-entity>
 		<a-entity id='correct' sync sync-n-sound></a-entity>
 		<a-entity id='incorrect' sync sync-n-sound></a-entity>
+		<a-entity id='click'></a-entity>
+		<a-entity id='timeEnd' sync sync-n-sound></a-entity>
+
+		<a-box id='trapdoorBox' position='0 -10 0' scale='25 1 25' material='visible: false' altspace-cursor-collider='enabled: false'></a-box>
+		<a-entity id='audienceTarget' position='0 2 6.5' rotation='0 180 0'></a-entity>
+		<a-entity id='trapdoorPortal' position='0 -100 0' n-portal='targetEntity: #audienceTarget' n-skeleton-parent='part: head'></a-entity>
+
+		<a-mixin id='winnerCrown' position='0 .1 .015' scale='.11 .11 .11' rotation='0 180 0' obj-model='obj: models/crown.obj; mtl: models/crown.mtl' collapse-model></a-mixin>
+
+		<a-mixin id='s-series-m01' position='0 .1 .015' scale='.11 .11 .11'></a-mixin>
+		<a-mixin id='s-series-f01' position='0 .1 .03' scale='.11 .11 .11'></a-mixin>
+		<a-mixin id='a-series-m01' position='0 .07 .01' scale='.1 .1 .1'></a-mixin>
+		<a-mixin id='x-series-m02' position='0 .11 .05' scale='.1 .1 .1'></a-mixin>
+		<a-mixin id='pod-classic' position='0 .1 .04' scale='.14 .14 .14'></a-mixin>
+		<a-mixin id='robothead-propellerhead-01' position='0 .1 .08' scale='.12 .12 .12'></a-mixin>
+		<a-mixin id='robothead-roundguy-01' position='0 .17 .025' scale='.17 .17 .17'></a-mixin>
+		<a-mixin id='rubenoid' position='0 .11 .04' scale='.14 .14 .14'></a-mixin>
+		
+		<a-mixin id='sync' n-skeleton-parent='part: head' sync sync-n-skeleton-parent></a-mixin>
 	</a-scene>
 <script>
 	var scene = document.querySelector('a-scene');
 	scene.addEventListener('connected', function() {
 	var sync = scene.systems['sync-system'].connection;
 
-	buzzIn.setAttribute('n-sound', {src: /Mobile/i.test(navigator.userAgent) ? 'https://bengarfield.github.io/AltVR/Hive/sounds/ding.mp3' : 'https://bengarfield.github.io/AltVR/Hive/sounds/ding.ogg', volume: 0.3, spatialBlend: 0.5});
-	correct.setAttribute('n-sound', {src: /Mobile/i.test(navigator.userAgent) ? 'https://bengarfield.github.io/AltVR/codenames/sounds/win2.mp3' : 'https://bengarfield.github.io/AltVR/codenames/sounds/win2.ogg', volume: 0.3, spatialBlend: 0.5});
-	incorrect.setAttribute('n-sound', {src: /Mobile/i.test(navigator.userAgent) ? 'https://bengarfield.github.io/AltVR/codenames/sounds/fail.mp3' : 'https://bengarfield.github.io/AltVR/codenames/sounds/fail.ogg', volume: 0.3, spatialBlend: 0.5});
+	buzzIn.setAttribute('n-sound', {src: 'sounds/ding'  + (/Mobile/i.test(navigator.userAgent) ? '.mp3' : '.ogg'), volume: 0.3, spatialBlend: 0.5});
+	correct.setAttribute('n-sound', {src: 'sounds/win'  + (/Mobile/i.test(navigator.userAgent) ? '.mp3' : '.ogg'), volume: 0.3, spatialBlend: 0.5});
+	incorrect.setAttribute('n-sound', {src: 'sounds/fail'  + (/Mobile/i.test(navigator.userAgent) ? '.mp3' : '.ogg'), volume: 0.3, spatialBlend: 0.5});
+	click.setAttribute('n-sound', {src: 'sounds/click' + (/Mobile/i.test(navigator.userAgent) ? '.mp3' : '.ogg'), volume: 0.3, spatialBlend: 0.5});
+	timeEnd.setAttribute('n-sound', {src: 'sounds/timeEnd' + (/Mobile/i.test(navigator.userAgent) ? '.mp3' : '.ogg'), volume: 0.6, spatialBlend: 0.5});
 
+	var isActivity = false;
+	if (findGetParameter('mode') == 'activity') {
+		isActivity = true;
+	}
 
 	var scores = [];
 	var categories = [{id:9,name:'General Knowledge'},{id:10,name:'Books'},{id:11,name:'Film'},{id:12,name:'Music'},{id:13,name:'Musicals & Theatres'},{id:14,name:'Television'},{id:15,name:'Video Games'},{id:16,name:'Board Games'},{id:17,name:'Science & Nature'},{id:18,name:'Computers'},{id:19,name:'Mathematics'},{id:20,name:'Mythology'},{id:21,name:'Sports'},{id:22,name:'Geography'},{id:23,name:'History'},{id:24,name:'Politics'},{id:25,name:'Art'},{id:26,name:'Celebrities'},{id:27,name:'Animals'},{id:28,name:'Vehicles'},{id:29,name:'Comics'},{id:30,name:'Gadgets'},{id:31,name:'Japanese Anime & Manga'},{id:32,name:'Cartoon & Animations'}];
@@ -287,7 +368,6 @@
 			obj.getObjectByName('screen').material.color = new THREE.Color(0,0,0);
 			obj.getObjectByName('border').material.color = new THREE.Color(0,0,0);
 			obj.getObjectByName('border').material.map = new THREE.TextureLoader().load('models/timer.png');
-			console.log('timer', obj.getObjectByName('border').material);
 			obj.getObjectByName('edge').material = new THREE.MeshBasicMaterial({color: edge, map: new THREE.TextureLoader().load('models/screen.png')});
 
 			bigScreen.object3D.add(obj);
@@ -323,7 +403,6 @@
 		}
 
 		function hostPodiumLoad(obj) {
-			console.log('host', obj);
 			obj.rotation.y = Math.PI/2;
 			obj.scale.setScalar(.5);
 			obj.position.y = 0.1;
@@ -357,8 +436,6 @@
 		var podiumColors = [black,red,orange,yellow,green,blue];
 
 		function podiumLoad(obj) {
-			console.log('podium OBJ loaded')
-			console.log(obj);
 			obj.rotation.y = -Math.PI/2;
 			obj.scale.setScalar(.5);
 			obj.position.y = 0.1;
@@ -419,22 +496,31 @@
   		sync.instance.child('host').on('value', function(data){
 				if (data.val() != null) {
 					hasHost = true;
-					hostJoin.setAttribute('color', 'green');
 					hostUser = data.val();
-					hostText.setAttribute('n-text', 'text', 'Host\n<size=50%>' + hostUser.displayName);
+					hostText.setAttribute('n-text', 'text', 'Current Host:\n' + hostUser.displayName);
+					hostB.setAttribute('n-text', 'text', 'Leave');
+					hostB.setAttribute('color', 'red');
+					h1Join.setAttribute('position', '0 -.5 0');
 					if(data.val().userId == user.userId) {
 						isHost = true;
 						console.log('You are host!');
 						colliders.setAttribute('n-mesh-collider', 'type: environment; convex: false');
+						altspace.getSpace().then(function(space){
+							sync.instance.child('host').child('space').set(space.sid);
+						});
 					} else {
 						isHost = false;
 					}
 				} else {
 					hasHost = false;
-					hostJoin.setAttribute('color', 'red');
 					isHost = false;
 					hostUser = null;
-					hostText.setAttribute('n-text', 'text', 'Host');
+					hostText.setAttribute('n-text', 'text', 'Current Host:\nNot Joined');
+					hostB.setAttribute('n-text', 'text', 'Join');
+					hostB.setAttribute('color', 'green');
+					if (settings.manualJoinHost) {
+						h1Join.setAttribute('position', '0 2 0');
+					}
 					if (joined == 0) {
 						colliders.removeAttribute('n-mesh-collider');
 					}
@@ -442,23 +528,46 @@
 			});
 
 			var players = [{joined: false},{joined: false},{joined: false},{joined: false},{joined: false}];
-			var manualJoin = false;
-			sync.instance.child('manualJoin').on('value', function(data){
-				if (data.val() != null) {
-					manualJoin = data.val();
-					for (var i = 0; i < 5; i++) {
-						if (manualJoin) {
+
+			var settings = {};
+			sync.instance.child('settings').on('value', function(data){
+				if(data.val() != null) {
+					settings = data.val();
+					if (settings.manualJoin) {
+						for (var i = 0; i < 5; i++) {
 							if (!players[i].joined) {
 								document.querySelector('#p' + (i + 1) + 'Join').setAttribute('position', '0 2 0');
 							}
-							manJoinB.setAttribute('color', 'green');
-						} else {
-							document.querySelector('#p' + (i + 1) + 'Join').setAttribute('position', '0 -.5 0');
-							manJoinB.setAttribute('color', 'red');
 						}
+						manJoinB.setAttribute('src', 'textures/true.png');
+					} else {
+						for (var i = 0; i < 5; i++) {
+							document.querySelector('#p' + (i + 1) + 'Join').setAttribute('position', '0 -.5 0');
+						}
+						manJoinB.setAttribute('src', 'textures/false.png');
+					}
+
+					if (settings.manualJoinHost) {
+						hostManJoinB.setAttribute('src', 'textures/true.png');
+						if (!hasHost) {
+							h1Join.setAttribute('position', '0 2 0');
+						}
+					} else {
+						hostManJoinB.setAttribute('src', 'textures/false.png');
+						h1Join.setAttribute('position', '0 -.5 0');
+					}
+
+					if (settings.endGameKick) {
+						endKickB.setAttribute('src', 'textures/true.png');
+					} else {
+						endKickB.setAttribute('src', 'textures/false.png');
+					}
+
+					if (isActivity) {
+						//gray out buttons
 					}
 				} else {
-					sync.instance.child('manualJoin').set(false);
+					sync.instance.child('settings').set({manualJoin: (isActivity ? true : false), endGameKick: false, manualJoinHost: (isActivity ? true : false)});
 				}
 			});
 			
@@ -468,8 +577,11 @@
 					//console.log(data.val());
 					players = data.val();
 					joined = 0;
+					scores = [];
 					for (var i = 0; i < 5; i++) {
 						if (players[i].joined) {
+							scores.push({name: players[i].displayName, score: players[i].score});
+
 							var size = 4;
 
 							if (data.val()[i].displayName.length > 14) {
@@ -480,7 +592,7 @@
 
 							document.querySelector('#p' + (i + 1) + 'Name').setAttribute('n-text', 'fontSize', size);
 							document.querySelector('#p' + (i + 1) + 'Name').setAttribute('n-text', 'text', '<color=black><b>' + data.val()[i].displayName);
-							document.querySelector('#p' + (i + 1) + 'Score').setAttribute('n-text', 'text', '<color=black>' + data.val()[i].score);
+							document.querySelector('#p' + (i + 1) + 'Score').setAttribute('n-text', 'text', (data.val()[i].score < 0 ? '<color=#600>' : '<color=black>') + data.val()[i].score);
 							document.querySelector('#p' + (i + 1) + 'Join').setAttribute('position', '0 -.5 0');
 							document.querySelector('#p' + (i + 1) + 'ControlPanel').setAttribute('n-text', 'text', '<color=white>' + data.val()[i].displayName);
 							if (!playerBuzzedIn) {
@@ -490,7 +602,7 @@
 							document.querySelector('#p' + (i + 1) + 'Name').setAttribute('n-text', 'text', '');
 							document.querySelector('#p' + (i + 1) + 'Score').setAttribute('n-text', 'text', '');
 							document.querySelector('#p' + (i + 1) + 'ControlPanel').setAttribute('n-text', 'text', '<color=#888>Not joined');
-							if (manualJoin) {
+							if (settings.manualJoin) {
 								document.querySelector('#p' + (i + 1) + 'Join').setAttribute('position', '0 2 0');
 							}
 							setPanelLight(i, false);
@@ -579,7 +691,7 @@
 
 			var done = false;
 			var playerBuzzedIn;
-			sync.instance.child('click').on('value', function(data){
+			sync.instance.child('buzz').on('value', function(data){
 	      if (data.val() == null) {
 	        for (var i = 0; i < 5; i++) {
 	        	setColor(i, 'off');
@@ -588,10 +700,16 @@
 		        } else {
 			        setPanelLight(i, false);
 			      }
+						sync.instance.child('selectedAnswer').set(null);
+						setTimeout(function(){
+							updateButtonText();
+						},1);
 	        }
 	        done = false;
 	        playerBuzzedIn = null;
-	        setBorderColor(0);
+					if (mode == 'question') {
+						setBorderColor(0);
+					}
 	      } else {
 	        	var p = data.val()[Object.keys(data.val())[0]];
 	        	for (var i = 0; i < 5; i++) {
@@ -614,6 +732,7 @@
 	    });
 
 			function setBorderColor(color) {
+				//console.log('set border: ', color)
 				bigScreen.object3D.getObjectByName('border').material.map.offset.x = 0;
 				bigScreen.object3D.getObjectByName('border').material.color.set(podiumColors[color]);
 				hostPodium.object3D.getObjectByName('border').material.color.set(podiumColors[color]);
@@ -677,6 +796,8 @@
 					sync.instance.child('mode').set('category');
 				}
 			});
+			
+			var hasCrown = false;
 
 	    var screenState;
 	    sync.instance.child('screenState').on('value', function(data){
@@ -722,7 +843,27 @@
 
 							endGameText2.setAttribute('n-text', 'text', str);
 							endGameScoreText2.setAttribute('n-text', 'text', str2);
-						} else {
+						} else if (mode == 'scores') {
+							sortByKey(scores, 'score');
+							scores.reverse();
+							
+							checkJointScores(scores);
+
+							var str = '<size=60%>Scores:<size=25%>\n\n\n<size=45%><align=left>';
+							var str2 = '<size=45%>';
+
+							for (var i = 0; i < 5; i++) {
+								str += (scores[i] ? scores[i].pos + ' ' + scores[i].name : '') + '\n';
+								str2 += '	' + (scores[i] ? scores[i].score : '<color=black>.') + '\n';
+							}
+
+							endGameText.setAttribute('n-text', 'text', str);
+							endGameText2.setAttribute('n-text', 'text', str);
+
+							endGameScoreText.setAttribute('n-text', 'text', str2);
+							endGameScoreText2.setAttribute('n-text', 'text', str2);
+
+						} else if (mode == 'winner') {
 							var winner;
 							for (var i = 0; i < 5; i++) {
 								if (players[i].joined) {
@@ -732,11 +873,28 @@
 									}
 								}
 							}
+							
+
 							endGameText.setAttribute('n-text', 'text', 'Winner:\n' + winner.displayName);
 							endGameText2.setAttribute('n-text', 'text', 'Winner:\n' + winner.displayName);
 
 							endGameScoreText.setAttribute('n-text', 'text', '');
 							endGameScoreText2.setAttribute('n-text', 'text', '');
+							
+							console.log('Winner', winner);
+
+							if (winner.id == user.userId && !hasCrown) {
+								var avatar = user.avatarInfo.sid;
+								var avatars = ['s-series-m01','s-series-f01','a-series-m01','x-series-m02','pod-classic','robothead-propellerhead-01','robothead-roundguy-01'];
+								if (avatars.indexOf(avatar) == -1) {
+									avatar = 'rubenoid';
+								}
+								scene.systems['sync-system'].instantiate('winnerCrown ' + avatar + ' sync', scene);
+								hasCrown = true;
+							} else if (winner.id != user.userId && joined != 0 && settings.endGameKick) {
+								//removeStageCollision
+								colliders.removeAttribute('n-mesh-collider');
+							}
 						}
 
 						endScreen.setAttribute('position', '0 0 0');
@@ -747,6 +905,29 @@
 					sync.instance.child('screenState').set(1);
 				}
 			});
+
+			sync.instance.child('countdown').on('value', function(data){
+				if (data.val() != null) {
+					endGameText.setAttribute('n-text', 'text', '<size=250%>' + data.val());
+					endGameText2.setAttribute('n-text', 'text', '<size=250%>' + data.val());
+
+					endGameScoreText.setAttribute('n-text', 'text', '');
+					endGameScoreText2.setAttribute('n-text', 'text', '');
+				}
+			});
+
+			function checkJointScores(s) {
+				s[0].pos = '1:';
+				for (var i = 1; i < 5; i++) {
+					if (s[i]) {
+						if (s[i].score == s[i - 1].score) {
+							s[i].pos = '<color=black>1:</color>';
+						} else {
+							s[i].pos = i + 1 + ':';
+						}
+					}
+				}
+			}
 
 			var currentCategory;
 			sync.instance.child('category').on('value', function(data){
@@ -762,15 +943,33 @@
 				for (var i = 0; i < categoriesLeft.length; i++) {
 					if (categoriesLeft[i].id == data.val().id) {
 						categoriesLeft.splice(i, 1);
+						if (categoriesLeft.length < 4) {
+							sync.instance.child('finalRound').set(true);
+						}
 					}
 				}
 			});
-
 			sync.instance.child('categoriesDone').on('value', function(data){
 				if (data.val() == null) {
 					categoriesLeft = categories.slice(0);
 				}
 				console.log(categoriesLeft);
+			});
+			
+			var finalRound = false;
+			sync.instance.child('finalRound').on('value', function(data){
+				if (data.val() != null) {
+					finalRound = data.val();
+					if (finalRound) {
+						//finalRoundIndicator.setAttribute('position', '0 0 0');
+						finalRoundBack.setAttribute('color', '#cc0');
+					} else {
+						//finalRoundIndicator.setAttribute('position', '0 0 -10');
+						finalRoundBack.setAttribute('color', '#020202');
+					}
+				} else {
+					sync.instance.child('finalRound').set(false);
+				}
 			});
 
 			var round;
@@ -822,11 +1021,21 @@
 				    cT.setAttribute('n-text', 'text', data.val()[2]);
 				    dT.setAttribute('n-text', 'text', data.val()[3]);
 
+						aT.setAttribute('n-text', 'fontSize', 5);
+				    bT.setAttribute('n-text', 'fontSize', 5);
+				    cT.setAttribute('n-text', 'fontSize', 5);
+				    dT.setAttribute('n-text', 'fontSize', 4);
+
 				    questionTScreen.setAttribute('n-text', 'text', 'Round ' + (round + 1) + ' (' + d + ')\n\nChoose a Category');
 				    aTScreen.setAttribute('n-text', 'text', data.val()[0]);
 				    bTScreen.setAttribute('n-text', 'text', data.val()[1]);
 				    cTScreen.setAttribute('n-text', 'text', data.val()[2]);
 				    dTScreen.setAttribute('n-text', 'text', data.val()[3]);
+
+						aTScreen.setAttribute('n-text', 'fontSize', 5);
+				    bTScreen.setAttribute('n-text', 'fontSize', 5);
+				    cTScreen.setAttribute('n-text', 'fontSize', 5);
+				    dTScreen.setAttribute('n-text', 'fontSize', 5);
 
 						setBorderColor(lastPlayer + 1);
 					}
@@ -893,6 +1102,57 @@
 				}
 				answered = data.val();
 			});
+			
+			var endTime;
+			var timerEnabled = false;
+			sync.instance.child('endGameTimer').on('value', function(data){
+				if (data.val() != null) {
+					endTime = data.val().time;
+					var d = new Date(endTime);
+					var str = (d.getHours().toString().length == 1 ? '0' : '') + d.getHours() + ':' + (d.getMinutes().toString().length == 1 ? '0' : '') + d.getMinutes();
+					timeText.setAttribute('n-text', 'text', (data.val().enabled ? '<color=#fff>' : '<color=#444>') + str);
+					if (data.val().enabled != timerEnabled) {
+						timerEnabled = data.val().enabled;
+						if (timerEnabled) {
+							timerEnableButton.setAttribute('color', 'green');
+						} else {
+							timerEnableButton.setAttribute('color', '#a00');
+						}
+					}
+				} else {
+					sync.instance.child('endGameTimer').set({enabled: false, time: getTime()});
+				}
+			});
+
+			function getTime() {
+				var t = new Date().getTime();
+				var min = new Date().getUTCMinutes();
+				min++;
+				var dif = 1;
+				while (min % 30 != 0) {
+					min++;
+					dif++;
+				}
+				t = t + (dif * 60000) - (new Date(t).getUTCSeconds() * 1000) - new Date(t).getUTCMilliseconds();
+				return t;
+			}
+
+			function addMinutes(t, min) {
+				return t + (min * 60000);
+			}
+			
+			var asd = 5;
+			setInterval(function(){
+				if (timerEnabled && !finalRound) {
+					if (new Date().getTime() > endTime - (asd * 60000) && isHost) {
+						console.log('times up');
+						sync.instance.child('finalRound').set(true);
+						//play sound
+						timeEnd.components.sync.takeOwnership();
+						timeEnd.components['n-sound'].playSound();
+					}
+				}
+			}, 1000);
 
 			function resetScreenButtons() {
 					aB.object3D.getObjectByName('outer').material.color.set(new THREE.Color('#fff'));
@@ -958,11 +1218,7 @@
 		  function moveScreen(i) {
 		  	screenPos = i;
 		  	var a = [{pos:{x:0,y:0,z:1.2}, scale:{x:1,y:1,z:1}, rot:{x:0,y:0,z:0}}, 
-								{pos:{x:0,y:0.1,z:0}, scale:{x:0.35,y:0.35,z:0.35}, rot:{x:THREE.Math.degToRad(-20),y:THREE.Math.degToRad(-135),z:THREE.Math.degToRad(0)}}];
-
-		  	//screenContainer.object3D.position.set(a[i].pos.x,a[i].pos.y,a[i].pos.z);
-		  	//screenContainer.object3D.scale.set(a[i].scale.x,a[i].scale.y,a[i].scale.z);
-		  	//screenContainer.object3D.rotation.set(a[i].rot.x,a[i].rot.y,a[i].rot.z);
+								{pos:{x:-1,y:0.1,z:-1}, scale:{x:0.35,y:0.35,z:0.35}, rot:{x:THREE.Math.degToRad(-20),y:THREE.Math.degToRad(-135),z:THREE.Math.degToRad(0)}}];
 
 		  	new TWEEN.Tween(screenContainer.object3D.position).to(a[i].pos, 300).start();
 		  	new TWEEN.Tween(screenContainer.object3D.scale).to(a[i].scale, 300).start();
@@ -986,23 +1242,23 @@
       });
 
       podiumList[0].getObjectByName('button').addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({
-        joints: [['Index','Right',3],['Index','Left',3],['Hand','Right',0],['Hand','Left',0]],
+        joints: [['Middle','Right',0],['Middle','Right',1],['Middle','Right',2],['Middle','Right',3],['Middle','Left',0],['Middle','Left',1],['Middle','Left',2],['Middle','Left',3]],
         jointCubeSize: .02
       }));
       podiumList[1].getObjectByName('button').addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({
-        joints: [['Index','Right',3],['Index','Left',3],['Hand','Right',0],['Hand','Left',0]],
+        joints: [['Middle','Right',0],['Middle','Right',1],['Middle','Right',2],['Middle','Right',3],['Middle','Left',0],['Middle','Left',1],['Middle','Left',2],['Middle','Left',3]],
         jointCubeSize: .02
       }));
       podiumList[2].getObjectByName('button').addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({
-        joints: [['Index','Right',3],['Index','Left',3],['Hand','Right',0],['Hand','Left',0]],
+        joints: [['Middle','Right',0],['Middle','Right',1],['Middle','Right',2],['Middle','Right',3],['Middle','Left',0],['Middle','Left',1],['Middle','Left',2],['Middle','Left',3]],
         jointCubeSize: .02
       }));
       podiumList[3].getObjectByName('button').addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({
-        joints: [['Index','Right',3],['Index','Left',3],['Hand','Right',0],['Hand','Left',0]],
+        joints: [['Middle','Right',0],['Middle','Right',1],['Middle','Right',2],['Middle','Right',3],['Middle','Left',0],['Middle','Left',1],['Middle','Left',2],['Middle','Left',3]],
         jointCubeSize: .02
       }));
       podiumList[4].getObjectByName('button').addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({
-        joints: [['Index','Right',3],['Index','Left',3],['Hand','Right',0],['Hand','Left',0]],
+        joints: [['Middle','Right',0],['Middle','Right',1],['Middle','Right',2],['Middle','Right',3],['Middle','Left',0],['Middle','Left',1],['Middle','Left',2],['Middle','Left',3]],
         jointCubeSize: .02
       }));
 
@@ -1024,7 +1280,7 @@
 
       function buzz(i) {
       	if (joined == i && playerBuzzedIn == null && mode == 'question') {
-          sync.instance.child('click').push(i.toString());
+          sync.instance.child('buzz').push(i.toString());
           
           buzzIn.components.sync.takeOwnership();
           buzzIn.components['n-sound'].playSound();
@@ -1087,7 +1343,6 @@
 
 							decode(data);
 			  			sortAnswers(data.results);
-
 
 							if (questions[cat.id.toString()]) {
 			  				questions[cat.id.toString()][diff] = data.results;
@@ -1302,20 +1557,28 @@
 			}
 
 		  aB.addEventListener('mouseup', function(){
-		  	select('a');
+		  	if (isHost || isMod) {
+					select('a');
+				}
 		  });
 		  bB.addEventListener('mouseup', function(){
-		  	select('b');
+		  	if (isHost || isMod) {
+					select('b');
+				}
 		  });
 		  cB.addEventListener('mouseup', function(){
-		  	select('c');
+		  	if (isHost || isMod) {
+					select('c');
+				}
 		  });
 		  dB.addEventListener('mouseup', function(){
-		  	select('d');
+		  	if (isHost || isMod) {
+					select('d');
+				}
 		  });
 
 		  function select(a) {
-				if ((isHost || isMod) && mode != 'pregame') {
+				if (mode != 'pregame' && (playerBuzzedIn != null || mode == 'category')) {
 					if (selected == a) {
 						selected = null;
 					} else {
@@ -1362,26 +1625,73 @@
 
 
 		  var clicked = false;
-		  endGameB.addEventListener('mouseup', function(){
-		  	if (isHost || isMod) {
-			  	//sync.instance.child('current').set(-1);
-			  	//getQs(9);
 
-			  	sync.instance.child('categories').set(null);
-			  	if (screenState == 3) {
-			  		sync.instance.child('questions').set(null);
-			  		sync.instance.child('round').set(0);
-			  		sync.instance.child('current').set(-1);
-			  		sync.instance.child('categoriesDone').set(null);
-						sync.instance.child('mode').set('category');
-			  		sync.instance.child('screenState').set(1);
-						sync.instance.child('lastToChoose').set(4);
-						sync.instance.child('pregame').child('players').set(null);
-			  	} else {
-				  	sync.instance.child('screenState').set(3);
-				  }
+			var confirmFunction = '';
+		  endGameB.addEventListener('mouseup', function(){
+				if ((isHost || isMod) && mode != 'winner') {
+					showDialog('end');
+					confirmFunction = 'end';
+					click.components['n-sound'].playSound();
+				}
+			});
+
+			confirmNo.addEventListener('mouseup', function(){
+				if (isHost || isMod) {
+					confirmDialog.setAttribute('position', '0 0 0');
+					click.components['n-sound'].playSound();
+				}
+			});
+			confirmYes.addEventListener('mouseup', function(){
+		  	if (isHost || isMod) {
+					if (confirmFunction.includes('kick')) {
+						var i = Number(confirmFunction.slice(4,5));
+						sync.instance.child('players').child(i - 1).set({joined: false});
+					} else if (confirmFunction == 'clear') {
+						sync.instance.child('players').set(null);
+					} else {
+						endGame();
+					}
+					confirmDialog.setAttribute('position', '0 0 0');
+					click.components['n-sound'].playSound();
 			  }
-		  });
+			});
+
+			function showDialog(a) {
+				if(a == 'kick') {
+					confirmText.setAttribute('n-text', 'text', 'Kick Player?');
+				} else if (a == 'clear') {
+					confirmText.setAttribute('n-text', 'text', '<size=75%>Remove All\nPlayers?');
+				} else {
+					confirmText.setAttribute('n-text', 'text', 'End Game?');
+				}
+				
+				
+				confirmDialog.setAttribute('position', '0 0 0.02');
+			}
+			
+			function endGame() {
+				sync.instance.child('categories').set(null);
+				if (screenState == 3 && mode == 'winner') {
+					sync.instance.child('buzz').set(null);
+					sync.instance.child('answered').set(false);
+					sync.instance.child('questions').set(null);
+					sync.instance.child('round').set(0);
+					sync.instance.child('current').set(-1);
+					sync.instance.child('selectedAnswer').set(null);
+					sync.instance.child('category').set(null);
+					sync.instance.child('categoriesDone').set(null);
+					sync.instance.child('mode').set('category');
+					sync.instance.child('screenState').set(1);
+					sync.instance.child('lastToChoose').set(4);
+					sync.instance.child('pregame').child('players').set(null);
+					sync.instance.child('endGameTimer').set(null);
+					sync.instance.child('finalRound').set(false);
+				} else {
+					sync.instance.child('mode').set('winner');
+					sync.instance.child('screenState').set(1);
+					sync.instance.child('screenState').set(3);
+				}
+			}
 
 		  function nextQuestion() {
 				if (mode == 'pregame') {
@@ -1390,13 +1700,13 @@
 			  sync.instance.child('current').set(current + 1);
 			  sync.instance.child('answered').set(false);
 			  sync.instance.child('selectedAnswer').set(null);
-			  sync.instance.child('click').set(null);
+			  sync.instance.child('buzz').set(null);
 		  }
 
 		  var indexes = ['a','b','c','d'];
 
 		  function answerQuestion() {
-		  	console.log('selected', selected);
+		  	//console.log('selected', selected);
 				if (selected != null) {
 					if (mode == 'category') {
 						console.log(categoriesOnScreen[indexes.indexOf(selected)]);
@@ -1428,7 +1738,7 @@
 			  	sync.instance.child('round').set(round + 1);
 			  }
 
-		  	sync.instance.child('click').set(null);
+		  	sync.instance.child('buzz').set(null);
 		  	sync.instance.child('answered').set(false);
 			  sync.instance.child('selectedAnswer').set(null);
 		  	sync.instance.child('mode').set('category');
@@ -1439,29 +1749,92 @@
 
 		  resetB.addEventListener('mouseup', function(){
 		  	if (isHost || isMod) {
-			  	sync.instance.child('click').set(null);
+			  	sync.instance.child('buzz').set(null);
 		  	}
-		  });
+			});
+			var resetPopupShow;
+			var resetPopupHide;
+			resetB.addEventListener('mouseenter', function(){
+		  	if (isHost || isMod) {
+					clearTimeout(resetPopupHide);
+					resetPopupShow = setTimeout(function(){
+						resetPopup.object3D.position.z = .2;
+					}, 500);
+		  	}
+			});
+			resetB.addEventListener('mouseleave', function(){
+		  	if (isHost || isMod) {
+					clearTimeout(resetPopupShow);
+					resetPopupHide = setTimeout(function(){
+						resetPopup.object3D.position.z = -1;
+					}, 1000);
+		  	}
+			});
 			
-			var controlPanelPos = [{pos: {x:0.65,y:1.3,z:0.4}, scale: {x:1,y:1,z:1}}, {pos: {x:0,y:1,z:0}, scale: {x:0.5,y:0.5,z:0.5}}]
+			var controlPanelPos = [{pos:{x:0.65,y:1.3,z:0.4}, scale:{x:1,y:1,z:1}, rot:{x:THREE.Math.degToRad(-40),y:THREE.Math.degToRad(-50),z:0}}, {pos:{x:0,y:1,z:0}, scale:{x:0.25,y:0.25,z:0.25}, rot:{x:THREE.Math.degToRad(-90),y:0,z:0}}]
 			var hostPanelState = false;
 			controlB.addEventListener('mouseup', function(){
 		  	if (isHost || isMod) {
 			  	var i = 0;
 					if (hostPanelState) {
 						i = 1;
+						confirmDialog.setAttribute('position', '0 0 0');
 					}
 					hostPanelState = !hostPanelState;
 					new TWEEN.Tween(hostControlPanel.object3D.position).to(controlPanelPos[i].pos, 500).start();
 					new TWEEN.Tween(hostControlPanel.object3D.scale).to(controlPanelPos[i].scale, 500).start();
+					new TWEEN.Tween(hostControlPanel.object3D.rotation).to(controlPanelPos[i].rot, 500).start();
 		  	}
-		  });
+			});
+			var controlPopupShow;
+			var controlPopupHide;
+			controlB.addEventListener('mouseenter', function(){
+		  	if (isHost || isMod) {
+					clearTimeout(controlPopupHide);
+					controlPopupShow = setTimeout(function(){
+						controlPopup.object3D.position.z = .2;
+					}, 500);
+		  	}
+			});
+			controlB.addEventListener('mouseleave', function(){
+		  	if (isHost || isMod) {
+					clearTimeout(controlPopupShow);
+					controlPopupHide = setTimeout(function(){
+						controlPopup.object3D.position.z = -1;
+					}, 1000);
+		  	}
+			});
+
+			helpB.addEventListener('mouseup', function(){
+		  	if (isHost || isMod) {
+			  	altspace.open(location.origin + location.pathname + 'help/');
+		  	}
+			});
+			var helpPopupShow;
+			var helpPopupHide;
+			helpB.addEventListener('mouseenter', function(){
+		  	if (isHost || isMod) {
+					clearTimeout(helpPopupHide);
+					helpPopupShow = setTimeout(function(){
+						helpPopup.object3D.position.z = .2;
+					}, 500);
+		  	}
+			});
+			helpB.addEventListener('mouseleave', function(){
+		  	if (isHost || isMod) {
+					clearTimeout(helpPopupShow);
+					helpPopupHide = setTimeout(function(){
+						helpPopup.object3D.position.z = -1;
+					}, 1000);
+		  	}
+			});
 
 			controlPanelClose.addEventListener('mouseup', function(){
 		  	if (isHost || isMod) {
 					hostPanelState = false;
 					new TWEEN.Tween(hostControlPanel.object3D.position).to(controlPanelPos[1].pos, 500).start();
 					new TWEEN.Tween(hostControlPanel.object3D.scale).to(controlPanelPos[1].scale, 500).start();
+					new TWEEN.Tween(hostControlPanel.object3D.rotation).to(controlPanelPos[1].rot, 500).start();
 		  	}
 		  });
 			
@@ -1478,61 +1851,150 @@
 			}
 
 		  hostNext.addEventListener('mouseup', function(){
-		  	if (isHost || isMod) {
-		  		if (!questionsLoaded) {
-		  			console.log('loadQuestions');
-		  			if(!loadingQuestions) {
-			  			getAllQuestions();
-			  		}
-		  		} else if ((current == -1 && selected == null) || (mode == 'category' && selected == null) || (answered && current == 4) || (mode == 'pregame' && screenState == 3)) {
-		  			if (anyPlayers()) {
-							console.log('go to gategory selection');
-							if (round == 0 && !players[4].joined && !firstPlayer) {
-								sync.instance.child('lastToChoose').set(getNextPlayer(lastPlayer));
-								firstPlayer = true;
-							}
-							if ((mode == 'category' && selected == null) || mode == 'pregame') {
-								categorySelect(false);
-							} else {							
-								sync.instance.child('lastToChoose').set(getNextPlayer(lastPlayer));
-								categorySelect(true);
-							}
-						} else {
-							console.log('start pregame');
-							startPregame();
-						}
-		  		} else if ((mode == 'category' && !answered) || mode == 'question' && !answered && ((playerBuzzedIn != null && selected != null) || (playerBuzzedIn == null && selected == null))) {
-		  			console.log('answer question');
-		  			answerQuestion();
-		  		} else if (mode == 'pregame' && (current == 9 || remainingPlayers < 6)) {
-						console.log('end pregame');
-						endPregame();
-					} else if ((answered && current < 4) || (mode == 'category' && selected != null) || (mode == 'pregame' && current < 9 && screenState == 2)) {
-		  			console.log('go to next question');
-		  			nextQuestion();
-		  		}
-		  	}
-		  });
-
-		  hostJoin.addEventListener('mouseup', function(){
-		  	if (!hasHost) {
+				if (!hasHost) {
 					altspace.getSpace().then(function(space){
 						sync.instance.child('host').set({displayName: user.displayName, userId: user.userId, space: space.sid});
 					});
-		  	} else if (hasHost && (isHost || isMod)) {
-		  		sync.instance.child('host').set(null);
+					if (!questionsLoaded) {
+		  			//console.log('loadQuestions');
+		  			if(!loadingQuestions) {
+			  			getAllQuestions();
+			  		}
+		  		}
+				} else if (isHost || isMod) {
+		  		if (!questionsLoaded) {
+		  			//console.log('loadQuestions');
+		  			if(!loadingQuestions) {
+			  			getAllQuestions();
+			  		}
+		  		} else if (mode == 'winner') {
+						endGame();
+					} else if ((current == -1 && selected == null) || (mode == 'category' && selected == null) || (answered && current == 4) || (mode == 'pregame' && screenState == 3) || mode == 'scores') {
+		  			if (anyPlayers()) {
+							if(answered && current == 4 && mode == 'question') {
+								if (finalRound) {
+									//console.log('end game');
+									endGame();
+								} else {
+									//console.log('show scores');
+									showScores();
+								}
+							} else {
+
+								//console.log('go to gategory selection');
+								if (round == 0 && !players[4].joined && !firstPlayer) {
+									sync.instance.child('lastToChoose').set(getNextPlayer(lastPlayer));
+									firstPlayer = true;
+								}
+								if ((mode == 'category' && selected == null) || mode == 'pregame') {
+									categorySelect(false);
+								} else {							
+									sync.instance.child('lastToChoose').set(getNextPlayer(lastPlayer));
+									categorySelect(true);
+								}
+							}
+						} else if (!countdownStarted) {
+							//console.log('start pregame');
+							startPregameCountdown();
+							//startPregame();
+						}
+		  		} else if ((mode == 'category' && !answered) || mode == 'question' && !answered && ((playerBuzzedIn != null && selected != null) || (playerBuzzedIn == null && selected == null))) {
+		  			//console.log('answer question');
+		  			answerQuestion();
+		  		} else if (mode == 'pregame' && (current == 9 || remainingPlayers < 6)) {
+						//console.log('end pregame');
+						endPregame();
+					} else if ((answered && current < 4) || (mode == 'category' && selected != null) || (mode == 'pregame' && current < 9 && screenState == 2)) {
+		  			//console.log('go to next question');
+		  			nextQuestion();
+		  		}
 		  	}
+				updateButtonText();
 		  });
 
+			function updateButtonText() {
+				//var str = '<color=#080><b>O </b></color>';
+				//var str = '<size=75%>Press <color=#080>O</color> to ';
+				var str = '';
+				if (!hasHost) {
+					str += 'Click to Host';
+				} else if (!questionsLoaded) {
+					if(!loadingQuestions) {
+						str += 'Load Questions';
+					}
+				} else if (mode == 'winner') {
+					str += 'Return to Title';
+				} else if ((current == -1 && selected == null) || (mode == 'category' && selected == null) || (answered && current == 4) || (mode == 'pregame' && screenState == 3) || mode == 'scores') {
+					if (anyPlayers()) {
+						if(answered && current == 4 && mode == 'question') {
+							if (finalRound) {
+								str += 'End Game';
+							} else {
+								str += 'Show Scores';
+							}
+						} else {
+							if ((mode == 'category' && selected == null) || mode == 'pregame') {
+								if (round == 0 && screenState == 1) {
+									str += 'Start Game';
+								} else {
+									str += 'Shuffle Categories';
+								}
+							} else {
+								str += 'Next Round';
+							}
+						}
+					} else {
+						str += 'Start Player Selection';
+					}
+				} else if ((mode == 'category' && !answered) || mode == 'question' && !answered && ((playerBuzzedIn != null && selected != null) || (playerBuzzedIn == null && selected == null))) {
+					if (mode == 'category') {
+						str += 'Select Category';
+					} else if (playerBuzzedIn == null) {
+						str += 'Skip Question';
+					} else {
+						str += 'Reveal Answer';
+					}
+				} else if (mode == 'pregame' && (current == 9 || remainingPlayers < 6)) {
+					str += 'Reveal Top 5';
+				} else if ((answered && current < 4) || (mode == 'category' && selected != null) || (mode == 'pregame' && current < 9 && screenState == 2)) {
+					str += 'Next Question';
+				}
+				hostButtonText.setAttribute('n-text', 'text', str);
+				if (str == '') {
+					hostNext.setAttribute('color', '#343');
+				} else {
+					hostNext.setAttribute('color', '#282');
+				}
+			}
+
+			sync.instance.on('value', function(){
+				updateButtonText();
+			});
+
 			manJoinB.addEventListener('mouseup', function(){
+				if ((isHost || isMod) && !isActivity) {
+					sync.instance.child('settings').child('manualJoin').set(!settings.manualJoin);
+					click.components['n-sound'].playSound();
+				}
+			});
+			hostManJoinB.addEventListener('mouseup', function(){
+				if ((isHost || isMod) && !isActivity) {
+					sync.instance.child('settings').child('manualJoinHost').set(!settings.manualJoinHost);
+					click.components['n-sound'].playSound();
+				}
+			});
+			endKickB.addEventListener('mouseup', function(){
 				if (isHost || isMod) {
-					sync.instance.child('manualJoin').set(!manualJoin);
+					sync.instance.child('settings').child('endGameKick').set(!settings.endGameKick);
+					click.components['n-sound'].playSound();
 				}
 			});
 
 			clearPlayersB.addEventListener('mouseup', function(){
 				if (isHost || isMod) {
-					sync.instance.child('players').set(null);
+					confirmFunction = 'clear';
+					showDialog(confirmFunction);
+					click.components['n-sound'].playSound();
 				}
 			});
 
@@ -1540,7 +2002,7 @@
 		  for (var i = 0; i < 5; i++) {
 		  	document.querySelectorAll('.joinButton')[i].addEventListener('mouseup', function(e){
 			  	var i = parseInt(e.target.id.slice(1,2));
-			  	if (!players[i - 1].joined && joined == 0 && manualJoin) {
+			  	if (!players[i - 1].joined && joined == 0 && settings.manualJoin) {
 			  		//join
 			  		sync.instance.child('players').child(i - 1).set({displayName: user.displayName, id: user.userId, joined: true, score: 0});
 			  	} else if (joined == i || isMod) {
@@ -1551,8 +2013,11 @@
 
 				document.querySelectorAll('.kickButton')[i].addEventListener('mouseup', function(e){
 			  	var i = parseInt(e.target.id.slice(1,2));
-					if (isHost || isMod) {
-						sync.instance.child('players').child(i - 1).set({joined: false});
+					if ((isHost || isMod) && players[i - 1].joined) {
+						//sync.instance.child('players').child(i - 1).set({joined: false});
+						showDialog('kick');
+						confirmFunction = 'kick' + i;
+						click.components['n-sound'].playSound();
 					}
 			  });
 
@@ -1560,6 +2025,7 @@
 			  	var i = parseInt(e.target.id.slice(1,2));
 					if ((isHost || isMod) && players[i - 1].joined) {
 						sync.instance.child('players').child(i - 1).child('score').set(players[i - 1].score + 1);
+						click.components['n-sound'].playSound();
 					}
 			  });
 
@@ -1567,6 +2033,7 @@
 			  	var i = parseInt(e.target.id.slice(1,2));
 					if ((isHost || isMod) && players[i - 1].joined) {
 						sync.instance.child('players').child(i - 1).child('score').set(players[i - 1].score - 1);
+						click.components['n-sound'].playSound();
 					}
 			  });
 
@@ -1575,10 +2042,69 @@
 					if ((isHost || isMod) && players[i - 1].joined) {
 						var url = location.origin + location.pathname.slice(0, location.pathname.lastIndexOf('/')) + '/namechange.html' + location.search + '&player=' + (i - 1);
 						altspace.open(url);
-						//altspace.open(url);
+						click.components['n-sound'].playSound();
 					}
-			  });
+			  });	
 		  }
+
+			timerHourUp.addEventListener('mouseup', function(){
+				if (isHost || isMod) {
+					sync.instance.child('endGameTimer').child('time').set(addMinutes(endTime, 60));
+					click.components['n-sound'].playSound();
+				}
+			});
+			timerHourDown.addEventListener('mouseup', function(){
+				if (isHost || isMod) {
+					sync.instance.child('endGameTimer').child('time').set(addMinutes(endTime, -60));
+					click.components['n-sound'].playSound();
+				}
+			});
+			timerMinuteUp.addEventListener('mouseup', function(){
+				if (isHost || isMod) {
+					sync.instance.child('endGameTimer').child('time').set(addMinutes(endTime, 5));
+					click.components['n-sound'].playSound();
+				}
+			});
+			timerMinuteDown.addEventListener('mouseup', function(){
+				if (isHost || isMod) {
+					sync.instance.child('endGameTimer').child('time').set(addMinutes(endTime, -5));
+					click.components['n-sound'].playSound();
+				}
+			});
+			timerEnableButton.addEventListener('mouseup', function(){
+				if (isHost || isMod) {
+					sync.instance.child('endGameTimer').child('enabled').set(!timerEnabled);
+					click.components['n-sound'].playSound();
+				}
+			});
+			timerResetButton.addEventListener('mouseup', function(){
+				if (isHost || isMod) {
+					sync.instance.child('endGameTimer').set(null);
+					sync.instance.child('finalRound').set(false);
+					click.components['n-sound'].playSound();
+				}
+			});
+
+			hostB.addEventListener('mouseup', function(){
+				if (isHost || isMod) {
+					if (hasHost) {
+						sync.instance.child('host').set(null);
+					} else {
+						altspace.getSpace().then(function(space){
+							sync.instance.child('host').set({displayName: user.displayName, userId: user.userId, space: space.sid});
+						});
+					}
+					click.components['n-sound'].playSound();
+				}
+			});
+
+			h1Join.addEventListener('mouseup', function(){
+				if (!hasHost) {
+					altspace.getSpace().then(function(space){
+						sync.instance.child('host').set({displayName: user.displayName, userId: user.userId, space: space.sid});
+					});
+				}
+			});
 
 		  //PREGAME STUFF
 				
@@ -1626,15 +2152,37 @@
 					preLeaderScores.setAttribute('n-text', 'text', str2);
 				}
 
-				pregameStart.addEventListener('mouseup', function(){
-					if ((isHost || isMod) && mode != 'pregame') {
-						startPregame();
-					}
-				});
+				function showScores() {
+					sync.instance.child('answered').set(false);
+					sync.instance.child('mode').set('scores');
+					sync.instance.child('screenState').set(3);
+				}
+				
+				var countdownStarted = false;
+				function startPregameCountdown() {
+					countdownStarted = true;
+					var count = 5;
+					console.log(count);
+					sync.instance.child('countdown').set(count);
+					sync.instance.child('mode').set('countdown');
+					sync.instance.child('screenState').set(3);
+					var countdown = setInterval(function(){
+						count--;
+						console.log(count);
+						if (count == 0) {
+							clearInterval(countdown);
+							countdownStarted = false;
+							sync.instance.child('countdown').set(null);
+							startPregame();
+						} else {
+							sync.instance.child('countdown').set(count);
+						}
+					}, 1000);
+				}
 
 				function startPregame() {
 					sync.instance.child('pregame').child('timerEnded').set(false);
-					sync.instance.child('click').set(null);
+					sync.instance.child('buzz').set(null);
 					sync.instance.child('answered').set(false);
 					sync.instance.child('selectedAnswer').set(null);
 					sync.instance.child('mode').set('pregame');
@@ -1653,19 +2201,6 @@
 					sync.instance.child('players').set(top5);
 					sync.instance.child('screenState').set(3);
 				}
-
-				pregameNext.addEventListener('mouseup', function(){
-					if (isHost || isMod) {
-						sync.instance.child('pregame').child('timerEnded').set(false);
-						sync.instance.child('current').set(current + 1);
-					}
-				});
-
-				pregameEnd.addEventListener('mouseup', function(){
-					if (isHost || isMod) {
-						endPregame();
-					}
-				});
 
 				aBScreen.addEventListener('mouseup', function(){
 					pregameSelect('a');
@@ -1729,6 +2264,19 @@
 					}
 				}
 
+				trapdoorBox.object3D.addBehavior(new altspace.utilities.behaviors.JointCollisionEvents({
+					joints: [['Head','Center',0]],
+					jointCubeSize: .01
+				}));
+
+				trapdoorBox.object3D.addEventListener('jointcollisionenter', function(e){
+					trapdoorPortal.setAttribute('position', '0 0 0');
+
+					setTimeout(function(){
+						trapdoorPortal.setAttribute('position', '0 -100 0');
+					}, 100);
+				});
+				
 			}
 	  });
   });
@@ -1740,14 +2288,12 @@
 		}
 		return sum / (arr.length);
 	}
-
 	function sortByKey(array, key) {
     return array.sort(function(a, b) {
       var x = a[key]; var y = b[key];
       return ((x < y) ? -1 : ((x > y) ? 1 : 0));
     });
 	}
-
 	function shuffleArray(array) {
     for (var i = array.length - 1; i > 0; i--) {
       var j = Math.floor(Math.random() * (i + 1));
@@ -1757,6 +2303,18 @@
     }
     return array;
   }
+	function findGetParameter(parameterName) {
+		var result = null,
+			tmp = [];
+		location.search
+		.substr(1)
+			.split("&")
+			.forEach(function (item) {
+			tmp = item.split("=");
+			if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+		});
+		return result;
+	}
 </script>		
 </body>
 </html>
