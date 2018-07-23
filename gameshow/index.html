@@ -14,10 +14,10 @@
 			<a-plane position='0 0 1.5' scale='12 5.5 0' rotation='-90 0 0' material='visible: false'></a-plane>
 			<a-plane position='0 .25 4.25' scale='8 .5 0' rotation='180 0 0' material='visible: false'></a-plane>
 			<a-entity rotation='0 -123 0'>
-				<a-plane position='0 1.5 -5.5' scale='4.5 3 0' material='visible: false'></a-plane>
+				<a-plane position='0 .25 -5.5' scale='4.5 .5 0' material='visible: false'></a-plane>
 			</a-entity>
 			<a-entity rotation='0 123 0'>
-				<a-plane position='0 1.5 -5.5' scale='4.5 3 0' material='visible: false'></a-plane>
+				<a-plane position='0 .25 -5.5' scale='4.5 .5 0' material='visible: false'></a-plane>
 			</a-entity>
 		</a-entity>
 		<!-- <a-cylinder position='0 -.24 0' height='.6' radius='4.05' color='#101' opacity='.9' n-mesh-collider='type: environment; convex: false'></a-cylinder> -->
@@ -28,7 +28,7 @@
 		<a-entity position='0 0 2.6'>
 			<a-entity id='screenContainer' position='0 0 1.2'>
 				<a-entity id='bigScreen' position='0 4.5 -4' scale='.45 .45 .45'>
-					<a-entity position='0 -3.5 -.32' rotation='0 180 0' n-text='fontSize: 7; text: v0.5'></a-entity>
+					<a-entity position='0 -3.5 -.32' rotation='0 180 0' n-text='fontSize: 7; text: v0.51'></a-entity>
 
 					<a-plane scale='14 8 1' color='black'></a-plane>
 
@@ -193,7 +193,7 @@
 					<a-circle position='-.17 -.12 0' radius='.03' color='#111'></a-circle>
 					
 					<a-entity id='confirmText' position='0 .05 .01' scale='.5 .5 .5' n-text='fontSize: 1; text: End Game?'></a-entity>
-					<a-plane id='confirmYes' position='.095 -.05 .01' scale='.05 .05 .01' src='textures/button.png' transparent='true' color='green' n-text='fontSize: 5; horizontalAlign: left; width: 3.2; text: Yes' n-box-collider></a-plane>
+					<a-plane id='confirmYes' position='.095 -.05 .01' scale='.05 .05 .01' src='textures/button.png' transparent='true' color='#0c0' n-text='fontSize: 5; horizontalAlign: left; width: 3.2; text: Yes' n-box-collider></a-plane>
 					<a-plane id='confirmNo' position='-.06 -.05 .01' scale='.05 .05 .01' src='textures/button.png' transparent='true' color='red' n-text='fontSize: 5; horizontalAlign: left; width: 3; text: No' n-box-collider></a-plane>
 				</a-entity>	
 
@@ -630,6 +630,9 @@
 					}
 					if (joined != 0) {
 						colliders.setAttribute('n-mesh-collider', 'type: environment; convex: false');
+						for (var i = 1; i < 6; i++) {
+							document.querySelector('#p' + i + 'Join').setAttribute('position', '0 -.5 0');
+						}
 					} else if (!isHost) {
 						colliders.removeAttribute('n-mesh-collider');
 					}
@@ -1934,7 +1937,7 @@
 							}
 						} else {
 							if ((mode == 'category' && selected == null) || mode == 'pregame') {
-								if (round == 0 && screenState == 1) {
+								if ((round == 0 && screenState == 1) || mode == 'pregame') {
 									str += 'Start Game';
 								} else {
 									str += 'Shuffle Categories';
@@ -2073,6 +2076,9 @@
 			});
 			timerEnableButton.addEventListener('mouseup', function(){
 				if (isHost || isMod) {
+					if (timerEnabled) {
+						sync.instance.child('finalRound').set(false);
+					}
 					sync.instance.child('endGameTimer').child('enabled').set(!timerEnabled);
 					click.components['n-sound'].playSound();
 				}
