@@ -28,7 +28,7 @@
 		<a-entity position='0 0 2.6'>
 			<a-entity id='screenContainer' position='0 0 1.2'>
 				<a-entity id='bigScreen' position='0 4.5 -4' scale='.45 .45 .45'>
-					<a-entity position='0 -3.5 -.32' rotation='0 180 0' n-text='fontSize: 7; text: v0.51'></a-entity>
+					<a-entity position='0 -3.5 -.32' rotation='0 180 0' n-text='fontSize: 7; text: v0.52'></a-entity>
 
 					<a-plane scale='14 8 1' color='black'></a-plane>
 
@@ -1631,9 +1631,12 @@
 
 			var confirmFunction = '';
 		  endGameB.addEventListener('mouseup', function(){
-				if ((isHost || isMod) && mode != 'winner') {
+				if ((isHost || isMod) && mode != 'winner' && screenState != 1) {
 					showDialog('end');
 					confirmFunction = 'end';
+					click.components['n-sound'].playSound();
+				} else if (mode == 'winner') {
+					endGame();
 					click.components['n-sound'].playSound();
 				}
 			});
@@ -1865,14 +1868,14 @@
 			  		}
 		  		}
 				} else if (isHost || isMod) {
-		  		if (!questionsLoaded) {
+					if (mode == 'winner') {
+						endGame();
+					} else if (!questionsLoaded) {
 		  			//console.log('loadQuestions');
 		  			if(!loadingQuestions) {
 			  			getAllQuestions();
 			  		}
-		  		} else if (mode == 'winner') {
-						endGame();
-					} else if ((current == -1 && selected == null) || (mode == 'category' && selected == null) || (answered && current == 4) || (mode == 'pregame' && screenState == 3) || mode == 'scores') {
+		  		} else if ((current == -1 && selected == null) || (mode == 'category' && selected == null) || (answered && current == 4) || (mode == 'pregame' && screenState == 3) || mode == 'scores') {
 		  			if (anyPlayers()) {
 							if(answered && current == 4 && mode == 'question') {
 								if (finalRound) {
@@ -1921,12 +1924,12 @@
 				var str = '';
 				if (!hasHost) {
 					str += 'Click to Host';
+				} else if (mode == 'winner') {
+					str += 'Return to Title';
 				} else if (!questionsLoaded) {
 					if(!loadingQuestions) {
 						str += 'Load Questions';
 					}
-				} else if (mode == 'winner') {
-					str += 'Return to Title';
 				} else if ((current == -1 && selected == null) || (mode == 'category' && selected == null) || (answered && current == 4) || (mode == 'pregame' && screenState == 3) || mode == 'scores') {
 					if (anyPlayers()) {
 						if(answered && current == 4 && mode == 'question') {
