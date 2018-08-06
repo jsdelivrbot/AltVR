@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>GameShow</title>
+	<title>AltQuiz</title>
 	<script src="https://aframe.io/releases/0.7.0/aframe.js"></script>
 	<script src="https://sdk.altvr.com/libs/altspace.js/2.9.0/altspace.min.js"></script>
 </head>
@@ -28,7 +28,7 @@
 		<a-entity position='0 0 2.6'>
 			<a-entity id='screenContainer' position='0 0 1.2'>
 				<a-entity id='bigScreen' position='0 4.5 -4' scale='.45 .45 .45'>
-					<a-entity position='0 -3.5 -.32' rotation='0 180 0' n-text='fontSize: 7; text: v0.52'></a-entity>
+					<a-entity position='0 -3.5 -.32' rotation='0 180 0' n-text='fontSize: 7; text: v0.55'></a-entity>
 
 					<a-plane scale='14 8 1' color='black'></a-plane>
 
@@ -36,6 +36,7 @@
 						<!-- <a-entity position='0 0 .1' scale='2 2 2' n-text='text: Logo\ngoes here'></a-entity> -->
 						<a-entity position='0 0 .01' scale='2 2 2' n-text="width: 2.8; text: <line-height=65%><align=left>Alt\n<line-height=35%><align=right>Quiz"></a-entity>
 						<!-- <a-entity position='0 0 .01' scale='2 2 2' n-text="width: 2.8; text: <line-height=65%><align=left>Alt\n<line-height=35%><align=right>Quiz\n<align=center><size=30%>It's a quiz"></a-entity> -->
+						<!-- <a-plane></a-plane> -->
 					</a-entity>
 
 					<a-entity id='gameScreen' position='0 0 -.2'>
@@ -508,10 +509,20 @@
 						altspace.getSpace().then(function(space){
 							sync.instance.child('host').child('space').set(space.sid);
 						});
+						if (isActivity) {
+							sync.instance.child('host').onDisconnect().set(null);
+						}
 					} else {
 						isHost = false;
 					}
 				} else {
+					if (isHost) {
+						hostPanelState = false;
+						controlPanelMove();
+						if (isActivity) {
+							sync.instance.child('host').onDisconnect().cancel();
+						}
+					}
 					hasHost = false;
 					isHost = false;
 					hostUser = null;
@@ -535,7 +546,7 @@
 					settings = data.val();
 					if (settings.manualJoin) {
 						for (var i = 0; i < 5; i++) {
-							if (!players[i].joined) {
+							if (!players[i].joined && joined == 0) {
 								document.querySelector('#p' + (i + 1) + 'Join').setAttribute('position', '0 2 0');
 							}
 						}
@@ -946,7 +957,7 @@
 				for (var i = 0; i < categoriesLeft.length; i++) {
 					if (categoriesLeft[i].id == data.val().id) {
 						categoriesLeft.splice(i, 1);
-						if (categoriesLeft.length < 4) {
+						if (categoriesLeft.length == 0) {
 							sync.instance.child('finalRound').set(true);
 						}
 					}
@@ -1113,7 +1124,7 @@
 					endTime = data.val().time;
 					var d = new Date(endTime);
 					var str = (d.getHours().toString().length == 1 ? '0' : '') + d.getHours() + ':' + (d.getMinutes().toString().length == 1 ? '0' : '') + d.getMinutes();
-					timeText.setAttribute('n-text', 'text', (data.val().enabled ? '<color=#fff>' : '<color=#444>') + str);
+					timeText.setAttribute('n-text', 'text', (data.val().enabled ? (d.getTime() > new Date().getTime() ? '<color=#fff>' : '<color=#f00>') : (d.getTime() > new Date().getTime() ? '<color=#444>' : '<color=#300>')) + str);
 					if (data.val().enabled != timerEnabled) {
 						timerEnabled = data.val().enabled;
 						if (timerEnabled) {
@@ -1560,22 +1571,22 @@
 			}
 
 		  aB.addEventListener('mouseup', function(){
-		  	if (isHost || isMod) {
+		  	if ((isHost || isMod) && aT.getAttribute('n-text').text != '') {
 					select('a');
 				}
 		  });
 		  bB.addEventListener('mouseup', function(){
-		  	if (isHost || isMod) {
+		  	if ((isHost || isMod) && bT.getAttribute('n-text').text != '') {
 					select('b');
 				}
 		  });
 		  cB.addEventListener('mouseup', function(){
-		  	if (isHost || isMod) {
+		  	if ((isHost || isMod) && cT.getAttribute('n-text').text != '') {
 					select('c');
 				}
 		  });
 		  dB.addEventListener('mouseup', function(){
-		  	if (isHost || isMod) {
+		  	if ((isHost || isMod) && dT.getAttribute('n-text').text != '') {
 					select('d');
 				}
 		  });
@@ -1749,7 +1760,11 @@
 			  sync.instance.child('selectedAnswer').set(null);
 		  	sync.instance.child('mode').set('category');
 				sync.instance.child('screenState').set(2);
-		  	sync.instance.child('categories').set([categoriesLeft[0].name,categoriesLeft[1].name,categoriesLeft[2].name,categoriesLeft[3].name]);
+				var cats = [];
+				
+				var	cats = [categoriesLeft[0].name,(categoriesLeft[1] ? categoriesLeft[1].name : ''),(categoriesLeft[2] ? categoriesLeft[2].name : ''),(categoriesLeft[3] ? categoriesLeft[3].name : '')];
+		  	
+				sync.instance.child('categories').set(cats);
 		  	//console.log(categories);
 		  }
 
@@ -1777,21 +1792,26 @@
 		  	}
 			});
 			
-			var controlPanelPos = [{pos:{x:0.65,y:1.3,z:0.4}, scale:{x:1,y:1,z:1}, rot:{x:THREE.Math.degToRad(-40),y:THREE.Math.degToRad(-50),z:0}}, {pos:{x:0,y:1,z:0}, scale:{x:0.25,y:0.25,z:0.25}, rot:{x:THREE.Math.degToRad(-90),y:0,z:0}}]
 			var hostPanelState = false;
 			controlB.addEventListener('mouseup', function(){
 		  	if (isHost || isMod) {
-			  	var i = 0;
-					if (hostPanelState) {
-						i = 1;
-						confirmDialog.setAttribute('position', '0 0 0');
-					}
 					hostPanelState = !hostPanelState;
-					new TWEEN.Tween(hostControlPanel.object3D.position).to(controlPanelPos[i].pos, 500).start();
-					new TWEEN.Tween(hostControlPanel.object3D.scale).to(controlPanelPos[i].scale, 500).start();
-					new TWEEN.Tween(hostControlPanel.object3D.rotation).to(controlPanelPos[i].rot, 500).start();
+					controlPanelMove();
 		  	}
 			});
+
+			function controlPanelMove() {
+				var controlPanelPos = [{pos:{x:0.65,y:1.3,z:0.4}, scale:{x:1,y:1,z:1}, rot:{x:THREE.Math.degToRad(-40),y:THREE.Math.degToRad(-50),z:0}}, {pos:{x:0,y:1,z:0}, scale:{x:0.25,y:0.25,z:0.25}, rot:{x:THREE.Math.degToRad(-90),y:0,z:0}}];
+				var i = 0;
+				if (!hostPanelState) {
+					i = 1;
+					confirmDialog.setAttribute('position', '0 0 0');
+				}
+				new TWEEN.Tween(hostControlPanel.object3D.position).to(controlPanelPos[i].pos, 500).start();
+				new TWEEN.Tween(hostControlPanel.object3D.scale).to(controlPanelPos[i].scale, 500).start();
+				new TWEEN.Tween(hostControlPanel.object3D.rotation).to(controlPanelPos[i].rot, 500).start();
+			}
+
 			var controlPopupShow;
 			var controlPopupHide;
 			controlB.addEventListener('mouseenter', function(){
@@ -1838,9 +1858,7 @@
 			controlPanelClose.addEventListener('mouseup', function(){
 		  	if (isHost || isMod) {
 					hostPanelState = false;
-					new TWEEN.Tween(hostControlPanel.object3D.position).to(controlPanelPos[1].pos, 500).start();
-					new TWEEN.Tween(hostControlPanel.object3D.scale).to(controlPanelPos[1].scale, 500).start();
-					new TWEEN.Tween(hostControlPanel.object3D.rotation).to(controlPanelPos[1].rot, 500).start();
+					controlPanelMove();
 		  	}
 		  });
 			
@@ -2079,7 +2097,7 @@
 			});
 			timerEnableButton.addEventListener('mouseup', function(){
 				if (isHost || isMod) {
-					if (timerEnabled) {
+					if (timerEnabled && categoriesLeft != 0) {
 						sync.instance.child('finalRound').set(false);
 					}
 					sync.instance.child('endGameTimer').child('enabled').set(!timerEnabled);
@@ -2089,7 +2107,9 @@
 			timerResetButton.addEventListener('mouseup', function(){
 				if (isHost || isMod) {
 					sync.instance.child('endGameTimer').set(null);
-					sync.instance.child('finalRound').set(false);
+					if (categoriesLeft != 0) {
+						sync.instance.child('finalRound').set(false);
+					}
 					click.components['n-sound'].playSound();
 				}
 			});
