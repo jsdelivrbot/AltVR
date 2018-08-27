@@ -1,0 +1,56 @@
+# Blender MTL File: 'None'
+# Material Count: 6
+
+newmtl None
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 1 1 1
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd EnterpriseD_02_D.png
+
+newmtl None_EnterpriseD_01_D.png
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 1 1 1
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd EnterpriseD_01_D.png
+
+newmtl None_EnterpriseD_Briefing_D.png
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 1 1 1
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd EnterpriseD_Briefing_D.png
+
+newmtl None_EnterpriseD_Decal_D.png
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 1 1 1
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd EnterpriseD_Decal_D.png
+
+newmtl None_EnterpriseD_E_E.png
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 1 1 1
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd EnterpriseD_E_E.png
+
+newmtl None_EnterpriseD_windows_D.png
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 1 1 1
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd EnterpriseD_windows_D.png
