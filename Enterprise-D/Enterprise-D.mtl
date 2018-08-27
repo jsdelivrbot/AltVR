@@ -8,7 +8,7 @@ Kd 1 1 1
 Ks 0.8 0.8 0.8
 d 1
 illum 2
-map_Kd EnterpriseD_02_D.png
+map_Kd EnterpriseD_02_D_Lit.png
 
 newmtl None_EnterpriseD_01_D.png
 Ns 0
@@ -17,7 +17,7 @@ Kd 1 1 1
 Ks 0.8 0.8 0.8
 d 1
 illum 2
-map_Kd EnterpriseD_01_D.png
+map_Kd EnterpriseD_01_D_Lit.png
 
 newmtl None_EnterpriseD_Briefing_D.png
 Ns 0
