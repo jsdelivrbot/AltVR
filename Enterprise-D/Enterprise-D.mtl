@@ -33,7 +33,7 @@ Ns 0
 Ka 0.000000 0.000000 0.000000
 Kd 1 1 1
 Ks 0.8 0.8 0.8
-d 1
+d 0.99
 illum 2
 map_Kd EnterpriseD_Decal_D.png
 
@@ -51,6 +51,6 @@ Ns 0
 Ka 0.000000 0.000000 0.000000
 Kd 1 1 1
 Ks 0.8 0.8 0.8
-d 1
+d 0.99
 illum 2
 map_Kd EnterpriseD_windows_D.png
