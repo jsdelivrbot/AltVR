@@ -1,0 +1,270 @@
+# Blender MTL File: 'scene.blend'
+# Material Count: 27
+
+newmtl Material.001
+Ns 94.117647
+Ka 1.000000 1.000000 1.000000
+Kd 0.000000 0.000000 0.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd textures\BrushedSteel_diffuse.png
+
+newmtl Material.002
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 0.99
+illum 2
+map_Kd textures\BridgeDecals_C.png
+
+newmtl None
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 1 1 1
+Ks 1 1 1
+d 1
+illum 2
+map_Kd textures\FirstOfficerCounselor_Panel_C.png
+
+newmtl None.001
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd textures\BridgeTNG_OPerarionsFlightConsole_C.png
+
+newmtl None.001_BridgeTNG_OPerarionsFlightConsole_C.png
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd textures\BridgeTNG_OPerarionsFlightConsole_C.png
+
+newmtl None.001_BridgeTNG_Tan.png
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd textures\BridgeTNG_Tan.png
+
+newmtl None.003
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd textures\BridgeDecals_C.png
+
+newmtl None.006
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 1 1 1
+Ks 1 1 1
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd textures\BridgeTNG_Tan.png
+
+newmtl None.007
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 1 1 1
+Ks 1 1 1
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd textures\BridgeTNG_Tan.png
+
+newmtl None_  1
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 1 1 1
+Ks 1 1 1
+d 1
+illum 2
+map_Kd textures\BridgeTNG_Wood.png
+
+newmtl None_BackWallConsoleTopDetail_C.png
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 1 1 1
+Ks 1 1 1
+d 1
+illum 2
+map_Kd textures\BackWallConsoleTopDetail_C.png
+
+newmtl None_BridgeDecals_C.png
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 1 1 1
+Ks 1 1 1
+d 1
+illum 2
+map_Kd textures\BridgeDecals_C.png
+
+newmtl None_BridgeDecals_C.png_BridgeDecals_C.png
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd textures\BridgeDecals_C.png
+
+newmtl None_BridgeTNG_Carpet.png
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 1 1 1
+Ks 1 1 1
+d 1
+illum 2
+map_Kd textures\BridgeTNG_Carpet.png
+
+newmtl None_BridgeTNG_Door_C.png
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 1 1 1
+Ks 1 1 1
+d 1
+illum 2
+map_Kd textures\BridgeTNG_Door_C.png
+
+newmtl None_BridgeTNG_Tan.png
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 1 1 1
+Ks 1 1 1
+d 1
+illum 2
+map_Kd textures\BridgeTNG_Tan.png
+
+newmtl None_BridgeTNG_Tan.png.001
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd textures\BridgeTNG_Tan.png
+
+newmtl None_BridgeTNG_ViewscreenGFX.png.001
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 0.000000 0.000000 0.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd textures\BrushedSteel_diffuse.png
+
+newmtl None_BridgeTNG_WallPadding_C.png
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 1 1 1
+Ks 1 1 1
+d 1
+illum 2
+map_Kd textures\BridgeTNG_WallPadding_C.png
+
+newmtl None_BridgeTNG_Wood.png
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 1 1 1
+Ks 1 1 1
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd textures\BridgeTNG_Wood.png
+
+newmtl None_Bridge_RedCarpet_C.png
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 1 1 1
+Ks 1 1 1
+d 1
+illum 2
+map_Kd textures\Bridge_RedCarpet_C.png
+
+newmtl None_BrushedSteel_diffuse.png
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 1 1 1
+Ks 1 1 1
+d 1
+illum 2
+map_Kd textures\BrushedSteel_diffuse.png
+
+newmtl None_BrushedSteel_diffuse.png_BrushedSteel_diffuse.png
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 1 1 1
+Ks 1 1 1
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd textures\BrushedSteel_diffuse.png
+
+newmtl None_DedicationPlaque_AlbedoTransparency.png
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 1 1 1
+Ks 1 1 1
+d 1
+illum 2
+map_Kd textures\DedicationPlaque_AlbedoTransparency.png
+
+newmtl None_NONE
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 1 1 1
+Ks 1 1 1
+d 1
+illum 2
+
+newmtl None_TNG_WallPlastic_C.png
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 1 1 1
+Ks 1 1 1
+d 1
+illum 2
+map_Kd textures\TNG_WallPlastic_C.png
+
+newmtl None_ViewScreenBorder_C.png
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 1 1 1
+Ks 1 1 1
+d 1
+illum 2
+map_Kd textures\ViewScreenBorder_C.png

@@ -1,0 +1,83 @@
+# Blender MTL File: 'scene.blend'
+# Material Count: 9
+
+newmtl Material.003
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.750000 0.750000 0.750000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+
+newmtl None
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 1 1 1
+Ks 1 1 1
+d 1
+illum 2
+map_Kd textures\TNG_Eng_Crew.png
+
+newmtl None_BridgeTNG_Ceiling_E.png
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd .9 .9 .9
+Ks 1 1 1
+d 1
+illum 2
+
+newmtl None_BridgeTNG_VerticalPanels_E.png
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 1 1 1
+Ks 1 1 1
+d 1
+illum 2
+map_Kd textures\BridgeTNG_VerticalPanels_E.png
+
+newmtl None_BridgeTNG_ViewscreenGFX.png
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 1 1 1
+Ks 1 1 1
+d 1
+illum 2
+map_Kd textures\BridgeTNG_ViewscreenGFX.png
+
+newmtl None_BridgeTNG_WallLockerLights.png.001
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 1 1 1
+Ks 1 1 1
+d 1
+illum 2
+map_Kd textures\BridgeTNG_WallLockerLights.png
+
+newmtl None_LCARS_Horizontal.png
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 1 1 1
+Ks 1 1 1
+d 1
+illum 2
+map_Kd textures\LCARS_Horizontal.png
+
+newmtl None_LCARS_Vertical.png
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 1 1 1
+Ks 1 1 1
+d 1
+illum 2
+map_Kd textures\LCARS_Vertical.png
+
+newmtl None_TNG_Helm_local_map.png
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 1 1 1
+Ks 1 1 1
+d 1
+illum 2
+map_Kd textures\TNG_Helm_local map.png
