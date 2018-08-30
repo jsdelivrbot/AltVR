@@ -1,5 +1,5 @@
 # Blender MTL File: 'scene.blend'
-# Material Count: 9
+# Material Count: 10
 
 newmtl Material.003
 Ns 96.078431
@@ -18,7 +18,7 @@ Kd 1 1 1
 Ks 1 1 1
 d 1
 illum 2
-map_Kd textures\TNG_Eng_Crew.png
+map_Kd textures\FirstOfficerCounselor_Panel_C.png
 
 newmtl None_BridgeTNG_Ceiling_E.png
 Ns 0
@@ -27,6 +27,7 @@ Kd .9 .9 .9
 Ks 1 1 1
 d 1
 illum 2
+map_Kd D:\stbc\tng\Texture2D\BridgeTNG_Ceiling_E.png
 
 newmtl None_BridgeTNG_VerticalPanels_E.png
 Ns 0
@@ -72,6 +73,15 @@ Ks 1 1 1
 d 1
 illum 2
 map_Kd textures\LCARS_Vertical.png
+
+newmtl None_TNG_Eng_Crew.png
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 1 1 1
+Ks 1 1 1
+d 1
+illum 2
+map_Kd textures\TNG_Eng_Crew.png
 
 newmtl None_TNG_Helm_local_map.png
 Ns 0
