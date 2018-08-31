@@ -1,33 +1,22 @@
 # Blender MTL File: 'ship.blend'
-# Material Count: 7
+# Material Count: 6
 
 newmtl None
 Ns 0.000000
 Ka 0.000000 0.000000 0.000000
 Kd 1.000000 1.000000 1.000000
-Ks textures
+Ks 0.800000 0.800000 0.800000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
 map_Kd textures\EnterpriseD_02_D_Lit.png
 
-newmtl None.001
-Ns 0.000000
-Ka 0.000000 0.000000 0.000000
-Kd textures
-Ks textures
-Ke 0.000000 0.000000 0.000000
-Ni 1.000000
-d 1.000000
-illum 2
-map_Kd textures\EnterpriseD_01_D_Lit.png
-
 newmtl None_EnterpriseD_01_D.png
 Ns 0.000000
 Ka 0.000000 0.000000 0.000000
 Kd 1.000000 1.000000 1.000000
-Ks textures
+Ks 0.800000 0.800000 0.800000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
@@ -38,7 +27,7 @@ newmtl None_EnterpriseD_Briefing_D.png
 Ns 0.000000
 Ka 0.000000 0.000000 0.000000
 Kd 1.000000 1.000000 1.000000
-Ks textures
+Ks 0.800000 0.800000 0.800000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
@@ -49,7 +38,7 @@ newmtl None_EnterpriseD_Decal_D.png
 Ns 0.000000
 Ka 0.000000 0.000000 0.000000
 Kd 1.000000 1.000000 1.000000
-Ks textures
+Ks 0.800000 0.800000 0.800000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 0.990000
@@ -60,7 +49,7 @@ newmtl None_EnterpriseD_E_E.png
 Ns 0.000000
 Ka 0.000000 0.000000 0.000000
 Kd 1.000000 1.000000 1.000000
-Ks textures
+Ks 0.800000 0.800000 0.800000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
