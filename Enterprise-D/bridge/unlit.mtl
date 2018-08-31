@@ -27,7 +27,6 @@ Kd .9 .9 .9
 Ks 1 1 1
 d 1
 illum 2
-map_Kd D:\stbc\tng\Texture2D\BridgeTNG_Ceiling_E.png
 
 newmtl None_BridgeTNG_VerticalPanels_E.png
 Ns 0
