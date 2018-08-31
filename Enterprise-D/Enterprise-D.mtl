@@ -1,56 +1,79 @@
-# Blender MTL File: 'None'
-# Material Count: 6
+# Blender MTL File: 'ship.blend'
+# Material Count: 7
 
 newmtl None
-Ns 0
+Ns 0.000000
+Ka 0.000000 0.000000 0.000000
+Kd 1.000000 1.000000 1.000000
+Ks 1 1 1
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd textures\EnterpriseD_02_D_Lit.png
+
+newmtl None.001
+Ns 0.000000
 Ka 0.000000 0.000000 0.000000
 Kd 1 1 1
-Ks 0.8 0.8 0.8
-d 1
+Ks 1 1 1
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
 illum 2
-map_Kd EnterpriseD_02_D_Lit.png
+map_Kd textures\EnterpriseD_01_D_Lit.png
 
 newmtl None_EnterpriseD_01_D.png
-Ns 0
+Ns 0.000000
 Ka 0.000000 0.000000 0.000000
-Kd 1 1 1
-Ks 0.8 0.8 0.8
-d 1
+Kd 1.000000 1.000000 1.000000
+Ks 1 1 1
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
 illum 2
-map_Kd EnterpriseD_01_D_Lit.png
+map_Kd textures\EnterpriseD_01_D_Lit.png
 
 newmtl None_EnterpriseD_Briefing_D.png
-Ns 0
+Ns 0.000000
 Ka 0.000000 0.000000 0.000000
-Kd 1 1 1
-Ks 0.8 0.8 0.8
-d 1
+Kd 1.000000 1.000000 1.000000
+Ks 1 1 1
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
 illum 2
-map_Kd EnterpriseD_Briefing_D.png
+map_Kd textures\EnterpriseD_Briefing_D.png
 
 newmtl None_EnterpriseD_Decal_D.png
-Ns 0
+Ns 0.000000
 Ka 0.000000 0.000000 0.000000
-Kd 1 1 1
-Ks 0.8 0.8 0.8
-d 0.99
+Kd 1.000000 1.000000 1.000000
+Ks 1 1 1
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 0.990000
 illum 2
-map_Kd EnterpriseD_Decal_D.png
+map_Kd textures\EnterpriseD_Decal_D.png
 
 newmtl None_EnterpriseD_E_E.png
-Ns 0
+Ns 0.000000
 Ka 0.000000 0.000000 0.000000
-Kd 1 1 1
-Ks 0.8 0.8 0.8
-d 1
+Kd 1.000000 1.000000 1.000000
+Ks 1 1 1
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
 illum 2
-map_Kd EnterpriseD_E_E.png
+map_Kd textures\EnterpriseD_E_E.png
 
-newmtl None_EnterpriseD_windows_D.png
-Ns 0
-Ka 0.000000 0.000000 0.000000
+newmtl topWindow
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
 Kd 1 1 1
-Ks 0.8 0.8 0.8
-d 0.99
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 0.9
 illum 2
-map_Kd EnterpriseD_windows_D.png
+map_Kd textures\EnterpriseD_E_E.png
